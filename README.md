@@ -104,6 +104,10 @@ Heros **mais largos / full-bleed**, na proporção do **novo.creeta** (mais imer
 margem lateral). Vale para `PageVideoHero` e `PageHero`. O hero atual do ttcab é mais contido
 — alargar para o padrão creeta ao migrar. _Vira token/escala de largura de hero._
 
+## Playground (ver os componentes)
+
+`cd playground && npm install && npm run dev` → kitchen-sink em http://localhost:5177 com os componentes reais renderizados (paleta ttcab).
+
 ## Roadmap
 
 - [x] v0.1 — tokens (preset + paletas ttcab/creeta) + preview
