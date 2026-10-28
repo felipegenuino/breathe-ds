@@ -70,6 +70,17 @@ Valores pela fórmula WCAG padrão (os mesmos que o `preview/` calcula ao vivo):
 
 `action` `#f6a22a` é decorativo/CTA — não usar como texto sobre creme.
 
+## Tipografia da família
+
+| Papel | Fonte | Observação |
+|---|---|---|
+| `font-heading` | **Quicksand** | compartilhada por toda a família (RTA) |
+| `font-body` | **Gotham** | fonte de marca; licenciada |
+| `font-body` (sem licença) | **Figtree** | substituta livre da Gotham, métricas próximas (ex.: creeta) |
+
+Títulos são iguais em toda a família. O corpo é Gotham onde há licença (ttcab) e
+Figtree como stand-in onde não há (creeta) — mesmo papel, valor por site.
+
 ## Primeiros consumidores
 
 **ttcab** e **creeta**. A paleta do creeta em `tokens/creeta.css` está
