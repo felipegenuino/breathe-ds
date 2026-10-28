@@ -1,4 +1,4 @@
-import { useState, type ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import { Accordion } from "../../components/Accordion";
 import { Button } from "../../components/Button";
 import { Card } from "../../components/Card";
@@ -108,8 +108,12 @@ function Switcher({ pal, setPal }: { pal: string; setPal: (p: string) => void })
 
 export function App() {
   const [pal, setPal] = useState("Neutro");
+  useEffect(() => {
+    const root = document.documentElement;
+    Object.entries(PALETTES[pal]).forEach(([k, v]) => root.style.setProperty(k, v));
+  }, [pal]);
   return (
-    <div style={PALETTES[pal] as React.CSSProperties}>
+    <div>
       {/* dogfooding: o header do DS É o componente Header do Breathe */}
       <Header
         logo={<span className="flex items-center gap-2 font-heading text-xl font-bold text-ink"><BreatheMark size={30} /> Breathe</span>}
@@ -133,7 +137,7 @@ export function App() {
             <div className="mb-4 text-ink"><BreatheMark size={64} /></div>
             <p className="mb-3 font-heading text-[0.82rem] font-bold tracking-[0.14em] text-ink-soft uppercase">Breathe · @cuidado-global/ui</p>
             <h1 className="font-heading text-[clamp(2.4rem,6vw,4.5rem)] leading-[1.05] font-semibold tracking-[-0.02em] text-ink">Playground do design system</h1>
-            <p className="mt-5 max-w-[56ch] text-lg leading-[1.6] text-ink-body">Componentes reais renderizados com a paleta ttcab. Troque os tokens e tudo retematiza.</p>
+            <p className="mt-5 max-w-[56ch] text-lg leading-[1.6] text-ink-body">Componentes reais renderizados com a paleta <b>{pal}</b>. Troque no topo e tudo retematiza — o Breathe é neutro, a cor vem de cada app.</p>
           </Container>
         </div>
 
