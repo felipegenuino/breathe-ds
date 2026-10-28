@@ -28,7 +28,8 @@
     "./components/Header": "./components/Header.tsx",
     "./components/BottomNav": "./components/BottomNav.tsx",
     "./components/BreatheMark": "./components/BreatheMark.tsx",
-    "./tokens/neutral.css": "./tokens/neutral.css"
+    "./tokens/neutral.css": "./tokens/neutral.css",
+    "./components/icons": "./components/icons.tsx"
   },
   "publishConfig": {
     "access": "restricted"

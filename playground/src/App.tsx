@@ -10,6 +10,7 @@ import { Footer } from "../../components/Footer";
 import { Header } from "../../components/Header";
 import { BottomNav } from "../../components/BottomNav";
 import { BreatheMark } from "../../components/BreatheMark";
+import { icons, IconWind, IconActivity, IconBaby, IconSearch, IconHome, IconBook, IconMessage, IconMapPin, IconGraduationCap, IconVideo, IconUsers } from "../../components/icons";
 
 /* ───── paletas (o DS é neutro; a cor vem de cada app) ───── */
 const PALETTES: Record<string, Record<string, string>> = {
@@ -33,21 +34,18 @@ const PALETTES: Record<string, Record<string, string>> = {
   },
 };
 
-/* ───── ícones inline (só pro demo) ───── */
-const I = (p: ReactNode) => (
-  <svg viewBox="0 0 24 24" className="h-[18px] w-[18px]" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round">{p}</svg>
-);
-const IcWind = I(<><path d="M3 8h11a3 3 0 1 0-3-3" /><path d="M3 12h15a3 3 0 1 1-3 3" /><path d="M3 16h7a2.5 2.5 0 1 1-2 4" /></>);
-const IcPulse = I(<path d="M3 12h4l2 6 4-14 2 8h6" />);
-const IcBaby = I(<><circle cx="12" cy="7" r="3" /><path d="M6 21v-3a6 6 0 0 1 12 0v3" /></>);
-const IcSearch = I(<><circle cx="11" cy="11" r="7" /><path d="m21 21-4.3-4.3" /></>);
-const IcHome = I(<><path d="M3 10l9-7 9 7" /><path d="M5 9v11h14V9" /></>);
-const IcBook = I(<path d="M4 5a2 2 0 0 1 2-2h12v18H6a2 2 0 0 0-2 2z" />);
-const IcChat = I(<path d="M21 15a2 2 0 0 1-2 2H8l-4 4V5a2 2 0 0 1 2-2h13a2 2 0 0 1 2 2z" />);
-const IcPin = I(<><path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11z" /><circle cx="12" cy="10" r="2.5" /></>);
-const IcCap = I(<><path d="M22 10 12 5 2 10l10 5 10-5z" /><path d="M6 12v5c0 1 2.7 2.5 6 2.5s6-1.5 6-2.5v-5" /></>);
-const IcVideo = I(<><rect x="3" y="5" width="18" height="14" rx="2" /><path d="m10 9 5 3-5 3z" /></>);
-const IcUsers = I(<><circle cx="9" cy="8" r="3" /><path d="M3 20a6 6 0 0 1 12 0" /><path d="M17 8a3 3 0 0 1 0 6" /></>);
+/* ───── ícones do DS (dogfooding a lib de ícones) ───── */
+const IcWind = <IconWind size={18} />;
+const IcPulse = <IconActivity size={18} />;
+const IcBaby = <IconBaby size={18} />;
+const IcSearch = <IconSearch size={18} />;
+const IcHome = <IconHome size={18} />;
+const IcBook = <IconBook size={18} />;
+const IcChat = <IconMessage size={18} />;
+const IcPin = <IconMapPin size={18} />;
+const IcCap = <IconGraduationCap size={18} />;
+const IcVideo = <IconVideo size={18} />;
+const IcUsers = <IconUsers size={18} />;
 
 function SideNav({ pal, setPal }: { pal: string; setPal: (p: string) => void }) {
   const items = [
@@ -123,6 +121,7 @@ export function App() {
           { label: "Tokens", href: "#tokens" },
           { label: "Componentes", href: "#buttons", children: [
             { label: "Button", href: "#buttons", icon: IcPulse },
+            { label: "Ícones", href: "#icons", icon: IcSearch },
             { label: "Accordion", href: "#accordion", icon: IcBook },
             { label: "PillList", href: "#pills", icon: IcSearch },
             { label: "Header", href: "#header", icon: IcHome },
@@ -173,6 +172,18 @@ export function App() {
             <Button variant="ghost">Ver todos</Button>
             <Button variant="accent" size="sm">Pequeno</Button>
             <Button variant="solid" size="lg">Grande</Button>
+          </div>
+        </Section>
+
+        <Section id="icons" title="Ícones">
+          <p className="mb-6 max-w-[60ch] text-ink-body">Conjunto do lucide embutido no DS (sem dependência externa), em <code className="rounded bg-ink/[0.07] px-1.5 py-0.5 text-sm">currentColor</code>. Os componentes recebem ícones por slot.</p>
+          <div className="flex flex-wrap gap-3">
+            {Object.entries(icons).map(([name, Ic]) => (
+              <div key={name} className="flex w-[104px] flex-col items-center gap-2.5 rounded-2xl border border-line p-4 text-ink">
+                <Ic size={24} />
+                <span className="text-[0.68rem] text-ink-soft">{name.replace("Icon", "")}</span>
+              </div>
+            ))}
           </div>
         </Section>
 
