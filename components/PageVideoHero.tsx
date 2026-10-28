@@ -1,98 +1,115 @@
 "use client";
 
-import { useRef, useState, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
+import { BackgroundVideo } from "./BackgroundVideo";
 
 type Panel = { kicker?: ReactNode; title: ReactNode; lead?: ReactNode };
 
+/** Clipe de fundo (arquivo do próprio site), sem som, em repetição. */
+type Preview = { src: string; srcLarge?: string; poster: string; posterLarge?: string; trimEdges?: boolean; objectPosition?: string };
+
+/** Dois tipos de hero com vídeo:
+ *  - loop:   só o clipe ambiente em repetição (sem player).
+ *  - player: o clipe é a prévia; ao apertar o play, o vídeo inteiro (YouTube)
+ *            toca no próprio card e surge a barra de fechar no pé. */
+type VideoLoop = { mode: "loop"; preview: Preview };
+type VideoPlayer = { mode: "player"; preview: Preview; youtubeId: string; legenda?: ReactNode };
+
 type Props = {
-  videoId: string;
+  /** Fundo em vídeo — define o tipo do hero (loop ou player). */
+  video: VideoLoop | VideoPlayer;
   /** Slot no topo-esquerdo (selo de local, "← voltar" + ícone). */
   topLeft?: ReactNode;
   /** Legenda curta no canto inferior-esquerdo (pílula) — versão simples. */
   caption?: ReactNode;
   /** Painel de conteúdo inferior-esquerdo (kicker + título + lead). */
   panel?: Panel;
-  /** CTAs no canto inferior-direito. Sem isto, mostra "Assistir ao vídeo"; null esconde. */
+  /** CTAs no canto inferior-direito. No modo player, sem isto mostra "Assistir
+   *  ao vídeo"; null esconde. No modo loop, só aparece o que vier aqui. */
   actions?: ReactNode | null;
-  /** Rótulo + meta do botão padrão "Assistir ao vídeo". */
+  /** Rótulo + meta do botão padrão "Assistir ao vídeo" (modo player). */
   watch?: { label?: string; meta?: ReactNode };
+  /** Rótulo do botão de fechar na barra inferior (modo player tocando). */
+  closeLabel?: string;
   videoTitle?: string;
 };
 
 function PlayGlyph({ size = 20 }: { size?: number }) {
   return <svg viewBox="0 0 24 24" width={size} height={size} className="ml-0.5" fill="currentColor" aria-hidden="true"><path d="M6 3v18l15-9z" /></svg>;
 }
-function PauseGlyph() {
-  return <svg viewBox="0 0 24 24" className="h-[18px] w-[18px]" fill="currentColor" aria-hidden="true"><rect x="6" y="4" width="4" height="16" rx="1.2" /><rect x="14" y="4" width="4" height="16" rx="1.2" /></svg>;
+function XGlyph({ size = 18 }: { size?: number }) {
+  return <svg viewBox="0 0 24 24" width={size} height={size} fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" /></svg>;
 }
 
 /**
  * Hero full-bleed da família Cuidado Global — espelha o "TopoVideo" do
  * novo.creeta (tamanhos/espaçamentos exatos: max-w-1600, rounded-32,
- * min-h 560/820, painel rounded-24 px-6 py-4, botão assistir bottom-6 right-6,
- * pausa top-4 right-4), com a linguagem do Breathe (tokens: ink/surface).
- * Vídeo COBRE o card (cqw/cqh). Botão de pausa controla o vídeo (API do
- * YouTube). Slots injetáveis.
+ * min-h 560/820), com a linguagem do Breathe (tokens: ink/surface).
+ *
+ * O fundo é SEMPRE um clipe local em repetição (BackgroundVideo). No modo
+ * "player", um botão de assistir carrega o vídeo inteiro no próprio card e
+ * abre a barra de fechar no pé (legenda à esquerda, "Fechar" à direita).
+ * Nada é pedido ao YouTube antes do play (domínio sem cookies).
  */
 export function PageVideoHero({
-  videoId,
+  video,
   topLeft,
   caption,
   panel,
   actions,
   watch,
+  closeLabel = "Fechar o vídeo",
   videoTitle,
 }: Props) {
-  const [som, setSom] = useState(false);
-  const [playing, setPlaying] = useState(true);
-  const iframeRef = useRef<HTMLIFrameElement>(null);
+  const isPlayer = video.mode === "player";
+  const [playing, setPlaying] = useState(false);
+  const watchRef = useRef<HTMLButtonElement>(null);
+  const playedOnce = useRef(false);
 
-  const base = `https://www.youtube.com/embed/${videoId}`;
-  const params = new URLSearchParams({
-    autoplay: "1", mute: som ? "0" : "1", loop: "1", playlist: videoId,
-    controls: som ? "1" : "0", playsinline: "1", rel: "0", modestbranding: "1",
-    cc_load_policy: "0", iv_load_policy: "3", enablejsapi: "1",
-  });
+  // Ao fechar, o foco volta para o botão de assistir.
+  useEffect(() => {
+    if (playing) playedOnce.current = true;
+    else if (playedOnce.current) watchRef.current?.focus();
+  }, [playing]);
 
-  const command = (func: string) =>
-    iframeRef.current?.contentWindow?.postMessage(JSON.stringify({ event: "command", func, args: [] }), "*");
-  const togglePlay = () => { command(playing ? "pauseVideo" : "playVideo"); setPlaying((p) => !p); };
+  const legenda = isPlayer ? (video as VideoPlayer).legenda : undefined;
 
   return (
     <div className="px-4 pt-2 md:px-6 md:pt-6">
       <section className="relative isolate mx-auto flex min-h-[min(calc(100svh-7.5rem),560px)] max-w-[1600px] flex-col justify-end overflow-hidden rounded-[32px] bg-ink text-surface lg:min-h-[min(calc(100svh-7.5rem),820px)]">
-        {/* fundo — vídeo cobrindo (cqw/cqh) */}
-        <div className="absolute inset-0 -z-10 [container-type:size]">
-          <iframe
-            ref={iframeRef}
-            key={som ? "com-som" : "mudo"}
-            src={`${base}?${params.toString()}`}
-            title={videoTitle ?? (typeof caption === "string" ? caption : "Vídeo")}
-            className="absolute top-1/2 left-1/2 h-[56.25cqw] max-h-none min-h-full w-[177.78cqh] min-w-full -translate-x-1/2 -translate-y-1/2 border-0"
-            allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
-            referrerPolicy="strict-origin-when-cross-origin"
-            allowFullScreen
-          />
+        {/* mídia — clipe em loop (prévia) ou, tocando, o vídeo inteiro */}
+        <div className={`absolute inset-x-0 top-0 ${playing ? "bottom-[4.5rem]" : "bottom-0 -z-10"}`}>
+          {playing ? (
+            <iframe
+              title={videoTitle ?? "Vídeo"}
+              src={`https://www.youtube-nocookie.com/embed/${(video as VideoPlayer).youtubeId}?autoplay=1&rel=0&modestbranding=1&playsinline=1`}
+              allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; fullscreen"
+              allowFullScreen
+              className="absolute inset-0 h-full w-full border-0 bg-black"
+            />
+          ) : (
+            <>
+              <BackgroundVideo
+                key={video.preview.src}
+                src={video.preview.src}
+                srcLarge={video.preview.srcLarge}
+                poster={video.preview.poster}
+                posterLarge={video.preview.posterLarge}
+                trimEdges={video.preview.trimEdges}
+                objectPosition={video.preview.objectPosition}
+                className="absolute inset-0"
+              />
+              {/* véus — legibilidade do texto (base) e dos elementos do topo */}
+              <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink/70 via-ink/10 to-transparent" />
+              <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-ink/35 to-transparent" />
+            </>
+          )}
         </div>
 
-        {!som && (
+        {!playing && (
           <>
-            {/* véus — legibilidade do texto (base) e dos elementos do topo */}
-            <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink/70 via-ink/10 to-transparent" />
-            <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-ink/35 to-transparent" />
-
             {/* topo-esquerdo */}
             {topLeft && <div className="absolute top-4 left-4 z-10">{topLeft}</div>}
-
-            {/* pausa — top-4 right-4 (igual creeta) */}
-            <button
-              type="button"
-              onClick={togglePlay}
-              aria-label={playing ? "Pausar vídeo" : "Reproduzir vídeo"}
-              className="absolute top-4 right-4 z-10 flex h-11 w-11 items-center justify-center rounded-full bg-ink/85 text-surface backdrop-blur-md transition-colors duration-200 hover:bg-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-surface motion-reduce:transition-none"
-            >
-              {playing ? <PauseGlyph /> : <PlayGlyph size={18} />}
-            </button>
 
             {/* painel / legenda — no fluxo (justify-end), m-6 */}
             <div className="relative z-10 p-6 md:m-6 md:p-0">
@@ -113,14 +130,15 @@ export function PageVideoHero({
               ) : null}
             </div>
 
-            {/* assistir / CTAs — bottom-6 right-6 (actions={null} esconde) */}
+            {/* ação inferior-direita */}
             {actions === null ? null : actions ? (
               <div className="absolute right-4 bottom-4 z-10 flex flex-wrap items-center justify-end gap-2 md:right-6 md:bottom-6">{actions}</div>
-            ) : (
+            ) : isPlayer ? (
               <button
+                ref={watchRef}
                 type="button"
-                onClick={() => setSom(true)}
-                className="absolute right-4 bottom-4 z-10 flex items-center gap-3 rounded-full border border-surface/15 bg-ink/80 py-2 pr-7 pl-2 font-heading font-semibold text-surface backdrop-blur-md transition-colors duration-200 hover:bg-ink/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-surface motion-reduce:transition-none md:right-6 md:bottom-6"
+                onClick={() => setPlaying(true)}
+                className="absolute right-4 bottom-4 z-10 flex items-center gap-3 rounded-full border border-surface/15 bg-ink/80 py-2 pr-7 pl-2 font-body font-semibold text-surface backdrop-blur-md transition-colors duration-200 hover:bg-ink/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-surface motion-reduce:transition-none md:right-6 md:bottom-6"
               >
                 <span className="relative flex h-12 w-12 items-center justify-center rounded-full bg-surface text-ink">
                   <PlayGlyph size={20} />
@@ -130,8 +148,23 @@ export function PageVideoHero({
                   {watch?.meta && <span className="text-sm font-normal text-surface/80">{watch.meta}</span>}
                 </span>
               </button>
-            )}
+            ) : null}
           </>
+        )}
+
+        {/* barra de fechar — pé do vídeo tocando (legenda à esquerda, fechar à direita) */}
+        {playing && (
+          <div className="relative z-10 flex h-[4.5rem] items-center justify-between gap-6 bg-ink px-6">
+            <p className="min-w-0 truncate text-sm text-surface/80">{legenda}</p>
+            <button
+              type="button"
+              onClick={() => setPlaying(false)}
+              className="inline-flex min-h-11 shrink-0 items-center gap-2 rounded-full border border-surface/25 px-5 text-sm font-semibold text-surface transition-colors duration-200 hover:bg-surface/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-surface motion-reduce:transition-none"
+            >
+              <XGlyph size={18} />
+              {closeLabel}
+            </button>
+          </div>
         )}
       </section>
     </div>

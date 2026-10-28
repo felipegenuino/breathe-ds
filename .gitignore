@@ -1,3 +1,11 @@
 node_modules/
 *.log
 .DS_Store
+
+# Mídias de demo do playground: pesadas e podem conter material real de cliente
+# (paciente/criança). Ficam só locais — dropar os clipes Ghibli/stock aqui.
+playground/public/demo/*.mp4
+playground/public/demo/*.webm
+playground/public/demo/*.jpg
+playground/public/demo/*.jpeg
+playground/public/demo/*.png

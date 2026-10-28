@@ -202,31 +202,56 @@ function SegGroup<T extends string>({ label, value, set, options }: { label: str
   );
 }
 
+// Loop = clipe de assimetrias (paisagem). Player = Mariangela (vertical → object-position puxa o rosto p/ cima).
+const PREVIEW_LOOP = { src: "/demo/clip.mp4", poster: "/demo/clip-poster.jpg" };
+const PREVIEW_PLAYER = { src: "/demo/mariangela.mp4", poster: "/demo/mariangela-poster.jpg", objectPosition: "center 20%" };
+
 function HeroDemo() {
+  const [tipo, setTipo] = useState<"player" | "loop">("player");
   const [local, setLocal] = useState(true);
   const [conteudo, setConteudo] = useState<"painel" | "legenda" | "nenhum">("painel");
-  const [acao, setAcao] = useState<"cta" | "assistir" | "nenhum">("cta");
+  const [acao, setAcao] = useState<"assistir" | "cta" | "nenhum">("assistir");
   const [kicker, setKicker] = useState(true);
   const [lead, setLead] = useState(true);
+
+  // No modo loop nao ha player: a acao "assistir" nao se aplica.
+  const acaoEfetiva = tipo === "loop" && acao === "assistir" ? "cta" : acao;
+  const acoesOpcoes: ["assistir" | "cta" | "nenhum", string][] =
+    tipo === "player"
+      ? [["assistir", "Assistir"], ["cta", "CTA"], ["nenhum", "Nenhum"]]
+      : [["cta", "CTA"], ["nenhum", "Nenhum"]];
+
+  const video =
+    tipo === "player"
+      ? { mode: "player" as const, preview: PREVIEW_PLAYER, youtubeId: "h3a7DHFd6L4", legenda: "Mariangela Pinheiro de Lima, criadora do método, explica o Reequilíbrio Toracoabdominal." }
+      : { mode: "loop" as const, preview: PREVIEW_LOOP };
+
+  const actions =
+    acaoEfetiva === "cta" ? <HeroCTA primary="Ação principal" secondary="Ação secundária" />
+      : acaoEfetiva === "nenhum" ? null
+        : undefined;
+
   return (
     <>
       {/* seletor de elementos do hero */}
       <Container>
         <div className="mb-5 flex flex-wrap items-center gap-x-5 gap-y-3 rounded-2xl border border-line bg-surface p-4">
           <span className="text-[0.7rem] font-semibold tracking-[0.12em] text-ink-soft uppercase">Elementos</span>
+          <SegGroup label="Tipo" value={tipo} set={setTipo} options={[["player", "Player"], ["loop", "Loop"]]} />
           <PillToggle label="Local" on={local} set={setLocal} />
           <SegGroup label="Conteúdo" value={conteudo} set={setConteudo} options={[["painel", "Painel"], ["legenda", "Legenda"], ["nenhum", "Nenhum"]]} />
-          <SegGroup label="Ação" value={acao} set={setAcao} options={[["cta", "CTA"], ["assistir", "Assistir"], ["nenhum", "Nenhum"]]} />
+          <SegGroup label="Ação" value={acaoEfetiva} set={setAcao} options={acoesOpcoes} />
           {conteudo === "painel" && (<><PillToggle label="Kicker" on={kicker} set={setKicker} /><PillToggle label="Lead" on={lead} set={setLead} /></>)}
         </div>
       </Container>
       <PageVideoHero
-        videoId="h3a7DHFd6L4"
+        video={video}
+        videoTitle="Vídeo de demonstração"
         topLeft={local ? <span className={HERO_PILL}><IconMapPin size={16} /> Localização · Cidade</span> : undefined}
         panel={conteudo === "painel" ? { kicker: kicker ? "Sobrelinha do hero" : undefined, title: <>Título do hero<br />em duas linhas.</>, lead: lead ? "Um parágrafo curto de apoio que resume a proposta em uma ou duas frases." : undefined } : undefined}
         caption={conteudo === "legenda" ? "Legenda curta do vídeo." : undefined}
-        actions={acao === "cta" ? <HeroCTA primary="Ação principal" secondary="Ação secundária" /> : acao === "nenhum" ? null : undefined}
-        watch={acao === "assistir" ? { label: "Assistir ao vídeo", meta: "Com som, 0 min 00 s" } : undefined}
+        actions={actions}
+        watch={{ label: "Assistir ao vídeo", meta: "Com som, 3 min 33 s" }}
       />
     </>
   );
