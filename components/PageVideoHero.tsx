@@ -98,18 +98,21 @@ export function PageVideoHero({
 
         {/* véu p/ legibilidade do texto (some com som ligado) */}
         {!som && (
-          <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink/70 via-ink/10 to-ink/15" />
+          <>
+            <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink/70 via-ink/10 to-ink/15" />
+            <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-ink/40 to-transparent" />
+          </>
         )}
 
         {/* topo-esquerdo */}
-        {topLeft && <div className="absolute top-4 left-4 z-10 md:top-6 md:left-6">{topLeft}</div>}
+        {topLeft && <div className="absolute top-5 left-5 z-10 md:top-7 md:left-7">{topLeft}</div>}
 
         {/* topo-direito: pausar / play */}
         <button
           type="button"
           onClick={togglePlay}
           aria-label={playing ? "Pausar vídeo" : "Reproduzir vídeo"}
-          className={`absolute top-4 right-4 z-10 grid h-11 w-11 place-items-center rounded-full ${glass} text-surface transition hover:bg-ink/70 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-surface md:top-6 md:right-6`}
+          className={`absolute top-5 right-5 z-10 grid h-11 w-11 place-items-center rounded-full ${glass} text-surface transition hover:bg-ink/70 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-surface md:top-7 md:right-7`}
         >
           {playing ? <PauseGlyph /> : <PlayGlyph />}
         </button>
