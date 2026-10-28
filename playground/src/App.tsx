@@ -104,6 +104,49 @@ function Switcher({ pal, setPal }: { pal: string; setPal: (p: string) => void })
   );
 }
 
+const USED_ICONS = ["IconHome", "IconWind", "IconActivity", "IconBaby", "IconSearch", "IconUsers", "IconMapPin", "IconMessage", "IconVideo", "IconVolume2", "IconChevronDown", "IconArrowUpRight"];
+
+function IconCard({ name, Ic }: { name: string; Ic: (p: { size?: number }) => ReactNode }) {
+  return (
+    <div className="flex w-[104px] flex-col items-center gap-2.5 rounded-2xl border border-line p-4 text-ink">
+      <Ic size={24} />
+      <span className="text-[0.68rem] text-ink-soft">{name.replace("Icon", "")}</span>
+    </div>
+  );
+}
+
+function IconsSection() {
+  const [q, setQ] = useState("");
+  const [showAll, setShowAll] = useState(false);
+  const all = Object.entries(icons) as [string, (p: { size?: number }) => ReactNode][];
+  const query = q.trim().toLowerCase();
+  const filtered = query
+    ? all.filter(([n]) => n.toLowerCase().includes(query))
+    : showAll ? all : all.filter(([n]) => USED_ICONS.includes(n));
+  const hidden = all.length - USED_ICONS.length;
+  return (
+    <div>
+      <p className="mb-5 max-w-[60ch] text-ink-body">Conjunto do lucide embutido no DS (sem dependência externa), em <code className="rounded bg-ink/[0.07] px-1.5 py-0.5 text-sm">currentColor</code>. Os componentes recebem ícones por slot.</p>
+      <div className="relative mb-6 max-w-sm">
+        <span className="pointer-events-none absolute top-1/2 left-3.5 -translate-y-1/2 text-ink-soft"><IconSearch size={18} /></span>
+        <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Buscar ícone…"
+          className="w-full rounded-pill border border-line bg-surface py-2.5 pr-4 pl-10 text-ink placeholder:text-ink-soft focus:outline-2 focus:outline-offset-2 focus:outline-ink" />
+      </div>
+      {!query && <p className="mb-3 text-[0.7rem] font-semibold tracking-[0.12em] text-ink-soft uppercase">{showAll ? "Todos os ícones" : "Mais usados"}</p>}
+      <div className="flex flex-wrap gap-3">
+        {filtered.map(([name, Ic]) => <IconCard key={name} name={name} Ic={Ic} />)}
+      </div>
+      {filtered.length === 0 && <p className="text-ink-soft">Nenhum ícone encontrado.</p>}
+      {!query && (
+        <button type="button" onClick={() => setShowAll((v) => !v)}
+          className="mt-6 inline-flex items-center gap-1.5 font-heading text-[0.95rem] font-semibold text-ink underline decoration-action-text/50 underline-offset-4 hover:decoration-action-text">
+          {showAll ? "Ver menos" : `Ver todos (+${hidden})`}
+        </button>
+      )}
+    </div>
+  );
+}
+
 export function App() {
   const [pal, setPal] = useState("Neutro");
   useEffect(() => {
@@ -176,15 +219,7 @@ export function App() {
         </Section>
 
         <Section id="icons" title="Ícones">
-          <p className="mb-6 max-w-[60ch] text-ink-body">Conjunto do lucide embutido no DS (sem dependência externa), em <code className="rounded bg-ink/[0.07] px-1.5 py-0.5 text-sm">currentColor</code>. Os componentes recebem ícones por slot.</p>
-          <div className="flex flex-wrap gap-3">
-            {Object.entries(icons).map(([name, Ic]) => (
-              <div key={name} className="flex w-[104px] flex-col items-center gap-2.5 rounded-2xl border border-line p-4 text-ink">
-                <Ic size={24} />
-                <span className="text-[0.68rem] text-ink-soft">{name.replace("Icon", "")}</span>
-              </div>
-            ))}
-          </div>
+          <IconsSection />
         </Section>
 
         <Section id="accordion" title="Accordion">
