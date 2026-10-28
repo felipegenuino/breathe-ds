@@ -97,6 +97,9 @@ ilustrativa (marcada `[conferir]`) — fecha ao migrar o creeta.
       componentes importarem/injetarem (sem cada site depender do lucide direto)
 - [ ] **MediaCard** (vídeo/imagem atrás + badge de ícone + título + lead + seta;
       variante **carrossel horizontal no mobile** com barra de progresso + pause) — aprovado
+- [ ] **VideoStoryCard** (vídeo curto, vertical) — aprovado. Play + badge de duração +
+      título + lead + **"Ler a transcrição"** (colapso, reusa o Accordion). Padrão da página de Vídeos.
+      _Nota: o card ainda pode melhorar num update futuro (ok deixar pra depois)._
 - [ ] **ProfessionalCard** (equipe) — aprovado. Duas versões: **small** (foto + nome, fila/linha)
       e **big** (foto + nome + função + CREFITO + accordions "Trajetória"/"Orientações").
       Variante com **vídeo**: badge "Apresentação", hover anima o vídeo, e **modal** (vídeo + bio).
