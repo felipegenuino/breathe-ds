@@ -58,12 +58,15 @@ Para um site sem arquivo de tokens pronto, defina os papéis no próprio `:root`
 
 ## Contrastes medidos — TTCAB (`tokens/ttcab.css`)
 
+Valores pela fórmula WCAG padrão (os mesmos que o `preview/` calcula ao vivo):
+
 | Par | Contraste | Nível |
 |---|---|---|
-| surface `#fbf5e9` / ink `#144753` | 8,9:1 | AAA |
-| surface `#fbf5e9` / ink-soft `#54707a` | 4,9:1 | AA |
-| surface `#fbf5e9` / action-text `#9a5d07` | 4,9:1 | AA |
-| surface-panel `#144753` / texto creme | 8,9:1 | AAA |
+| surface `#fbf5e9` / ink `#144753` | 9,41:1 | AAA |
+| surface `#fbf5e9` / ink-soft `#54707a` | 4,86:1 | AA |
+| surface `#fbf5e9` / ink-body `#1e4f5b` | 8,32:1 | AAA |
+| surface `#fbf5e9` / action-text `#9a5d07` | 4,90:1 | AA |
+| surface-panel `#144753` / texto creme | 9,41:1 | AAA |
 
 `action` `#f6a22a` é decorativo/CTA — não usar como texto sobre creme.
 

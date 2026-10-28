@@ -1,9 +1,10 @@
 /*
   Paleta TTCAB (petróleo + creme). Contrastes medidos:
-   - surface #fbf5e9 / ink #144753 ............ 8,9:1  (AAA)
-   - surface #fbf5e9 / ink-soft #54707a ....... 4,9:1  (AA)
-   - surface #fbf5e9 / action-text #9a5d07 .... 4,9:1  (AA)
-   - surface-panel #144753 / surface (texto) .. 8,9:1  (AAA)
+   - surface #fbf5e9 / ink #144753 ............ 9,41:1 (AAA)
+   - surface #fbf5e9 / ink-soft #54707a ....... 4,86:1 (AA)
+   - surface #fbf5e9 / ink-body #1e4f5b ....... 8,32:1 (AAA)
+   - surface #fbf5e9 / action-text #9a5d07 .... 4,90:1 (AA)
+   - surface-panel #144753 / surface (texto) .. 9,41:1 (AAA)
    - action #f6a22a é DECORATIVO/CTA — nunca texto sobre creme.
 */
 :root {

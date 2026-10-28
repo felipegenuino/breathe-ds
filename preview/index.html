@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>@cuidado-global/ui — tokens</title>
+<style>
+  :root{
+    --cream:#fbf5e9; --ink:#144753; --ink-soft:#54707a; --line:rgb(20 71 83 / .16);
+    --orange:#f6a22a;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--cream);color:var(--ink);
+    font-family:"Quicksand",system-ui,Arial,sans-serif;line-height:1.5;
+    -webkit-font-smoothing:antialiased}
+  .wrap{max-width:1100px;margin:0 auto;padding:40px 16px 80px}
+  header p.k{margin:0 0 10px;font-size:.78rem;font-weight:700;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--ink-soft);display:flex;align-items:center;gap:10px}
+  header p.k::before{content:"";width:9px;height:9px;border-radius:50%;background:var(--orange)}
+  h1{font-size:clamp(2rem,5vw,3rem);margin:.1em 0 .1em;letter-spacing:-.015em}
+  .lead{max-width:60ch;color:var(--ink-soft);font-size:1.05rem}
+  h2{font-size:1.5rem;margin:52px 0 6px;letter-spacing:-.01em}
+  h2 span{color:var(--ink-soft);font-size:1rem;font-weight:600}
+  .grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));margin-top:18px}
+  .sw{border:1px solid var(--line);border-radius:16px;overflow:hidden;background:#fff}
+  .chip{height:92px;display:flex;align-items:flex-end;padding:10px 12px;font-weight:700;font-size:.9rem}
+  .meta{padding:12px 14px}
+  .meta .role{font-weight:700;font-size:.95rem}
+  .meta .hex{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.82rem;color:var(--ink-soft);margin-top:2px}
+  .badge{display:inline-block;margin-top:8px;font-size:.72rem;font-weight:700;
+    padding:3px 9px;border-radius:999px;border:1px solid var(--line);color:var(--ink)}
+  .note{font-size:.84rem;color:var(--ink-soft);max-width:70ch;margin:6px 0 0}
+  .pair{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
+  .pcard{border:1px solid var(--line);border-radius:14px;padding:16px 18px;min-width:220px;flex:1 1 220px}
+  .pcard b{font-weight:800}
+  .pcard .c{font-family:ui-monospace,monospace;font-size:.8rem;opacity:.85;margin-top:6px}
+  .radii{display:flex;gap:16px;flex-wrap:wrap;margin-top:16px}
+  .radii div{background:var(--ink);color:var(--cream);display:grid;place-items:center;
+    width:120px;height:80px;font-size:.8rem;font-weight:700}
+  .foot{margin-top:60px;border-top:1px solid var(--line);padding-top:18px;color:var(--ink-soft);font-size:.85rem}
+  code{font-family:ui-monospace,monospace;background:rgba(20,71,83,.07);padding:2px 6px;border-radius:6px;font-size:.85em}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <p class="k">@cuidado-global/ui · v0.1 tokens-first</p>
+    <h1>Design System — Cuidado Global</h1>
+    <p class="lead">Os sites da família herdam os <b>papéis de token</b> (surface, ink, action, line…).
+      Cada site define os próprios hex. Todo token traz <b>papel + contraste medido</b> — nunca "a cor X".</p>
+  </header>
+
+  <!-- TTCAB -->
+  <h2>Paleta TTCAB <span>— petróleo + creme (precisa)</span></h2>
+  <div class="grid" id="ttcab"></div>
+  <div class="pair" id="ttcab-pairs"></div>
+
+  <!-- CREETA -->
+  <h2>Paleta Creeta <span>— petróleo + névoa + magenta (ilustrativa, a conferir)</span></h2>
+  <div class="grid" id="creeta"></div>
+  <div class="pair" id="creeta-pairs"></div>
+
+  <!-- ESCALAS -->
+  <h2>Escalas compartilhadas <span>— iguais em toda a família</span></h2>
+  <div class="radii">
+    <div style="border-radius:24px">radius-xl<br>24px</div>
+    <div style="border-radius:28px">radius-2xl<br>28px</div>
+    <div style="border-radius:9999px">radius-pill</div>
+  </div>
+  <p class="note" style="margin-top:18px">Motion — curva assinatura: <code>--ease-cg: cubic-bezier(.2,.8,.2,1)</code>
+    (a mesma do indicador deslizante da nav e dos hovers).</p>
+  <p class="note">Tipografia por papel: <code>font-heading</code> (Quicksand no ttcab) · <code>font-body</code>.</p>
+
+  <div class="foot">
+    Consumo: <code>@import "@cuidado-global/ui/theme.css";</code> +
+    <code>@import "@cuidado-global/ui/tokens/ttcab.css";</code> no globals.css. Local, ainda sem publish.
+  </div>
+</div>
+
+<script>
+// contraste WCAG
+function lin(c){c/=255;return c<=.03928?c/12.92:Math.pow((c+.055)/1.055,2.4)}
+function L(hex){const m=hex.replace('#','');const r=parseInt(m.slice(0,2),16),g=parseInt(m.slice(2,4),16),b=parseInt(m.slice(4,6),16);return .2126*lin(r)+.7152*lin(g)+.0722*lin(b)}
+function ratio(a,b){const la=L(a),lb=L(b);const hi=Math.max(la,lb),lo=Math.min(la,lb);return (hi+.05)/(lo+.05)}
+function lvl(r){return r>=7?"AAA":r>=4.5?"AA":r>=3?"AA grande":"baixo"}
+
+const TTCAB={surface:"#fbf5e9","surface-panel":"#144753",ink:"#144753","ink-soft":"#54707a","ink-body":"#1e4f5b",action:"#f6a22a","action-text":"#9a5d07"};
+const CREETA={surface:"#eef3f4","surface-panel":"#144753",ink:"#144753","ink-soft":"#4a6b73","ink-body":"#1e4f5b",action:"#ab2781","action-text":"#8f1f6c"};
+const roles={
+  surface:"fundo base", "surface-panel":"painel escuro (footer/CTA)", ink:"texto principal / títulos",
+  "ink-soft":"texto secundário","ink-body":"corpo de leitura", action:"CTA/destaque — nunca texto",
+  "action-text":"texto na cor de ação", line:"hairline/borda"
+};
+function textColorFor(hex){return L(hex)>.4?"#144753":"#fbf5e9"}
+function swatch(name,hex){
+  const tc=textColorFor(hex);
+  return `<div class="sw"><div class="chip" style="background:${hex};color:${tc}">${name}</div>
+    <div class="meta"><div class="role">${roles[name]||name}</div>
+    <div class="hex">${hex.toUpperCase()}</div></div></div>`;
+}
+function render(id,pal){document.getElementById(id).innerHTML=Object.entries(pal).map(([k,v])=>swatch(k,v)).join("");}
+function pairs(id,pal){
+  const P=[["ink","surface"],["ink-soft","surface"],["ink-body","surface"],["surface","surface-panel"],["action-text","surface"]];
+  document.getElementById(id).innerHTML=P.map(([t,b])=>{
+    const r=ratio(pal[t],pal[b]).toFixed(2);
+    return `<div class="pcard" style="background:${pal[b]};color:${pal[t]}">
+      <b>${t}</b> sobre <b>${b}</b>
+      <div class="c">${pal[t].toUpperCase()} / ${pal[b].toUpperCase()} · ${r}:1 · ${lvl(r)}</div></div>`;
+  }).join("")+
+  `<div class="pcard" style="background:${pal.action};color:${textColorFor(pal.action)}">
+     <b>action</b> — decorativo/CTA<div class="c">${pal.action.toUpperCase()} · não usar como texto sobre o fundo</div></div>`;
+}
+render("ttcab",TTCAB); pairs("ttcab-pairs",TTCAB);
+render("creeta",CREETA); pairs("creeta-pairs",CREETA);
+</script>
+</body>
+</html>
