@@ -87,17 +87,25 @@ e refinada). _A extrair para tokens de tamanho/peso/entrelinha._
 **ttcab** e **creeta**. A paleta do creeta em `tokens/creeta.css` está
 ilustrativa (marcada `[conferir]`) — fecha ao migrar o creeta.
 
+## Decisão — estilo de card
+
+Linguagem de card do DS: **bordas discretas + sombra discreta** (referência: "Famílias
+ contam" do novo.creeta). Nada de borda forte ou sombra pesada. _A virar tokens `--shadow-card` + `--border`._
+
 ## Roadmap
 
 - [x] v0.1 — tokens (preset + paletas ttcab/creeta) + preview
 - [x] Accordion (1º componente; padrão de deps injetáveis)
 - [x] Tipografia da família (Quicksand + Figtree, só livres)
 - [ ] **Escalas do novo.creeta** (referência total, aprovado): **tipografia** (tamanhos/pesos/entrelinha)
-      **+ espaçamento/ritmo** (padding de seção, gaps, respiro vertical) → vira tokens do DS
+      **+ espaçamento/ritmo** (padding de seção, gaps) **+ border-radius padrão** → viram tokens do DS
 - [ ] **Ícones**: empacotar o conjunto do lucide usado pela família, para os
       componentes importarem/injetarem (sem cada site depender do lucide direto)
 - [ ] **MediaCard** (vídeo/imagem atrás + badge de ícone + título + lead + seta;
       variante **carrossel horizontal no mobile** com barra de progresso + pause) — aprovado
+- [ ] **TestimonialCard** (depoimento) — aprovado. Variantes: **citação** (card de texto),
+      **vídeo hero** (full-bleed com citação sobreposta), **vídeo ao lado** ("Famílias contam": vídeo + texto).
+      Avaliar um **mix** das duas. **Já existe no ttcab** (TestimonialVideoHero/Card) → extrair/generalizar.
 - [ ] **VideoStoryCard** (vídeo curto, vertical) — aprovado. Play + badge de duração +
       título + lead + **"Ler a transcrição"** (colapso, reusa o Accordion). Padrão da página de Vídeos.
       _Nota: o card ainda pode melhorar num update futuro (ok deixar pra depois)._
