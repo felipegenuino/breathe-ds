@@ -59,7 +59,7 @@ export function Accordion({ items, defaultOpenId, single = true }: Props) {
                 aria-expanded={isOpen}
                 aria-controls={panelId}
                 onClick={() => toggle(it.id)}
-                className="flex w-full items-center justify-between gap-4 px-[clamp(18px,3vw,28px)] py-[clamp(16px,2.4vw,22px)] text-left font-heading text-[1.05rem] font-semibold text-ink transition-colors hover:bg-ink/[0.03] focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ink"
+                className="flex w-full items-center justify-between gap-4 px-[clamp(18px,3vw,28px)] py-[clamp(16px,2.4vw,22px)] text-left font-heading text-[1.05rem] font-semibold text-ink transition-colors focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ink"
               >
                 <span>{it.title}</span>
                 <svg
