@@ -92,6 +92,16 @@ ilustrativa (marcada `[conferir]`) — fecha ao migrar o creeta.
 Linguagem de card do DS: **bordas discretas + sombra discreta** (referência: "Famílias
  contam" do novo.creeta). Nada de borda forte ou sombra pesada. _A virar tokens `--shadow-card` + `--border`._
 
+## Decisão — estilo de card
+
+Linguagem de card do DS: **bordas discretas + sombra discreta** (referência: "Famílias contam" do novo.creeta). Nada de borda forte ou sombra pesada. _A virar tokens `--shadow-card` + `--border`._
+
+## Decisão — largura de hero
+
+Heros **mais largos / full-bleed**, na proporção do **novo.creeta** (mais imersivos, menos
+margem lateral). Vale para `PageVideoHero` e `PageHero`. O hero atual do ttcab é mais contido
+— alargar para o padrão creeta ao migrar. _Vira token/escala de largura de hero._
+
 ## Roadmap
 
 - [x] v0.1 — tokens (preset + paletas ttcab/creeta) + preview
