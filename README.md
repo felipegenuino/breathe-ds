@@ -92,7 +92,8 @@ ilustrativa (marcada `[conferir]`) — fecha ao migrar o creeta.
 - [x] v0.1 — tokens (preset + paletas ttcab/creeta) + preview
 - [x] Accordion (1º componente; padrão de deps injetáveis)
 - [x] Tipografia da família (Quicksand + Figtree, só livres)
-- [ ] **Escala tipográfica** a partir do novo.creeta (guia aprovado pelo Felipe)
+- [ ] **Escalas do novo.creeta** (referência total, aprovado): **tipografia** (tamanhos/pesos/entrelinha)
+      **+ espaçamento/ritmo** (padding de seção, gaps, respiro vertical) → vira tokens do DS
 - [ ] **Ícones**: empacotar o conjunto do lucide usado pela família, para os
       componentes importarem/injetarem (sem cada site depender do lucide direto)
 - [ ] **MediaCard** (vídeo/imagem atrás + badge de ícone + título + lead + seta;
