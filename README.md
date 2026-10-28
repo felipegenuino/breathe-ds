@@ -72,14 +72,15 @@ Valores pela fórmula WCAG padrão (os mesmos que o `preview/` calcula ao vivo):
 
 ## Tipografia da família
 
+Decisão (28/10/2026): **só fontes open-source** — nada de licenciadas (Gotham saiu).
+
 | Papel | Fonte | Observação |
 |---|---|---|
-| `font-heading` | **Quicksand** | compartilhada por toda a família (RTA) |
-| `font-body` | **Gotham** | fonte de marca; licenciada |
-| `font-body` (sem licença) | **Figtree** | substituta livre da Gotham, métricas próximas (ex.: creeta) |
+| `font-heading` | **Quicksand** | títulos, toda a família (Google Fonts) |
+| `font-body` | **Figtree** | corpo, toda a família (Google Fonts) |
 
-Títulos são iguais em toda a família. O corpo é Gotham onde há licença (ttcab) e
-Figtree como stand-in onde não há (creeta) — mesmo papel, valor por site.
+**Hierarquia/escala tipográfica:** usar a do **novo.creeta** como guia (bem trabalhada
+e refinada). _A extrair para tokens de tamanho/peso/entrelinha._
 
 ## Primeiros consumidores
 
@@ -88,8 +89,14 @@ ilustrativa (marcada `[conferir]`) — fecha ao migrar o creeta.
 
 ## Roadmap
 
-- [x] v0.1 — tokens (preset + paletas ttcab/creeta)
-- [ ] v0.2 — primitivos sem estado: Container, SectionKicker, Button
-- [ ] v0.3 — PageHero / PageVideoHero
-- [ ] v0.4 — nav flutuante + dropdown, Card
-- [ ] migrar ttcab e creeta para consumir o pacote
+- [x] v0.1 — tokens (preset + paletas ttcab/creeta) + preview
+- [x] Accordion (1º componente; padrão de deps injetáveis)
+- [x] Tipografia da família (Quicksand + Figtree, só livres)
+- [ ] **Escala tipográfica** a partir do novo.creeta (guia aprovado pelo Felipe)
+- [ ] **Ícones**: empacotar o conjunto do lucide usado pela família, para os
+      componentes importarem/injetarem (sem cada site depender do lucide direto)
+- [ ] **MediaCard** (vídeo/imagem atrás + badge de ícone + título + lead + seta;
+      variante **carrossel horizontal no mobile** com barra de progresso + pause) — aprovado
+- [ ] **Footer** (aprovado) · **PageVideoHero** (hero full-bleed) · **Header** (dropdown)
+- [ ] Primitivos: Button, Container, SectionKicker, Card
+- [ ] Migrar ttcab e creeta para consumir o pacote + `npm publish`
