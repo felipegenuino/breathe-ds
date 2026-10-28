@@ -97,6 +97,7 @@ ilustrativa (marcada `[conferir]`) — fecha ao migrar o creeta.
       componentes importarem/injetarem (sem cada site depender do lucide direto)
 - [ ] **MediaCard** (vídeo/imagem atrás + badge de ícone + título + lead + seta;
       variante **carrossel horizontal no mobile** com barra de progresso + pause) — aprovado
+- [ ] **PillList** (chips tipo "Condições que atendemos": rótulo + seta, grade que quebra, link "Ver todos") — aprovado
 - [ ] **Footer** (aprovado) · **PageVideoHero** (hero full-bleed) · **Header** (dropdown)
 - [ ] Primitivos: Button, Container, SectionKicker, Card
 - [ ] Migrar ttcab e creeta para consumir o pacote + `npm publish`
