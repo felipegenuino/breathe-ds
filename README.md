@@ -106,6 +106,8 @@ ilustrativa (marcada `[conferir]`) — fecha ao migrar o creeta.
       Variante com **vídeo**: badge "Apresentação", hover anima o vídeo, e **modal** (vídeo + bio).
       **Regra de dado:** todo profissional PRECISA ter **CREFITO** vinculado (exigência COFFITO).
 - [ ] **PillList** (chips tipo "Condições que atendemos": rótulo + seta, grade que quebra, link "Ver todos") — aprovado
+- [ ] **ContextualAnchorNav** (nav flutuante de âncoras) — aprovado. Cápsula flutuante +
+      aba ativa **deslizante** (scroll-spy). **Já existe no ttcab** (TreatmentAnchorNav) → extrair.
 - [ ] **Footer** (aprovado) · **PageVideoHero** (hero full-bleed) · **Header** (dropdown)
 - [ ] Primitivos: Button, Container, SectionKicker, Card
 - [ ] Migrar ttcab e creeta para consumir o pacote + `npm publish`
