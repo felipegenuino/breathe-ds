@@ -39,6 +39,20 @@
     width:120px;height:80px;font-size:.8rem;font-weight:700}
   .foot{margin-top:60px;border-top:1px solid var(--line);padding-top:18px;color:var(--ink-soft);font-size:.85rem}
   code{font-family:ui-monospace,monospace;background:rgba(20,71,83,.07);padding:2px 6px;border-radius:6px;font-size:.85em}
+  .acc{display:flex;flex-direction:column;gap:12px}
+  .acc-item{border:1px solid var(--line);border-radius:28px;background:#fff;overflow:hidden;box-shadow:0 2px 12px rgba(20,71,83,.06)}
+  .acc-btn{display:flex;width:100%;align-items:center;justify-content:space-between;gap:16px;background:none;border:0;cursor:pointer;padding:20px 26px;text-align:left;font-family:inherit;font-weight:700;font-size:1.05rem;color:var(--ink)}
+  .acc-btn:hover{background:rgba(20,71,83,.03)}
+  .acc-chev{width:20px;height:20px;flex:none;color:var(--ink-soft);transition:transform .2s cubic-bezier(.2,.8,.2,1)}
+  .acc-item[data-open] .acc-chev{transform:rotate(180deg)}
+  .acc-panel{display:grid;grid-template-rows:0fr;transition:grid-template-rows .3s cubic-bezier(.2,.8,.2,1)}
+  .acc-item[data-open] .acc-panel{grid-template-rows:1fr}
+  .acc-inner{min-height:0;overflow:hidden}
+  .acc-inner>*{margin:0;padding:0 26px 22px;color:var(--ink);line-height:1.65}
+  .checks{list-style:none}
+  .checks li{position:relative;padding-left:30px;line-height:2.1}
+  .checks li::before{content:"✓";position:absolute;left:0;top:.45em;width:20px;height:20px;border-radius:50%;background:rgba(20,71,83,.08);font-size:.72rem;font-weight:800;display:grid;place-items:center;line-height:1}
+  @media (prefers-reduced-motion: reduce){.acc-chev,.acc-panel{transition:none}}
 </style>
 </head>
 <body>
@@ -70,6 +84,38 @@
   <p class="note" style="margin-top:18px">Motion — curva assinatura: <code>--ease-cg: cubic-bezier(.2,.8,.2,1)</code>
     (a mesma do indicador deslizante da nav e dos hovers).</p>
   <p class="note">Tipografia por papel: <code>font-heading</code> (Quicksand no ttcab) · <code>font-body</code>.</p>
+
+  <!-- COMPONENTES -->
+  <h2>Componentes <span>— renderizados de verdade</span></h2>
+  <p class="note" style="margin-bottom:18px">Accordion (1º componente). Estilo de card do DS:
+    <b>borda discreta + sombra discreta</b>, raio 28px, só um aberto por vez, animação na curva da família.</p>
+  <div class="acc" id="acc">
+    <div class="acc-item" data-open>
+      <button class="acc-btn" type="button">O que o fisioterapeuta avalia
+        <svg class="acc-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+      </button>
+      <div class="acc-panel"><div class="acc-inner"><ul class="checks">
+        <li>Ausculta pulmonar e sinais vitais</li>
+        <li>Padrão de respiração</li>
+        <li>Bloqueio inspiratório e padrão de postura</li>
+        <li>Qualidade da movimentação global do paciente</li>
+      </ul></div></div>
+    </div>
+    <div class="acc-item">
+      <button class="acc-btn" type="button">O que pode mudar a forma de respirar
+        <svg class="acc-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+      </button>
+      <div class="acc-panel"><div class="acc-inner"><p style="margin:0">Hábitos, posturas e bloqueios
+        que o corpo cria em resposta ao distúrbio respiratório — avaliados caso a caso.</p></div></div>
+    </div>
+    <div class="acc-item">
+      <button class="acc-btn" type="button">A técnica, em detalhe
+        <svg class="acc-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+      </button>
+      <div class="acc-panel"><div class="acc-inner"><p style="margin:0">Manuseios específicos por faixa
+        etária, conduzindo o corpo a reorganizar sinergias e melhorar a função respiratória.</p></div></div>
+    </div>
+  </div>
 
   <div class="foot">
     Consumo: <code>@import "@cuidado-global/ui/theme.css";</code> +
@@ -112,6 +158,16 @@ function pairs(id,pal){
 }
 render("ttcab",TTCAB); pairs("ttcab-pairs",TTCAB);
 render("creeta",CREETA); pairs("creeta-pairs",CREETA);
+
+// Accordion (single-open)
+document.querySelectorAll('.acc-btn').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const item=btn.closest('.acc-item');
+    const wasOpen=item.hasAttribute('data-open');
+    item.closest('.acc').querySelectorAll('.acc-item[data-open]').forEach(i=>i.removeAttribute('data-open'));
+    if(!wasOpen) item.setAttribute('data-open','');
+  });
+});
 </script>
 </body>
 </html>
