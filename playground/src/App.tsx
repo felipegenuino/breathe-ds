@@ -9,6 +9,7 @@ import { PageVideoHero } from "../../components/PageVideoHero";
 import { Footer } from "../../components/Footer";
 import { Header } from "../../components/Header";
 import { BottomNav } from "../../components/BottomNav";
+import { BreatheMark } from "../../components/BreatheMark";
 
 /* ───── ícones inline (só pro demo) ───── */
 const I = (p: ReactNode) => (
@@ -28,6 +29,7 @@ const IcUsers = I(<><circle cx="9" cy="8" r="3" /><path d="M3 20a6 6 0 0 1 12 0"
 
 function SideNav() {
   const items = [
+    ["symbol", "Símbolo vivo"],
     ["tokens", "Tokens"], ["buttons", "Button"], ["accordion", "Accordion"],
     ["pills", "PillList"], ["header", "Header"], ["hero", "PageVideoHero"],
     ["footer", "Footer"], ["mobile", "Mobile · BottomNav"],
@@ -67,11 +69,22 @@ export function App() {
       <main className="min-w-0 flex-1">
         <div className="border-b border-line py-[clamp(48px,7vw,96px)]">
           <Container>
+            <div className="mb-4 text-ink"><BreatheMark size={64} /></div>
             <p className="mb-3 font-heading text-[0.82rem] font-bold tracking-[0.14em] text-ink-soft uppercase">Breathe · @cuidado-global/ui</p>
             <h1 className="font-heading text-[clamp(2.4rem,6vw,4.5rem)] leading-[1.05] font-semibold tracking-[-0.02em] text-ink">Playground do design system</h1>
             <p className="mt-5 max-w-[56ch] text-lg leading-[1.6] text-ink-body">Componentes reais renderizados com a paleta ttcab. Troque os tokens e tudo retematiza.</p>
           </Container>
         </div>
+
+        <Section id="symbol" title="Símbolo vivo">
+          <p className="mb-8 max-w-[60ch] text-ink-body">O símbolo do Breathe respira — inspira e expira num pulso suave. Em <code className="rounded bg-ink/[0.07] px-1.5 py-0.5 text-sm">currentColor</code>, herda o token do contexto. Respeita prefers-reduced-motion.</p>
+          <div className="flex flex-wrap items-center gap-10">
+            <div className="text-ink"><BreatheMark size={120} /></div>
+            <div className="text-action"><BreatheMark size={88} duration={4.5} /></div>
+            <div className="rounded-2xl bg-ink p-8 text-surface"><BreatheMark size={88} /></div>
+            <div className="text-ink-soft"><BreatheMark size={64} animated={false} /><p className="mt-2 text-xs text-ink-soft">estático</p></div>
+          </div>
+        </Section>
 
         <Section id="tokens" title="Tokens">
           <div className="flex flex-wrap gap-3">
