@@ -281,14 +281,21 @@ export function App() {
         </Section>
 
         <Section id="hero" title="PageVideoHero">
-          <PageVideoHero
-            videoId="h3a7DHFd6L4"
-            kicker="O único centro baseado no Método RTA"
-            title={<>Respirar melhor.<br />Viver com mais liberdade.</>}
-            lead="Tratamento especializado para condições respiratórias, dor e assimetrias corporais, em todas as fases da vida."
-            locationLabel={<>{IcPin} Fisioterapia em Florianópolis</>}
-            actions={<><Button variant="solid" size="sm">Agendar avaliação</Button><Button variant="outline" size="sm" className="!bg-surface">Ver o que tratamos</Button></>}
-          />
+          <div className="space-y-5">
+            {/* versão home — legenda + assistir */}
+            <PageVideoHero
+              videoId="h3a7DHFd6L4"
+              caption="O corpo respira por inteiro."
+              watch={{ label: "Assistir ao vídeo", meta: "Com som, 3 min 33s" }}
+            />
+            {/* versão clínica — local + painel + CTAs */}
+            <PageVideoHero
+              videoId="h3a7DHFd6L4"
+              topLeft={<span className="inline-flex items-center gap-2 rounded-pill bg-ink/55 px-4 py-2 font-heading text-sm font-semibold text-surface backdrop-blur-md"><IconMapPin size={16} /> Córrego Grande, Florianópolis</span>}
+              panel={{ kicker: "A clínica", title: <>Uma clínica feita para acolher de verdade.</> }}
+              actions={<><Button variant="solid" size="sm">Agendar avaliação</Button><a href="#" className="font-heading text-sm font-semibold text-surface underline underline-offset-4">Como chegar ↗</a></>}
+            />
+          </div>
         </Section>
 
         <Section id="footer" title="Footer">

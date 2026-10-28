@@ -1,44 +1,56 @@
 "use client";
 
-import { useState, type ReactNode } from "react";
+import { useRef, useState, type ReactNode } from "react";
+
+type Panel = { kicker?: ReactNode; title: ReactNode; lead?: ReactNode };
 
 type Props = {
   videoId: string;
-  /** Sobrelinha curta (ex.: marca ou contexto). */
-  kicker?: ReactNode;
-  title: ReactNode;
-  lead?: ReactNode;
-  /** Selo de local no topo-esquerdo (ex.: "Fisioterapia em Florianópolis"). */
-  locationLabel?: ReactNode;
-  /** Texto do botão que religa o som. */
-  soundLabel?: string;
+  /** Slot no topo-esquerdo (selo de local, "← voltar" + ícone, etc.). */
+  topLeft?: ReactNode;
+  /** Legenda curta no canto inferior-esquerdo (pílula de vidro) — versão home. */
+  caption?: ReactNode;
+  /** Painel de conteúdo inferior-esquerdo (kicker + título + lead). */
+  panel?: Panel;
+  /** CTAs no canto inferior-direito. Sem isto, mostra o botão "Assistir ao vídeo". */
+  actions?: ReactNode;
+  /** Rótulo + meta do botão padrão "Assistir ao vídeo" (ex.: "Com som, 3 min 33s"). */
+  watch?: { label?: string; meta?: ReactNode };
   /** Título acessível do iframe. */
   videoTitle?: string;
-  /** CTAs do hero (passe seus próprios Links/Buttons). Ficam no canto inferior-direito. */
-  actions?: ReactNode;
+  /** Altura do hero. */
+  height?: string;
 };
 
+function PlayGlyph() {
+  return <svg viewBox="0 0 24 24" className="h-[13px] w-[13px] translate-x-[1px]" fill="currentColor" aria-hidden="true"><path d="M6 3v18l15-9z" /></svg>;
+}
+function PauseGlyph() {
+  return <svg viewBox="0 0 24 24" className="h-4 w-4" fill="currentColor" aria-hidden="true"><rect x="6" y="4" width="4" height="16" rx="1" /><rect x="14" y="4" width="4" height="16" rx="1" /></svg>;
+}
+
 /**
- * Hero full-bleed da família Cuidado Global. O vídeo COBRE o card inteiro
- * (cqw/cqh: dimensões do próprio card, cobre em qualquer proporção sem corte
- * torto), com um painel de vidro `surface-panel` sobre ele. Largura ampla
- * (full-bleed) — padrão do novo.creeta. Deps injetáveis: os CTAs vêm por
- * `actions`, então o componente não depende de Link/roteador do app.
- *
- * Tokens: texto creme (surface) sobre painel petróleo (surface-panel) — o
- * contraste do papel é definido por cada site (ver tokens/*).
+ * Hero full-bleed da família Cuidado Global — modelo do novo.creeta. Vídeo
+ * COBRE o card inteiro (cqw/cqh), bordas arredondadas, largura ampla. Elementos
+ * (todos opcionais, slots): botão pausar/play no topo-direito, slot no
+ * topo-esquerdo, legenda OU painel no inferior-esquerdo, CTAs OU "Assistir ao
+ * vídeo" no inferior-direito. Botão de pausa controla o vídeo de verdade
+ * (postMessage da API do YouTube). Deps injetáveis (slots por props).
  */
 export function PageVideoHero({
   videoId,
-  kicker,
-  title,
-  lead,
-  locationLabel,
-  soundLabel = "Assistir com som",
-  videoTitle,
+  topLeft,
+  caption,
+  panel,
   actions,
+  watch,
+  videoTitle,
+  height = "clamp(520px, 82vh, 880px)",
 }: Props) {
   const [som, setSom] = useState(false);
+  const [playing, setPlaying] = useState(true);
+  const iframeRef = useRef<HTMLIFrameElement>(null);
+
   const base = `https://www.youtube.com/embed/${videoId}`;
   const params = new URLSearchParams({
     autoplay: "1",
@@ -51,92 +63,98 @@ export function PageVideoHero({
     modestbranding: "1",
     cc_load_policy: "0",
     iv_load_policy: "3",
+    enablejsapi: "1",
   });
 
+  const command = (func: string) =>
+    iframeRef.current?.contentWindow?.postMessage(
+      JSON.stringify({ event: "command", func, args: [] }),
+      "*"
+    );
+  const togglePlay = () => {
+    command(playing ? "pauseVideo" : "playVideo");
+    setPlaying((p) => !p);
+  };
+
+  const glass = "bg-ink/55 backdrop-blur-md";
+
   return (
-    <div className="px-3 pt-2 md:px-4 md:pt-3">
-      <section className="relative isolate flex h-[clamp(520px,78vh,860px)] w-full flex-col justify-end overflow-hidden rounded-2xl bg-ink text-surface [container-type:size]">
-        {/* Vídeo cobrindo o card */}
+    <div className="px-2 md:px-3">
+      <section
+        className="relative isolate flex w-full flex-col justify-end overflow-hidden rounded-[22px] bg-ink text-surface [container-type:size] md:rounded-[26px]"
+        style={{ height }}
+      >
+        {/* vídeo cobrindo */}
         <iframe
+          ref={iframeRef}
           key={som ? "com-som" : "mudo"}
           src={`${base}?${params.toString()}`}
-          title={videoTitle ?? (typeof title === "string" ? title : "Vídeo")}
-          aria-hidden={!som}
-          tabIndex={som ? 0 : -1}
+          title={videoTitle ?? (typeof caption === "string" ? caption : "Vídeo")}
           className="absolute top-1/2 left-1/2 h-[56.25cqw] max-h-none min-h-full w-[177.78cqh] min-w-full -translate-x-1/2 -translate-y-1/2 border-0"
           allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
           referrerPolicy="strict-origin-when-cross-origin"
           allowFullScreen
         />
 
-        {/* Selo de local (topo-esquerdo) */}
-        {locationLabel && (
-          <span className="absolute top-4 left-4 z-[1] inline-flex items-center gap-2 rounded-full bg-ink/70 px-4 py-2 font-heading text-sm font-semibold text-surface backdrop-blur-md md:top-6 md:left-6">
-            {locationLabel}
-          </span>
+        {/* véu p/ legibilidade do texto (some com som ligado) */}
+        {!som && (
+          <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink/70 via-ink/10 to-ink/15" />
         )}
 
-        {!som && (
-          <>
-            <div
-              aria-hidden="true"
-              className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink/85 via-ink/30 to-transparent"
-            />
-            {/* Botão de som — topo-direito */}
-            <button
-              type="button"
-              onClick={() => setSom(true)}
-              className="absolute top-4 right-4 z-[1] inline-flex min-h-11 items-center gap-2 rounded-full bg-surface px-4 py-2 font-heading text-sm font-semibold text-ink shadow-[0_6px_18px_rgba(0,0,0,0.25)] transition hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-surface active:scale-[0.97] motion-reduce:transition-none motion-reduce:active:scale-100 md:top-6 md:right-6"
-            >
-              <SoundIcon />
-              {soundLabel}
-            </button>
+        {/* topo-esquerdo */}
+        {topLeft && <div className="absolute top-4 left-4 z-10 md:top-6 md:left-6">{topLeft}</div>}
 
-            {/* Painel de vidro — inferior-esquerdo */}
-            <div className="relative m-4 max-w-[42rem] rounded-2xl bg-ink/75 p-[clamp(22px,3.2vw,40px)] backdrop-blur-md md:m-6 lg:m-8">
-              {kicker && (
-                <p className="mb-4 font-heading text-[0.82rem] font-bold tracking-[0.1em] text-surface/80 uppercase">
-                  {kicker}
-                </p>
-              )}
-              <h1 className="font-heading text-[clamp(2.2rem,5vw,4rem)] leading-[1.05] font-semibold tracking-[-0.015em] text-balance text-surface">
-                {title}
-              </h1>
-              {lead && (
-                <p className="mt-4 max-w-[46ch] text-base leading-[1.6] text-pretty text-surface/90 md:text-lg">
-                  {lead}
-                </p>
-              )}
+        {/* topo-direito: pausar / play */}
+        <button
+          type="button"
+          onClick={togglePlay}
+          aria-label={playing ? "Pausar vídeo" : "Reproduzir vídeo"}
+          className={`absolute top-4 right-4 z-10 grid h-11 w-11 place-items-center rounded-full ${glass} text-surface transition hover:bg-ink/70 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-surface md:top-6 md:right-6`}
+        >
+          {playing ? <PauseGlyph /> : <PlayGlyph />}
+        </button>
+
+        {/* linha inferior: painel/legenda (esq) + CTAs/assistir (dir) */}
+        {!som && (
+          <div className="relative z-10 flex items-end justify-between gap-4 p-4 md:p-6">
+            <div className="min-w-0">
+              {panel ? (
+                <div className={`max-w-[40rem] rounded-2xl p-[clamp(20px,3vw,34px)] ${glass}`}>
+                  {panel.kicker && (
+                    <p className="mb-3 font-heading text-[0.8rem] font-bold tracking-[0.12em] text-surface/80 uppercase">{panel.kicker}</p>
+                  )}
+                  <h1 className="font-heading text-[clamp(2rem,4.6vw,3.6rem)] leading-[1.04] font-semibold tracking-[-0.015em] text-balance text-surface">{panel.title}</h1>
+                  {panel.lead && (
+                    <p className="mt-4 max-w-[44ch] text-base leading-[1.55] text-pretty text-surface/90 md:text-lg">{panel.lead}</p>
+                  )}
+                </div>
+              ) : caption ? (
+                <div className={`inline-block rounded-2xl px-5 py-3 font-heading text-[1.05rem] font-medium text-surface md:text-xl ${glass}`}>
+                  {caption}
+                </div>
+              ) : null}
             </div>
 
-            {/* CTAs injetáveis — inferior-direito */}
-            {actions && (
-              <div className="absolute right-4 bottom-4 z-[1] flex flex-wrap items-center justify-end gap-2 md:right-6 md:bottom-6">
-                {actions}
-              </div>
-            )}
-          </>
+            <div className="flex flex-none flex-wrap items-center justify-end gap-2">
+              {actions ?? (
+                <button
+                  type="button"
+                  onClick={() => setSom(true)}
+                  className={`inline-flex items-center gap-3 rounded-full py-1.5 pr-5 pl-1.5 text-left text-surface transition hover:bg-ink/70 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-surface ${glass}`}
+                >
+                  <span className="grid h-10 w-10 flex-none place-items-center rounded-full bg-surface text-ink">
+                    <PlayGlyph />
+                  </span>
+                  <span className="leading-tight">
+                    <span className="block font-heading text-sm font-semibold">{watch?.label ?? "Assistir ao vídeo"}</span>
+                    {watch?.meta && <span className="block text-xs text-surface/80">{watch.meta}</span>}
+                  </span>
+                </button>
+              )}
+            </div>
+          </div>
         )}
       </section>
     </div>
-  );
-}
-
-function SoundIcon() {
-  return (
-    <svg
-      aria-hidden="true"
-      viewBox="0 0 24 24"
-      className="h-[18px] w-[18px]"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M11 5 6 9H2v6h4l5 4V5z" />
-      <path d="M15.54 8.46a5 5 0 0 1 0 7.07" />
-      <path d="M19.07 4.93a10 10 0 0 1 0 14.14" />
-    </svg>
   );
 }
