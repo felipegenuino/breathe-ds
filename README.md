@@ -109,5 +109,9 @@ ilustrativa (marcada `[conferir]`) — fecha ao migrar o creeta.
 - [ ] **ContextualAnchorNav** (nav flutuante de âncoras) — aprovado. Cápsula flutuante +
       aba ativa **deslizante** (scroll-spy). **Já existe no ttcab** (TreatmentAnchorNav) → extrair.
 - [ ] **Footer** (aprovado) · **PageVideoHero** (hero full-bleed) · **Header** (dropdown)
+- [ ] **ThreadRail** (grafismo lateral — fio que desce pela esquerda ligando seções) — aprovado,
+      **já existe no ttcab** → extrair.
+- [ ] **OrganicFrame** (recorte de imagem orgânico, tipo blob) — registrado como **OPÇÃO**
+      (não default pra todos os sites). **Já existe no ttcab** → extrair como variante opcional.
 - [ ] Primitivos: Button, Container, SectionKicker, Card
 - [ ] Migrar ttcab e creeta para consumir o pacote + `npm publish`
