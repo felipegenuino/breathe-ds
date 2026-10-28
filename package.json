@@ -17,7 +17,9 @@
     "./theme.css": "./theme.css",
     "./tokens/ttcab.css": "./tokens/ttcab.css",
     "./tokens/creeta.css": "./tokens/creeta.css",
-    "./components/Accordion": "./components/Accordion.tsx"
+    "./components/Accordion": "./components/Accordion.tsx",
+    "./components/PageVideoHero": "./components/PageVideoHero.tsx",
+    "./components/Footer": "./components/Footer.tsx"
   },
   "publishConfig": {
     "access": "restricted"
