@@ -14,6 +14,7 @@
   --cg-ink-soft: #54707a;
   --cg-ink-body: #1e4f5b;
   --cg-action: #f6a22a;
+  --cg-on-action: #144753;   /* ink sobre orange */
   --cg-action-text: #9a5d07;
   --cg-line: rgb(20 71 83 / 0.16);
   --cg-font-heading: var(--font-quicksand), system-ui, sans-serif;  /* Quicksand */

@@ -23,6 +23,7 @@
   --color-ink-body: var(--cg-ink-body);            /* corpo de leitura */
   --color-action: var(--cg-action);                /* CTA/destaque — nunca texto puro */
   --color-action-text: var(--cg-action-text);      /* texto na cor de ação (AA) */
+  --color-on-action: var(--cg-on-action);          /* texto SOBRE a cor de ação (botão) */
   --color-line: var(--cg-line);                    /* hairlines/bordas */
 
   /* ── Tipografia (papéis; família real vem dos --cg-font-*) ── */

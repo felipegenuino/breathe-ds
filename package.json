@@ -19,7 +19,14 @@
     "./tokens/creeta.css": "./tokens/creeta.css",
     "./components/Accordion": "./components/Accordion.tsx",
     "./components/PageVideoHero": "./components/PageVideoHero.tsx",
-    "./components/Footer": "./components/Footer.tsx"
+    "./components/Footer": "./components/Footer.tsx",
+    "./components/Button": "./components/Button.tsx",
+    "./components/Container": "./components/Container.tsx",
+    "./components/SectionKicker": "./components/SectionKicker.tsx",
+    "./components/Card": "./components/Card.tsx",
+    "./components/PillList": "./components/PillList.tsx",
+    "./components/Header": "./components/Header.tsx",
+    "./components/BottomNav": "./components/BottomNav.tsx"
   },
   "publishConfig": {
     "access": "restricted"
