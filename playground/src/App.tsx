@@ -84,7 +84,7 @@ function SideNav({ pal, setPal }: { pal: string; setPal: (p: string) => void }) 
 
 function Section({ id, title, children }: { id: string; title: string; children: ReactNode }) {
   return (
-    <section id={id} className="scroll-mt-6 border-b border-line py-[clamp(40px,6vw,72px)]">
+    <section id={id} className="scroll-mt-24 border-b border-line py-[clamp(40px,6vw,72px)]">
       <Container>
         <SectionKicker>{title}</SectionKicker>
         {children}
@@ -95,12 +95,39 @@ function Section({ id, title, children }: { id: string; title: string; children:
 
 const CHIP = "inline-flex items-center gap-2 rounded-pill bg-ink/[0.06] px-4 py-2 font-heading text-sm font-semibold text-ink";
 
+function Switcher({ pal, setPal }: { pal: string; setPal: (p: string) => void }) {
+  return (
+    <div className="inline-flex rounded-pill border border-line p-0.5">
+      {Object.keys(PALETTES).map((name) => (
+        <button key={name} type="button" onClick={() => setPal(name)}
+          className={`rounded-pill px-3 py-1.5 text-xs font-semibold transition-colors ${pal === name ? "bg-ink text-surface" : "text-ink-soft hover:text-ink"}`}>{name}</button>
+      ))}
+    </div>
+  );
+}
+
 export function App() {
   const [pal, setPal] = useState("Neutro");
   return (
-    <div className="flex" style={PALETTES[pal] as React.CSSProperties}>
-      <SideNav pal={pal} setPal={setPal} />
-      <main className="min-w-0 flex-1">
+    <div style={PALETTES[pal] as React.CSSProperties}>
+      {/* dogfooding: o header do DS É o componente Header do Breathe */}
+      <Header
+        logo={<span className="flex items-center gap-2 font-heading text-xl font-bold text-ink"><BreatheMark size={30} /> Breathe</span>}
+        cta={<Switcher pal={pal} setPal={setPal} />}
+        items={[
+          { label: "Símbolo", href: "#symbol" },
+          { label: "Tokens", href: "#tokens" },
+          { label: "Componentes", href: "#buttons", children: [
+            { label: "Button", href: "#buttons", icon: IcPulse },
+            { label: "Accordion", href: "#accordion", icon: IcBook },
+            { label: "PillList", href: "#pills", icon: IcSearch },
+            { label: "Header", href: "#header", icon: IcHome },
+            { label: "PageVideoHero", href: "#hero", icon: IcVideo },
+            { label: "Footer", href: "#footer", icon: IcPin },
+          ], seeAll: { label: "Mobile · BottomNav", href: "#mobile" } },
+        ]}
+      />
+      <main className="min-w-0">
         <div className="border-b border-line py-[clamp(48px,7vw,96px)]">
           <Container>
             <div className="mb-4 text-ink"><BreatheMark size={64} /></div>
