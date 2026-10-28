@@ -97,6 +97,10 @@ ilustrativa (marcada `[conferir]`) — fecha ao migrar o creeta.
       componentes importarem/injetarem (sem cada site depender do lucide direto)
 - [ ] **MediaCard** (vídeo/imagem atrás + badge de ícone + título + lead + seta;
       variante **carrossel horizontal no mobile** com barra de progresso + pause) — aprovado
+- [ ] **ProfessionalCard** (equipe) — aprovado. Duas versões: **small** (foto + nome, fila/linha)
+      e **big** (foto + nome + função + CREFITO + accordions "Trajetória"/"Orientações").
+      Variante com **vídeo**: badge "Apresentação", hover anima o vídeo, e **modal** (vídeo + bio).
+      **Regra de dado:** todo profissional PRECISA ter **CREFITO** vinculado (exigência COFFITO).
 - [ ] **PillList** (chips tipo "Condições que atendemos": rótulo + seta, grade que quebra, link "Ver todos") — aprovado
 - [ ] **Footer** (aprovado) · **PageVideoHero** (hero full-bleed) · **Header** (dropdown)
 - [ ] Primitivos: Button, Container, SectionKicker, Card
