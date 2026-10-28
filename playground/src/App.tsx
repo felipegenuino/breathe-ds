@@ -168,6 +168,20 @@ function IconsSection() {
   );
 }
 
+function HeroCTA({ secondary }: { secondary: ReactNode }) {
+  // Estrutura do novo.creeta: container escuro + pílula branca + link claro.
+  return (
+    <div className="inline-flex items-center gap-x-6 rounded-full border border-surface/15 bg-ink/80 py-2 pr-7 pl-2 backdrop-blur-md">
+      <a href="#" className="inline-flex min-h-11 items-center gap-2 rounded-full bg-surface px-5 font-heading font-semibold text-ink transition hover:-translate-y-px">
+        <IconMessage size={18} /> Agendar avaliação
+      </a>
+      <a href="#" className="inline-flex min-h-11 items-center gap-1.5 font-heading font-semibold text-surface underline underline-offset-4">
+        {secondary}
+      </a>
+    </div>
+  );
+}
+
 export function App() {
   const [pal, setPal] = useState("Neutro");
   useEffect(() => {
@@ -295,24 +309,14 @@ export function App() {
                 title: <>Respirar melhor.<br />Viver com mais liberdade.</>,
                 lead: "Tratamento especializado para condições respiratórias, dor e assimetrias corporais, em todas as fases da vida.",
               }}
-              actions={
-                <div className="flex items-center gap-0.5 rounded-full bg-surface p-1.5 shadow-[0_10px_30px_rgba(0,0,0,0.28)]">
-                  <a href="#" className="inline-flex items-center gap-2 rounded-full px-4 py-2.5 font-heading text-sm font-semibold text-ink transition-colors hover:bg-ink/[0.06]"><IconMessage size={18} /> Agendar avaliação</a>
-                  <a href="#" className="inline-flex items-center rounded-full px-4 py-2.5 font-heading text-sm font-semibold text-ink underline decoration-ink/40 underline-offset-4 transition-colors hover:decoration-ink">Ver o que tratamos</a>
-                </div>
-              }
+              actions={<HeroCTA secondary="Ver o que tratamos" />}
             />
             {/* versão clínica — local + painel + CTA (Agendar + Como chegar) */}
             <PageVideoHero
               videoId="h3a7DHFd6L4"
               topLeft={<span className={HERO_PILL}><IconMapPin size={16} /> Córrego Grande, Florianópolis</span>}
               panel={{ kicker: "A clínica", title: <>Uma clínica feita para acolher de verdade.</> }}
-              actions={
-                <div className="flex items-center gap-0.5 rounded-full bg-surface p-1.5 shadow-[0_10px_30px_rgba(0,0,0,0.28)]">
-                  <a href="#" className="inline-flex items-center gap-2 rounded-full px-4 py-2.5 font-heading text-sm font-semibold text-ink transition-colors hover:bg-ink/[0.06]"><IconMessage size={18} /> Agendar avaliação</a>
-                  <a href="#" className="inline-flex items-center gap-1 rounded-full px-4 py-2.5 font-heading text-sm font-semibold text-ink underline decoration-ink/40 underline-offset-4 transition-colors hover:decoration-ink">Como chegar <IconArrowUpRight size={15} /></a>
-                </div>
-              }
+              actions={<HeroCTA secondary={<>Como chegar <IconArrowUpRight size={15} /></>} />}
             />
           </div>
         </section>
