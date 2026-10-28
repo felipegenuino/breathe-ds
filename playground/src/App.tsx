@@ -165,17 +165,70 @@ function IconsSection() {
   );
 }
 
-function HeroCTA({ secondary }: { secondary: ReactNode }) {
-  // Estrutura do novo.creeta: container escuro + pílula branca + link claro.
+function HeroCTA({ primary = "Ação principal", secondary }: { primary?: ReactNode; secondary: ReactNode }) {
+  // Estrutura do novo.creeta: container escuro + pílula branca + link claro (com ícone na lateral).
   return (
     <div className="inline-flex items-center gap-x-6 rounded-full border border-surface/15 bg-ink/80 py-2 pr-7 pl-2 backdrop-blur-md">
       <a href="#" className="inline-flex min-h-11 items-center gap-2 rounded-full bg-surface px-5 font-body font-semibold text-ink transition hover:-translate-y-px">
-        <IconMessage size={18} /> Agendar avaliação
+        <IconMessage size={18} /> {primary}
       </a>
       <a href="#" className="inline-flex min-h-11 items-center gap-1.5 font-body font-semibold text-surface underline underline-offset-4">
-        {secondary}
+        {secondary} <IconArrowUpRight size={15} />
       </a>
     </div>
+  );
+}
+
+function PillToggle({ label, on, set }: { label: string; on: boolean; set: (v: boolean) => void }) {
+  return (
+    <button type="button" onClick={() => set(!on)} aria-pressed={on}
+      className={`rounded-pill border px-3 py-1.5 text-xs font-semibold transition-colors ${on ? "border-ink bg-ink text-surface" : "border-line text-ink-soft hover:text-ink"}`}>
+      {label}
+    </button>
+  );
+}
+
+function SegGroup<T extends string>({ label, value, set, options }: { label: string; value: T; set: (v: T) => void; options: [T, string][] }) {
+  return (
+    <div className="flex items-center gap-2">
+      <span className="text-xs font-semibold text-ink-soft">{label}</span>
+      <div className="inline-flex rounded-pill border border-line p-0.5">
+        {options.map(([v, l]) => (
+          <button key={v} type="button" onClick={() => set(v)}
+            className={`rounded-pill px-3 py-1 text-xs font-semibold transition-colors ${value === v ? "bg-ink text-surface" : "text-ink-soft hover:text-ink"}`}>{l}</button>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function HeroDemo() {
+  const [local, setLocal] = useState(true);
+  const [conteudo, setConteudo] = useState<"painel" | "legenda" | "nenhum">("painel");
+  const [acao, setAcao] = useState<"cta" | "assistir" | "nenhum">("cta");
+  const [kicker, setKicker] = useState(true);
+  const [lead, setLead] = useState(true);
+  return (
+    <>
+      {/* seletor de elementos do hero */}
+      <Container>
+        <div className="mb-5 flex flex-wrap items-center gap-x-5 gap-y-3 rounded-2xl border border-line bg-surface p-4">
+          <span className="text-[0.7rem] font-semibold tracking-[0.12em] text-ink-soft uppercase">Elementos</span>
+          <PillToggle label="Local" on={local} set={setLocal} />
+          <SegGroup label="Conteúdo" value={conteudo} set={setConteudo} options={[["painel", "Painel"], ["legenda", "Legenda"], ["nenhum", "Nenhum"]]} />
+          <SegGroup label="Ação" value={acao} set={setAcao} options={[["cta", "CTA"], ["assistir", "Assistir"], ["nenhum", "Nenhum"]]} />
+          {conteudo === "painel" && (<><PillToggle label="Kicker" on={kicker} set={setKicker} /><PillToggle label="Lead" on={lead} set={setLead} /></>)}
+        </div>
+      </Container>
+      <PageVideoHero
+        videoId="h3a7DHFd6L4"
+        topLeft={local ? <span className={HERO_PILL}><IconMapPin size={16} /> Localização · Cidade</span> : undefined}
+        panel={conteudo === "painel" ? { kicker: kicker ? "Sobrelinha do hero" : undefined, title: <>Título do hero<br />em duas linhas.</>, lead: lead ? "Um parágrafo curto de apoio que resume a proposta em uma ou duas frases." : undefined } : undefined}
+        caption={conteudo === "legenda" ? "Legenda curta do vídeo." : undefined}
+        actions={acao === "cta" ? <HeroCTA primary="Ação principal" secondary="Ação secundária" /> : acao === "nenhum" ? null : undefined}
+        watch={acao === "assistir" ? { label: "Assistir ao vídeo", meta: "Com som, 0 min 00 s" } : undefined}
+      />
+    </>
   );
 }
 
@@ -296,26 +349,7 @@ export function App() {
           <Container>
             <SectionKicker>PageVideoHero <span className="font-heading text-base font-semibold text-ink-soft">— largura real (full-bleed)</span></SectionKicker>
           </Container>
-          <div className="space-y-5">
-            {/* versão home — painel + CTA fiel ao creeta (pílula branca com 2 itens) */}
-            <PageVideoHero
-              videoId="h3a7DHFd6L4"
-              topLeft={<span className={HERO_PILL}><IconMapPin size={16} /> Fisioterapia em Florianópolis</span>}
-              panel={{
-                kicker: "O único centro de tratamento baseado no Método RTA",
-                title: <>Respirar melhor.<br />Viver com mais liberdade.</>,
-                lead: "Tratamento especializado para condições respiratórias, dor e assimetrias corporais, em todas as fases da vida.",
-              }}
-              actions={<HeroCTA secondary="Ver o que tratamos" />}
-            />
-            {/* versão clínica — local + painel + CTA (Agendar + Como chegar) */}
-            <PageVideoHero
-              videoId="h3a7DHFd6L4"
-              topLeft={<span className={HERO_PILL}><IconMapPin size={16} /> Córrego Grande, Florianópolis</span>}
-              panel={{ kicker: "A clínica", title: <>Uma clínica feita para acolher de verdade.</> }}
-              actions={<HeroCTA secondary={<>Como chegar <IconArrowUpRight size={15} /></>} />}
-            />
-          </div>
+          <HeroDemo />
         </section>
 
         <Section id="footer" title="Footer">

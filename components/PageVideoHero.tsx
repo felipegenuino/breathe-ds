@@ -12,8 +12,8 @@ type Props = {
   caption?: ReactNode;
   /** Painel de conteúdo inferior-esquerdo (kicker + título + lead). */
   panel?: Panel;
-  /** CTAs no canto inferior-direito. Sem isto, mostra "Assistir ao vídeo". */
-  actions?: ReactNode;
+  /** CTAs no canto inferior-direito. Sem isto, mostra "Assistir ao vídeo"; null esconde. */
+  actions?: ReactNode | null;
   /** Rótulo + meta do botão padrão "Assistir ao vídeo". */
   watch?: { label?: string; meta?: ReactNode };
   videoTitle?: string;
@@ -113,8 +113,8 @@ export function PageVideoHero({
               ) : null}
             </div>
 
-            {/* assistir / CTAs — bottom-6 right-6 */}
-            {actions ? (
+            {/* assistir / CTAs — bottom-6 right-6 (actions={null} esconde) */}
+            {actions === null ? null : actions ? (
               <div className="absolute right-4 bottom-4 z-10 flex flex-wrap items-center justify-end gap-2 md:right-6 md:bottom-6">{actions}</div>
             ) : (
               <button
