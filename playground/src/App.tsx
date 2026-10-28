@@ -19,19 +19,16 @@ const PALETTES: Record<string, Record<string, string>> = {
     "--color-surface": "#ffffff", "--color-surface-panel": "#18181b", "--color-ink": "#18181b",
     "--color-ink-soft": "#71717a", "--color-ink-body": "#3f3f46", "--color-action": "#18181b",
     "--color-action-text": "#52525b", "--color-on-action": "#ffffff", "--color-line": "rgb(0 0 0 / 0.12)",
-    "--font-heading": "system-ui, sans-serif", "--font-body": "system-ui, sans-serif",
   },
   TTCAB: {
     "--color-surface": "#fbf5e9", "--color-surface-panel": "#144753", "--color-ink": "#144753",
     "--color-ink-soft": "#54707a", "--color-ink-body": "#1e4f5b", "--color-action": "#f6a22a",
     "--color-action-text": "#9a5d07", "--color-on-action": "#144753", "--color-line": "rgb(20 71 83 / 0.16)",
-    "--font-heading": "Quicksand, system-ui, sans-serif", "--font-body": "Figtree, system-ui, sans-serif",
   },
   Creeta: {
     "--color-surface": "#eef3f4", "--color-surface-panel": "#144753", "--color-ink": "#144753",
     "--color-ink-soft": "#52707a", "--color-ink-body": "#1e4f5b", "--color-action": "#ab2781",
     "--color-action-text": "#8f1f6c", "--color-on-action": "#ffffff", "--color-line": "rgb(20 71 83 / 0.16)",
-    "--font-heading": "Quicksand, system-ui, sans-serif", "--font-body": "Figtree, system-ui, sans-serif",
   },
 };
 

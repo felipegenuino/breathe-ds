@@ -89,6 +89,15 @@ e refinada). _A extrair para tokens de tamanho/peso/entrelinha._
 **ttcab** e **creeta**. A paleta do creeta em `tokens/creeta.css` está
 ilustrativa (marcada `[conferir]`) — fecha ao migrar o creeta.
 
+## O que muda por tema (e o que é fixo)
+
+**Muda por tema:** apenas **cores** e **grafismos** (ThreadRail, OrganicFrame,
+marca d'água…). Cada site/marca da família tem a sua cor e os seus grafismos.
+
+**Fixo em toda a família:** **tipografia** (Quicksand nos títulos + Figtree no
+corpo, em qualquer tema — inclusive o Neutro) e os **ícones** (lucide). Botões
+usam a fonte de corpo semibold (o 600 da Quicksand rende leve demais).
+
 ## Decisão — estilo de card
 
 Linguagem de card do DS: **bordas discretas + sombra discreta** (referência: "Famílias
