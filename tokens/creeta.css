@@ -1,0 +1,18 @@
+/*
+  Paleta Creeta (petróleo + névoa + magenta). Ilustrativa — a conferir/ajustar
+  ao migrar o creeta de fato. Base: as vars reais do creeta (globals.css).
+   - surface #EEF3F4 / ink #144753 ............ ~9:1 (AAA) [conferir]
+   - action #AB2781 (magenta) é CTA; texto na cor precisa de tom AA próprio.
+*/
+:root {
+  --cg-surface: #eef3f4;        /* névoa */
+  --cg-surface-panel: #144753;  /* petróleo */
+  --cg-ink: #144753;            /* petróleo */
+  --cg-ink-soft: #4a6b73;       /* [conferir] */
+  --cg-ink-body: #1e4f5b;       /* [conferir] */
+  --cg-action: #ab2781;         /* magenta (Agendar) */
+  --cg-action-text: #8f1f6c;    /* [conferir] tom AA sobre névoa */
+  --cg-line: rgb(20 71 83 / 0.16);
+  --cg-font-heading: system-ui, sans-serif;  /* [definir fontes do creeta] */
+  --cg-font-body: system-ui, sans-serif;
+}

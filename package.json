@@ -1,0 +1,17 @@
+{
+  "name": "@cuidado-global/ui",
+  "version": "0.1.0",
+  "description": "Design system da família Cuidado Global — tokens tematizáveis (tokens-first). Primitivos entram nas próximas versões.",
+  "license": "UNLICENSED",
+  "type": "module",
+  "sideEffects": ["*.css"],
+  "files": ["theme.css", "tokens", "README.md"],
+  "exports": {
+    "./theme.css": "./theme.css",
+    "./tokens/ttcab.css": "./tokens/ttcab.css",
+    "./tokens/creeta.css": "./tokens/creeta.css"
+  },
+  "publishConfig": {
+    "access": "restricted"
+  }
+}

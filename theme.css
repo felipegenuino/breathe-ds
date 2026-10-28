@@ -1,0 +1,39 @@
+/*
+  @cuidado-global/ui — theme.css  (tokens-first, v0.1)
+
+  Contrato de tokens da família Cuidado Global (ecossistema RTA/Mariangela).
+  As CORES são PAPÉIS: o valor de cada uma vem de uma CSS var `--cg-*` que
+  CADA SITE define (ttcab petróleo/creme, creeta petróleo/névoa/magenta…).
+  Assim os sites herdam a MESMA estrutura e nomes, com a própria paleta.
+
+  Uso no globals.css de um site (Tailwind v4):
+    @import "tailwindcss";
+    @import "@cuidado-global/ui/theme.css";
+    @import "@cuidado-global/ui/tokens/ttcab.css";   (ou defina os --cg-* inline)
+
+  Escalas fixas (tipografia-papel, raio, motion) são compartilhadas aqui.
+  Contrastes medidos de cada paleta: ver README.md e os arquivos tokens/*.
+*/
+@theme {
+  /* ── Cores (papéis) — valor vem dos --cg-* do site ── */
+  --color-surface: var(--cg-surface);              /* fundo base */
+  --color-surface-panel: var(--cg-surface-panel);  /* painel escuro (footer/CTA) */
+  --color-ink: var(--cg-ink);                      /* texto principal / títulos */
+  --color-ink-soft: var(--cg-ink-soft);            /* texto secundário */
+  --color-ink-body: var(--cg-ink-body);            /* corpo de leitura */
+  --color-action: var(--cg-action);                /* CTA/destaque — nunca texto puro */
+  --color-action-text: var(--cg-action-text);      /* texto na cor de ação (AA) */
+  --color-line: var(--cg-line);                    /* hairlines/bordas */
+
+  /* ── Tipografia (papéis; família real vem dos --cg-font-*) ── */
+  --font-heading: var(--cg-font-heading, system-ui, sans-serif);
+  --font-body: var(--cg-font-body, Arial, system-ui, sans-serif);
+
+  /* ── Raio ── */
+  --radius-xl: 24px;
+  --radius-2xl: 28px;
+  --radius-pill: 9999px;
+
+  /* ── Motion — curva assinatura da família ── */
+  --ease-cg: cubic-bezier(0.2, 0.8, 0.2, 1);
+}
