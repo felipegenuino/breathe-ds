@@ -10,7 +10,8 @@ import { Footer } from "../../components/Footer";
 import { Header } from "../../components/Header";
 import { BottomNav } from "../../components/BottomNav";
 import { BreatheMark } from "../../components/BreatheMark";
-import { icons, IconWind, IconActivity, IconBaby, IconSearch, IconHome, IconBook, IconMessage, IconMapPin, IconGraduationCap, IconVideo, IconUsers } from "../../components/icons";
+import { used, IconWind, IconActivity, IconBaby, IconSearch, IconHome, IconBook, IconMessage, IconMapPin, IconGraduationCap, IconVideo, IconUsers } from "../../components/icons";
+import * as Lucide from "lucide-react";
 
 /* ───── paletas (o DS é neutro; a cor vem de cada app) ───── */
 const PALETTES: Record<string, Record<string, string>> = {
@@ -104,45 +105,64 @@ function Switcher({ pal, setPal }: { pal: string; setPal: (p: string) => void })
   );
 }
 
-const USED_ICONS = ["IconHome", "IconWind", "IconActivity", "IconBaby", "IconSearch", "IconUsers", "IconMapPin", "IconMessage", "IconVideo", "IconVolume2", "IconChevronDown", "IconArrowUpRight"];
+type IconComp = (p: { size?: number }) => ReactNode;
+const LUCIDE_ALL = (Object.entries(Lucide).filter(
+  ([n, v]) => /^[A-Z][A-Za-z0-9]+$/.test(n) && !n.startsWith("Lucide") && !n.endsWith("Icon") && (typeof v === "object" || typeof v === "function") && v != null
+) as [string, IconComp][]).sort((a, b) => a[0].localeCompare(b[0]));
+const USED_ENTRIES = Object.entries(used) as [string, IconComp][];
+const ICON_CAP = 240;
 
-function IconCard({ name, Ic }: { name: string; Ic: (p: { size?: number }) => ReactNode }) {
+function IconCard({ name, Ic }: { name: string; Ic: IconComp }) {
   return (
-    <div className="flex w-[104px] flex-col items-center gap-2.5 rounded-2xl border border-line p-4 text-ink">
-      <Ic size={24} />
-      <span className="text-[0.68rem] text-ink-soft">{name.replace("Icon", "")}</span>
+    <div className="flex flex-col items-center gap-2 rounded-2xl border border-line p-3 text-ink" title={name}>
+      <Ic size={22} />
+      <span className="max-w-full truncate text-[0.62rem] text-ink-soft">{name}</span>
     </div>
   );
 }
 
 function IconsSection() {
   const [q, setQ] = useState("");
-  const [showAll, setShowAll] = useState(false);
-  const all = Object.entries(icons) as [string, (p: { size?: number }) => ReactNode][];
+  const [mode, setMode] = useState<"used" | "all">("used");
   const query = q.trim().toLowerCase();
-  const filtered = query
-    ? all.filter(([n]) => n.toLowerCase().includes(query))
-    : showAll ? all : all.filter(([n]) => USED_ICONS.includes(n));
-  const hidden = all.length - USED_ICONS.length;
+  const source = query || mode === "all" ? LUCIDE_ALL : USED_ENTRIES;
+  const filtered = query ? source.filter(([n]) => n.toLowerCase().includes(query)) : source;
+  const shown = filtered.slice(0, ICON_CAP);
   return (
-    <div>
-      <p className="mb-5 max-w-[60ch] text-ink-body">Conjunto do lucide embutido no DS (sem dependência externa), em <code className="rounded bg-ink/[0.07] px-1.5 py-0.5 text-sm">currentColor</code>. Os componentes recebem ícones por slot.</p>
-      <div className="relative mb-6 max-w-sm">
-        <span className="pointer-events-none absolute top-1/2 left-3.5 -translate-y-1/2 text-ink-soft"><IconSearch size={18} /></span>
-        <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Buscar ícone…"
-          className="w-full rounded-pill border border-line bg-surface py-2.5 pr-4 pl-10 text-ink placeholder:text-ink-soft focus:outline-2 focus:outline-offset-2 focus:outline-ink" />
+    <div className="grid gap-8 lg:grid-cols-[256px_1fr]">
+      {/* coluna 1 — título, busca, filtro */}
+      <div className="lg:sticky lg:top-24 lg:self-start">
+        <p className="mb-4 max-w-[34ch] text-ink-body">A lib do lucide inteira. Busque e use em qualquer interface — os componentes recebem ícones por slot.</p>
+        <div className="relative mb-5">
+          <span className="pointer-events-none absolute top-1/2 left-3.5 -translate-y-1/2 text-ink-soft"><IconSearch size={18} /></span>
+          <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Buscar ícone…"
+            className="w-full rounded-pill border border-line bg-surface py-2.5 pr-4 pl-10 text-ink placeholder:text-ink-soft focus:outline-2 focus:outline-offset-2 focus:outline-ink" />
+        </div>
+        <p className="mb-2 text-[0.7rem] font-semibold tracking-[0.12em] text-ink-soft uppercase">Filtro</p>
+        <div className="inline-flex rounded-pill border border-line p-0.5">
+          {([["used", "Mais usados"], ["all", "Todos"]] as const).map(([m, label]) => (
+            <button key={m} type="button" onClick={() => setMode(m)}
+              className={`rounded-pill px-3 py-1.5 text-xs font-semibold transition-colors ${mode === m ? "bg-ink text-surface" : "text-ink-soft hover:text-ink"}`}>{label}</button>
+          ))}
+        </div>
+        <p className="mt-4 text-sm text-ink-soft">
+          {query ? `${filtered.length} resultado(s)` : mode === "all" ? `${LUCIDE_ALL.length} ícones na lib` : `${USED_ENTRIES.length} principais`}
+        </p>
       </div>
-      {!query && <p className="mb-3 text-[0.7rem] font-semibold tracking-[0.12em] text-ink-soft uppercase">{showAll ? "Todos os ícones" : "Mais usados"}</p>}
-      <div className="flex flex-wrap gap-3">
-        {filtered.map(([name, Ic]) => <IconCard key={name} name={name} Ic={Ic} />)}
+
+      {/* coluna 2 — grade */}
+      <div>
+        {filtered.length === 0 ? (
+          <p className="text-ink-soft">Nenhum ícone encontrado.</p>
+        ) : (
+          <div className="grid grid-cols-[repeat(auto-fill,minmax(88px,1fr))] gap-3">
+            {shown.map(([name, Ic]) => <IconCard key={name} name={name} Ic={Ic} />)}
+          </div>
+        )}
+        {filtered.length > ICON_CAP && (
+          <p className="mt-5 text-sm text-ink-soft">Mostrando {ICON_CAP} de {filtered.length}. Refine a busca pra achar os demais.</p>
+        )}
       </div>
-      {filtered.length === 0 && <p className="text-ink-soft">Nenhum ícone encontrado.</p>}
-      {!query && (
-        <button type="button" onClick={() => setShowAll((v) => !v)}
-          className="mt-6 inline-flex items-center gap-1.5 font-heading text-[0.95rem] font-semibold text-ink underline decoration-action-text/50 underline-offset-4 hover:decoration-action-text">
-          {showAll ? "Ver menos" : `Ver todos (+${hidden})`}
-        </button>
-      )}
     </div>
   );
 }
