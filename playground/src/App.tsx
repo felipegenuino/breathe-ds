@@ -10,7 +10,7 @@ import { Footer } from "../../components/Footer";
 import { Header } from "../../components/Header";
 import { BottomNav } from "../../components/BottomNav";
 import { BreatheMark } from "../../components/BreatheMark";
-import { used, IconWind, IconActivity, IconBaby, IconSearch, IconHome, IconBook, IconMessage, IconMapPin, IconGraduationCap, IconVideo, IconUsers } from "../../components/icons";
+import { used, IconWind, IconActivity, IconBaby, IconSearch, IconHome, IconBook, IconMessage, IconMapPin, IconGraduationCap, IconVideo, IconUsers, IconArrowUpRight } from "../../components/icons";
 import * as Lucide from "lucide-react";
 
 /* ───── paletas (o DS é neutro; a cor vem de cada app) ───── */
@@ -92,6 +92,7 @@ function Section({ id, title, children }: { id: string; title: string; children:
   );
 }
 
+const HERO_PILL = "inline-flex items-center gap-2 rounded-pill bg-ink/55 px-4 py-2 font-heading text-sm font-semibold text-surface backdrop-blur-md";
 const CHIP = "inline-flex items-center gap-2 rounded-pill bg-ink/[0.06] px-4 py-2 font-heading text-sm font-semibold text-ink";
 
 function Switcher({ pal, setPal }: { pal: string; setPal: (p: string) => void }) {
@@ -280,23 +281,41 @@ export function App() {
           </div>
         </Section>
 
-        <Section id="hero" title="PageVideoHero">
+        <section id="hero" className="scroll-mt-24 border-b border-line py-[clamp(40px,6vw,72px)]">
+          <Container>
+            <SectionKicker>PageVideoHero <span className="font-heading text-base font-semibold text-ink-soft">— largura real (full-bleed)</span></SectionKicker>
+          </Container>
           <div className="space-y-5">
-            {/* versão home — legenda + assistir */}
+            {/* versão home — painel + CTA fiel ao creeta (pílula branca com 2 itens) */}
             <PageVideoHero
               videoId="h3a7DHFd6L4"
-              caption="O corpo respira por inteiro."
-              watch={{ label: "Assistir ao vídeo", meta: "Com som, 3 min 33s" }}
+              topLeft={<span className={HERO_PILL}><IconMapPin size={16} /> Fisioterapia em Florianópolis</span>}
+              panel={{
+                kicker: "O único centro de tratamento baseado no Método RTA",
+                title: <>Respirar melhor.<br />Viver com mais liberdade.</>,
+                lead: "Tratamento especializado para condições respiratórias, dor e assimetrias corporais, em todas as fases da vida.",
+              }}
+              actions={
+                <div className="flex items-center gap-0.5 rounded-full bg-surface p-1.5 shadow-[0_10px_30px_rgba(0,0,0,0.28)]">
+                  <a href="#" className="inline-flex items-center gap-2 rounded-full px-4 py-2.5 font-heading text-sm font-semibold text-ink transition-colors hover:bg-ink/[0.06]"><IconMessage size={18} /> Agendar avaliação</a>
+                  <a href="#" className="inline-flex items-center rounded-full px-4 py-2.5 font-heading text-sm font-semibold text-ink underline decoration-ink/40 underline-offset-4 transition-colors hover:decoration-ink">Ver o que tratamos</a>
+                </div>
+              }
             />
-            {/* versão clínica — local + painel + CTAs */}
+            {/* versão clínica — local + painel + CTA (Agendar + Como chegar) */}
             <PageVideoHero
               videoId="h3a7DHFd6L4"
-              topLeft={<span className="inline-flex items-center gap-2 rounded-pill bg-ink/55 px-4 py-2 font-heading text-sm font-semibold text-surface backdrop-blur-md"><IconMapPin size={16} /> Córrego Grande, Florianópolis</span>}
+              topLeft={<span className={HERO_PILL}><IconMapPin size={16} /> Córrego Grande, Florianópolis</span>}
               panel={{ kicker: "A clínica", title: <>Uma clínica feita para acolher de verdade.</> }}
-              actions={<><Button variant="solid" size="sm">Agendar avaliação</Button><a href="#" className="font-heading text-sm font-semibold text-surface underline underline-offset-4">Como chegar ↗</a></>}
+              actions={
+                <div className="flex items-center gap-0.5 rounded-full bg-surface p-1.5 shadow-[0_10px_30px_rgba(0,0,0,0.28)]">
+                  <a href="#" className="inline-flex items-center gap-2 rounded-full px-4 py-2.5 font-heading text-sm font-semibold text-ink transition-colors hover:bg-ink/[0.06]"><IconMessage size={18} /> Agendar avaliação</a>
+                  <a href="#" className="inline-flex items-center gap-1 rounded-full px-4 py-2.5 font-heading text-sm font-semibold text-ink underline decoration-ink/40 underline-offset-4 transition-colors hover:decoration-ink">Como chegar <IconArrowUpRight size={15} /></a>
+                </div>
+              }
             />
           </div>
-        </Section>
+        </section>
 
         <Section id="footer" title="Footer">
           <Footer
