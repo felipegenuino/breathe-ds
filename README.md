@@ -1,8 +1,10 @@
-# @cuidado-global/ui
+# Breathe
 
-Design system da **família Cuidado Global** (ecossistema RTA / Mariangela:
+**Breathe** — o design system da **família Cuidado Global** (ecossistema RTA / Mariangela:
 creeta, ttcab, metodorta…). Os sites **herdam** este pacote e aplicam a
 própria paleta sobre o mesmo contrato.
+
+> Pacote npm: `@cuidado-global/ui` (endereço técnico). **Breathe** é o nome do sistema.
 
 > **v0.1 — tokens-first.** Só a camada de tokens. Os primitivos (Button,
 > PageHero/PageVideoHero, SectionKicker, Container, nav flutuante + dropdown,

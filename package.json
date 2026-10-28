@@ -1,7 +1,7 @@
 {
   "name": "@cuidado-global/ui",
   "version": "0.1.0",
-  "description": "Design system da fam\u00edlia Cuidado Global \u2014 tokens tematiz\u00e1veis (tokens-first). Primitivos entram nas pr\u00f3ximas vers\u00f5es.",
+  "description": "Breathe \u2014 design system da fam\u00edlia Cuidado Global. Tokens tematiz\u00e1veis + componentes.",
   "license": "UNLICENSED",
   "type": "module",
   "sideEffects": [
