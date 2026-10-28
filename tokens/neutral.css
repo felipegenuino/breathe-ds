@@ -1,0 +1,21 @@
+/*
+  Paleta NEUTRA — o padrão do Breathe. O design system é neutro de propósito:
+  a cor vem de CADA aplicação (ttcab, creeta…). Use isto como base e sobrescreva
+  os --cg-* no :root do seu site. Monocromático (cinza/quase-preto) pra deixar
+  claro que é um placeholder "traga sua cor".
+   - surface #ffffff / ink #18181b ............ ~17:1 (AAA)
+   - surface #ffffff / ink-soft #71717a ....... ~4,8:1 (AA)
+*/
+:root {
+  --cg-surface: #ffffff;
+  --cg-surface-panel: #18181b;
+  --cg-ink: #18181b;
+  --cg-ink-soft: #71717a;
+  --cg-ink-body: #3f3f46;
+  --cg-action: #18181b;
+  --cg-action-text: #52525b;
+  --cg-on-action: #ffffff;
+  --cg-line: rgb(0 0 0 / 0.12);
+  --cg-font-heading: system-ui, sans-serif;
+  --cg-font-body: system-ui, sans-serif;
+}

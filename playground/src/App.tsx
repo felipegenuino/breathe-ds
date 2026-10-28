@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import { useState, type ReactNode } from "react";
 import { Accordion } from "../../components/Accordion";
 import { Button } from "../../components/Button";
 import { Card } from "../../components/Card";
@@ -10,6 +10,28 @@ import { Footer } from "../../components/Footer";
 import { Header } from "../../components/Header";
 import { BottomNav } from "../../components/BottomNav";
 import { BreatheMark } from "../../components/BreatheMark";
+
+/* ───── paletas (o DS é neutro; a cor vem de cada app) ───── */
+const PALETTES: Record<string, Record<string, string>> = {
+  Neutro: {
+    "--color-surface": "#ffffff", "--color-surface-panel": "#18181b", "--color-ink": "#18181b",
+    "--color-ink-soft": "#71717a", "--color-ink-body": "#3f3f46", "--color-action": "#18181b",
+    "--color-action-text": "#52525b", "--color-on-action": "#ffffff", "--color-line": "rgb(0 0 0 / 0.12)",
+    "--font-heading": "system-ui, sans-serif", "--font-body": "system-ui, sans-serif",
+  },
+  TTCAB: {
+    "--color-surface": "#fbf5e9", "--color-surface-panel": "#144753", "--color-ink": "#144753",
+    "--color-ink-soft": "#54707a", "--color-ink-body": "#1e4f5b", "--color-action": "#f6a22a",
+    "--color-action-text": "#9a5d07", "--color-on-action": "#144753", "--color-line": "rgb(20 71 83 / 0.16)",
+    "--font-heading": "Quicksand, system-ui, sans-serif", "--font-body": "Figtree, system-ui, sans-serif",
+  },
+  Creeta: {
+    "--color-surface": "#eef3f4", "--color-surface-panel": "#144753", "--color-ink": "#144753",
+    "--color-ink-soft": "#52707a", "--color-ink-body": "#1e4f5b", "--color-action": "#ab2781",
+    "--color-action-text": "#8f1f6c", "--color-on-action": "#ffffff", "--color-line": "rgb(20 71 83 / 0.16)",
+    "--font-heading": "Quicksand, system-ui, sans-serif", "--font-body": "Figtree, system-ui, sans-serif",
+  },
+};
 
 /* ───── ícones inline (só pro demo) ───── */
 const I = (p: ReactNode) => (
@@ -27,7 +49,7 @@ const IcCap = I(<><path d="M22 10 12 5 2 10l10 5 10-5z" /><path d="M6 12v5c0 1 2
 const IcVideo = I(<><rect x="3" y="5" width="18" height="14" rx="2" /><path d="m10 9 5 3-5 3z" /></>);
 const IcUsers = I(<><circle cx="9" cy="8" r="3" /><path d="M3 20a6 6 0 0 1 12 0" /><path d="M17 8a3 3 0 0 1 0 6" /></>);
 
-function SideNav() {
+function SideNav({ pal, setPal }: { pal: string; setPal: (p: string) => void }) {
   const items = [
     ["symbol", "Símbolo vivo"],
     ["tokens", "Tokens"], ["buttons", "Button"], ["accordion", "Accordion"],
@@ -37,7 +59,18 @@ function SideNav() {
   return (
     <nav className="sticky top-0 hidden h-screen w-56 flex-none overflow-y-auto border-r border-line p-6 lg:block">
       <p className="mb-1 font-heading text-xl font-bold text-ink">Breathe</p>
-      <p className="mb-6 text-sm text-ink-soft">design system · Cuidado Global</p>
+      <p className="mb-4 text-sm text-ink-soft">design system · Cuidado Global</p>
+      <div className="mb-6">
+        <p className="mb-2 text-[0.7rem] font-semibold tracking-[0.1em] text-ink-soft uppercase">Paleta</p>
+        <div className="inline-flex rounded-pill border border-line p-0.5">
+          {Object.keys(PALETTES).map((name) => (
+            <button key={name} type="button" onClick={() => setPal(name)}
+              className={`rounded-pill px-3 py-1.5 text-xs font-semibold transition-colors ${pal === name ? "bg-ink text-surface" : "text-ink-soft hover:text-ink"}`}>
+              {name}
+            </button>
+          ))}
+        </div>
+      </div>
       <ul className="flex flex-col gap-1">
         {items.map(([id, label]) => (
           <li key={id}>
@@ -63,9 +96,10 @@ function Section({ id, title, children }: { id: string; title: string; children:
 const CHIP = "inline-flex items-center gap-2 rounded-pill bg-ink/[0.06] px-4 py-2 font-heading text-sm font-semibold text-ink";
 
 export function App() {
+  const [pal, setPal] = useState("Neutro");
   return (
-    <div className="flex">
-      <SideNav />
+    <div className="flex" style={PALETTES[pal] as React.CSSProperties}>
+      <SideNav pal={pal} setPal={setPal} />
       <main className="min-w-0 flex-1">
         <div className="border-b border-line py-[clamp(48px,7vw,96px)]">
           <Container>
@@ -88,12 +122,15 @@ export function App() {
 
         <Section id="tokens" title="Tokens">
           <div className="flex flex-wrap gap-3">
-            {[["surface", "#fbf5e9"], ["ink", "#144753"], ["ink-soft", "#54707a"], ["action", "#f6a22a"], ["line", "rgb(20 71 83 / .16)"]].map(([n, v]) => (
+            {([["surface", "--color-surface"], ["ink", "--color-ink"], ["ink-soft", "--color-ink-soft"], ["action", "--color-action"], ["line", "--color-line"]] as const).map(([n, k]) => {
+              const v = PALETTES[pal][k];
+              return (
               <div key={n} className="w-40 overflow-hidden rounded-2xl border border-line">
                 <div className="h-14" style={{ background: v }} />
                 <div className="p-3"><p className="font-heading text-sm font-bold text-ink">{n}</p><p className="font-mono text-xs text-ink-soft">{v}</p></div>
               </div>
-            ))}
+              );
+            })}
           </div>
         </Section>
 

@@ -1,19 +1,21 @@
 /*
-  Paleta Creeta (petróleo + névoa + magenta). Ilustrativa — a conferir/ajustar
-  ao migrar o creeta de fato. Base: as vars reais do creeta (globals.css).
-   - surface #EEF3F4 / ink #144753 ............ ~9:1 (AAA) [conferir]
-   - action #AB2781 (magenta) é CTA; texto na cor precisa de tom AA próprio.
+  Paleta Creeta (clínica RTA em Floripa) — petróleo + névoa + magenta.
+  Valores do novo.creeta. Contrastes medidos (fórmula WCAG):
+   - surface #eef3f4 / ink #144753 ............ ~9,1:1 (AAA)
+   - surface #eef3f4 / ink-soft #52707a ....... ~4,7:1 (AA)
+   - action #ab2781 (magenta) é o CTA ("Agendar"); texto sobre ele = branco.
 */
 :root {
   --cg-surface: #eef3f4;        /* névoa */
   --cg-surface-panel: #144753;  /* petróleo */
   --cg-ink: #144753;            /* petróleo */
-  --cg-ink-soft: #4a6b73;       /* [conferir] */
-  --cg-ink-body: #1e4f5b;       /* [conferir] */
+  --cg-ink-soft: #52707a;
+  --cg-ink-body: #1e4f5b;
   --cg-action: #ab2781;         /* magenta (Agendar) */
+  --cg-action-text: #8f1f6c;    /* magenta mais escuro p/ texto */
   --cg-on-action: #ffffff;      /* branco sobre magenta */
-  --cg-action-text: #8f1f6c;    /* [conferir] tom AA sobre névoa */
   --cg-line: rgb(20 71 83 / 0.16);
-  --cg-font-heading: var(--fonte-titulo), system-ui, sans-serif;  /* Quicksand (igual ao ttcab) */
-  --cg-font-body: var(--fonte-corpo), system-ui, sans-serif;      /* Figtree — substituta livre da Gotham */
+  --cg-font-heading: var(--font-quicksand), system-ui, sans-serif;  /* Quicksand */
+  --cg-font-body: var(--font-figtree), system-ui, sans-serif;       /* Figtree */
 }
+CSS
