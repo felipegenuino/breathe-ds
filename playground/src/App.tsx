@@ -172,10 +172,10 @@ function HeroCTA({ secondary }: { secondary: ReactNode }) {
   // Estrutura do novo.creeta: container escuro + pílula branca + link claro.
   return (
     <div className="inline-flex items-center gap-x-6 rounded-full border border-surface/15 bg-ink/80 py-2 pr-7 pl-2 backdrop-blur-md">
-      <a href="#" className="inline-flex min-h-11 items-center gap-2 rounded-full bg-surface px-5 font-heading font-semibold text-ink transition hover:-translate-y-px">
+      <a href="#" className="inline-flex min-h-11 items-center gap-2 rounded-full bg-surface px-5 font-body font-semibold text-ink transition hover:-translate-y-px">
         <IconMessage size={18} /> Agendar avaliação
       </a>
-      <a href="#" className="inline-flex min-h-11 items-center gap-1.5 font-heading font-semibold text-surface underline underline-offset-4">
+      <a href="#" className="inline-flex min-h-11 items-center gap-1.5 font-body font-semibold text-surface underline underline-offset-4">
         {secondary}
       </a>
     </div>
