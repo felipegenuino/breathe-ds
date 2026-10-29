@@ -30,12 +30,22 @@ ffmpeg -ss 1 -i clip-vertical.mp4 -frames:v 1 -q:v 3 clip-poster-vertical.jpg
 Nunca usar aqui filmagem real de paciente, mesmo fora do git: o playground é
 visto em tela compartilhada e em capturas.
 
-## Modo Player → não precisa de arquivo local
+## Modo Player → MP4 gerado ou YouTube
 
-O hero tipo **Player** agora roda **o próprio vídeo do YouTube** (`h3a7DHFd6L4`)
-mudo, em repetição, como fundo (16:9, cobrindo o cartão). Ao apertar o som, o
-vídeo remonta do zero, com áudio e controles. Não há mais prévia local para o
-Player — os antigos `mariangela.mp4` / `mariangela-poster.jpg` foram retirados
-daqui (filmagem real) e vivem em `~/Developer/_agent-temp/breathe-demo-real/`.
-O quadro parado de movimento reduzido vem da miniatura do próprio YouTube
-(`i.ytimg.com/vi/<id>/maxresdefault.jpg`), ou de um `poster` passado na prop.
+O hero tipo **Player** roda **o próprio vídeo** mudo, em repetição, como fundo;
+ao apertar o som, remonta do zero com áudio e controles. Duas fontes na demo:
+
+| Arquivo | Origem | Uso |
+|---|---|---|
+| `podcast.mp4` + `podcast-poster.jpg` | `Woman_speaking_in_podcast_studio_f5167944.mp4` (gerado, 10 s, 1280×720, com fala) | Player · MP4 |
+| YouTube `AwltovsqPQE` | vídeo genérico, sem arquivo local | Player · YouTube |
+
+```bash
+ffmpeg -i gerado.mp4 -c:v libx264 -preset slow -crf 26 -pix_fmt yuv420p -movflags +faststart -c:a aac -b:a 96k podcast.mp4
+ffmpeg -ss 1 -i podcast.mp4 -frames:v 1 -q:v 4 podcast-poster.jpg
+```
+
+Antes (até 29/10/2026 à tarde) o Player usava o vídeo real da Mariangela no
+YouTube (`h3a7DHFd6L4`); saiu da demo pela mesma regra das outras mídias reais.
+No modo YouTube, o quadro parado de movimento reduzido vem da miniatura do
+próprio YouTube (`i.ytimg.com/vi/<id>/maxresdefault.jpg`), ou de um `poster`.

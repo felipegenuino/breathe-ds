@@ -17,20 +17,33 @@ type LoopPreview = {
 
 /** Two kinds of video hero:
  *  - loop:   a local clip on repeat (no player). Background = BackgroundVideo.
- *  - player: the YouTube video ITSELF plays muted, on repeat, as the background
- *            (16:9, covering the card, no false crop/zoom). Turning the sound on
- *            remounts it from zero — with audio and controls — and the close bar
- *            appears at the bottom. Keeps things consistent: the preview and the
- *            video are the same footage. */
+ *  - player: the video ITSELF plays muted, on repeat, as the background.
+ *            Turning the sound on remounts it from zero — with audio and controls —
+ *            and the close bar appears at the bottom. Keeps things consistent: the
+ *            preview and the video are the same footage. The source is either a
+ *            YouTube id (16:9 iframe covering the card, no false crop/zoom) or an
+ *            mp4 hosted by the site (`src` + `poster`; the sound version plays in
+ *            the browser's own player, letterboxed like the iframe). */
 type VideoLoop = { mode: "loop"; preview: LoopPreview };
-type VideoPlayer = {
-  mode: "player";
+type PlayerCommon = { mode: "player"; playerCaption?: ReactNode };
+type VideoPlayerYouTube = PlayerCommon & {
   youtubeId: string;
   /** Still frame (reduced motion / data saver). Without it, uses YouTube's own
    *  thumbnail (maxresdefault). */
   poster?: string;
-  playerCaption?: ReactNode;
 };
+type VideoPlayerFile = PlayerCommon & {
+  /** The mp4 itself: muted and looping as the background, with sound after the tap. */
+  src: string;
+  /** Larger file for wide screens (background only). */
+  srcLarge?: string;
+  /** Still frame (reduced motion / data saver, and the <video> poster). */
+  poster: string;
+  posterLarge?: string;
+  objectPosition?: string;
+};
+type VideoPlayer = VideoPlayerYouTube | VideoPlayerFile;
+const isFile = (v: VideoPlayer): v is VideoPlayerFile => "src" in v;
 
 type Props = {
   /** Video background — defines the hero kind (loop or player). */
@@ -144,10 +157,10 @@ function YouTubeBackground({
  * in the Breathe language (tokens: ink/surface).
  *
  * - loop:   the background is a local clip on repeat (BackgroundVideo).
- * - player: the background is the YouTube video ITSELF playing muted, on repeat.
- *           Turning the sound on remounts it from zero (with audio and controls)
- *           inside the card and opens the close bar at the bottom (caption on
- *           the left, "Close" on the right).
+ * - player: the background is the video ITSELF (YouTube id or the site's mp4)
+ *           playing muted, on repeat. Turning the sound on remounts it from zero
+ *           (with audio and controls) inside the card and opens the close bar at
+ *           the bottom (caption on the left, "Close" on the right).
  */
 export function PageVideoHero({
   video,
@@ -179,20 +192,49 @@ export function PageVideoHero({
         {/* media — background (preview) or, when playing, the full video with sound */}
         <div className={`absolute inset-x-0 top-0 ${playing ? "bottom-[4.5rem]" : "bottom-0 -z-10"}`}>
           {playing ? (
-            <iframe
-              key="cg-hero-sound"
-              title={videoTitle ?? "Video"}
-              src={`https://www.youtube-nocookie.com/embed/${(video as VideoPlayer).youtubeId}?autoplay=1&mute=0&start=0&rel=0&modestbranding=1&playsinline=1&iv_load_policy=3`}
-              allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; fullscreen"
-              allowFullScreen
-              className="absolute inset-0 h-full w-full border-0 bg-black"
-            />
+            isFile(video as VideoPlayer) ? (
+              // the site's own mp4, with sound and the browser's controls; the
+              // click came from the person, so autoplay with audio is allowed
+              <video
+                key="cg-hero-sound"
+                src={(video as VideoPlayerFile).src}
+                poster={(video as VideoPlayerFile).poster}
+                controls
+                autoPlay
+                playsInline
+                aria-label={videoTitle ?? "Video"}
+                onEnded={() => setPlaying(false)}
+                className="absolute inset-0 h-full w-full bg-black object-contain"
+              />
+            ) : (
+              <iframe
+                key="cg-hero-sound"
+                title={videoTitle ?? "Video"}
+                src={`https://www.youtube-nocookie.com/embed/${(video as VideoPlayerYouTube).youtubeId}?autoplay=1&mute=0&start=0&rel=0&modestbranding=1&playsinline=1&iv_load_policy=3`}
+                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; fullscreen"
+                allowFullScreen
+                className="absolute inset-0 h-full w-full border-0 bg-black"
+              />
+            )
           ) : (
             <>
-              {isPlayer ? (
+              {isPlayer && isFile(video as VideoPlayer) ? (
+                // the mp4 itself, muted and on repeat (BackgroundVideo: reduced
+                // motion, data saver and the pause button come with it)
+                <BackgroundVideo
+                  key={(video as VideoPlayerFile).src}
+                  src={(video as VideoPlayerFile).src}
+                  srcLarge={(video as VideoPlayerFile).srcLarge}
+                  poster={(video as VideoPlayerFile).poster}
+                  posterLarge={(video as VideoPlayerFile).posterLarge}
+                  objectPosition={(video as VideoPlayerFile).objectPosition}
+                  labels={previewLabels}
+                  className="absolute inset-0"
+                />
+              ) : isPlayer ? (
                 <YouTubeBackground
-                  id={(video as VideoPlayer).youtubeId}
-                  poster={(video as VideoPlayer).poster}
+                  id={(video as VideoPlayerYouTube).youtubeId}
+                  poster={(video as VideoPlayerYouTube).poster}
                   title={videoTitle}
                   labels={previewLabels}
                 />

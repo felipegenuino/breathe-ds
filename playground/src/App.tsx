@@ -223,11 +223,16 @@ function SegGroup<T extends string>({ label, value, set, options }: { label: str
   );
 }
 
-// Loop = local clip of asymmetries (landscape). Player = the YouTube video itself playing muted, looping (16:9, covers the card, no crop).
+// Loop = local clip (landscape). Player = the video itself playing muted, looping, then with sound on tap:
+// a YouTube id (16:9 iframe, covers the card, no crop) or an mp4 of the site (generated podcast-style clip).
 const PREVIEW_LOOP = { src: "/demo/clip.mp4", poster: "/demo/clip-poster.jpg" };
+const PLAYER_FILE = { src: "/demo/podcast.mp4", poster: "/demo/podcast-poster.jpg" };
+const PLAYER_YOUTUBE_ID = "AwltovsqPQE";
+const PLAYER_CAPTION = "Speaker name, role, explains the method in the studio.";
 
 function HeroDemo() {
   const [kind, setKind] = useState<"player" | "loop">("player");
+  const [source, setSource] = useState<"file" | "youtube">("file");
   const [showLocation, setShowLocation] = useState(true);
   const [content, setContent] = useState<"panel" | "caption" | "none">("panel");
   const [action, setAction] = useState<"watch" | "cta" | "none">("watch");
@@ -243,7 +248,9 @@ function HeroDemo() {
 
   const video =
     kind === "player"
-      ? { mode: "player" as const, youtubeId: "h3a7DHFd6L4", playerCaption: "Mariangela Pinheiro de Lima, criadora do método, explica o Reequilíbrio Toracoabdominal." }
+      ? source === "file"
+        ? { mode: "player" as const, ...PLAYER_FILE, playerCaption: PLAYER_CAPTION }
+        : { mode: "player" as const, youtubeId: PLAYER_YOUTUBE_ID, playerCaption: PLAYER_CAPTION }
       : { mode: "loop" as const, preview: PREVIEW_LOOP };
 
   const actions =
@@ -258,6 +265,7 @@ function HeroDemo() {
         <div className="mb-5 flex flex-wrap items-center gap-x-5 gap-y-3 rounded-2xl border border-line bg-surface p-4">
           <span className="text-[0.7rem] font-semibold tracking-[0.12em] text-ink-soft uppercase">Elements</span>
           <SegGroup label="Type" value={kind} set={setKind} options={[["player", "Player"], ["loop", "Loop"]]} />
+          {kind === "player" && <SegGroup label="Source" value={source} set={setSource} options={[["file", "MP4"], ["youtube", "YouTube"]]} />}
           <PillToggle label="Location" on={showLocation} set={setShowLocation} />
           <SegGroup label="Content" value={content} set={setContent} options={[["panel", "Panel"], ["caption", "Caption"], ["none", "None"]]} />
           <SegGroup label="Action" value={effectiveAction} set={setAction} options={actionOptions} />
