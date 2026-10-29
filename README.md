@@ -271,10 +271,13 @@ from color, not from extra markup.
   trail, title, PersonChip and date, the text with its notice, the video beside
   it sticky from md, the transcript open; children for "other posts" and the
   final call).
-- **CourseCard**: ttcab's class card ("Formação"): the year large in
-  `action-text`, title, note, definition rows on neutral hairlines, a footnote
-  with a dot in the action colour and the Button `accent` as the one
-  full-colour element. By tone: no border, no shadow, no lift.
+- **CourseCard**: the class card (ttcab's "Formação", the school's class list):
+  course name as eyebrow, the year large in `action-text`, title, seats note,
+  definition rows on neutral hairlines, who teaches (a Byline with the stacked
+  portraits), a footnote with a dot in the action colour and the Button
+  `accent` as the one full-colour element, pinned at the foot. `soldOut` tones
+  the year down and puts a pill in the button's place. By tone: no border, no
+  shadow, no lift.
 - **StoryPanel**: creeta's "origin" block — one dark panel (surface-panel)
   grouping a story: media at the top with a film that fades into the panel, the
   logo at its base, title, lead, three pillars in columns with a hairline above
