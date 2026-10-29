@@ -18,6 +18,7 @@ import { CourseCard } from "../../components/CourseCard";
 import { EventList } from "../../components/EventList";
 import { EventFacts, DateBadge } from "../../components/EventFacts";
 import { RegistrationBox } from "../../components/RegistrationBox";
+import { SidePanel } from "../../components/SidePanel";
 import { BackgroundVideo } from "../../components/BackgroundVideo";
 import { ChatPreview } from "../../components/ChatPreview";
 import { PlanTimeline } from "../../components/PlanTimeline";
@@ -375,6 +376,119 @@ const FOOTER_GROUPS = (
   links: ids.map((id) => ({ href: `#${id}`, label: PAGE_NAV.find((p) => p.id === id)!.label })),
 }));
 
+
+// Real classes of the school, read from the public pages of metodorta.com.br on
+// 2026-10-29 (titles, dates, venues, prices, rules). Instructors are not named
+// on the pages: pending with the school. Covers here are generated images.
+type DemoCourse = {
+  id: string;
+  course: string;
+  city: string;
+  cover: string;
+  coverPosition?: string;
+  start: { month: string; day: string };
+  when: { title: string; subtitle?: string };
+  where?: { title: string; subtitle?: string; href?: string };
+  workload: string;
+  seats?: string;
+  soldOut?: boolean;
+  price: { value: string; note: string; cash: string; down: string };
+  cart?: string;
+  page: string;
+  about: string;
+  programme: string[];
+  audience: string;
+  discounts: string[];
+  rules: string[];
+};
+const COURSES: DemoCourse[] = [
+  {
+    id: "ttcab-2026-fortaleza",
+    course: "TTCAB 2026 · Tratamento do Torcicolo Congênito e outras Assimetrias Corporais do Bebê",
+    city: "Fortaleza · CE",
+    cover: "/demo/assessment.jpg",
+    start: { month: "Nov", day: "3" },
+    when: { title: "3 a 9 de novembro de 2026 · 08h30–17h30", subtitle: "+ 10 de novembro · 08h30–13h00" },
+    where: { title: "Instituto Olá, auditório Luz", subtitle: "Rua Felipe Nery, 1000, Guararapes, Fortaleza · CE", href: "https://www.google.com/maps/search/?api=1&query=Rua+Felipe+Nery+1000+Fortaleza" },
+    workload: "69 horas/aula",
+    seats: "14 vagas",
+    price: { value: "R$ 7.280", note: "à vista · até 12x no cartão", cash: "R$ 7.280,00", down: "R$ 1.456,00" },
+    cart: "https://metodorta.com.br/carrinho/?add-to-cart=60079",
+    page: "https://metodorta.com.br/cursos-e-eventos/ttcab-tratamento-do-torcicolo-congenito-e-outras-assimetrias-corporais-do-bebe-2/",
+    about: "Biomecânica das assimetrias corporais do bebê no primeiro ano de vida: desenvolvimento sensório-motor e estratégias de captação sensorial e atividades funcionais.",
+    programme: ["Tipos de torcicolo (congênito, obstétrico, postural) e graduação da gravidade", "Biomecânica craniocervical e torácica; pressão pélvica e abdominal", "Relação com as assimetrias cranianas e efeitos sensório-motores", "Assimetrias por gastrostomia, cirurgia e escoliose congênita", "Prática: avaliação funcional e tratamento gentil de corpo inteiro em quatro faixas (0–3, 4–6, 7–9 e 10–12 meses)"],
+    audience: "Somente fisioterapeutas podem participar.",
+    discounts: ["Grupos de cinco ou mais da mesma turma: 5% de desconto (cupom pelo WhatsApp)", "Reciclagem para quem já fez o curso básico: 25% de desconto"],
+    rules: ["A pré-inscrição não garante a vaga: a matrícula se confirma com a primeira parcela ou o pagamento integral", "Certificado incluso, emitido no nome usado na matrícula e entregue no último dia (segunda via R$ 70,00)", "Alunos presenciais precisam de ao menos três doses da vacina contra a COVID-19 até o início"],
+  },
+  {
+    id: "basico-2026-florianopolis",
+    course: "Curso Básico de RTA 2026 · Reequilíbrio Toracoabdominal",
+    city: "Florianópolis · SC",
+    cover: "/demo/clip-poster.jpg",
+    coverPosition: "50% 40%",
+    start: { month: "Dez", day: "2" },
+    when: { title: "2 a 8 de dezembro de 2026 · 08h30–17h30", subtitle: "+ 9 de dezembro · 08h30–13h30" },
+    where: { title: "Centro de Reequilíbrio Toracoabdominal (Creeta)", subtitle: "Rua João Mathias Cordeiro, 33, Santa Mônica, Florianópolis · SC", href: "https://www.google.com/maps/search/?api=1&query=Rua+Jo%C3%A3o+Mathias+Cordeiro+33+Florian%C3%B3polis" },
+    workload: "69 horas/aula",
+    seats: "28 vagas",
+    price: { value: "R$ 7.280", note: "à vista · até 12x no cartão", cash: "R$ 7.280,00", down: "R$ 1.456,00" },
+    cart: "https://metodorta.com.br/carrinho/?add-to-cart=77155",
+    page: "https://metodorta.com.br/cursos-e-eventos/curso-basico-em-reequilibrio-toracoabdominal/",
+    about: "Avaliação e tratamento global, funcional e humanizado do sistema respiratório, em pacientes de todas as idades.",
+    programme: ["Biomecânica respiratória e raciocínio clínico do método", "Atividade muscular respiratória e não respiratória; desenvolvimento muscular no primeiro ano", "Bloqueio inspiratório nas doenças obstrutivas e restritivas; padrões respiratórios", "Facilitação do diafragma, alongamento e fortalecimento, reexpansão pulmonar, desbloqueio da caixa torácica", "Biomecânica neonatal e manuseio do prematuro"],
+    audience: "Somente fisioterapeutas, com comprovação do registro no Crefito.",
+    discounts: ["Grupos de cinco ou mais da mesma turma: 5% de desconto", "Reciclagem para quem já fez o curso básico: 25% de desconto"],
+    rules: ["A pré-inscrição não garante a vaga: a matrícula se confirma com a primeira parcela ou o pagamento integral", "Certificado incluso (segunda via R$ 70,00)", "Troca de turma com 30 dias de antecedência, taxa de 15% e vaga disponível"],
+  },
+  {
+    id: "basico-2026-rio",
+    course: "Curso Básico de RTA 2026 · Reequilíbrio Toracoabdominal",
+    city: "Rio de Janeiro · RJ",
+    cover: "/demo/podcast-poster.jpg",
+    start: { month: "Set", day: "21" },
+    when: { title: "21 a 27 de setembro de 2026 · 08h30–17h30", subtitle: "+ 28 de setembro · 08h30–13h30" },
+    where: { title: "Centro de Estudos Physioscience", subtitle: "Av. N. Senhora de Copacabana, 928, sala 1202, Copacabana, Rio de Janeiro · RJ" },
+    workload: "69 horas/aula",
+    soldOut: true,
+    price: { value: "R$ 7.280", note: "à vista · até 12x no cartão", cash: "R$ 7.280,00", down: "R$ 1.456,00" },
+    page: "https://metodorta.com.br/cursos-e-eventos/curso-basico-em-reequilibrio-toracoabdominal/",
+    about: "Avaliação e tratamento global, funcional e humanizado do sistema respiratório, em pacientes de todas as idades.",
+    programme: ["Biomecânica respiratória e raciocínio clínico do método", "Facilitação do diafragma, reexpansão pulmonar, desbloqueio da caixa torácica", "Biomecânica neonatal e manuseio do prematuro"],
+    audience: "Somente fisioterapeutas, com comprovação do registro no Crefito.",
+    discounts: ["Grupos de cinco ou mais da mesma turma: 5% de desconto", "Reciclagem: 25% de desconto"],
+    rules: ["Turma esgotada: a escola pode indicar outra cidade com vaga"],
+  },
+  {
+    id: "avancado-2027-florianopolis",
+    course: "Curso Avançado de RTA em Pediatria Ambulatorial 2027",
+    city: "Florianópolis · SC",
+    cover: "/demo/invite-loop-poster.jpg",
+    start: { month: "Ago", day: "18" },
+    when: { title: "18 a 24 de agosto de 2027", subtitle: "08h30–12h30 e 14h00–18h00" },
+    where: { title: "Centro de Reequilíbrio Toracoabdominal (Creeta)", subtitle: "Rua João Mathias Cordeiro, 33, Santa Mônica, Florianópolis · SC", href: "https://www.google.com/maps/search/?api=1&query=Rua+Jo%C3%A3o+Mathias+Cordeiro+33+Florian%C3%B3polis" },
+    workload: "67 horas/aula",
+    seats: "18 vagas",
+    price: { value: "R$ 8.350", note: "à vista · até 12x no cartão", cash: "R$ 8.350,00", down: "R$ 1.670,00" },
+    page: "https://metodorta.com.br/cursos-e-eventos/avancado-de-rta-em-pediatria-ambulatorial-2027/",
+    about: "Aprofunda a avaliação clínica e a tomada de decisão no atendimento pediátrico ambulatorial, com a formação avançada em RTA.",
+    programme: ["Avaliação clínica e decisão terapêutica no ambulatório pediátrico", "Alunos da mesma cidade podem trazer o próprio paciente; encaminhamentos são aceitos"],
+    audience: "Somente fisioterapeutas com a formação básica em RTA.",
+    discounts: [],
+    rules: ["A pré-inscrição não garante a vaga: a matrícula se confirma com a primeira parcela ou o pagamento integral", "Certificado incluso", "Alunos presenciais precisam de ao menos três doses da vacina contra a COVID-19 até o início"],
+  },
+];
+
+// Curso Básico de RTA 2027: the eight classes of the year (R$ 8.350, 69 horas/aula), as an EventList
+const BASICO_2027 = [
+  { month: "Abril", iso: "2027-04", items: [{ date: "1 a 7 abr", city: "Dourados · MS", venue: "Local a confirmar", seats: 33 }] },
+  { month: "Maio", iso: "2027-05", items: [{ date: "3 a 9 mai", city: "João Pessoa · PB", venue: "Local a confirmar", seats: 36 }, { date: "24 a 30 mai", city: "Curitiba · PR", venue: "Neurointensiva, Rua Victório Malucelli, 360, Hauer", seats: 34 }] },
+  { month: "Junho", iso: "2027-06", items: [{ date: "8 a 14 jun", city: "Florianópolis · SC", venue: "Creeta, Rua João Mathias Cordeiro, 33, Santa Mônica", seats: 31 }, { date: "22 a 28 jun", city: "Rio de Janeiro · RJ", venue: "Centro de Estudos Physioscience, Copacabana", seats: 30 }] },
+  { month: "Julho", iso: "2027-07", items: [{ date: "1 a 6 jul", city: "São Paulo · SP", venue: "Instituto Phorte, Rua Treze de Maio, 681, Bela Vista", seats: 37 }] },
+  { month: "Agosto", iso: "2027-08", items: [{ date: "2 a 8 ago", city: "Foz do Iguaçu · PR", venue: "Local a confirmar", seats: 39 }] },
+  { month: "Outubro", iso: "2027-10", items: [{ date: "18 a 24 out", city: "Fortaleza · CE", venue: "Local a confirmar", seats: 32 }] },
+];
+
 function useScrollSpy(ids: readonly string[]) {
   const [active, setActive] = useState(ids[0]);
   useEffect(() => {
@@ -408,6 +522,8 @@ export function App() {
   const [listLinks, setListLinks] = useState(true);
   // optional parts of the page footer (the footer is its own demo)
   const [dose, setDose] = useState<"disciplined" | "loud">("disciplined");
+  const [openCourse, setOpenCourse] = useState<string | null>(null);
+  const selected = COURSES.find((c) => c.id === openCourse) ?? null;
   const [ft, setFt] = useState({ quote: true, pages: true, hours: true, directions: true, notice: true, contacts: true, languages: false, credits: true });
   const brand = BRAND_BY_PALETTE[pal] ?? BRAND_BY_PALETTE.Neutral;
   useEffect(() => {
@@ -1152,47 +1268,102 @@ export function App() {
       </Section>
 
       <Section id="course" title="CourseCard — the class card">
-        <p className="mb-6 max-w-[62ch] text-ink-body">The class card (ttcab's "Formação", the school's class list) in the family's own vocabulary: the course name as the category line, the city as the title with the seats pill (as the EventRow), the facts as tiles (the calendar tile for the start, the pin for the venue with its map link, a clock for the workload, as the EventFacts), who teaches as a Byline, and at the foot the price with its instalment note on the left and the Button accent on the right, the one full-colour element. The cover photo at the top, as every class page of the school has one. "soldOut" puts the pill in the button's place. By tone: no border, no shadow, no lift.</p>
+        <p className="mb-6 max-w-[62ch] text-ink-body">The class card (ttcab's "Formação", the school's class list) in the family's own vocabulary: the course name as the category line, the city as the title with the seats pill, the facts as tiles (the calendar tile for the start, the pin for the venue with its map link, a clock for the workload), who teaches as a Byline, a cover at the top, and at the foot the price with its note beside the Button accent. Click a card: it opens the SidePanel (Luma's drawer) with everything about the class and the button that goes straight to the school's cart. Real classes from the school's public pages (29 Oct 2026); covers are generated images; instructors are not named on the pages, pending with the school.</p>
         <div className="grid gap-3 md:grid-cols-2 md:gap-5">
-          <CourseCard
-            cover={{ src: "/demo/assessment.jpg" }}
-            course="Course name"
-            title="City · ST"
-            seats="14 seats"
-            start={{ month: "Nov", day: "3" }}
-            when={{ title: "3 to 9 November 2026 · 08:30–17:30", subtitle: "+ 10 November · 08:30–13:00" }}
-            where={{ title: "Venue name", subtitle: "Street name, 1000, auditorium, neighbourhood", href: "https://www.google.com/maps/search/?api=1&query=Florian%C3%B3polis", external: true }}
-            workload="69 class hours"
-            instructors={[{ name: "Person name", href: "#people", photo: "/demo/person-avatar.jpg" }]}
-            price={{ value: "R$ 7.280", note: "up to 12 instalments" }}
-            footnote="Only physiotherapists can attend."
-            action={<Button variant="accent" href="https://github.com/felipegenuino/breathe-ds" target="_blank" rel="noopener noreferrer">Secure my seat</Button>}
-          />
-          <CourseCard
-            cover={{ src: "/demo/clip-poster.jpg", position: "50% 40%" }}
-            course="Course name"
-            title="Big city · ST"
-            soldOut
-            start={{ month: "Sep", day: "21" }}
-            when={{ title: "21 to 27 September 2026 · 08:30–17:30", subtitle: "+ 28 September · 08:30–13:30" }}
-            where={{ title: "Venue name", subtitle: "Avenue name, 928, room 1202, neighbourhood" }}
-            workload="69 class hours"
-            instructors={[{ name: "Person name", href: "#people", photo: "/demo/person-avatar.jpg" }, { name: "Another person", href: "#people", photo: "/demo/person-avatar.jpg" }, { name: "Third person", href: "#people", photo: "/demo/person-avatar.jpg" }]}
-            price={{ value: "R$ 7.280", note: "up to 12 instalments" }}
-            footnote="Only physiotherapists can attend."
-          />
-          <CourseCard
-            cover={{ src: "/demo/podcast-poster.jpg" }}
-            course="Course name"
-            title="Another city · ST"
-            seats="Limited seats"
-            start={{ month: "2027", day: "—" }}
-            when={{ title: "Dates to be confirmed" }}
-            where={{ title: "Venue to be confirmed" }}
-            workload="69 class hours"
-            price={{ value: "R$ 7.280", note: "up to 12 instalments" }}
-            footnote="Only physiotherapists can attend."
-            action={<Button variant="accent" href="https://github.com/felipegenuino/breathe-ds" target="_blank" rel="noopener noreferrer">Secure my seat</Button>}
+          {COURSES.map((c) => (
+            <CourseCard
+              key={c.id}
+              cover={{ src: c.cover, position: c.coverPosition }}
+              course={c.course}
+              title={c.city}
+              seats={c.seats}
+              soldOut={c.soldOut}
+              start={c.start}
+              when={c.when}
+              where={c.where ? { ...c.where, external: !!c.where.href } : undefined}
+              workload={c.workload}
+              price={{ value: c.price.value, note: c.price.note }}
+              footnote={c.audience}
+              onSelect={() => setOpenCourse(c.id)}
+              action={c.cart ? <Button variant="accent" href={c.cart} target="_blank" rel="noopener noreferrer">Garantir minha vaga</Button> : <Button variant="outline" href={c.page} target="_blank" rel="noopener noreferrer">Ver a página</Button>}
+            />
+          ))}
+        </div>
+
+        <SidePanel
+          open={!!selected}
+          onClose={() => setOpenCourse(null)}
+          title={selected ? `${selected.course} · ${selected.city}` : "Class"}
+          actions={selected && (
+            <>
+              <Button variant="outline" size="sm" onClick={() => navigator.clipboard?.writeText(selected.page)}>Copy link</Button>
+              <Button variant="outline" size="sm" href={selected.page} target="_blank" rel="noopener noreferrer">Course page <IconArrowUpRight size={14} /></Button>
+            </>
+          )}
+        >
+          {selected && (
+            <div className="p-5 md:p-6">
+              <div className="relative aspect-[4/3] overflow-hidden rounded-[22px] bg-ink/[0.06]">
+                <img src={selected.cover} alt="" className="absolute inset-0 h-full w-full object-cover" style={{ objectPosition: selected.coverPosition ?? "50% 25%" }} />
+              </div>
+              <p className="mt-5 text-sm font-semibold text-ink-soft">{selected.course}</p>
+              <h3 className="mt-1 font-heading text-[1.75rem] font-medium leading-[1.12] tracking-[-0.01em] text-ink">
+                {selected.city}
+                {(selected.seats || selected.soldOut) && <span className="ml-2 inline-flex translate-y-[-3px] items-center rounded-pill bg-ink/[0.08] px-2.5 py-0.5 align-middle text-xs font-semibold text-ink">{selected.soldOut ? "Esgotada" : selected.seats}</span>}
+              </h3>
+              <EventFacts
+                className="mt-5"
+                facts={[
+                  { tile: <DateBadge month={selected.start.month} day={selected.start.day} />, title: selected.when.title, subtitle: selected.when.subtitle },
+                  ...(selected.where ? [{ tile: "pin" as const, title: selected.where.title, subtitle: selected.where.subtitle, href: selected.where.href, external: true }] : []),
+                ]}
+              />
+              <RegistrationBox
+                className="mt-6"
+                title="Inscrição"
+                intro={selected.soldOut ? "Turma esgotada. Fale com a escola para entrar na lista de espera." : "Escolha como pagar:"}
+                options={[
+                  { id: "cash", label: "À vista", remaining: "cartão ou PIX", price: selected.price.cash, disabled: selected.soldOut },
+                  { id: "boleto", label: "Boleto sem juros", remaining: `entrada ${selected.price.down} via PIX`, price: selected.price.cash, disabled: selected.soldOut },
+                  { id: "card", label: "Cartão em até 12x", remaining: "com juros", price: selected.price.cash, disabled: selected.soldOut },
+                ]}
+                action={selected.cart && !selected.soldOut
+                  ? <Button variant="accent" href={selected.cart} target="_blank" rel="noopener noreferrer">Garantir minha vaga <IconArrowUpRight size={16} /></Button>
+                  : <Button variant="solid" href="https://wa.me/5548999164520" target="_blank" rel="noopener noreferrer">Falar com a escola <IconArrowUpRight size={16} /></Button>}
+                footnote={`${selected.audience} Carga horária: ${selected.workload}.`}
+              />
+              <section className="mt-8">
+                <h4 className="font-heading text-lg font-medium text-ink">Sobre o curso</h4>
+                <p className="mt-2 leading-relaxed text-ink-body">{selected.about}</p>
+              </section>
+              {selected.programme.length > 0 && (
+                <section className="mt-6">
+                  <h4 className="font-heading text-lg font-medium text-ink">Programa</h4>
+                  <List marker="arrow" className="mt-3" items={selected.programme.map((label) => ({ label }))} />
+                </section>
+              )}
+              {selected.discounts.length > 0 && (
+                <section className="mt-6">
+                  <h4 className="font-heading text-lg font-medium text-ink">Descontos</h4>
+                  <List marker="check" className="mt-3" items={selected.discounts.map((label) => ({ label }))} />
+                </section>
+              )}
+              <section className="mt-6 mb-2">
+                <h4 className="font-heading text-lg font-medium text-ink">Matrícula</h4>
+                <List className="mt-3" items={selected.rules.map((label) => ({ label }))} />
+              </section>
+            </div>
+          )}
+        </SidePanel>
+
+        <p className="mt-10 mb-3 text-xs font-semibold text-ink-soft">EventList · the eight classes of the Basic course in 2027 (R$ 8.350 · 69 class hours)</p>
+        <div className="max-w-3xl">
+          <EventList
+            label="Curso Básico de RTA 2027"
+            groups={BASICO_2027.map((g) => ({
+              date: g.month, iso: g.iso,
+              events: g.items.map((it) => ({ time: it.date, timeAccent: "08h30–17h30", title: it.city, href: "https://metodorta.com.br/cursos-e-eventos/basico-2027/", location: it.venue, badge: `${it.seats} vagas` })),
+            }))}
           />
         </div>
       </Section>

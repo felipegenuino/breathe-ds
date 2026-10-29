@@ -39,6 +39,10 @@ type Props = {
   action?: ReactNode;
   /** No seats left: the pill says so and takes the button's place. */
   soldOut?: boolean;
+  /** Makes the card clickable (the title becomes a button stretched over the
+   *  card) to open its details, e.g. in a SidePanel. Links inside (the map,
+   *  the instructors, the action) keep working on their own. */
+  onSelect?: () => void;
   headingLevel?: "h2" | "h3";
   linkComponent?: ElementType;
   labels?: Partial<Labels>;
@@ -56,7 +60,7 @@ const PILL = "inline-flex items-center rounded-pill bg-ink/[0.08] px-2.5 py-0.5 
  * a Byline, and the Button accent pinned at the foot. By tone: no border, no
  * shadow, no lift.
  */
-export function CourseCard({ cover, course, title, start, when, where, workload, seats, instructors, price, footnote, action, soldOut = false, headingLevel: Title = "h3", linkComponent, labels, className = "" }: Props) {
+export function CourseCard({ cover, course, title, start, when, where, workload, seats, instructors, price, footnote, action, soldOut = false, onSelect, headingLevel: Title = "h3", linkComponent, labels, className = "" }: Props) {
   const t = { ...EN, ...labels };
   const facts: EventFact[] = [{ tile: <DateBadge month={start.month} day={start.day} />, title: when.title, subtitle: when.subtitle }];
   if (where) facts.push({ tile: "pin", title: where.title, subtitle: where.subtitle, href: where.href, external: where.external });
@@ -78,7 +82,7 @@ export function CourseCard({ cover, course, title, start, when, where, workload,
   );
 
   return (
-    <article className={`flex flex-col overflow-hidden rounded-[28px] bg-card ${className}`}>
+    <article className={`relative flex flex-col overflow-hidden rounded-[28px] bg-card ${onSelect ? "transition-transform duration-200 ease-out active:scale-[0.99] motion-reduce:transition-none motion-reduce:active:scale-100 [&_a]:relative [&_a]:z-10 [&_button]:relative [&_button]:z-10" : ""} ${className}`}>
       {cover && (
         <div className="relative aspect-[4/3] overflow-hidden">
           {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -88,7 +92,14 @@ export function CourseCard({ cover, course, title, start, when, where, workload,
       <div className="flex flex-1 flex-col p-6 md:p-7">
       {course && <p className="mb-2 text-sm font-semibold text-ink-soft">{course}</p>}
       <Title className="font-heading text-xl font-medium leading-snug text-ink md:text-[1.375rem]">
-        {title}
+        {onSelect ? (
+          // the stretched hit area of the card: this button is the exception to [&_button]:z-10 (static, after: covers the card)
+          <button type="button" onClick={onSelect} className="static! z-auto! text-left after:absolute after:inset-0 after:z-0 after:rounded-[28px] focus-visible:outline-none focus-visible:after:outline focus-visible:after:outline-2 focus-visible:after:-outline-offset-2 focus-visible:after:outline-ink">
+            {title}
+          </button>
+        ) : (
+          title
+        )}
         {pill && <span className={`${PILL} ml-2 translate-y-[-2px] align-middle`}>{pill}</span>}
       </Title>
 

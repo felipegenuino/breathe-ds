@@ -74,7 +74,8 @@
     "./components/EventRow": "./components/EventRow.tsx",
     "./components/EventList": "./components/EventList.tsx",
     "./components/EventFacts": "./components/EventFacts.tsx",
-    "./components/RegistrationBox": "./components/RegistrationBox.tsx"
+    "./components/RegistrationBox": "./components/RegistrationBox.tsx",
+    "./components/SidePanel": "./components/SidePanel.tsx"
   },
   "publishConfig": {
     "access": "public"

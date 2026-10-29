@@ -271,13 +271,22 @@ from color, not from extra markup.
   trail, title, PersonChip and date, the text with its notice, the video beside
   it sticky from md, the transcript open; children for "other posts" and the
   final call).
+- **SidePanel**: Luma's drawer — a native `<dialog>` that slides in from the
+  right, full height, up to 32rem wide (full width on the phone), with a top
+  bar (close on the left, actions such as "Copy link" and "Course page ↗" on
+  the right) and a scrolling body. Esc, the backdrop and the button close it;
+  focus goes back to what opened it. The playground opens one from a
+  CourseCard (`onSelect`) with the whole class inside: cover, facts,
+  RegistrationBox with the button straight to the school's cart, programme,
+  discounts, rules.
 - **CourseCard**: the class card (ttcab's "Formação", the school's class list)
   in the family's own vocabulary: course name as the category line, the city as
   the title with the seats pill, the facts as EventFacts tiles (DateBadge for
   the start, pin for the venue with its map link, clock for the workload), who
   teaches as a Byline, a cover photo at the top, and at the foot the price with
   its note beside the Button `accent`; `soldOut` puts the pill in the button's
-  place. By tone: no border, no shadow, no lift.
+  place; `onSelect` makes the card a button stretched over it (the links inside
+  keep working) to open its details. By tone: no border, no shadow, no lift.
 - **Events** (after Luma and Meetup, for the school's classes): **EventList**
   (days down a dotted rail, each with its rows), **EventRow** (time with an
   accented end, title as the stretched link, organizers, location, who is going
