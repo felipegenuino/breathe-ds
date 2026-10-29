@@ -262,7 +262,7 @@ function HeroDemo() {
 /* Marca de cada paleta: o Breathe é neutro; TTCAB e Creeta trazem o símbolo e
    o wordmark reais dos sites (components/marks). A altura do wordmark vem da
    razão do manual de cada marca (wordmarkRatio), não de um valor a olho. */
-const CORTINA_MARCA: Record<string, { name: string; tagline: string; logo?: ReactNode; wordmark?: ReactNode; wordmarkRatio?: number }> = {
+const CORTINA_MARCA: Record<string, { name: string; tagline: string; logo?: ReactNode; wordmark?: ReactNode; wordmarkRatio?: number; symbolSide?: "left" | "right" }> = {
   Neutro: { name: "Breathe", tagline: "Design system da família Cuidado Global" },
   TTCAB: {
     name: "TTCAB",
@@ -270,6 +270,7 @@ const CORTINA_MARCA: Record<string, { name: string; tagline: string; logo?: Reac
     logo: <TtcabSymbol size={60} />,
     wordmark: <TtcabWordmark />,
     wordmarkRatio: TTCAB_LOCKUP.wordmarkPerSymbol,
+    symbolSide: TTCAB_LOCKUP.symbolSide,
   },
   Creeta: {
     name: "creeta",
@@ -277,6 +278,7 @@ const CORTINA_MARCA: Record<string, { name: string; tagline: string; logo?: Reac
     logo: <CreetaSymbol size={60} />,
     wordmark: <CreetaWordmark />,
     wordmarkRatio: CREETA_LOCKUP.wordmarkPerSymbol,
+    symbolSide: CREETA_LOCKUP.symbolSide,
   },
 };
 
@@ -290,7 +292,7 @@ export function App() {
   }, [pal]);
   return (
     <div>
-      <Cortina key={cortinaKey} name={marca.wordmark ?? marca.name} tagline={marca.tagline} logo={marca.logo} wordmarkRatio={marca.wordmarkRatio} />
+      <Cortina key={cortinaKey} name={marca.wordmark ?? marca.name} tagline={marca.tagline} logo={marca.logo} wordmarkRatio={marca.wordmarkRatio} symbolSide={marca.symbolSide} />
       {/* dogfooding: o header do DS É o componente Header do Breathe */}
       <Header
         logo={<span className="flex items-center gap-2 font-heading text-xl font-bold text-ink"><BreatheMark size={20} /> Breathe</span>}
@@ -349,7 +351,7 @@ export function App() {
                     name={marca.name}
                     logo={marca.logo}
                     wordmark={marca.wordmark}
-                    wordmarkRatio={marca.wordmarkRatio}
+                    wordmarkRatio={marca.wordmarkRatio} symbolSide={marca.symbolSide}
                     tagline={comTag ? marca.tagline : undefined}
                     size={v === "symbol" || v === "merged" ? "lg" : "md"}
                   />
@@ -464,7 +466,7 @@ export function App() {
               logo={
                 <a href="#" aria-label="Página inicial" className="inline-flex rounded-xl transition-opacity hover:opacity-70 focus-visible:outline-2 focus-visible:outline-offset-[3px] focus-visible:outline-ink">
                   {/* entrada como no novo.creeta: símbolo, depois o nome; espera a Cortina subir (2200 + 700ms) */}
-                  <Lockup key={cortinaKey} entrance entranceDelay={2700} variant="horizontal" size="md" name={marca.name} logo={marca.logo} wordmark={marca.wordmark} wordmarkRatio={marca.wordmarkRatio} />
+                  <Lockup key={cortinaKey} entrance entranceDelay={2700} variant="horizontal" size="md" name={marca.name} logo={marca.logo} wordmark={marca.wordmark} wordmarkRatio={marca.wordmarkRatio} symbolSide={marca.symbolSide} />
                 </a>
               }
               cta={<Button variant="accent" size="sm">WhatsApp</Button>}
@@ -509,7 +511,7 @@ export function App() {
 
         <Section id="footer" title="Footer">
           <Footer
-            logo={<Lockup variant="horizontal" size="sm" name={marca.name} logo={marca.logo} wordmark={marca.wordmark} wordmarkRatio={marca.wordmarkRatio} />}
+            logo={<Lockup variant="horizontal" size="sm" name={marca.name} logo={marca.logo} wordmark={marca.wordmark} wordmarkRatio={marca.wordmarkRatio} symbolSide={marca.symbolSide} />}
             tagline={marca.tagline}
             columns={[{ title: "Navegação", items: ["Início", "Para famílias", "Depoimentos"].map((l) => <a key={l} href="#" className="hover:text-ink-soft">{l}</a>) },
                       { title: "", items: ["Tratamento", "Profissionais", "Artigos"].map((l) => <a key={l} href="#" className="hover:text-ink-soft">{l}</a>) }]}
@@ -523,7 +525,7 @@ export function App() {
           <p className="mb-8 max-w-[60ch] text-ink-body">No celular e no tablet a navegação sai do header e vira esta barra flutuante no rodapé. Aqui ela fica embutida numa moldura para você ver no desktop; abaixo de ~1024px ela aparece de verdade no rodapé da janela. Toque em "Mais" para o painel.</p>
           <div className="relative mx-auto h-[640px] w-[390px] max-w-full overflow-hidden rounded-[2.5rem] border border-line bg-surface shadow-[0_24px_48px_-24px_rgba(20,71,83,0.35)]">
             <div className="flex h-16 items-center justify-between px-5">
-              <Lockup variant="horizontal" size="sm" name={marca.name} logo={marca.logo} wordmark={marca.wordmark} wordmarkRatio={marca.wordmarkRatio} />
+              <Lockup variant="horizontal" size="sm" name={marca.name} logo={marca.logo} wordmark={marca.wordmark} wordmarkRatio={marca.wordmarkRatio} symbolSide={marca.symbolSide} />
               <span className={CHIP}>{IcPin} PT</span>
             </div>
             <div className="space-y-3 px-5 pt-6" aria-hidden="true">

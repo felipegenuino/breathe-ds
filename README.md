@@ -130,7 +130,8 @@ marca (`public/brand`) dos repositórios, separados em dois componentes para a
 
 **Proporção vem do manual, não do olho.** Cada arquivo de marca exporta
 `*_LOCKUP.wordmarkPerSymbol` (altura do wordmark ÷ altura do símbolo no
-logotipo horizontal: TTCAB 0,557 · creeta 0,469). O `Lockup` e a `Cortina`
+logotipo horizontal: TTCAB 0,557 · creeta 0,469) e `symbolSide` (no TTCAB o
+símbolo fica à **direita** do nome; no creeta e nos demais, à esquerda). O `Lockup` e a `Cortina`
 passam isso ao svg pela variável `--cg-wordmark`; o símbolo injetado recebe a
 altura do tamanho (`size`). Medido nos sites (29/10/2026): no header dos dois o
 símbolo tem **44px** de altura — é o `size="md"` do Lockup. O símbolo aceita

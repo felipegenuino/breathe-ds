@@ -37,6 +37,9 @@ type Props = {
   /** Altura do wordmark como fração da altura do símbolo, do manual da marca
    *  (ex.: `TTCAB_LOCKUP.wordmarkPerSymbol`). Chega ao svg por `--cg-wordmark`. */
   wordmarkRatio?: number;
+  /** Lado do símbolo no horizontal. Padrão `left` (creeta e os demais); o TTCAB
+   *  é `right` (`TTCAB_LOCKUP.symbolSide`). */
+  symbolSide?: "left" | "right";
   size?: Size;
   /** O símbolo "respira"? Padrão `false` — logo de cabeçalho não fica animando. */
   animated?: boolean;
@@ -61,6 +64,7 @@ export function Lockup({
   logo,
   wordmark,
   wordmarkRatio = 0.5,
+  symbolSide = "left",
   size = "md",
   animated = false,
   entrance = false,
@@ -140,7 +144,7 @@ export function Lockup({
 
   // horizontal (padrão)
   return (
-    <span className={`inline-flex items-center ${GAP[size]}${entranceCls} ${className}`} style={entranceStyle}>
+    <span className={`inline-flex items-center ${symbolSide === "right" ? "flex-row-reverse" : ""} ${GAP[size]}${entranceCls} ${className}`} style={entranceStyle}>
       {entrance && <style>{ENTRANCE_CSS}</style>}
       {mark}
       <span className="flex min-w-0 flex-col">

@@ -14,6 +14,8 @@ type Props = {
   /** Quando `name` é um wordmark svg: altura dele como fração da altura do
    *  símbolo, do manual da marca (ex.: `CREETA_LOCKUP.wordmarkPerSymbol`). */
   wordmarkRatio?: number;
+  /** Lado do símbolo. Padrão `left`; o TTCAB é `right` (`TTCAB_LOCKUP.symbolSide`). */
+  symbolSide?: "left" | "right";
   /** Chave do sessionStorage (quando há o script de cabeça). */
   storageKey?: string;
   /** Chamado quando a cortina termina de subir. */
@@ -38,7 +40,7 @@ type Props = {
  * Ao terminar de subir, o <html> ganha data-cg-cortina-fim (para o topo das
  * páginas "pousar" só depois dela, nunca numa troca de tela) e chama onDone.
  */
-export function Cortina({ name, tagline, logo, wordmarkRatio, storageKey, onDone, className }: Props) {
+export function Cortina({ name, tagline, logo, wordmarkRatio, symbolSide = "left", storageKey, onDone, className }: Props) {
   const el = useRef<HTMLDivElement>(null);
   const [gone, setGone] = useState(false);
 
@@ -65,7 +67,7 @@ export function Cortina({ name, tagline, logo, wordmarkRatio, storageKey, onDone
   return (
     <div ref={el} className={`cg-cortina${className ? ` ${className}` : ""}`} aria-hidden="true">
       <style>{CORTINA_CSS}</style>
-      <div className="cg-cortina__lockup">
+      <div className={`cg-cortina__lockup${symbolSide === "right" ? " cg-cortina__lockup--right" : ""}`}>
         <span className="cg-cortina__mark">{logo ?? <BreatheMark size={60} duration={5} />}</span>
         <span className="cg-cortina__text">
           <span
@@ -106,6 +108,8 @@ const CORTINA_CSS = `
 }
 /* gap ≈ 1/3 do corpo do nome: o anel é curvo, então o vão óptico lê um pouco maior que o geométrico */
 .cg-cortina__lockup{ display:flex; align-items:center; gap:clamp(10px,1.6vw,16px); padding:0 24px; }
+.cg-cortina__lockup--right{ flex-direction:row-reverse; }
+.cg-cortina__lockup--right .cg-cortina__name{ animation-name:cg-cortina-nome-dir; }
 .cg-cortina__mark{ display:inline-flex; color:var(--color-ink,#14323a);
   animation:cg-cortina-mark 700ms var(--ease-cg,cubic-bezier(.2,.8,.2,1)) both; }
 /* símbolo ~1.25× o corpo do nome (a caixa do SVG é justa ao glifo), fluido.
@@ -125,6 +129,7 @@ const CORTINA_CSS = `
 @keyframes cg-cortina-sobe{ to{ transform:translateY(-100%); visibility:hidden; } }
 @keyframes cg-cortina-mark{ from{ opacity:0; transform:scale(.6) rotate(-16deg); } }
 @keyframes cg-cortina-nome{ from{ opacity:0; transform:translateX(-8px); } }
+@keyframes cg-cortina-nome-dir{ from{ opacity:0; transform:translateX(8px); } }
 @keyframes cg-cortina-tag{ from{ opacity:0; transform:translateY(4px); } }
 html[data-cg-cortina="vista"] .cg-cortina{ display:none; }
 @media (prefers-reduced-motion:reduce){ .cg-cortina{ display:none; } }

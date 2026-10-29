@@ -48,7 +48,8 @@ type WordmarkProps = {
 
 /** Razão do manual: altura do wordmark ÷ altura do símbolo no logotipo
  *  horizontal (40.3 / 86 (nome a 1.4643× no logotipo horizontal)). Passe como `wordmarkRatio` ao Lockup/Cortina. */
-export const CREETA_LOCKUP = { wordmarkPerSymbol: 0.469 } as const;
+/** No creeta o símbolo fica à esquerda do nome (padrão da família). */
+export const CREETA_LOCKUP = { wordmarkPerSymbol: 0.469, symbolSide: "left" } as const;
 
 /** Caixa justa ao desenho das letras: 116.66 × 27.53. */
 export function CreetaWordmark({ height = "var(--cg-wordmark, 1em)", color = "currentColor", className, style, title = "creeta" }: WordmarkProps) {

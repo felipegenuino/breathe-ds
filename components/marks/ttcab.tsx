@@ -40,7 +40,8 @@ type WordmarkProps = {
 
 /** Razão do manual: altura do wordmark ÷ altura do símbolo no logotipo
  *  horizontal (43.67 / 78.39). Passe como `wordmarkRatio` ao Lockup/Cortina. */
-export const TTCAB_LOCKUP = { wordmarkPerSymbol: 0.557 } as const;
+/** No TTCAB o símbolo fica à DIREITA do nome (logotipo horizontal do manual). */
+export const TTCAB_LOCKUP = { wordmarkPerSymbol: 0.557, symbolSide: "right" } as const;
 
 /** Caixa justa ao desenho das letras: 149.75 × 43.67. */
 export function TtcabWordmark({ height = "var(--cg-wordmark, 1em)", color = "currentColor", className, style, title = "TTCAB" }: WordmarkProps) {
