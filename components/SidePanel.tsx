@@ -40,8 +40,11 @@ export function SidePanel({ open, onClose, title, actions, children, labels, cla
     if (!d) return;
     if (open) {
       if (!d.open) d.showModal();
-      requestAnimationFrame(() => d.setAttribute("data-open", ""));
-      return;
+      // paint the closed state first (the dialog was display:none), then open:
+      // a forced reflow plus a frame, or the slide would not play
+      void d.getBoundingClientRect();
+      const frame = requestAnimationFrame(() => d.setAttribute("data-open", ""));
+      return () => cancelAnimationFrame(frame);
     }
     if (!d.open) return;
     d.removeAttribute("data-open");
@@ -73,7 +76,7 @@ export function SidePanel({ open, onClose, title, actions, children, labels, cla
     <dialog
       ref={box}
       aria-labelledby={headingId}
-      className={`fixed inset-y-0 right-0 left-auto m-0 flex h-dvh max-h-none w-[min(100vw,32rem)] max-w-none translate-x-full flex-col overflow-hidden bg-card p-0 text-ink shadow-2xl [transition:transform_280ms_var(--ease-cg)] data-open:translate-x-0 motion-reduce:transition-none backdrop:bg-ink/50 backdrop:backdrop-blur-sm backdrop:opacity-0 backdrop:[transition:opacity_240ms_ease-out] [&[data-open]::backdrop]:opacity-100 ${className}`}
+      className={`fixed inset-y-0 right-0 left-auto m-0 flex h-dvh max-h-none w-[min(100vw,32rem)] max-w-none translate-x-full flex-col overflow-hidden bg-card p-0 text-ink shadow-2xl [transition:translate_280ms_var(--ease-cg)] data-open:translate-x-0 motion-reduce:transition-none backdrop:bg-ink/50 backdrop:backdrop-blur-sm backdrop:opacity-0 backdrop:[transition:opacity_240ms_ease-out] [&[data-open]::backdrop]:opacity-100 ${className}`}
     >
       <h2 id={headingId} className="sr-only">{title}</h2>
       <div className="flex shrink-0 items-center justify-between gap-3 border-b border-ink/10 px-4 py-3">
