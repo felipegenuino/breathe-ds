@@ -21,7 +21,7 @@ type Props = {
 export function Pill({ href, children, meta, linkComponent, className = "" }: Props) {
   const onPage = href.startsWith("#");
   const L: ElementType = onPage ? "a" : linkComponent ?? "a";
-  const classes = `group inline-flex min-h-11 items-center gap-2 rounded-full bg-white py-1.5 pl-4 pr-1.5 text-sm font-medium text-ink shadow-[0_1px_2px_rgba(0,0,0,0.12)] transition duration-200 hover:bg-ink hover:text-surface active:scale-[0.98] motion-reduce:active:scale-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink motion-reduce:transition-none ${className}`;
+  const classes = `group inline-flex min-h-11 items-center gap-2 rounded-full bg-card py-1.5 pl-4 pr-1.5 text-sm font-medium text-ink shadow-[0_1px_2px_rgba(0,0,0,0.12)] transition duration-200 hover:bg-ink hover:text-surface active:scale-[0.98] motion-reduce:active:scale-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink motion-reduce:transition-none ${className}`;
   return (
     <L href={href} className={classes}>
       <span>{children}</span>

@@ -18,6 +18,7 @@
   /* ── Colors (roles) — value comes from the site's --cg-* ── */
   --color-surface: var(--cg-surface);              /* base background */
   --color-surface-panel: var(--cg-surface-panel);  /* dark panel (footer/CTA) */
+  --color-card: var(--cg-card, #ffffff);           /* raised surface: cards, pills, menus over the page */
   --color-ink: var(--cg-ink);                      /* primary text / headings */
   --color-ink-soft: var(--cg-ink-soft);            /* secondary text */
   --color-ink-body: var(--cg-ink-body);            /* body copy */

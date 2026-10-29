@@ -266,7 +266,7 @@ export function VideoStoryCard({
               )}
               {/* play and duration, together in the top corner */}
               <span aria-hidden="true" className="absolute left-3 top-3 flex items-center gap-2">
-                <span className="flex h-11 w-11 items-center justify-center rounded-full bg-white text-ink shadow-[0_8px_24px_-8px_rgba(0,0,0,0.6)] transition-transform duration-200 ease-out group-hover:scale-105 group-active:scale-95 motion-reduce:transition-none motion-reduce:group-hover:scale-100 motion-reduce:group-active:scale-100">
+                <span className="flex h-11 w-11 items-center justify-center rounded-full bg-card text-ink shadow-[0_8px_24px_-8px_rgba(0,0,0,0.6)] transition-transform duration-200 ease-out group-hover:scale-105 group-active:scale-95 motion-reduce:transition-none motion-reduce:group-hover:scale-100 motion-reduce:group-active:scale-100">
                   <Play size={18} strokeWidth={2} className="ml-0.5 fill-current" />
                 </span>
                 <span className="rounded-full bg-ink/85 px-3 py-1.5 text-xs font-medium text-white backdrop-blur-md">

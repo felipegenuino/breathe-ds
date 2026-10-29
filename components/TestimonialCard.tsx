@@ -96,7 +96,7 @@ function TapVideo({ src, poster, description, withSound = true, captions, media,
         )}
         <span
           aria-hidden="true"
-          className="absolute left-1/2 top-1/2 flex h-14 w-14 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-white text-ink shadow-[0_8px_24px_-8px_rgba(0,0,0,0.6)] transition-transform duration-200 ease-out group-hover:scale-105 group-active:scale-95 motion-reduce:transition-none motion-reduce:group-hover:scale-100 motion-reduce:group-active:scale-100"
+          className="absolute left-1/2 top-1/2 flex h-14 w-14 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-card text-ink shadow-[0_8px_24px_-8px_rgba(0,0,0,0.6)] transition-transform duration-200 ease-out group-hover:scale-105 group-active:scale-95 motion-reduce:transition-none motion-reduce:group-hover:scale-100 motion-reduce:group-active:scale-100"
         >
           <Play size={22} strokeWidth={2} className="ml-0.5 fill-current" />
         </span>
@@ -117,7 +117,7 @@ function TapVideo({ src, poster, description, withSound = true, captions, media,
 export function TestimonialCard({ quote, author, authorPhoto, authorAvatar, link, video, as: Root = "div", labels, className = "" }: Props) {
   const t = { ...EN, ...labels };
   return (
-    <Root className={`grid grid-cols-[minmax(0,2fr)_minmax(0,3fr)] overflow-hidden rounded-[28px] bg-white ${className}`}>
+    <Root className={`grid grid-cols-[minmax(0,2fr)_minmax(0,3fr)] overflow-hidden rounded-[28px] bg-card ${className}`}>
       <TapVideo {...video} label={t.watch(video.description)} />
       <figure className="flex flex-col justify-between gap-5 p-5 md:p-7">
         <blockquote className="font-heading text-[0.9375rem] font-medium leading-relaxed text-ink md:text-base">{quote}</blockquote>

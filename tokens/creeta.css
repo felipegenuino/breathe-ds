@@ -10,6 +10,7 @@
 :root {
   --cg-surface: #eef3f4;        /* mist */
   --cg-surface-panel: #144753;  /* petrol */
+  --cg-card: #ffffff;           /* cards, pills and menus over the page */
   --cg-ink: #144753;            /* petrol */
   --cg-ink-soft: #266675;       /* teal-escuro */
   --cg-ink-body: #1e4f5b;

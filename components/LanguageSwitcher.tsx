@@ -114,7 +114,7 @@ export function LanguageSwitcher({ languages, mode = "menu", labels, className =
       </button>
       <ul
         id={id}
-        className={`absolute right-0 top-full z-50 mt-2 min-w-[11rem] list-none origin-top-right rounded-[20px] bg-white p-1.5 shadow-[0_16px_40px_-16px_rgba(0,0,0,0.35)] transition duration-150 ease-out motion-reduce:transition-none ${
+        className={`absolute right-0 top-full z-50 mt-2 min-w-[11rem] list-none origin-top-right rounded-[20px] bg-card p-1.5 shadow-[0_16px_40px_-16px_rgba(0,0,0,0.35)] transition duration-150 ease-out motion-reduce:transition-none ${
           open ? "visible scale-100 opacity-100" : "invisible scale-95 opacity-0"
         }`}
       >

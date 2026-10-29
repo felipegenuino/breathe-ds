@@ -3,14 +3,20 @@
   purpose: color comes from EACH application (ttcab, creeta…). Use this as the
   base and override the --cg-* in your site's :root. Monochrome (gray/near-black)
   to make it clear it is a "bring your own color" placeholder.
-   - surface #ffffff / ink #18181b ............ ~17:1 (AAA)
-   - surface #ffffff / ink-soft #71717a ....... ~4.8:1 (AA)
+  The page is a light gray and the cards are white: the family is tonal (mist on
+  creeta, cream on ttcab), so the neutral palette is too — a white page would
+  swallow the white cards.
+   - surface #f4f4f5 / ink #18181b ............ 16.1:1 (AAA)
+   - surface #f4f4f5 / ink-soft #65656e ....... 5.25:1 (AA)
+   - surface #f4f4f5 / ink-body #3f3f46 ....... 9.5:1 (AAA)
+   - card #ffffff / ink-soft #65656e .......... 5.77:1 (AA)
 */
 :root {
-  --cg-surface: #ffffff;
+  --cg-surface: #f4f4f5;        /* page: light gray, so white cards read */
   --cg-surface-panel: #18181b;
+  --cg-card: #ffffff;
   --cg-ink: #18181b;
-  --cg-ink-soft: #71717a;
+  --cg-ink-soft: #65656e;
   --cg-ink-body: #3f3f46;
   --cg-action: #18181b;
   --cg-action-text: #52525b;

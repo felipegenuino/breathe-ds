@@ -119,7 +119,7 @@ export function MediaCard({
         <div>{badge}</div>
         <span
           aria-hidden="true"
-          className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-white text-ink transition-colors duration-200 group-hover:bg-action group-hover:text-on-action motion-reduce:transition-none"
+          className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-card text-ink transition-colors duration-200 group-hover:bg-action group-hover:text-on-action motion-reduce:transition-none"
         >
           <svg viewBox="0 0 24 24" width={20} height={20} className="cg-arrow-go" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M7 17 17 7M9 7h8v8" /></svg>
         </span>

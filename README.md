@@ -63,6 +63,7 @@ hidden behind the sticky Header or the BottomNav (WCAG 2.4.11).
 |---|---|---|
 | `surface` | base background | `--cg-surface` |
 | `surface-panel` | dark panel (footer, final CTA) | `--cg-surface-panel` |
+| `card` | raised surface: cards, pills, menus over the page (white on all three palettes) | `--cg-card` |
 | `ink` | primary text / headings | `--cg-ink` |
 | `ink-soft` | secondary text | `--cg-ink-soft` |
 | `ink-body` | reading body text | `--cg-ink-body` |

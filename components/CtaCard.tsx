@@ -41,7 +41,7 @@ export function CtaCard({ title, lead, action, video, media, className = "" }: P
       ) : media ? (
         <div className={`relative overflow-hidden rounded-2xl ${sideFrame}`}>{media}</div>
       ) : null}
-      <div className="flex flex-col justify-center rounded-2xl bg-white px-6 py-10 md:px-10 md:py-14">
+      <div className="flex flex-col justify-center rounded-2xl bg-card px-6 py-10 md:px-10 md:py-14">
         <h2 className="max-w-xl font-heading text-3xl leading-[1.1] font-medium md:text-4xl">{title}</h2>
         {lead && <p className="mt-4 max-w-md text-ink/80">{lead}</p>}
         {/* The button follows the site's pattern (accent on white), same as the header's "Book". */}

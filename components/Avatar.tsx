@@ -26,7 +26,7 @@ export const initials = (name: string) =>
 /** Round portrait, decorative (the name is written next to it). */
 export function Avatar({ name, photo, children, size = 40, ring = false, className = "" }: Props) {
   const style = { width: size, height: size, fontSize: Math.round(size * 0.36) };
-  const base = `inline-flex shrink-0 items-center justify-center overflow-hidden rounded-full ${ring ? "ring-2 ring-white" : ""} ${className}`;
+  const base = `inline-flex shrink-0 items-center justify-center overflow-hidden rounded-full ${ring ? "ring-2 ring-card" : ""} ${className}`;
   if (children) return <span aria-hidden="true" className={base} style={style}>{children}</span>;
   if (photo) return <img src={photo} alt="" loading="lazy" decoding="async" className={`${base} object-cover`} style={style} />;
   return (

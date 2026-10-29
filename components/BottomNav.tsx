@@ -282,7 +282,7 @@ const CSS = `
 .cg-more-panel{
   position:fixed; inset:auto .75rem calc(5.75rem + env(safe-area-inset-bottom)) .75rem;
   width:auto; margin:0; border:0; border-radius:26px; padding:.5rem;
-  background:#fff; color:var(--color-ink);
+  background:var(--color-card); color:var(--color-ink);
   box-shadow:0 20px 48px -16px rgb(0 0 0 / .35), 0 1px 2px rgb(0 0 0 / .1);
   opacity:0; transform:translateY(8px) scale(.97); transform-origin:88% 100%;
   transition:opacity 180ms cubic-bezier(.23,1,.32,1), transform 180ms cubic-bezier(.23,1,.32,1), overlay 180ms allow-discrete, display 180ms allow-discrete;

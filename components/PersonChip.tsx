@@ -31,7 +31,7 @@ export function PersonChip({ name, description, photo, avatar, href, linkCompone
       </span>
     </>
   );
-  const box = `inline-flex min-h-11 items-center gap-3 rounded-full bg-white py-1.5 ${hasPhoto ? "pl-1.5" : "pl-5"}`;
+  const box = `inline-flex min-h-11 items-center gap-3 rounded-full bg-card py-1.5 ${hasPhoto ? "pl-1.5" : "pl-5"}`;
   if (!href) return <p className={`m-0 ${box} pr-5 ${className}`}>{inner}</p>;
   return (
     <L

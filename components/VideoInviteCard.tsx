@@ -157,7 +157,7 @@ export function VideoInviteCard({ name, role, loop, video, onPlay, onEnded, labe
           onPlay?.();
           setInviting(true);
         }}
-        className="group absolute right-4 bottom-4 z-10 flex h-14 w-14 items-center justify-center rounded-full bg-white text-ink shadow-[0_8px_24px_-8px_rgba(0,0,0,0.6)] transition-transform duration-200 ease-out hover:scale-105 active:scale-95 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-surface motion-reduce:transition-none motion-reduce:hover:scale-100 motion-reduce:active:scale-100"
+        className="group absolute right-4 bottom-4 z-10 flex h-14 w-14 items-center justify-center rounded-full bg-card text-ink shadow-[0_8px_24px_-8px_rgba(0,0,0,0.6)] transition-transform duration-200 ease-out hover:scale-105 active:scale-95 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-surface motion-reduce:transition-none motion-reduce:hover:scale-100 motion-reduce:active:scale-100"
       >
         <PlayGlyph size={22} />
         <span className="sr-only">{t.listen}</span>

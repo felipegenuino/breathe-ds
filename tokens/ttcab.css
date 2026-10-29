@@ -10,6 +10,7 @@
 :root {
   --cg-surface: #fbf5e9;
   --cg-surface-panel: #144753;
+  --cg-card: #ffffff;           /* cards, pills and menus over the page */
   --cg-ink: #144753;
   --cg-ink-soft: #54707a;
   --cg-ink-body: #1e4f5b;
