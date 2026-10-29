@@ -452,9 +452,10 @@ export function App() {
         </Section>
 
         <Section id="header" title="Header (nav + dropdown)">
-          <div className="overflow-hidden rounded-2xl border border-line">
+          {/* sem overflow-hidden: o dropdown precisa sair da caixa da demo */}
+          <div className="relative z-10 rounded-2xl border border-line [&>header]:rounded-t-2xl">
             <Header
-              logo={<span className="font-heading text-xl font-bold text-ink">TTCAB</span>}
+              logo={<Lockup variant="horizontal" size="sm" name={marca.name} logo={marca.logo} wordmark={marca.wordmark} />}
               cta={<Button variant="accent" size="sm">WhatsApp</Button>}
               localeSwitcher={<span className={CHIP}>{IcPin} PT</span>}
               items={[
@@ -483,8 +484,8 @@ export function App() {
 
         <Section id="footer" title="Footer">
           <Footer
-            logo={<span className="font-heading text-xl font-bold text-ink">TTCAB</span>}
-            tagline="Tratamento do Torcicolo Congênito e outras Assimetrias no Bebê"
+            logo={<Lockup variant="horizontal" size="sm" name={marca.name} logo={marca.logo} wordmark={marca.wordmark} />}
+            tagline={marca.tagline}
             columns={[{ title: "Navegação", items: ["Início", "Para famílias", "Depoimentos"].map((l) => <a key={l} href="#" className="hover:text-ink-soft">{l}</a>) },
                       { title: "", items: ["Tratamento", "Profissionais", "Artigos"].map((l) => <a key={l} href="#" className="hover:text-ink-soft">{l}</a>) }]}
             contact={{ title: "Contato", lines: ["Rua João Mathias Cordeiro, 33", "Córrego Grande, Florianópolis — SC"], actions: <Button href="#" variant="link">Ver no Google Maps <IconArrowUpRight size={16} /></Button> }}
