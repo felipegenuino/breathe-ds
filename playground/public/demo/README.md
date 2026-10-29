@@ -12,6 +12,9 @@ abaixo para o demo rodar:
 | `clip-vertical.mp4` | VideoStoryCard (9:16) | retrato 720×1280, mudo, recorte central do clip gerado |
 | `clip-poster-vertical.jpg` | Capa do vertical | 9:16, 1 frame                          |
 | `map-preview.webp`  | MapCard (prévia parada) | captura larga do mapa (2200×517), alfinete perto do topo/meio |
+| `person.mp4` / `person-poster.jpg` | CtaCard (convite), retratos | clipe GERADO de uma pessoa (720×1280, mudo, 10s) |
+| `person-vertical.mp4` / `person-poster-vertical.jpg` | VideoStoryCard | o mesmo clipe (já é 9:16) |
+| `person-avatar.jpg` | Avatar / Byline / PersonChip | recorte quadrado do rosto, 320×320 |
 
 Clipes ambiente devem ser **genéricos** (sem pessoa real identificável) —
 preferir stock livre ou geração por IA. Os que estão aqui são o clipe gerado

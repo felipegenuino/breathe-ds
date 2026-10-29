@@ -618,7 +618,7 @@ export function App() {
           <div className="grid gap-8 lg:grid-cols-2">
             <div className="rounded-2xl border border-line bg-white p-6">
               <p className="mb-3 text-xs font-semibold text-ink-soft">Byline · group (eyebrow + names as links)</p>
-              <Byline eyebrow="Eyebrow" people={[{ name: "Person name", href: "#people" }, { name: "Another person", href: "#people" }]} />
+              <Byline eyebrow="Eyebrow" people={[{ name: "Person name", href: "#people", photo: "/demo/person-avatar.jpg" }, { name: "Another person", href: "#people", photo: "/demo/person-avatar.jpg" }]} />
             </div>
             <div className="rounded-2xl border border-line bg-white p-6">
               <p className="mb-3 text-xs font-semibold text-ink-soft">Byline · inline (name + action link)</p>
@@ -626,7 +626,7 @@ export function App() {
             </div>
             <div className="rounded-2xl border border-line bg-surface p-6">
               <p className="mb-3 text-xs font-semibold text-ink-soft">PersonChip · link (arrow bubble)</p>
-              <PersonChip name="Person name" description="Role · Registration number" href="#people" />
+              <PersonChip name="Person name" description="Role · Registration number" href="#people" photo="/demo/person-avatar.jpg" />
             </div>
             <div className="rounded-2xl border border-line bg-surface p-6">
               <p className="mb-3 text-xs font-semibold text-ink-soft">PersonChip · text only</p>
@@ -796,9 +796,9 @@ export function App() {
             title="Card title"
             speaker={vs.speaker ? "Speaker name" : undefined}
             lead={vs.lead ? "A short lead that appears on hover or focus." : undefined}
-            src="/demo/clip-vertical.mp4"
-            poster="/demo/clip-poster-vertical.jpg"
-            previewSrc={vs.preview ? "/demo/clip-vertical.mp4" : undefined}
+            src="/demo/person-vertical.mp4"
+            poster="/demo/person-poster-vertical.jpg"
+            previewSrc={vs.preview ? "/demo/person-vertical.mp4" : undefined}
             layout={vs.layout}
             duration={99}
           />
@@ -813,7 +813,7 @@ export function App() {
         <div className="max-w-2xl">
           <TestimonialCard
             quote="A short testimonial quote, two or three sentences long, in the voice of the person who wrote it."
-            authors={tc.two ? [{ name: "Author name", photo: tc.photo ? "/demo/clip-poster.jpg" : undefined }, { name: "Second author", photo: tc.photo ? "/demo/clip-poster.jpg" : undefined }] : [{ name: "Author name", photo: tc.photo ? "/demo/clip-poster.jpg" : undefined }]}
+            authors={tc.two ? [{ name: "Author name", photo: tc.photo ? "/demo/person-avatar.jpg" : undefined }, { name: "Second author", photo: tc.photo ? "/demo/person-avatar.jpg" : undefined }] : [{ name: "Author name", photo: tc.photo ? "/demo/person-avatar.jpg" : undefined }]}
             link={tc.link ? { href: "https://github.com/felipegenuino/breathe-ds", label: "Outbound link" } : undefined}
             video={{ src: "/demo/clip.mp4", poster: "/demo/clip-poster.jpg", description: "What the clip shows (1 min 39 s)" }}
           />
@@ -846,7 +846,7 @@ export function App() {
           title="Card title"
           lead="A short lead that sums up the invitation in one sentence."
           action={<Button variant="accent" href="#cta">{IcChat} Call to action</Button>}
-          video={{ title: "Overlay title", description: "Overlay description", loop: { src: "/demo/clip.mp4", poster: "/demo/clip-poster.jpg" }, video: { src: "/demo/clip.mp4", poster: "/demo/clip-poster.jpg" } }}
+          video={{ title: "Overlay title", description: "Overlay description", loop: { src: "/demo/person.mp4", poster: "/demo/person-poster.jpg" }, video: { src: "/demo/person.mp4", poster: "/demo/person-poster.jpg" } }}
         />
       </Section>
 
