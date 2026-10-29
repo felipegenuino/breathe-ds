@@ -19,7 +19,7 @@ export const ROW =
   "flex min-h-12 cursor-pointer list-none items-center justify-between gap-3 text-sm font-semibold text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink [&::-webkit-details-marker]:hidden";
 
 const OPEN_CHEVRON =
-  "shrink-0 text-ink-soft transition-transform duration-200 group-open:rotate-180 motion-reduce:transition-none";
+  "shrink-0 text-ink-soft transition-transform duration-200 group-open/row:rotate-180 motion-reduce:transition-none";
 
 /** What appears out of nowhere (the content of a <details>) fades in briefly
  *  instead of jumping on screen: `@starting-style` via Tailwind's `starting:`
@@ -72,7 +72,7 @@ export function CollapseRow({ label, srLabel, count, links, linkComponent, child
   const L: ElementType = linkComponent ?? "a";
   const n = count ?? links?.length;
   return (
-    <details className={`group ${className}`} {...rest}>
+    <details className={`group/row ${className}`} {...rest}>
       <summary className={ROW}>
         <span>
           {label}
