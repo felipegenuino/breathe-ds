@@ -278,6 +278,13 @@ from color, not from extra markup.
   `accent` as the one full-colour element, pinned at the foot. `soldOut` tones
   the year down and puts a pill in the button's place. By tone: no border, no
   shadow, no lift.
+- **Events** (after Luma and Meetup, for the school's classes): **EventList**
+  (days down a dotted rail, each with its rows), **EventRow** (time with an
+  accented end, title as the stretched link, organizers, location, who is going
+  with "+N", square cover, an optional badge), **EventFacts** (date on a
+  calendar tile, venue on a pin tile with its link), **DateBadge** and
+  **RegistrationBox** (a strip title, ticket options as a radio group with the
+  remaining pill and the price, the one button at the foot).
 - **StoryPanel**: creeta's "origin" block — one dark panel (surface-panel)
   grouping a story: media at the top with a film that fades into the panel, the
   logo at its base, title, lead, three pillars in columns with a hairline above

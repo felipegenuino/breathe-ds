@@ -15,6 +15,9 @@ import { PostCard } from "../../components/PostCard";
 import { FeaturedPosts } from "../../components/FeaturedPosts";
 import { PostArticle } from "../../components/PostArticle";
 import { CourseCard } from "../../components/CourseCard";
+import { EventList } from "../../components/EventList";
+import { EventFacts, DateBadge } from "../../components/EventFacts";
+import { RegistrationBox } from "../../components/RegistrationBox";
 import { BackgroundVideo } from "../../components/BackgroundVideo";
 import { ChatPreview } from "../../components/ChatPreview";
 import { PlanTimeline } from "../../components/PlanTimeline";
@@ -354,6 +357,7 @@ const PAGE_NAV = [
   { id: "story", label: "StoryPanel", Icon: IconBook },
   { id: "blog", label: "Blog", Icon: IconBook },
   { id: "course", label: "CourseCard", Icon: IconGraduationCap },
+  { id: "events", label: "Events", Icon: IconGraduationCap },
   { id: "cta", label: "CtaCard", Icon: IconMessage },
   { id: "footer", label: "Footer", Icon: IconMessage },
 ] as const;
@@ -364,7 +368,7 @@ const FOOTER_GROUPS = (
     ["Foundations", ["symbol", "tokens", "type", "lockup", "icons"]],
     ["Navigation", ["header", "mobile", "anchornav", "breadcrumb", "footer"]],
     ["Content", ["buttons", "action", "accordion", "list", "rows", "timeline", "pills"]],
-    ["Cards & media", ["people", "cards", "videos", "map", "hero", "care", "story", "blog", "course", "cta"]],
+    ["Cards & media", ["people", "cards", "videos", "map", "hero", "care", "story", "blog", "course", "events", "cta"]],
   ] as const
 ).map(([title, ids]) => ({
   title,
@@ -450,6 +454,7 @@ export function App() {
             { label: "StoryPanel (pillars on the dark panel)", href: "#story", icon: IcBook },
             { label: "Blog (PostCard, FeaturedPosts, PostArticle)", href: "#blog", icon: IcBook },
             { label: "CourseCard (class card)", href: "#course", icon: IcCap },
+            { label: "Events (EventList, EventRow, EventFacts, RegistrationBox)", href: "#events", icon: IcCap },
             { label: "CtaCard (final call)", href: "#cta", icon: IcChat },
             { label: "Footer", href: "#footer", icon: IcPin },
           ], seeAll: { label: "Mobile · BottomNav", href: "#mobile" } },
@@ -1190,6 +1195,55 @@ export function App() {
             footnote="Only physiotherapists can attend."
             action={<Button variant="accent" href="https://github.com/felipegenuino/breathe-ds" target="_blank" rel="noopener noreferrer">Secure my seat</Button>}
           />
+        </div>
+      </Section>
+
+      <Section id="events" title="Events — EventList · EventRow · EventFacts · RegistrationBox">
+        <p className="mb-6 max-w-[62ch] text-ink-body">An events area after Luma and Meetup, for the school's classes: the list grouped by day down a dotted rail, each row with the time, the title (the link, stretched over the row), who organizes, where, who is going and the square cover; and, on the event page, the facts as tiles (the date on a calendar tile, the venue on a pin tile with its link) and the registration box, a radio group of ticket options with the one button at the foot. The DateBadge is the calendar tile on its own.</p>
+
+        <p className="mb-3 text-xs font-semibold text-ink-soft">EventList · grouped by day</p>
+        <div className="max-w-3xl">
+          <EventList
+            groups={[
+              { date: "6 Nov", weekday: "Friday", iso: "2026-11-06", events: [
+                { time: "09:00", timeAccent: "12:00 GMT-3", title: "Event title with a venue name", href: "#events", organizers: [{ name: "Organizer name", photo: "/demo/person-avatar.jpg" }], location: "City, Country", people: [{ name: "Person one", photo: "/demo/person-avatar.jpg" }, { name: "Person two", photo: "/demo/person-avatar.jpg" }, { name: "Person three", photo: "/demo/person-avatar.jpg" }], peopleMore: 34, cover: { src: "/demo/cover-1.svg" } },
+                { time: "3 to 9 Nov", timeAccent: "08:30–17:30", title: "Course name · City", href: "#events", organizers: [{ name: "Person name", photo: "/demo/person-avatar.jpg" }, { name: "Another person", photo: "/demo/person-avatar.jpg" }], location: "Venue name, City · ST", people: [{ name: "Person one", photo: "/demo/person-avatar.jpg" }, { name: "Person two", photo: "/demo/person-avatar.jpg" }], peopleMore: 26, cover: { src: "/demo/cover-2.svg" }, badge: "Sold out" },
+              ] },
+              { date: "7 Nov", weekday: "Saturday", iso: "2026-11-07", events: [
+                { time: "10:00", timeAccent: "16:00 GMT-3", title: "Another event title", href: "#events", organizers: [{ name: "Organizer name" }], location: "Online", cover: { src: "/demo/cover-3.svg" } },
+              ] },
+            ]}
+          />
+        </div>
+
+        <p className="mt-10 mb-3 text-xs font-semibold text-ink-soft">Event page · EventFacts + RegistrationBox</p>
+        <div className="grid gap-3 md:grid-cols-[minmax(0,4fr)_minmax(0,7fr)] md:gap-5">
+          <div className="relative aspect-square overflow-hidden rounded-[28px] bg-ink/[0.06]">
+            <img src="/demo/cover-1.svg" alt="" className="absolute inset-0 h-full w-full object-cover" />
+          </div>
+          <div className="rounded-[28px] bg-card p-6 md:p-8">
+            <h3 className="font-heading text-[2rem] font-medium leading-[1.08] tracking-[-0.02em] text-ink md:text-4xl">Event title with a venue name</h3>
+            <Byline className="mt-4" people={[{ name: "Organizer name", photo: "/demo/person-avatar.jpg" }]} />
+            <EventFacts
+              className="mt-6"
+              facts={[
+                { tile: <DateBadge month="Nov" day="6" />, title: "Friday, 6 November", subtitle: "12:00 – 14:00 GMT-3" },
+                { tile: "pin", title: "Venue name", subtitle: "City, Country", href: "https://www.google.com/maps/search/?api=1&query=Florian%C3%B3polis", external: true },
+              ]}
+            />
+            <RegistrationBox
+              className="mt-6"
+              title="Registration"
+              intro="Hi! Choose your ticket:"
+              options={[
+                { id: "in-person", label: "In person", remaining: "6 left", price: "Free" },
+                { id: "online", label: "Online", price: "Free" },
+                { id: "vip", label: "With the workshop", price: "R$ 390", disabled: true },
+              ]}
+              action={<Button variant="accent">Register</Button>}
+              footnote="Only physiotherapists can attend."
+            />
+          </div>
         </div>
       </Section>
 
