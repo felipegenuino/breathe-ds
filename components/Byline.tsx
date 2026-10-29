@@ -37,6 +37,9 @@ const nameLink =
  */
 export function Byline({ people, eyebrow, action, joiners = { sep: ", ", last: " and " }, cite = false, newTabLabel = "(opens in a new tab)", linkComponent, className = "" }: Props) {
   const L: ElementType = linkComponent ?? "a";
+  // portraits stack with a ring (as on the site); initials would lose their letters, so they sit side by side
+  const stack = people.length > 1 && people.every((p) => p.photo || p.avatar);
+  const row = `flex shrink-0 ${stack ? "-space-x-2" : "gap-1.5"}`;
   const Names: ElementType = cite ? "cite" : "span";
   const names = people.map((p, i) => (
     <span key={p.name}>
@@ -63,9 +66,9 @@ export function Byline({ people, eyebrow, action, joiners = { sep: ", ", last: "
   if (eyebrow) {
     return (
       <div className={`flex items-center gap-3 ${className}`}>
-          <span className="flex shrink-0 -space-x-2">
+          <span className={row}>
           {people.map((p) => (
-            <Avatar key={p.name} name={p.name} photo={p.photo} size={36} ring>{p.avatar}</Avatar>
+            <Avatar key={p.name} name={p.name} photo={p.photo} size={36} ring={stack}>{p.avatar}</Avatar>
           ))}
         </span>
         <div className="leading-snug">
@@ -84,9 +87,9 @@ export function Byline({ people, eyebrow, action, joiners = { sep: ", ", last: "
       {people.length === 1 ? (
         <Avatar name={people[0].name} photo={people[0].photo} size={40}>{people[0].avatar}</Avatar>
       ) : (
-        <span className="flex shrink-0 -space-x-2">
+        <span className={row}>
           {people.map((p) => (
-            <Avatar key={p.name} name={p.name} photo={p.photo} size={36} ring>{p.avatar}</Avatar>
+            <Avatar key={p.name} name={p.name} photo={p.photo} size={36} ring={stack}>{p.avatar}</Avatar>
           ))}
         </span>
       )}
