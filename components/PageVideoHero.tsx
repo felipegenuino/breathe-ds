@@ -5,15 +5,32 @@ import { BackgroundVideo } from "./BackgroundVideo";
 
 type Panel = { kicker?: ReactNode; title: ReactNode; lead?: ReactNode };
 
-/** Clipe de fundo (arquivo do próprio site), sem som, em repetição. */
-type Preview = { src: string; srcLarge?: string; poster: string; posterLarge?: string; trimEdges?: boolean; objectPosition?: string };
+/** Clipe de fundo local (modo loop), sem som, em repetição. */
+type LoopPreview = {
+  src: string;
+  srcLarge?: string;
+  poster: string;
+  posterLarge?: string;
+  trimEdges?: boolean;
+  objectPosition?: string;
+};
 
 /** Dois tipos de hero com vídeo:
- *  - loop:   só o clipe ambiente em repetição (sem player).
- *  - player: o clipe é a prévia; ao apertar o play, o vídeo inteiro (YouTube)
- *            toca no próprio card e surge a barra de fechar no pé. */
-type VideoLoop = { mode: "loop"; preview: Preview };
-type VideoPlayer = { mode: "player"; preview: Preview; youtubeId: string; legenda?: ReactNode };
+ *  - loop:   um clipe local em repetição (sem player). Fundo = BackgroundVideo.
+ *  - player: o PRÓPRIO vídeo do YouTube roda mudo, em repetição, como fundo
+ *            (16:9, cobrindo o cartão, sem corte/zoom). Ao apertar o som ele
+ *            remonta do zero — com áudio e controles — e surge a barra de
+ *            fechar no pé. Mantém a consistência: a prévia e o vídeo são o
+ *            mesmo material. */
+type VideoLoop = { mode: "loop"; preview: LoopPreview };
+type VideoPlayer = {
+  mode: "player";
+  youtubeId: string;
+  /** Quadro parado (movimento reduzido / economia de dados). Sem ele, usa a
+   *  miniatura do próprio YouTube (maxresdefault). */
+  poster?: string;
+  legenda?: ReactNode;
+};
 
 type Props = {
   /** Fundo em vídeo — define o tipo do hero (loop ou player). */
@@ -31,6 +48,8 @@ type Props = {
   watch?: { label?: string; meta?: ReactNode };
   /** Rótulo do botão de fechar na barra inferior (modo player tocando). */
   closeLabel?: string;
+  /** Rótulos do botão de pausa do fundo (modo player, prévia muda). */
+  previewLabels?: { pause?: string; play?: string };
   videoTitle?: string;
 };
 
@@ -42,14 +61,93 @@ function XGlyph({ size = 18 }: { size?: number }) {
 }
 
 /**
+ * Fundo em vídeo do YouTube rodando MUDO, em repetição, cobrindo o cartão
+ * (modo player, antes de o som começar). É enfeite: fica fora da leitura de
+ * tela. Respeita movimento reduzido e economia de dados (aí fica no quadro
+ * parado, sem pedir o vídeo). O "cover" é feito com unidades de container
+ * (cqw/cqh), então a proporção 16:9 nunca é distorcida nem cortada em falso.
+ * Tem botão de pausa (WCAG 2.2.2). O clique passa reto (pointer-events-none):
+ * quem recebe o toque é o botão de assistir, por cima.
+ */
+function YouTubeBackground({
+  id,
+  poster,
+  title,
+  labels,
+}: {
+  id: string;
+  poster?: string;
+  title?: string;
+  labels?: { pause?: string; play?: string };
+}) {
+  const [show, setShow] = useState(false);
+  const [paused, setPaused] = useState(false);
+  const frame = useRef<HTMLIFrameElement>(null);
+
+  useEffect(() => {
+    const lessMotion =
+      typeof window.matchMedia === "function" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const saveData = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection?.saveData;
+    if (lessMotion || saveData) return; // fica no quadro parado
+    setShow(true);
+  }, []);
+
+  function toggle() {
+    const w = frame.current?.contentWindow;
+    if (!w) return;
+    // API do YouTube por postMessage (enablejsapi=1): pausa/retoma sem carregar o script.
+    w.postMessage(JSON.stringify({ event: "command", func: paused ? "playVideo" : "pauseVideo", args: [] }), "*");
+    setPaused((p) => !p);
+  }
+
+  const posterSrc = poster ?? `https://i.ytimg.com/vi/${id}/maxresdefault.jpg`;
+
+  return (
+    <div className="absolute inset-0 overflow-hidden" style={{ containerType: "size" }}>
+      {show ? (
+        <iframe
+          ref={frame}
+          title={title ?? "Vídeo"}
+          tabIndex={-1}
+          aria-hidden="true"
+          src={`https://www.youtube-nocookie.com/embed/${id}?autoplay=1&mute=1&loop=1&playlist=${id}&controls=0&disablekb=1&fs=0&modestbranding=1&rel=0&playsinline=1&iv_load_policy=3&enablejsapi=1`}
+          allow="autoplay; encrypted-media"
+          className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 border-0"
+          style={{ width: "max(100cqw, 177.78cqh)", height: "max(100cqh, 56.25cqw)" }}
+        />
+      ) : (
+        // miniatura do próprio YouTube (16:9) quando não se toca o vídeo
+        // eslint-disable-next-line @next/next/no-img-element
+        <img src={posterSrc} alt="" aria-hidden="true" className="absolute inset-0 h-full w-full object-cover" />
+      )}
+      {show && (
+        <button
+          type="button"
+          onClick={toggle}
+          aria-label={paused ? labels?.play ?? "Reproduzir vídeo" : labels?.pause ?? "Pausar vídeo"}
+          className="absolute top-4 right-4 z-10 flex h-11 w-11 items-center justify-center rounded-full bg-ink/85 text-surface backdrop-blur-md transition-colors duration-200 hover:bg-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-surface motion-reduce:transition-none"
+        >
+          {paused ? (
+            <svg viewBox="0 0 24 24" className="ml-0.5 h-[18px] w-[18px]" fill="currentColor" aria-hidden="true"><path d="M6 3v18l15-9z" /></svg>
+          ) : (
+            <svg viewBox="0 0 24 24" className="h-[18px] w-[18px]" fill="currentColor" aria-hidden="true"><rect x="6" y="4" width="4" height="16" rx="1.2" /><rect x="14" y="4" width="4" height="16" rx="1.2" /></svg>
+          )}
+        </button>
+      )}
+    </div>
+  );
+}
+
+/**
  * Hero full-bleed da família Cuidado Global — espelha o "TopoVideo" do
  * novo.creeta (tamanhos/espaçamentos exatos: max-w-1600, rounded-32,
  * min-h 560/820), com a linguagem do Breathe (tokens: ink/surface).
  *
- * O fundo é SEMPRE um clipe local em repetição (BackgroundVideo). No modo
- * "player", um botão de assistir carrega o vídeo inteiro no próprio card e
- * abre a barra de fechar no pé (legenda à esquerda, "Fechar" à direita).
- * Nada é pedido ao YouTube antes do play (domínio sem cookies).
+ * - loop:   o fundo é um clipe local em repetição (BackgroundVideo).
+ * - player: o fundo é o PRÓPRIO vídeo do YouTube rodando mudo, em repetição.
+ *           Ao apertar o som, ele remonta do zero (com áudio e controles) no
+ *           próprio cartão e abre a barra de fechar no pé (legenda à esquerda,
+ *           "Fechar" à direita).
  */
 export function PageVideoHero({
   video,
@@ -59,6 +157,7 @@ export function PageVideoHero({
   actions,
   watch,
   closeLabel = "Fechar o vídeo",
+  previewLabels,
   videoTitle,
 }: Props) {
   const isPlayer = video.mode === "player";
@@ -77,28 +176,38 @@ export function PageVideoHero({
   return (
     <div className="px-4 pt-2 md:px-6 md:pt-6">
       <section className="relative isolate mx-auto flex min-h-[min(calc(100svh-7.5rem),560px)] max-w-[1600px] flex-col justify-end overflow-hidden rounded-[32px] bg-ink text-surface lg:min-h-[min(calc(100svh-7.5rem),820px)]">
-        {/* mídia — clipe em loop (prévia) ou, tocando, o vídeo inteiro */}
+        {/* mídia — fundo (prévia) ou, tocando, o vídeo inteiro com som */}
         <div className={`absolute inset-x-0 top-0 ${playing ? "bottom-[4.5rem]" : "bottom-0 -z-10"}`}>
           {playing ? (
             <iframe
+              key="cg-hero-som"
               title={videoTitle ?? "Vídeo"}
-              src={`https://www.youtube-nocookie.com/embed/${(video as VideoPlayer).youtubeId}?autoplay=1&rel=0&modestbranding=1&playsinline=1`}
+              src={`https://www.youtube-nocookie.com/embed/${(video as VideoPlayer).youtubeId}?autoplay=1&mute=0&start=0&rel=0&modestbranding=1&playsinline=1&iv_load_policy=3`}
               allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; fullscreen"
               allowFullScreen
               className="absolute inset-0 h-full w-full border-0 bg-black"
             />
           ) : (
             <>
-              <BackgroundVideo
-                key={video.preview.src}
-                src={video.preview.src}
-                srcLarge={video.preview.srcLarge}
-                poster={video.preview.poster}
-                posterLarge={video.preview.posterLarge}
-                trimEdges={video.preview.trimEdges}
-                objectPosition={video.preview.objectPosition}
-                className="absolute inset-0"
-              />
+              {isPlayer ? (
+                <YouTubeBackground
+                  id={(video as VideoPlayer).youtubeId}
+                  poster={(video as VideoPlayer).poster}
+                  title={videoTitle}
+                  labels={previewLabels}
+                />
+              ) : (
+                <BackgroundVideo
+                  key={(video as VideoLoop).preview.src}
+                  src={(video as VideoLoop).preview.src}
+                  srcLarge={(video as VideoLoop).preview.srcLarge}
+                  poster={(video as VideoLoop).preview.poster}
+                  posterLarge={(video as VideoLoop).preview.posterLarge}
+                  trimEdges={(video as VideoLoop).preview.trimEdges}
+                  objectPosition={(video as VideoLoop).preview.objectPosition}
+                  className="absolute inset-0"
+                />
+              )}
               {/* véus — legibilidade do texto (base) e dos elementos do topo */}
               <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink/70 via-ink/10 to-transparent" />
               <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-ink/35 to-transparent" />

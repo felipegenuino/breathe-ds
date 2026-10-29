@@ -28,6 +28,7 @@
     "./components/Header": "./components/Header.tsx",
     "./components/BottomNav": "./components/BottomNav.tsx",
     "./components/BreatheMark": "./components/BreatheMark.tsx",
+    "./components/Cortina": "./components/Cortina.tsx",
     "./tokens/neutral.css": "./tokens/neutral.css",
     "./components/icons": "./components/icons.tsx"
   },

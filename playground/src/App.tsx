@@ -10,6 +10,7 @@ import { Footer } from "../../components/Footer";
 import { Header } from "../../components/Header";
 import { BottomNav } from "../../components/BottomNav";
 import { BreatheMark } from "../../components/BreatheMark";
+import { Cortina } from "../../components/Cortina";
 import { used, IconWind, IconActivity, IconBaby, IconSearch, IconHome, IconBook, IconMessage, IconMapPin, IconGraduationCap, IconVideo, IconUsers, IconArrowUpRight } from "../../components/icons";
 import * as Lucide from "lucide-react";
 
@@ -202,9 +203,8 @@ function SegGroup<T extends string>({ label, value, set, options }: { label: str
   );
 }
 
-// Loop = clipe de assimetrias (paisagem). Player = Mariangela (vertical → object-position puxa o rosto p/ cima).
+// Loop = clipe local de assimetrias (paisagem). Player = o próprio vídeo do YouTube rodando mudo, em loop (16:9, cobre o cartão, sem corte).
 const PREVIEW_LOOP = { src: "/demo/clip.mp4", poster: "/demo/clip-poster.jpg" };
-const PREVIEW_PLAYER = { src: "/demo/mariangela.mp4", poster: "/demo/mariangela-poster.jpg", objectPosition: "center 20%" };
 
 function HeroDemo() {
   const [tipo, setTipo] = useState<"player" | "loop">("player");
@@ -223,7 +223,7 @@ function HeroDemo() {
 
   const video =
     tipo === "player"
-      ? { mode: "player" as const, preview: PREVIEW_PLAYER, youtubeId: "h3a7DHFd6L4", legenda: "Mariangela Pinheiro de Lima, criadora do método, explica o Reequilíbrio Toracoabdominal." }
+      ? { mode: "player" as const, youtubeId: "h3a7DHFd6L4", legenda: "Mariangela Pinheiro de Lima, criadora do método, explica o Reequilíbrio Toracoabdominal." }
       : { mode: "loop" as const, preview: PREVIEW_LOOP };
 
   const actions =
@@ -251,20 +251,29 @@ function HeroDemo() {
         panel={conteudo === "painel" ? { kicker: kicker ? "Sobrelinha do hero" : undefined, title: <>Título do hero<br />em duas linhas.</>, lead: lead ? "Um parágrafo curto de apoio que resume a proposta em uma ou duas frases." : undefined } : undefined}
         caption={conteudo === "legenda" ? "Legenda curta do vídeo." : undefined}
         actions={actions}
-        watch={{ label: "Assistir ao vídeo", meta: "Com som, 3 min 33 s" }}
+        watch={{ label: "Assistir ao vídeo", meta: "Com som, 2 min 45 s" }}
       />
     </>
   );
 }
 
+const CORTINA_MARCA: Record<string, { name: string; tagline: string }> = {
+  Neutro: { name: "Breathe", tagline: "Design system da família Cuidado Global" },
+  TTCAB: { name: "TTCAB", tagline: "Torcicolo Congênito e Assimetrias do Bebê" },
+  Creeta: { name: "creeta", tagline: "Centro de Reequilíbrio Toracoabdominal" },
+};
+
 export function App() {
   const [pal, setPal] = useState("Neutro");
+  const [cortinaKey, setCortinaKey] = useState(0);
+  const marca = CORTINA_MARCA[pal] ?? CORTINA_MARCA.Neutro;
   useEffect(() => {
     const root = document.documentElement;
     Object.entries(PALETTES[pal]).forEach(([k, v]) => root.style.setProperty(k, v));
   }, [pal]);
   return (
     <div>
+      <Cortina key={cortinaKey} name={marca.name} tagline={marca.tagline} />
       {/* dogfooding: o header do DS É o componente Header do Breathe */}
       <Header
         logo={<span className="flex items-center gap-2 font-heading text-xl font-bold text-ink"><BreatheMark size={30} /> Breathe</span>}
@@ -290,6 +299,7 @@ export function App() {
             <p className="mb-3 font-heading text-[0.82rem] font-bold tracking-[0.14em] text-ink-soft uppercase">Breathe · @cuidado-global/ui</p>
             <h1 className="font-heading text-[clamp(2.4rem,6vw,4.5rem)] leading-[1.05] font-semibold tracking-[-0.02em] text-ink">Playground do design system</h1>
             <p className="mt-5 max-w-[56ch] text-lg leading-[1.6] text-ink-body">Componentes reais renderizados com a paleta <b>{pal}</b>. Troque no topo e tudo retematiza — o Breathe é neutro, a cor vem de cada app.</p>
+            <button type="button" onClick={() => setCortinaKey((k) => k + 1)} className="mt-6 inline-flex min-h-11 items-center gap-2 rounded-pill border border-line px-5 font-body font-semibold text-ink transition hover:bg-ink/[0.05]"><BreatheMark size={20} animated={false} /> Rever a cortina</button>
           </Container>
         </div>
 
