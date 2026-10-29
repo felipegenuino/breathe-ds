@@ -23,6 +23,7 @@ import { TestimonialCard } from "../../components/TestimonialCard";
 import { MediaCard, MediaCardBadge } from "../../components/MediaCard";
 import { MapCard } from "../../components/MapCard";
 import { PersonChip } from "../../components/PersonChip";
+import { ProfessionalCard } from "../../components/ProfessionalCard";
 import { Breadcrumb } from "../../components/Breadcrumb";
 import { BottomNav } from "../../components/BottomNav";
 import { BreatheMark } from "../../components/BreatheMark";
@@ -358,6 +359,7 @@ export function App() {
   const [mapW, setMapW] = useState<"full" | "half">("half");
   const [vs, setVs] = useState({ speaker: true, lead: true, preview: false, layout: "stacked" as "stacked" | "side" });
   const [tc, setTc] = useState({ link: true, two: false, photo: false });
+  const [pc, setPc] = useState({ photo: true, living: true, presentation: true, captions: true, bio: true, guidance: true, instagram: true });
   const [mc, setMc] = useState({ badge: true, arrow: true, eyebrow: false, text: true, link: false, media: "clip" as "image" | "clip" | "hover" });
   const [listLinks, setListLinks] = useState(true);
   // optional parts of the page footer (the footer is its own demo)
@@ -392,7 +394,7 @@ export function App() {
             { label: "Accordion", href: "#accordion", icon: IcBook },
             { label: "List", href: "#list", icon: IcBook },
             { label: "Timeline", href: "#timeline", icon: IcPulse },
-            { label: "People (Byline, PersonChip)", href: "#people", icon: IcUsers },
+            { label: "People (ProfessionalCard, Byline, PersonChip)", href: "#people", icon: IcUsers },
             { label: "Breadcrumb", href: "#breadcrumb", icon: IcPin },
             { label: "PillList", href: "#pills", icon: IcSearch },
             { label: "Header", href: "#header", icon: IcHome },
@@ -613,8 +615,28 @@ export function App() {
           </div>
         </Section>
 
-        <Section id="people" title="People — Byline · PersonChip">
-          <p className="mb-6 max-w-[62ch] text-ink-body">Who signs or explains a piece of content, from novo.creeta. Important for testimonials and content pages. Without a photo, the initials in a bubble.</p>
+        <Section id="people" title="People — ProfessionalCard · Byline · PersonChip">
+          <p className="mb-6 max-w-[62ch] text-ink-body">The team card of novo.creeta: portrait (plain, or a living one that plays on hover, or with the "Presentation" chip that opens a modal with the video, its live captions above the name, and the full bio), name, role, registration — always shown, it is a legal duty for health professionals — and the rows: trajectory, guidance, Instagram. Below, who signs or explains a piece of content: Byline and PersonChip. Without a photo, the initials in a bubble.</p>
+          <div className="mb-5 flex flex-wrap items-center gap-x-5 gap-y-3 rounded-2xl border border-line bg-surface p-4">
+            <span className="text-[0.7rem] font-semibold tracking-[0.12em] text-ink-soft uppercase">ProfessionalCard</span>
+            {([["photo", "Photo"], ["living", "Living portrait"], ["presentation", "Presentation"], ["captions", "Captions"], ["bio", "Trajectory"], ["guidance", "Guidance"], ["instagram", "Instagram"]] as [keyof typeof pc, string][]).map(([k, label]) => (
+              <PillToggle key={k} label={label} on={pc[k]} set={(v) => setPc((m) => ({ ...m, [k]: v }))} />
+            ))}
+          </div>
+          <div className="mb-10 max-w-sm">
+            <ProfessionalCard
+              id="person-name"
+              name="Person name"
+              role="Role"
+              registration="Registration number"
+              photo={pc.photo ? { src: "/demo/person-poster.jpg" } : undefined}
+              living={pc.photo && pc.living ? { src: "/demo/person.mp4", poster: "/demo/person-poster.jpg" } : undefined}
+              presentation={pc.presentation ? { src: "/demo/person.mp4", poster: "/demo/person-poster.jpg", duration: 10, captions: pc.captions ? { src: "/demo/person.vtt", srcLang: "en", label: "English" } : undefined } : undefined}
+              bio={pc.bio ? "A paragraph of bio: where the person trained, what they work with, and the approach they bring to the care." : undefined}
+              guidance={pc.guidance ? [{ label: "Guidance title", href: "#people" }, { label: "Another guidance title", href: "#people" }] : undefined}
+              instagram={pc.instagram ? "https://instagram.com" : undefined}
+            />
+          </div>
           <div className="grid gap-8 lg:grid-cols-2">
             <div className="rounded-2xl border border-line bg-white p-6">
               <p className="mb-3 text-xs font-semibold text-ink-soft">Byline · group (eyebrow + names as links)</p>

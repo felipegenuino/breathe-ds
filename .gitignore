@@ -7,6 +7,7 @@ node_modules/
 playground/public/demo/*.mp4
 playground/public/demo/*.webm
 playground/public/demo/*.webp
+playground/public/demo/*.vtt
 playground/public/demo/*.jpg
 playground/public/demo/*.jpeg
 playground/public/demo/*.png

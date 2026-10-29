@@ -192,6 +192,11 @@ from color, not from extra markup.
 - **Timeline**: the "Como cuidamos" of novo.creeta — ordered steps, each with a
   44px icon bubble, a title and a paragraph; a thin line links the drawings. A
   step may end with a link (strong link + outbound arrow).
+- **ProfessionalCard** / **ProfessionalModal** / **CaptionBand**: the team card of
+  novo.creeta — portrait (plain, living clip on hover, or with the "Presentation"
+  chip), name, role, registration (**always**: COFFITO 414/2012), trajectory /
+  guidance / Instagram rows; the modal plays the presentation with sound, the
+  live caption band (active WebVTT cue) above the name, and the full bio.
 - **Byline** / **PersonChip** / **Avatar**: who signs or explains content
   (novo.creeta) — stacked portraits + eyebrow + linked names, or portrait + name
   + "Watch the video ↗"; the person chip (portrait, name, role · registration,
@@ -244,7 +249,7 @@ from color, not from extra markup.
       **horizontal carousel on mobile** variant with progress bar + pause) — approved
 - [x] **TestimonialCard** — from novo.creeta (10/29): clip + play on the left, quote/author/link on the right. The "video hero" and "video beside" variants from ttcab are still open
 - [x] **VideoStoryCard** — from novo.creeta (10/29): vertical card, play + duration badge, lead on hover/focus, plays with sound in place; "Read the transcript" goes in `children` (Accordion)
-- [ ] **ProfessionalCard** (team) — approved. Two versions: **small** (photo + name, in a row)
+- [x] **ProfessionalCard** (team) — from novo.creeta (10/29): small = PersonChip/Byline, big = the card with living portrait, presentation modal + captions. Original note: Two versions: **small** (photo + name, in a row)
       and **big** (photo + name + role + CREFITO + "Trajetória"/"Orientações" accordions).
       **Video** variant: "Apresentação" badge, hover plays the video, and a **modal** (video + bio).
       **Data rule:** every professional MUST have a **CREFITO** attached (COFFITO requirement).
