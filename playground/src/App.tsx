@@ -607,14 +607,14 @@ export function App() {
       <div id="footer" className="scroll-mt-24">
         <Container>
           <div className="mt-16 flex flex-wrap items-center gap-x-5 gap-y-3 rounded-2xl border border-line bg-surface p-4 lg:mt-24">
-            <span className="text-[0.7rem] font-semibold tracking-[0.12em] text-ink-soft uppercase">Footer</span>
-            <PillToggle label="Quote" on={ft.quote} set={(v) => setFt((f) => ({ ...f, quote: v }))} />
-            <PillToggle label="Hours" on={ft.hours} set={(v) => setFt((f) => ({ ...f, hours: v }))} />
-            <PillToggle label="Directions" on={ft.directions} set={(v) => setFt((f) => ({ ...f, directions: v }))} />
-            <PillToggle label="Notice" on={ft.notice} set={(v) => setFt((f) => ({ ...f, notice: v }))} />
-            <PillToggle label="Contacts" on={ft.contacts} set={(v) => setFt((f) => ({ ...f, contacts: v }))} />
-            <PillToggle label="Languages" on={ft.languages} set={(v) => setFt((f) => ({ ...f, languages: v }))} />
-            <PillToggle label="Credits" on={ft.credits} set={(v) => setFt((f) => ({ ...f, credits: v }))} />
+            <span className="text-[0.7rem] font-semibold tracking-[0.12em] text-ink-soft uppercase">Footer parts</span>
+            <PillToggle label="Brand sentence" on={ft.quote} set={(v) => setFt((f) => ({ ...f, quote: v }))} />
+            <PillToggle label="Info line" on={ft.hours} set={(v) => setFt((f) => ({ ...f, hours: v }))} />
+            <PillToggle label="Outbound links" on={ft.directions} set={(v) => setFt((f) => ({ ...f, directions: v }))} />
+            <PillToggle label="Notice band" on={ft.notice} set={(v) => setFt((f) => ({ ...f, notice: v }))} />
+            <PillToggle label="Contact chips" on={ft.contacts} set={(v) => setFt((f) => ({ ...f, contacts: v }))} />
+            <PillToggle label="Language links" on={ft.languages} set={(v) => setFt((f) => ({ ...f, languages: v }))} />
+            <PillToggle label="Credits line" on={ft.credits} set={(v) => setFt((f) => ({ ...f, credits: v }))} />
           </div>
         </Container>
         <Footer
