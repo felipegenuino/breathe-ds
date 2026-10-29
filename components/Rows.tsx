@@ -18,8 +18,14 @@ import { ArrowDown, ArrowUpRight, ChevronDown } from "lucide-react";
 export const ROW =
   "flex min-h-12 cursor-pointer list-none items-center justify-between gap-3 text-sm font-semibold text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink [&::-webkit-details-marker]:hidden";
 
+/** Hover tells the two rows apart (2026-10-29): a link row underlines its label
+ *  (the family's sign for "goes somewhere", as the Footer and the Byline) and
+ *  its arrow takes the step; a collapse row never underlines — it goes nowhere —
+ *  its chevron dips 2px, "opens down here", and turns up when open. */
+const ROW_LINK = `${ROW} underline decoration-transparent underline-offset-4 transition-[text-decoration-color] duration-150 hover:decoration-ink motion-reduce:transition-none`;
+
 const OPEN_CHEVRON =
-  "shrink-0 text-ink-soft transition-transform duration-200 group-open/row:rotate-180 motion-reduce:transition-none";
+  "shrink-0 text-ink-soft transition-[transform,translate] duration-200 group-hover/row:translate-y-0.5 group-open/row:rotate-180 group-open/row:group-hover/row:translate-y-0 motion-reduce:transition-none";
 
 /** What appears out of nowhere (the content of a <details>) fades in briefly
  *  instead of jumping on screen: `@starting-style` via Tailwind's `starting:`
@@ -120,7 +126,7 @@ export type LinkRowProps = Omit<ComponentPropsWithoutRef<"a">, "children"> & {
 export function LinkRow({ label, href, srLabel, arrow, external = false, icon, linkComponent, className = "", ...rest }: LinkRowProps) {
   const L: ElementType = linkComponent ?? "a";
   return (
-    <L href={href} className={`${ROW} ${className}`} {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})} {...rest}>
+    <L href={href} className={`${ROW_LINK} ${className}`} {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})} {...rest}>
       <span>
         {label}
         {srLabel && <span className="sr-only">{srLabel}</span>}
