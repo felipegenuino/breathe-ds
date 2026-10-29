@@ -13,6 +13,10 @@ type Props = {
   action?: { label: ReactNode; href: string; external?: boolean };
   /** Joiners between names: ", " and " and ". */
   joiners?: { sep: string; last: string };
+  /** Wrap the names in <cite> (a testimonial's author). */
+  cite?: boolean;
+  /** sr-only after an external action link. */
+  newTabLabel?: string;
   linkComponent?: ElementType;
   className?: string;
 };
@@ -31,8 +35,9 @@ const nameLink =
  * - inline (under a topic card): portrait, name and "Watch the video ↗".
  * Portraits are decorative: the names carry the information.
  */
-export function Byline({ people, eyebrow, action, joiners = { sep: ", ", last: " and " }, linkComponent, className = "" }: Props) {
+export function Byline({ people, eyebrow, action, joiners = { sep: ", ", last: " and " }, cite = false, newTabLabel = "(opens in a new tab)", linkComponent, className = "" }: Props) {
   const L: ElementType = linkComponent ?? "a";
+  const Names: ElementType = cite ? "cite" : "span";
   const names = people.map((p, i) => (
     <span key={p.name}>
       {i > 0 && (i === people.length - 1 ? joiners.last : joiners.sep)}
@@ -51,6 +56,7 @@ export function Byline({ people, eyebrow, action, joiners = { sep: ", ", last: "
     >
       {action.label}
       <ArrowUpRight />
+      {action.external && <span className="sr-only"> {newTabLabel}</span>}
     </L>
   ) : null;
 
@@ -65,7 +71,7 @@ export function Byline({ people, eyebrow, action, joiners = { sep: ", ", last: "
         <div className="leading-snug">
           <p className="m-0 text-sm text-ink/80">{eyebrow}</p>
           <p className="m-0 mt-0.5 font-semibold text-ink">
-            {names}
+            <Names className="not-italic">{names}</Names>
             {actionEl && <> · {actionEl}</>}
           </p>
         </div>
@@ -85,7 +91,7 @@ export function Byline({ people, eyebrow, action, joiners = { sep: ", ", last: "
         </span>
       )}
       <span className="flex flex-wrap items-center gap-x-2">
-        <span className="font-semibold text-ink">{names}</span>
+        <Names className="not-italic font-semibold text-ink">{names}</Names>
         {actionEl}
       </span>
     </p>

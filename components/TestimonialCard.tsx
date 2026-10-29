@@ -1,7 +1,8 @@
 "use client";
 
 import { useState, type ElementType, type ReactNode } from "react";
-import { ArrowUpRight, Play } from "lucide-react";
+import { Play } from "lucide-react";
+import { Byline } from "./Byline";
 
 type Labels = {
   /** sr-only text of the play button: "Watch: {description}". */
@@ -40,8 +41,11 @@ export type TestimonialVideo = {
 type Props = {
   /** The family's words, with their own cuts, in a <blockquote>. */
   quote: ReactNode;
-  /** Who speaks, as shown on the site ("Tereza's family"). Goes in <cite>. */
-  author: ReactNode;
+  /** Who speaks, as shown on the site ("Tereza's family"). Goes in <cite>, with
+   *  the portrait (or the initials) in front — the family's Byline. */
+  author: string;
+  authorPhoto?: string;
+  authorAvatar?: ReactNode;
   /** The public source of the quote ("View on Instagram ↗"), opened in a new tab. */
   link?: { href: string; label: ReactNode };
   /** The family's video, on the left. */
@@ -110,27 +114,20 @@ function TapVideo({ src, poster, description, withSound = true, captions, media,
  * check the source. The quote is a real <blockquote> with <cite>: it is someone
  * else's words and the screen reader announces it as such.
  */
-export function TestimonialCard({ quote, author, link, video, as: Root = "div", labels, className = "" }: Props) {
+export function TestimonialCard({ quote, author, authorPhoto, authorAvatar, link, video, as: Root = "div", labels, className = "" }: Props) {
   const t = { ...EN, ...labels };
   return (
     <Root className={`grid grid-cols-[minmax(0,2fr)_minmax(0,3fr)] overflow-hidden rounded-[28px] bg-white ${className}`}>
       <TapVideo {...video} label={t.watch(video.description)} />
       <figure className="flex flex-col justify-between gap-5 p-5 md:p-7">
         <blockquote className="font-heading text-[0.9375rem] font-medium leading-relaxed text-ink md:text-base">{quote}</blockquote>
-        <figcaption className="text-sm text-ink/80">
-          <cite className="block not-italic font-semibold text-ink">{author}</cite>
-          {link && (
-            <a
-              href={link.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-1 inline-flex min-h-11 items-center gap-1 text-ink underline underline-offset-4 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink"
-            >
-              {link.label}
-              <ArrowUpRight aria-hidden="true" size={16} className="cg-arrow-go" />
-              <span className="sr-only">{t.newTab}</span>
-            </a>
-          )}
+        <figcaption>
+          <Byline
+            cite
+            people={[{ name: author, photo: authorPhoto, avatar: authorAvatar }]}
+            action={link ? { label: link.label, href: link.href, external: true } : undefined}
+            newTabLabel={t.newTab.trim()}
+          />
         </figcaption>
       </figure>
     </Root>
