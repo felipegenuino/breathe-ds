@@ -58,8 +58,10 @@ export function Lockup({
       {name}
     </span>
   );
+  // `block`: como item inline, a entrelinha do pai (1.5 do body) mandava na
+  // linha e a tagline de duas linhas ficava folgada demais.
   const tagEl = tagline ? (
-    <span className={`font-body leading-[1.4] text-ink-soft ${TAG[size]}`}>{tagline}</span>
+    <span className={`block font-body leading-[1.3] text-ink-soft ${TAG[size]}`}>{tagline}</span>
   ) : null;
 
   if (variant === "symbol") {
