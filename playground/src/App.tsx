@@ -1306,11 +1306,11 @@ export function App() {
               <div className="relative aspect-[4/3] overflow-hidden rounded-[22px] bg-ink/[0.06]">
                 <img src={selected.cover} alt="" className="absolute inset-0 h-full w-full object-cover" style={{ objectPosition: selected.coverPosition ?? "50% 25%" }} />
               </div>
-              <p className="mt-5 text-sm font-semibold text-ink-soft">{selected.course}</p>
-              <h3 className="mt-1 font-heading text-[1.75rem] font-medium leading-[1.12] tracking-[-0.01em] text-ink">
+              <h3 className="mt-5 font-heading text-[1.75rem] font-medium leading-[1.12] tracking-[-0.01em] text-ink">{selected.course}</h3>
+              <p className="mt-2 flex flex-wrap items-center gap-2 text-lg font-semibold text-ink">
                 {selected.city}
-                {(selected.seats || selected.soldOut) && <span className="ml-2 inline-flex translate-y-[-3px] items-center rounded-pill bg-ink/[0.08] px-2.5 py-0.5 align-middle text-xs font-semibold text-ink">{selected.soldOut ? "Esgotada" : selected.seats}</span>}
-              </h3>
+                {(selected.seats || selected.soldOut) && <span className="inline-flex items-center rounded-pill bg-ink/[0.08] px-2.5 py-0.5 text-xs font-semibold text-ink">{selected.soldOut ? "Esgotada" : selected.seats}</span>}
+              </p>
               <EventFacts
                 className="mt-5"
                 facts={[

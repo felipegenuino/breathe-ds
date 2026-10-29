@@ -15,9 +15,10 @@ type Props = {
   /** Cover photo at the top (the school's pages always have one), 4:3,
    *  focused near the top for the portrait photos the school uses. */
   cover?: { src: string; alt?: string; position?: string };
-  /** Small line above the title: the course name ("Basic course"). */
+  /** The course ("Basic RTA course 2026"): the heading of the card. */
   course?: ReactNode;
-  /** "City · ST". */
+  /** The class ("City · ST"): the line under the heading, with the seats pill.
+   *  Without `course`, it is the heading itself. */
   title: ReactNode;
   /** The start, for the calendar tile. */
   start: { month: ReactNode; day: ReactNode };
@@ -90,18 +91,24 @@ export function CourseCard({ cover, course, title, start, when, where, workload,
         </div>
       )}
       <div className="flex flex-1 flex-col p-6 md:p-7">
-      {course && <p className="mb-2 text-sm font-semibold text-ink-soft">{course}</p>}
+      {/* the course is what the person looks for: it is the heading; the city
+          is the variant, on the line below with the seats pill (2026-10-29) */}
       <Title className="font-heading text-xl font-medium leading-snug text-ink md:text-[1.375rem]">
         {onSelect ? (
           // the stretched hit area of the card: this button is the exception to [&_button]:z-10 (static, after: covers the card)
           <button type="button" onClick={onSelect} className="static! z-auto! text-left after:absolute after:inset-0 after:z-0 after:rounded-[28px] focus-visible:outline-none focus-visible:after:outline focus-visible:after:outline-2 focus-visible:after:-outline-offset-2 focus-visible:after:outline-ink">
-            {title}
+            {course ?? title}
           </button>
         ) : (
-          title
+          course ?? title
         )}
-        {pill && <span className={`${PILL} ml-2 translate-y-[-2px] align-middle`}>{pill}</span>}
       </Title>
+      {(course || pill) && (
+        <p className="mt-2 flex flex-wrap items-center gap-2 text-base font-semibold text-ink">
+          {course && <span>{title}</span>}
+          {pill && <span className={PILL}>{pill}</span>}
+        </p>
+      )}
 
       <EventFacts className="mt-5" facts={facts} linkComponent={linkComponent} />
 
