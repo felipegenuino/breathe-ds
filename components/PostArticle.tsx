@@ -60,34 +60,39 @@ export function PostArticle({ trail, title, signature, date, paragraphs, notice,
 
       {/* Three pieces in a grid. On the phone in reading order: the text (the
           answer), the video, the transcript. From md the video takes the right
-          column and follows the reading of the other two. */}
+          column and follows the reading of the other two. The two text pieces
+          share one column (`contents` on the phone, a stack from md): in two
+          grid rows the taller video stretched the first row and opened a gap
+          above the transcript (2026-10-29). */}
       <div className="mt-8 grid gap-3 md:mt-10 md:grid-cols-[minmax(0,7fr)_minmax(0,4fr)] md:items-start md:gap-5">
-        <section className="rounded-[28px] bg-card p-6 md:col-start-1 md:p-10">
-          {paragraphs.map((p, i) => (
-            <p key={i} className={i === 0 ? "text-lg leading-relaxed text-ink md:text-xl" : "mt-4 leading-relaxed text-ink-body"}>
-              {p}
-            </p>
-          ))}
-          {notice && <p className="mt-6 border-t border-ink/10 pt-4 text-sm text-ink-body">{notice}</p>}
-        </section>
+        <div className="contents md:col-start-1 md:row-start-1 md:flex md:flex-col md:gap-5">
+          <section className="rounded-[28px] bg-card p-6 md:p-10">
+            {paragraphs.map((p, i) => (
+              <p key={i} className={i === 0 ? "text-lg leading-relaxed text-ink md:text-xl" : "mt-4 leading-relaxed text-ink-body"}>
+                {p}
+              </p>
+            ))}
+            {notice && <p className="mt-6 border-t border-ink/10 pt-4 text-sm text-ink-body">{notice}</p>}
+          </section>
+
+          {transcript && transcript.paragraphs.length > 0 && (
+            <section className="rounded-[28px] bg-card p-6 max-md:order-2 md:p-10">
+              <h2 className="font-heading text-[1.375rem] font-medium leading-snug text-ink md:text-2xl">{transcript.title}</h2>
+              {transcript.note && <p className="mt-2 text-sm font-medium text-ink">{transcript.note}</p>}
+              <div lang={transcript.lang} className="mt-4 space-y-4 leading-relaxed text-ink-body">
+                {transcript.paragraphs.map((p, i) => (
+                  <p key={i}>{p}</p>
+                ))}
+              </div>
+            </section>
+          )}
+        </div>
 
         {aside && (
-          <aside className="md:sticky md:top-28 md:col-start-2 md:row-span-2 md:row-start-1">
+          <aside className="max-md:order-1 md:sticky md:top-28 md:col-start-2 md:row-start-1">
             <h2 className="sr-only">{t.aside}</h2>
             {aside}
           </aside>
-        )}
-
-        {transcript && transcript.paragraphs.length > 0 && (
-          <section className="rounded-[28px] bg-card p-6 md:col-start-1 md:p-10">
-            <h2 className="font-heading text-[1.375rem] font-medium leading-snug text-ink md:text-2xl">{transcript.title}</h2>
-            {transcript.note && <p className="mt-2 text-sm font-medium text-ink">{transcript.note}</p>}
-            <div lang={transcript.lang} className="mt-4 space-y-4 leading-relaxed text-ink-body">
-              {transcript.paragraphs.map((p, i) => (
-                <p key={i}>{p}</p>
-              ))}
-            </div>
-          </section>
         )}
       </div>
 
