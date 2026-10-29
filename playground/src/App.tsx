@@ -600,7 +600,7 @@ export function App() {
         </Section>
 
         <Section id="action" title="Action dose — how a hot accent stays calm">
-          <p className="mb-6 max-w-[62ch] text-ink-body">The rule brands with a hot color follow (Cloudflare orange, Airbnb red): the action color is the fill of ONE element per block, with dark text on it; links stay in ink; a highlighted card is a 6% wash plus a border, not the full color; white on the action color only as large text (the accent Button's label is 18.7px bold); the color as text only in its darker <code className="rounded bg-ink/[0.07] px-1.5 py-0.5 text-sm">action-text</code>. Switch the palette to TTCAB and compare with the loud version.</p>
+          <p className="mb-6 max-w-[62ch] text-ink-body">The rule brands with a hot color follow (Cloudflare orange, Airbnb red): the action color is the fill of ONE element per block, with dark text on it; links stay in ink; a highlighted card is a 6% wash plus a border, not the full color; white on the action color only on the accent Button, same type scale as the others (3.67:1 on ttcab, a conscious exception like Cloudflare's); the color as text only in its darker <code className="rounded bg-ink/[0.07] px-1.5 py-0.5 text-sm">action-text</code>. Switch the palette to TTCAB and compare with the loud version.</p>
           <div className="mb-5 flex flex-wrap items-center gap-x-5 gap-y-3 rounded-2xl border border-line bg-surface p-4">
             <span className="text-[0.7rem] font-semibold tracking-[0.12em] text-ink-soft uppercase">Dose</span>
             <SegGroup label="Dose" value={dose} set={setDose} options={[["disciplined", "One accent per block"], ["loud", "Loud (everything in the action color)"]]} />
@@ -640,7 +640,7 @@ export function App() {
 
                 {/* 3. segmented control: the selected segment is the one accent */}
                 <div className="rounded-[28px] bg-card p-6 md:p-8">
-                  <p className="mb-4 text-sm text-ink-soft">Small controls (segmented control, chips, tabs) never put white on the action color: at 14px it only passes as large text, which is why the accent Button sets its label at 18.7px bold. Two options that pass AA for the selected segment: ink, or the action family through the tint (action-tint behind action-text, with an action-line hairline).</p>
+                  <p className="mb-4 text-sm text-ink-soft">Small controls (segmented control, chips, tabs) never put white on the action color: the 3.67:1 exception is for the one accent Button of a block, not for every state. Two options that pass AA for the selected segment: ink, or the action family through the tint (action-tint behind action-text, with an action-line hairline).</p>
                   <div className="flex flex-wrap gap-x-8 gap-y-4">
                     {([["ink", "bg-ink text-surface"], ["action tint", "bg-action-tint text-action-text shadow-[inset_0_0_0_1px_var(--color-action-line)]"]] as const).map(([name, selected]) => (
                       <div key={name}>

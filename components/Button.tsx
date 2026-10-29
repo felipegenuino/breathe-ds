@@ -18,9 +18,11 @@ const variants: Record<Exclude<Variant, "link">, string> = {
   // solid petrol, cream text (e.g. "Falar com a equipe")
   solid: "bg-ink text-surface hover:-translate-y-0.5 shadow-[0_6px_18px_rgba(20,71,83,0.28)]",
   // action color (orange/magenta) + on-action text (from the token, varies per site).
-  // The label is 18.7px bold whatever the size: WCAG "large text", so white on a
-  // vivid action color (ttcab's red-orange, 3.67:1) still passes AA.
-  accent: "bg-action text-on-action text-[1.1667rem]! font-bold! hover:-translate-y-0.5 shadow-[0_6px_18px_rgba(20,71,83,0.22)]",
+  // Same type scale as the other variants: buttons side by side must share a size.
+  // On ttcab (white on the vivid red-orange) that is 3.67:1, a conscious exception
+  // (Cloudflare and Airbnb ship the same): passes the 3:1 of UI components, not
+  // the 4.5:1 of normal text. Keep the accent for ONE large button per block.
+  accent: "bg-action text-on-action hover:-translate-y-0.5 shadow-[0_6px_18px_rgba(20,71,83,0.22)]",
   outline: "border border-line text-ink hover:bg-ink/[0.05]",
   ghost: "text-ink hover:bg-ink/[0.06]",
 };

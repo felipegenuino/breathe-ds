@@ -93,10 +93,10 @@ Values from the standard WCAG formula (the same ones `preview/` computes live):
 | surface `#fbf5e9` / ink-soft `#54707a` | 4.86:1 | AA |
 | surface `#fbf5e9` / ink-body `#1e4f5b` | 8.32:1 | AAA |
 | surface `#fbf5e9` / action-text `#bd3f0c` | 4.98:1 | AA |
-| action `#e8541e` / on-action `#ffffff` (accent button, label 18.7px bold = large text) | 3.67:1 | AA large |
+| action `#e8541e` / on-action `#ffffff` (accent button) | 3.67:1 | 3:1 UI component; below AA text, conscious exception |
 | surface-panel `#144753` / cream text | 9.41:1 | AAA |
 
-`action` `#e8541e` is a vivid red-orange with white text, the Cloudflare/Airbnb route: 3.67:1 passes AA only as large text, so the accent Button sets its label at 18.7px bold and small controls (chips, tabs, segments) use `ink` instead. The UI orange does not match the logo's `#f6a22a` on purpose. As text, use `action-text`.
+`action` `#e8541e` is a vivid red-orange with white text, the Cloudflare/Airbnb route: 3.67:1 passes the 3:1 of UI components, not the 4.5:1 of normal text. A conscious exception, limited to the accent Button (one per block, same type scale as the other buttons so they never look mismatched); small controls (chips, tabs, segments) use `ink` or `action-tint` + `action-text` instead. The UI orange does not match the logo's `#f6a22a` on purpose. As text, use `action-text`.
 
 ## Family typography
 

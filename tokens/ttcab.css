@@ -7,10 +7,11 @@
    - surface-panel #144753 / surface (text) ... 9.41:1 (AAA)
    - action #e8541e / on-action #ffffff ...... 3.67:1 — the accent button
    The action color is a vivid red-orange with WHITE text (decided 2026-10-29,
-   the Cloudflare/Airbnb route): it passes the 3:1 of UI components and of
-   large text, not the 4.5:1 of normal text, so the accent Button sets its
-   label at 18.7px bold (WCAG "large"), and small controls never put white
-   on it (they use ink). The logo keeps its own #f6a22a.
+   the Cloudflare/Airbnb route): 3.67:1 passes the 3:1 of UI components and of
+   large text, NOT the 4.5:1 of normal text. Conscious exception, limited to the
+   accent Button (one per block, same type scale as the other buttons). Small
+   controls never put white on it (ink, or action-tint + action-text). The logo
+   keeps its own #f6a22a.
 */
 :root {
   --cg-surface: #fbf5e9;
