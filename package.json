@@ -31,7 +31,9 @@
     "./components/Cortina": "./components/Cortina.tsx",
     "./components/Lockup": "./components/Lockup.tsx",
     "./tokens/neutral.css": "./tokens/neutral.css",
-    "./components/icons": "./components/icons.tsx"
+    "./components/icons": "./components/icons.tsx",
+    "./components/marks/ttcab": "./components/marks/ttcab.tsx",
+    "./components/marks/creeta": "./components/marks/creeta.tsx"
   },
   "publishConfig": {
     "access": "restricted"

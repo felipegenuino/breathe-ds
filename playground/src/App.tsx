@@ -12,6 +12,8 @@ import { BottomNav } from "../../components/BottomNav";
 import { BreatheMark } from "../../components/BreatheMark";
 import { Cortina } from "../../components/Cortina";
 import { Lockup, type LockupVariant } from "../../components/Lockup";
+import { TtcabSymbol, TtcabWordmark } from "../../components/marks/ttcab";
+import { CreetaSymbol, CreetaWordmark } from "../../components/marks/creeta";
 import { used, IconWind, IconActivity, IconBaby, IconSearch, IconHome, IconBook, IconMessage, IconMapPin, IconGraduationCap, IconVideo, IconUsers, IconArrowUpRight } from "../../components/icons";
 import * as Lucide from "lucide-react";
 
@@ -256,10 +258,23 @@ function HeroDemo() {
   );
 }
 
-const CORTINA_MARCA: Record<string, { name: string; tagline: string }> = {
+/* Marca de cada paleta: o Breathe é neutro; TTCAB e Creeta trazem o símbolo e
+   o wordmark reais dos sites (components/marks). A altura do wordmark é em
+   `em` do nome: caixa-alta do TTCAB 0.8em, minúsculas do creeta 0.7em. */
+const CORTINA_MARCA: Record<string, { name: string; tagline: string; logo?: ReactNode; wordmark?: ReactNode }> = {
   Neutro: { name: "Breathe", tagline: "Design system da família Cuidado Global" },
-  TTCAB: { name: "TTCAB", tagline: "Torcicolo Congênito e Assimetrias do Bebê" },
-  Creeta: { name: "creeta", tagline: "Centro de Reequilíbrio Toracoabdominal" },
+  TTCAB: {
+    name: "TTCAB",
+    tagline: "Torcicolo Congênito e Assimetrias do Bebê",
+    logo: <TtcabSymbol size={60} />,
+    wordmark: <TtcabWordmark height="0.8em" />,
+  },
+  Creeta: {
+    name: "creeta",
+    tagline: "Centro de Reequilíbrio Toracoabdominal",
+    logo: <CreetaSymbol size={60} />,
+    wordmark: <CreetaWordmark height="0.7em" />,
+  },
 };
 
 export function App() {
@@ -272,7 +287,7 @@ export function App() {
   }, [pal]);
   return (
     <div>
-      <Cortina key={cortinaKey} name={marca.name} tagline={marca.tagline} />
+      <Cortina key={cortinaKey} name={marca.wordmark ?? marca.name} tagline={marca.tagline} logo={marca.logo} />
       {/* dogfooding: o header do DS É o componente Header do Breathe */}
       <Header
         logo={<span className="flex items-center gap-2 font-heading text-xl font-bold text-ink"><BreatheMark size={20} /> Breathe</span>}
@@ -328,6 +343,8 @@ export function App() {
                   <Lockup
                     variant={v}
                     name={marca.name}
+                    logo={marca.logo}
+                    wordmark={marca.wordmark}
                     tagline={comTag ? marca.tagline : undefined}
                     size={v === "symbol" || v === "merged" ? "lg" : "md"}
                   />

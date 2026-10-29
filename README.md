@@ -113,6 +113,27 @@ Heros **mais largos / full-bleed**, na proporção do **novo.creeta** (mais imer
 margem lateral). Vale para `PageVideoHero` e `PageHero`. O hero atual do ttcab é mais contido
 — alargar para o padrão creeta ao migrar. _Vira token/escala de largura de hero._
 
+## Marcas dos sites (`components/marks/`)
+
+Cada site da família tem o símbolo e o wordmark reais, copiados dos arquivos de
+marca (`public/brand`) dos repositórios, separados em dois componentes para a
+`Cortina` e o `Lockup` montarem os arranjos:
+
+| Site | Símbolo | Wordmark | Import |
+|---|---|---|---|
+| TTCAB | `TtcabSymbol` (mãe + bebê, laranja `#F6A22A`) | `TtcabWordmark` (caixa-alta, `currentColor`) | `@cuidado-global/ui/components/marks/ttcab` |
+| Creeta | `CreetaSymbol` (três ondas + ponto, cores da marca) | `CreetaWordmark` (minúsculas, `currentColor`) | `@cuidado-global/ui/components/marks/creeta` |
+
+```tsx
+<Cortina logo={<TtcabSymbol size={60} />} name={<TtcabWordmark height="0.8em" />} tagline="…" />
+<Lockup variant="horizontal" logo={<CreetaSymbol />} wordmark={<CreetaWordmark height="0.7em" />} name="creeta" tagline="…" />
+```
+
+O wordmark em `em` acompanha o corpo do nome (`0.8em` para caixa-alta, `0.7em`
+para minúsculas com ascendente). O símbolo injetado no `Lockup` recebe a altura
+do tamanho (`size`); o símbolo aceita `color` para versão monocromática (branco
+sobre painel escuro). O desenho não se edita à mão: é o do manual de cada marca.
+
 ## Playground (ver os componentes)
 
 `cd playground && npm install && npm run dev` → kitchen-sink em http://localhost:5177 com os componentes reais renderizados (paleta ttcab).

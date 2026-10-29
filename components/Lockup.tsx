@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import type { CSSProperties, ReactNode } from "react";
 import { BreatheMark } from "./BreatheMark";
 
 /**
@@ -27,8 +27,12 @@ type Props = {
   /** Nome da marca (cada site passa o seu). */
   name?: string;
   tagline?: ReactNode;
-  /** Símbolo customizado; por padrão o BreatheMark (anel + ponto). */
+  /** Símbolo customizado; por padrão o BreatheMark (anel + ponto). Um <svg>
+   *  injetado recebe a altura do tamanho (`size`); a largura segue a proporção. */
   logo?: ReactNode;
+  /** Wordmark desenhado (svg) no lugar do nome em texto. Um svg com altura em
+   *  `em` acompanha o corpo do nome. `merged` ignora (lá o nome é texto). */
+  wordmark?: ReactNode;
   size?: Size;
   /** O símbolo "respira"? Padrão `false` — logo de cabeçalho não fica animando. */
   animated?: boolean;
@@ -45,6 +49,7 @@ export function Lockup({
   name = "Breathe",
   tagline,
   logo,
+  wordmark,
   size = "md",
   animated = false,
   className = "",
@@ -52,10 +57,16 @@ export function Lockup({
   // No horizontal com tagline, o símbolo cobre o bloco inteiro (nome + tagline),
   // virando um "bookend" proporcional — não só a altura do nome.
   const markPx = variant === "horizontal" && tagline ? Math.round(NAME_PX[size] * 2.3) : MARK[size];
-  const mark = logo ?? <BreatheMark size={markPx} animated={animated} title={name} />;
+  const mark = logo ? (
+    <span className="inline-flex text-ink [&>svg]:h-[var(--mark)] [&>svg]:w-auto" style={{ "--mark": `${markPx}px` } as CSSProperties}>
+      {logo}
+    </span>
+  ) : (
+    <BreatheMark size={markPx} animated={animated} title={name} />
+  );
   const nameEl = (
     <span className={`font-heading font-bold leading-none tracking-[-0.02em] text-ink ${NAME[size]}`}>
-      {name}
+      {wordmark ?? name}
     </span>
   );
   // `block`: como item inline, a entrelinha do pai (1.5 do body) mandava na
