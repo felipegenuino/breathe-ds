@@ -1,5 +1,6 @@
 import { useEffect, useState, type ReactNode } from "react";
 import { Accordion } from "../../components/Accordion";
+import { CollapseRow, LinkRow, RowList } from "../../components/Rows";
 import { Button } from "../../components/Button";
 import { Card } from "../../components/Card";
 import { Container } from "../../components/Container";
@@ -317,6 +318,7 @@ const PAGE_NAV = [
   { id: "icons", label: "Icons", Icon: IconSearch },
   { id: "accordion", label: "Accordion", Icon: IconBook },
   { id: "list", label: "List", Icon: IconBook },
+  { id: "rows", label: "Rows", Icon: IconBook },
   { id: "timeline", label: "Timeline", Icon: IconActivity },
   { id: "people", label: "People", Icon: IconUsers },
   { id: "breadcrumb", label: "Breadcrumb", Icon: IconMapPin },
@@ -601,6 +603,24 @@ export function App() {
               { label: "List item" },
             ]} />
           </div>
+        </Section>
+
+        <Section id="rows" title="Rows — RowList · CollapseRow · LinkRow">
+          <p className="mb-6 max-w-[62ch] text-ink-body">The list of equal rows at the foot of a card (the Trajectory, Guidance and Instagram rows of the ProfessionalCard), made generic: each row is 48px tall with the label on the left and a glyph on the right. A CollapseRow opens in place (a native details: a text, or a list of links with the count beside the label); a LinkRow goes somewhere. The arrow follows the Pill: ↗ another page, ↓ an anchor on this page; "external" only adds the new tab.</p>
+          <Card className="max-w-md">
+            <RowList>
+              <CollapseRow label="Collapse with text">A short paragraph that opens in place, under the row, without JavaScript.</CollapseRow>
+              <CollapseRow label="Collapse with links" links={[
+                { label: "Link to another page", href: "#rows" },
+                { label: "Link to an anchor on this page", href: "#list", arrow: "down" },
+                { label: "Outbound link in a new tab", href: "https://github.com/felipegenuino/breathe-ds", external: true },
+              ]} />
+              <LinkRow label="Link row" href="#rows" />
+              <LinkRow label="Link row to an anchor" href="#list" arrow="down" />
+              <LinkRow label="Link row in a new tab" href="https://github.com/felipegenuino/breathe-ds" external srLabel=" (opens in a new tab)" />
+              <LinkRow label="Link row with an icon" href="#rows" icon={<IconInstagram size={18} aria-hidden="true" />} />
+            </RowList>
+          </Card>
         </Section>
 
         <Section id="timeline" title="Timeline">

@@ -1,9 +1,9 @@
 "use client";
 
 import { useEffect, useRef, useState, type ElementType, type ReactNode } from "react";
-import { ArrowUpRight, ChevronDown } from "lucide-react";
 import { initials } from "./Avatar";
 import { ProfessionalModal, type ProfessionalModalLabels, type ProfessionalPresentation } from "./ProfessionalModal";
+import { CollapseRow, LinkRow, RowList } from "./Rows";
 
 export type ProfessionalPhoto = {
   src: string;
@@ -47,19 +47,6 @@ const EN: Omit<ProfessionalCardLabels, keyof ProfessionalModalLabels> = {
 };
 
 const SIZES = "(min-width: 1024px) 30vw, (min-width: 640px) 45vw, 92vw";
-
-/** One row of the card's list: label on the left, arrow on the right, 48px
- *  tall for the finger. `ink` on `card` (creeta's petrol on white: 10.2:1). */
-const ROW =
-  "flex min-h-12 cursor-pointer list-none items-center justify-between gap-3 text-sm font-semibold text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink [&::-webkit-details-marker]:hidden";
-
-const OPEN_CHEVRON =
-  "shrink-0 text-ink-soft transition-transform duration-200 group-open:rotate-180 motion-reduce:transition-none";
-
-/** What appears out of nowhere (the content of a <details>) fades in briefly
- *  instead of jumping on screen: `@starting-style` via Tailwind's `starting:`
- *  variant, no JavaScript. Browsers without support show it at once. */
-const FADE_IN = "transition-[opacity,translate] duration-[220ms] ease-[var(--ease-cg)] starting:opacity-0 starting:-translate-y-1";
 
 /** The photo zooms in a little with the mouse over the card, as on the home. */
 const ZOOM =
@@ -332,63 +319,22 @@ export function ProfessionalCard({
             used to be three things with three designs (an open button, a loose
             list of links and a magenta link at the end). The first two open in
             place: six open bios made 6,700px of page on a phone. */}
-        <div className="mt-4 divide-y divide-ink/10 border-t border-ink/10">
+        <RowList className="mt-4">
           {bio && (
-            <details className="group">
-              <summary className={ROW}>
-                <span>
-                  {t.trajectory}
-                  <span className="sr-only">{t.of(name)}</span>
-                </span>
-                <ChevronDown aria-hidden="true" size={18} className={OPEN_CHEVRON} />
-              </summary>
-              {typeof bio === "string" ? (
-                <p className={`${FADE_IN} pb-4 text-sm leading-relaxed text-ink/80`}>{bio}</p>
-              ) : (
-                <div className={`${FADE_IN} space-y-3 pb-4 text-sm leading-relaxed text-ink/80`}>{bio}</div>
-              )}
-            </details>
+            <CollapseRow label={t.trajectory} srLabel={t.of(name)}>
+              {bio}
+            </CollapseRow>
           )}
 
           {/* What the person signs: it is what makes this card the destination
               of the authorship link of the guidance pages. Whoever arrives by
               that link finds this block open (site-side, data-cg-open-on-arrival). */}
           {guidance && guidance.length > 0 && (
-            <details className="group" data-cg-open-on-arrival="">
-              <summary className={ROW}>
-                <span>
-                  {t.guidance}
-                  <span className="sr-only">{t.of(name)}</span>
-                  <span className="ml-2 font-normal text-ink/80">{guidance.length}</span>
-                </span>
-                <ChevronDown aria-hidden="true" size={18} className={OPEN_CHEVRON} />
-              </summary>
-              <ul className={`${FADE_IN} pb-2`}>
-                {guidance.map((g, i) => (
-                  <li key={`${i}-${g.href}`}>
-                    <L
-                      href={g.href}
-                      className="flex min-h-11 items-center justify-between gap-3 py-1.5 text-sm leading-snug text-ink-soft underline decoration-transparent underline-offset-4 transition-[text-decoration-color] duration-150 hover:decoration-ink-soft focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink motion-reduce:transition-none"
-                    >
-                      {g.label}
-                      <ArrowUpRight aria-hidden="true" size={16} className="cg-arrow-go shrink-0" />
-                    </L>
-                  </li>
-                ))}
-              </ul>
-            </details>
+            <CollapseRow label={t.guidance} srLabel={t.of(name)} links={guidance} linkComponent={L} data-cg-open-on-arrival="" />
           )}
 
-          {instagram && (
-            <a href={instagram} target="_blank" rel="noopener noreferrer" className={ROW}>
-              <span>
-                {t.instagram}
-                <span className="sr-only">{t.instagramOf(name)}</span>
-              </span>
-              <ArrowUpRight aria-hidden="true" size={18} className="cg-arrow-go shrink-0 text-ink-soft" />
-            </a>
-          )}
-        </div>
+          {instagram && <LinkRow label={t.instagram} srLabel={t.instagramOf(name)} href={instagram} external />}
+        </RowList>
       </div>
     </As>
   );

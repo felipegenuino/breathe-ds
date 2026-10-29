@@ -47,6 +47,7 @@
     "./components/AnchorNav": "./components/AnchorNav.tsx",
     "./components/LanguageSwitcher": "./components/LanguageSwitcher.tsx",
     "./components/List": "./components/List.tsx",
+    "./components/Rows": "./components/Rows.tsx",
     "./components/Avatar": "./components/Avatar.tsx",
     "./components/Byline": "./components/Byline.tsx",
     "./components/ProfessionalCard": "./components/ProfessionalCard.tsx",

@@ -192,6 +192,12 @@ from color, not from extra markup.
 - **Timeline**: the "Como cuidamos" of novo.creeta — ordered steps, each with a
   44px icon bubble, a title and a paragraph; a thin line links the drawings. A
   step may end with a link (strong link + outbound arrow).
+- **RowList** / **CollapseRow** / **LinkRow**: the list of equal rows at the foot
+  of a card (the Trajectory / Guidance / Instagram block of the ProfessionalCard),
+  generic. 48px rows with hairlines; a CollapseRow is a native `<details>` with a
+  text or a list of links (`links`, count beside the label); a LinkRow goes
+  somewhere (↗ another page, ↓ anchor, `external` for a new tab, `icon` to
+  replace the arrow). The ProfessionalCard is built on them.
 - **ProfessionalCard** / **ProfessionalModal** / **CaptionBand**: the team card of
   novo.creeta — portrait (plain, living clip on hover, or with the "Presentation"
   chip), name, role, registration (**always**: COFFITO 414/2012), trajectory /
