@@ -1,6 +1,6 @@
 {
   "name": "@breathe-ds/ui",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "Breathe DS — the design system of the Cuidado Global family of sites (creeta, ttcab, metodorta). Themeable tokens + React components.",
   "license": "MIT",
   "type": "module",
@@ -15,9 +15,18 @@
     "LICENSE"
   ],
   "exports": {
-    "./theme.css": "./theme.css",
-    "./tokens/ttcab.css": "./tokens/ttcab.css",
-    "./tokens/creeta.css": "./tokens/creeta.css",
+    "./theme.css": {
+      "style": "./theme.css",
+      "default": "./theme.css"
+    },
+    "./tokens/ttcab.css": {
+      "style": "./tokens/ttcab.css",
+      "default": "./tokens/ttcab.css"
+    },
+    "./tokens/creeta.css": {
+      "style": "./tokens/creeta.css",
+      "default": "./tokens/creeta.css"
+    },
     "./components/Accordion": "./components/Accordion.tsx",
     "./components/PageVideoHero": "./components/PageVideoHero.tsx",
     "./components/Footer": "./components/Footer.tsx",
@@ -42,7 +51,10 @@
     "./components/BreatheMark": "./components/BreatheMark.tsx",
     "./components/Curtain": "./components/Curtain.tsx",
     "./components/Lockup": "./components/Lockup.tsx",
-    "./tokens/neutral.css": "./tokens/neutral.css",
+    "./tokens/neutral.css": {
+      "style": "./tokens/neutral.css",
+      "default": "./tokens/neutral.css"
+    },
     "./components/icons": "./components/icons.tsx",
     "./components/AnchorNav": "./components/AnchorNav.tsx",
     "./components/LanguageSwitcher": "./components/LanguageSwitcher.tsx",

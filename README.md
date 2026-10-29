@@ -57,6 +57,21 @@ For a site without a ready-made token file, define the roles on `:root` itself:
 and `scroll-padding` (6rem top, 7rem bottom) so keyboard focus never lands
 hidden behind the sticky Header or the BottomNav (WCAG 2.4.11).
 
+## Using it in a site (Tailwind v4)
+
+```css
+@import "tailwindcss";
+@import "@breathe-ds/ui/theme.css";        /* the roles */
+@import "@breathe-ds/ui/tokens/ttcab.css"; /* this brand's hex (or creeta.css, neutral.css) */
+/* Tailwind only generates the classes it finds written: scan the components */
+@source "../../node_modules/@breathe-ds/ui/components";
+```
+
+The components are TSX sources, not a build: in Next.js add
+`transpilePackages: ["@breathe-ds/ui"]` to `next.config`. The CSS entries of
+the package are exported with the `style` condition, which Tailwind's resolver
+requires (a plain string export fails with "Can't resolve").
+
 ## Token roles
 
 | Token (Tailwind) | Role | `--cg-*` |
