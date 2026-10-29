@@ -781,7 +781,7 @@ export function App() {
         </ul>
         <ul className="mt-8 grid list-none gap-3 md:grid-cols-2 md:gap-5">
           <TestimonialCard as="li" quote="A short testimonial quote, two or three sentences long, in the voice of the person who wrote it." author="Author name" link={{ href: "https://github.com/felipegenuino/breathe-ds", label: "Outbound link" }} video={{ src: "/demo/clip.mp4", poster: "/demo/clip-poster.jpg", description: "What the clip shows (1 min 39 s)" }} />
-          <TestimonialCard as="li" quote="A shorter quote." author="Author name" link={{ href: "https://github.com/felipegenuino/breathe-ds", label: "Outbound link" }} video={{ src: "/demo/clip.mp4", poster: "/demo/clip-poster.jpg", description: "What the clip shows (1 min 39 s)" }} />
+          <TestimonialCard as="li" quote="A shorter quote, signed by two people." authors={[{ name: "Author name" }, { name: "Second author" }]} link={{ href: "https://github.com/felipegenuino/breathe-ds", label: "Outbound link" }} video={{ src: "/demo/clip.mp4", poster: "/demo/clip-poster.jpg", description: "What the clip shows (1 min 39 s)" }} />
         </ul>
       </Section>
 

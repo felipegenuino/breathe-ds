@@ -43,9 +43,11 @@ type Props = {
   quote: ReactNode;
   /** Who speaks, as shown on the site ("Tereza's family"). Goes in <cite>, with
    *  the portrait (or the initials) in front — the family's Byline. */
-  author: string;
+  author?: string;
   authorPhoto?: string;
   authorAvatar?: ReactNode;
+  /** Two or more voices ("Ana and João"): stacked portraits, names joined. Replaces `author`. */
+  authors?: { name: string; photo?: string; avatar?: ReactNode }[];
   /** The public source of the quote ("View on Instagram ↗"), opened in a new tab. */
   link?: { href: string; label: ReactNode };
   /** The family's video, on the left. */
@@ -114,8 +116,9 @@ function TapVideo({ src, poster, description, withSound = true, captions, media,
  * check the source. The quote is a real <blockquote> with <cite>: it is someone
  * else's words and the screen reader announces it as such.
  */
-export function TestimonialCard({ quote, author, authorPhoto, authorAvatar, link, video, as: Root = "div", labels, className = "" }: Props) {
+export function TestimonialCard({ quote, author, authorPhoto, authorAvatar, authors, link, video, as: Root = "div", labels, className = "" }: Props) {
   const t = { ...EN, ...labels };
+  const people = authors ?? [{ name: author ?? "", photo: authorPhoto, avatar: authorAvatar }];
   return (
     <Root className={`grid grid-cols-[minmax(0,2fr)_minmax(0,3fr)] overflow-hidden rounded-[28px] bg-card ${className}`}>
       <TapVideo {...video} label={t.watch(video.description)} />
@@ -124,7 +127,7 @@ export function TestimonialCard({ quote, author, authorPhoto, authorAvatar, link
         <figcaption>
           <Byline
             cite
-            people={[{ name: author, photo: authorPhoto, avatar: authorAvatar }]}
+            people={people}
             action={link ? { label: link.label, href: link.href, external: true } : undefined}
             newTabLabel={t.newTab.trim()}
           />
