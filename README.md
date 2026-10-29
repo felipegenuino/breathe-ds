@@ -152,6 +152,17 @@ edited by hand: it is the one from each brand's manual.
 novo.creeta: symbol, then name, then tagline; with reduced motion it becomes
 a short fade.
 
+## Typography
+
+The family's scale, from novo.creeta, as components: `Heading` (sizes
+`display` 2.5rem→6xl · `hero` · `section` 1.75rem→4xl · `card` · `small`;
+Quicksand medium in `ink`) with an optional `accent` — the second sentence of
+the same heading on its own line, one tone below in `ink-soft` — and
+`SectionHeading` (eyebrow/number line, title + accent, lead). `Text` for
+paragraphs (`lead`, `body`, `small`, `eyebrow`, Figtree) and `Prose` for a run
+of paragraphs at reading width. Two tones, one element: the hierarchy comes
+from color, not from extra markup.
+
 ## Navigation
 
 - **Header**: brand (the app passes the link to the home page) · items · item with dropdown
@@ -184,6 +195,9 @@ a short fade.
   + "Watch the video ↗"; the person chip (portrait, name, role · registration,
   arrow bubble when it links to the person's card). No photo → initials bubble.
 - **Breadcrumb**: the article trail "← Section › Parent" (current page not listed).
+- **CtaCard** / **VideoInviteCard**: the final call of a novo.creeta page — white
+  card (title, lead, CTA slot) beside a video card: muted loop with the speaker's
+  name over it, pause control, play button that plays the full video with sound.
 - **Footer**: the site-footer of novo.creeta, by tokens — full width like the
   Header, with the signed brand + sentence, "Pages" (title on the first line, links in two
   columns), "Where we are" (address, hours, "Directions ↗ · Waze ↗"), an optional

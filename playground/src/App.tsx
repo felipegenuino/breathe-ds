@@ -13,6 +13,9 @@ import { LanguageSwitcher } from "../../components/LanguageSwitcher";
 import { List } from "../../components/List";
 import { Timeline } from "../../components/Timeline";
 import { Byline } from "../../components/Byline";
+import { Heading, SectionHeading } from "../../components/Heading";
+import { Text, Prose } from "../../components/Text";
+import { CtaCard } from "../../components/CtaCard";
 import { PersonChip } from "../../components/PersonChip";
 import { Breadcrumb } from "../../components/Breadcrumb";
 import { BottomNav } from "../../components/BottomNav";
@@ -38,7 +41,7 @@ const PALETTES: Record<string, Record<string, string>> = {
   },
   Creeta: {
     "--color-surface": "#eef3f4", "--color-surface-panel": "#144753", "--color-ink": "#144753",
-    "--color-ink-soft": "#52707a", "--color-ink-body": "#1e4f5b", "--color-action": "#ab2781",
+    "--color-ink-soft": "#266675", "--color-ink-body": "#1e4f5b", "--color-action": "#ab2781",
     "--color-action-text": "#8f1f6c", "--color-on-action": "#ffffff", "--color-line": "rgb(20 71 83 / 0.16)",
   },
 };
@@ -301,6 +304,7 @@ const DEMO_LANGUAGES = [
 const PAGE_NAV = [
   { id: "symbol", label: "Symbol", Icon: IconWind },
   { id: "tokens", label: "Tokens", Icon: IconActivity },
+  { id: "type", label: "Typography", Icon: IconBook },
   { id: "lockup", label: "Lockup", Icon: IconHome },
   { id: "buttons", label: "Button", Icon: IconActivity },
   { id: "icons", label: "Icons", Icon: IconSearch },
@@ -314,6 +318,7 @@ const PAGE_NAV = [
   { id: "mobile", label: "Mobile", Icon: IconMapPin },
   { id: "anchornav", label: "AnchorNav", Icon: IconMapPin },
   { id: "hero", label: "Hero", Icon: IconVideo },
+  { id: "cta", label: "CtaCard", Icon: IconMessage },
   { id: "footer", label: "Footer", Icon: IconMessage },
 ] as const;
 
@@ -366,6 +371,7 @@ export function App() {
           { label: "Home", href: "#top", icon: <IconHome size={18} strokeWidth={1.75} />, iconOnly: true },
           { label: "Symbol", href: "#symbol" },
           { label: "Tokens", href: "#tokens" },
+          { label: "Typography", href: "#type" },
           { label: "Components", href: "#buttons", children: [
             { label: "Lockup (logo)", href: "#lockup", icon: IcHome },
             { label: "Button", href: "#buttons", icon: IcPulse },
@@ -380,6 +386,7 @@ export function App() {
             { label: "Mobile · BottomNav", href: "#mobile", icon: IcHome },
             { label: "AnchorNav", href: "#anchornav", icon: IcPin },
             { label: "PageVideoHero", href: "#hero", icon: IcVideo },
+            { label: "CtaCard (final call)", href: "#cta", icon: IcChat },
             { label: "Footer", href: "#footer", icon: IcPin },
           ], seeAll: { label: "Mobile · BottomNav", href: "#mobile" } },
         ]}
@@ -447,6 +454,42 @@ export function App() {
               </div>
               );
             })}
+          </div>
+        </Section>
+
+        <Section id="type" title="Typography">
+          <p className="mb-8 max-w-[62ch] text-ink-body">The family's type scale, from novo.creeta. Quicksand medium for headings in <code className="rounded bg-ink/[0.07] px-1.5 py-0.5 text-sm">ink</code>; a two-tone heading keeps the second sentence in the same element, one tone below (<code className="rounded bg-ink/[0.07] px-1.5 py-0.5 text-sm">ink-soft</code>). Figtree for text: lead, body, small, eyebrow.</p>
+          <div className="space-y-12">
+            <div className="rounded-[28px] bg-white p-6 md:p-10">
+              <SectionHeading as="h1" eyebrow="Eyebrow" title="Display heading, first sentence." accent="Second sentence, one tone below." lead="Lead paragraph: a supporting sentence right under the title, at reading width." />
+              <p className="m-0 text-xs text-ink-soft">SectionHeading as h1 · display · eyebrow + accent + lead</p>
+            </div>
+            <div className="rounded-[28px] bg-white p-6 md:p-10">
+              <SectionHeading number="01" eyebrow="Eyebrow" title="Section heading." accent="With its accent sentence." lead="Lead paragraph under a section title." />
+              <p className="m-0 text-xs text-ink-soft">SectionHeading as h2 · section · number + eyebrow</p>
+            </div>
+            <div className="grid gap-6 md:grid-cols-2">
+              <div className="rounded-[28px] bg-white p-6 md:p-8">
+                <Heading as="h2" size="hero">Hero heading over media.</Heading>
+                <p className="m-0 mt-2 text-xs text-ink-soft">Heading · hero</p>
+              </div>
+              <div className="rounded-[28px] bg-white p-6 md:p-8">
+                <Heading as="h2" size="card">Card heading</Heading>
+                <p className="m-0 mt-2 text-xs text-ink-soft">Heading · card</p>
+                <Heading as="h3" className="mt-6">Small heading (h3)</Heading>
+                <p className="m-0 mt-2 text-xs text-ink-soft">Heading · small</p>
+              </div>
+            </div>
+            <div className="rounded-[28px] bg-white p-6 md:p-10">
+              <Text variant="eyebrow">Eyebrow · a date or a label one tone below</Text>
+              <Heading as="h3" className="mt-1">Small heading after an eyebrow</Heading>
+              <Prose className="mt-4">
+                <Text variant="lead">Lead paragraph: larger, for the sentence that opens a block of text.</Text>
+                <Text>Body paragraph: the reading text of the family, Figtree with relaxed leading, at a width of about sixty-five characters so the eye comes back to the next line without effort.</Text>
+                <Text>A second body paragraph, to show the rhythm between paragraphs inside Prose.</Text>
+                <Text variant="small">Small: a note or a caption, in the soft tone.</Text>
+              </Prose>
+            </div>
           </div>
         </Section>
 
@@ -684,6 +727,16 @@ export function App() {
           </Container>
           <HeroDemo />
         </section>
+
+      <Section id="cta" title="CtaCard — final call">
+        <p className="mb-6 max-w-[62ch] text-ink-body">The final call of a novo.creeta page: a white card with the title, the lead and the CTA, beside a video card — a muted loop with the speaker's name over it, a pause control, and a play button that plays the full video with sound. Without the video it is the card alone.</p>
+        <CtaCard
+          title="Card title"
+          lead="A short lead that sums up the invitation in one sentence."
+          action={<Button variant="accent" href="#cta">{IcChat} Call to action</Button>}
+          video={{ name: "Person name", role: "Role", loop: { src: "/demo/clip.mp4", poster: "/demo/clip-poster.jpg" }, video: { src: "/demo/clip.mp4", poster: "/demo/clip-poster.jpg" } }}
+        />
+      </Section>
 
       </main>
 
