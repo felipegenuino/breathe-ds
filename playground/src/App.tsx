@@ -358,13 +358,48 @@ export function App() {
         </Section>
 
         <Section id="buttons" title="Button">
-          <div className="flex flex-wrap items-center gap-3">
-            <Button variant="solid">Falar com a equipe</Button>
-            <Button variant="accent">Encontre um profissional</Button>
-            <Button variant="outline">Conheça o tratamento</Button>
-            <Button variant="ghost">Ver todos</Button>
-            <Button variant="accent" size="sm">Pequeno</Button>
-            <Button variant="solid" size="lg">Grande</Button>
+          <p className="mb-8 max-w-[64ch] text-ink-body">O mesmo botão da família — o mesmo que está no nav, no hero e no footer. Quatro variantes, três tamanhos, com ícone, estado desabilitado e a versão <b>link</b> (com <code className="rounded bg-ink/[0.07] px-1.5 py-0.5 text-sm">href</code> vira <code className="rounded bg-ink/[0.07] px-1.5 py-0.5 text-sm">&lt;a&gt;</code>, visual idêntico).</p>
+          <div className="space-y-8">
+            <div>
+              <p className="mb-3 text-xs font-bold tracking-[0.12em] text-ink-soft uppercase">Variantes</p>
+              <div className="flex flex-wrap items-center gap-3">
+                <Button variant="solid">Solid</Button>
+                <Button variant="accent">Accent</Button>
+                <Button variant="outline">Outline</Button>
+                <Button variant="ghost">Ghost</Button>
+              </div>
+            </div>
+            <div>
+              <p className="mb-3 text-xs font-bold tracking-[0.12em] text-ink-soft uppercase">Tamanhos</p>
+              <div className="flex flex-wrap items-center gap-3">
+                <Button variant="solid" size="sm">Pequeno</Button>
+                <Button variant="solid" size="md">Médio</Button>
+                <Button variant="solid" size="lg">Grande</Button>
+              </div>
+            </div>
+            <div>
+              <p className="mb-3 text-xs font-bold tracking-[0.12em] text-ink-soft uppercase">Com ícone (lucide injetado)</p>
+              <div className="flex flex-wrap items-center gap-3">
+                <Button variant="accent"><IconWind size={18} /> Ícone à esquerda</Button>
+                <Button variant="outline">Ícone à direita <IconArrowUpRight size={18} /></Button>
+                <Button variant="ghost" aria-label="Só ícone"><IconMessage size={18} /></Button>
+              </div>
+            </div>
+            <div>
+              <p className="mb-3 text-xs font-bold tracking-[0.12em] text-ink-soft uppercase">Estados</p>
+              <div className="flex flex-wrap items-center gap-3">
+                <Button variant="solid" disabled>Desabilitado</Button>
+                <Button variant="outline" disabled>Desabilitado</Button>
+              </div>
+            </div>
+            <div>
+              <p className="mb-3 text-xs font-bold tracking-[0.12em] text-ink-soft uppercase">Como link (vira &lt;a&gt;)</p>
+              <div className="flex flex-wrap items-center gap-3">
+                <Button href="#buttons" variant="solid">Link solid</Button>
+                <Button href="#buttons" variant="accent">Link accent <IconArrowUpRight size={18} /></Button>
+                <Button href="#buttons" variant="outline">Link outline</Button>
+              </div>
+            </div>
           </div>
         </Section>
 
