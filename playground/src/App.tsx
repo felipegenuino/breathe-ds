@@ -1,6 +1,7 @@
 import { useEffect, useState, type ReactNode } from "react";
 import { Accordion } from "../../components/Accordion";
 import { CollapseRow, LinkRow, RowList } from "../../components/Rows";
+import { Rail, RailItem } from "../../components/Rail";
 import { Button } from "../../components/Button";
 import { Card } from "../../components/Card";
 import { Container } from "../../components/Container";
@@ -362,6 +363,7 @@ export function App() {
   const [vs, setVs] = useState({ speaker: true, lead: true, preview: false, watched: false, layout: "stacked" as "stacked" | "side" });
   const [tc, setTc] = useState({ link: true, two: false, photo: false });
   const [pc, setPc] = useState({ photo: true, living: true, presentation: true, captions: true, bio: true, guidance: true, instagram: true });
+  const [pcSize, setPcSize] = useState<"full" | "medium" | "micro">("full");
   const [mc, setMc] = useState({ badge: true, arrow: true, eyebrow: false, text: true, link: false, media: "clip" as "image" | "clip" | "hover" });
   const [listLinks, setListLinks] = useState(true);
   // optional parts of the page footer (the footer is its own demo)
@@ -636,14 +638,50 @@ export function App() {
         </Section>
 
         <Section id="people" title="People — ProfessionalCard · Byline · PersonChip">
-          <p className="mb-6 max-w-[62ch] text-ink-body">The team card of novo.creeta: portrait (plain, or a living one that plays on hover, or with the "Presentation" chip that opens a modal with the video, its live captions above the name, and the full bio), name, role, registration — always shown, it is a legal duty for health professionals — and the rows: trajectory, guidance, Instagram. Below, who signs or explains a piece of content: Byline and PersonChip. Without a photo, the initials in a bubble.</p>
+          <p className="mb-6 max-w-[62ch] text-ink-body">The team card of novo.creeta in three sizes. Full (team page): portrait (plain, or a living one that plays on hover, or with the "Presentation" chip that opens a modal with the video, its live captions above the name, and the full bio), name, role, registration — always shown, it is a legal duty for health professionals — and the rows: trajectory, guidance, Instagram. Medium (home): a tile with the 3:4 portrait and the name, linking to the full card, on a Rail — a snapping carousel with a progress bar on the phone, a grid from md. Micro ("who treats" on a treatment page): 72px photo, name and role. Below, who signs or explains a piece of content: Byline and PersonChip. Without a photo, the initials in a bubble.</p>
           <div className="mb-5 flex flex-wrap items-center gap-x-5 gap-y-3 rounded-2xl border border-line bg-surface p-4">
             <span className="text-[0.7rem] font-semibold tracking-[0.12em] text-ink-soft uppercase">ProfessionalCard</span>
-            {([["photo", "Photo"], ["living", "Living portrait"], ["presentation", "Presentation"], ["captions", "Captions"], ["bio", "Trajectory"], ["guidance", "Guidance"], ["instagram", "Instagram"]] as [keyof typeof pc, string][]).map(([k, label]) => (
+            <SegGroup label="Size" value={pcSize} set={setPcSize} options={[["full", "Full"], ["medium", "Medium"], ["micro", "Micro"]]} />
+            {(pcSize === "full"
+              ? ([["photo", "Photo"], ["living", "Living portrait"], ["presentation", "Presentation"], ["captions", "Captions"], ["bio", "Trajectory"], ["guidance", "Guidance"], ["instagram", "Instagram"]] as [keyof typeof pc, string][])
+              : pcSize === "medium"
+                ? ([["photo", "Photo"], ["living", "Living portrait"]] as [keyof typeof pc, string][])
+                : ([["photo", "Photo"]] as [keyof typeof pc, string][])
+            ).map(([k, label]) => (
               <PillToggle key={k} label={label} on={pc[k]} set={(v) => setPc((m) => ({ ...m, [k]: v }))} />
             ))}
           </div>
-          <div className="mb-10 max-w-sm">
+          {pcSize === "medium" && (
+            <div className="mb-10">
+              <Rail label="Team" grid="md:grid-cols-6">
+                {["Person name", "Another person", "Third person", "Fourth person", "Fifth person", "Sixth person"].map((n, i) => (
+                  <RailItem key={n} width="narrow">
+                    <ProfessionalCard
+                      size="medium"
+                      name={n}
+                      href="#people"
+                      photo={pc.photo ? { src: "/demo/person-poster.jpg" } : undefined}
+                      living={pc.photo && pc.living && i === 0 ? { src: "/demo/person.mp4", poster: "/demo/person-poster.jpg" } : undefined}
+                    />
+                  </RailItem>
+                ))}
+              </Rail>
+              <a href="#people" className="mt-4 inline-flex min-h-11 items-center gap-1.5 font-semibold text-ink-soft underline underline-offset-4">
+                Meet the team
+                <IconArrowUpRight aria-hidden="true" size={18} className="cg-arrow-go" />
+              </a>
+            </div>
+          )}
+          {pcSize === "micro" && (
+            <ul className="mb-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-3 md:gap-5">
+              {[["Person name", "Role"], ["Another person", "Role and a longer specialty that wraps"], ["Third person", "Role"]].map(([n, r]) => (
+                <li key={n}>
+                  <ProfessionalCard size="micro" name={n} role={r} href="#people" photo={pc.photo ? { src: "/demo/person-avatar.jpg" } : undefined} />
+                </li>
+              ))}
+            </ul>
+          )}
+          <div className={`mb-10 max-w-sm ${pcSize === "full" ? "" : "hidden"}`}>
             <ProfessionalCard
               id="person-name"
               name="Person name"

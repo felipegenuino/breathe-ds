@@ -104,3 +104,11 @@
   .cg-lockup--entrance .cg-lockup__mark, .cg-lockup--entrance .cg-lockup__name, .cg-lockup--entrance .cg-lockup__tag{ animation: cg-lockup-fade 240ms ease var(--cg-entrance-delay,0ms) both; }
   @keyframes cg-lockup-fade{ from{ opacity:0; } }
 }
+
+/* Rail: the horizontal list hides its scrollbar (the progress bar under it says how much is left). */
+.cg-no-scrollbar {
+  scrollbar-width: none;
+}
+.cg-no-scrollbar::-webkit-scrollbar {
+  display: none;
+}

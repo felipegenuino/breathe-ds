@@ -203,6 +203,13 @@ from color, not from extra markup.
   chip), name, role, registration (**always**: COFFITO 414/2012), trajectory /
   guidance / Instagram rows; the modal plays the presentation with sound, the
   live caption band (active WebVTT cue) above the name, and the full bio.
+  Three sizes (`size`): `full` (team page), `medium` (the home's tile — 3:4
+  portrait, name, "Meet" badge on hover, a link to the full card; `shortName`,
+  `href`) and `micro` (the "who treats" row — 72px photo, name, role, link).
+- **Rail** / **RailItem**: novo.creeta's `Trilho` — on the phone a snapping
+  horizontal rail with a progress bar underneath (shown only when it scrolls),
+  a grid from md (`grid` classes written in full). RailItem presets the phone
+  width: `wide` (treatments, videos) or `narrow` (team).
 - **Byline** / **PersonChip** / **Avatar**: who signs or explains content
   (novo.creeta) — stacked portraits + eyebrow + linked names, or portrait + name
   + "Watch the video ↗"; the person chip (portrait, name, role · registration,
