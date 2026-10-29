@@ -12,11 +12,13 @@ import { BreatheMark } from "./BreatheMark";
 export type LockupVariant = "stacked" | "horizontal" | "wordmark" | "symbol" | "merged";
 type Size = "sm" | "md" | "lg";
 
-/* Nome em `font-heading`; símbolo ~1.9× o corpo do nome (o anel é aberto e
-   "lê" mais leve, então pede um tamanho a mais pra fechar em harmonia). */
+/* Nome em `font-heading`; símbolo ~1.3× o corpo do nome (o anel é aberto e
+   "lê" mais leve, então pede um tamanho a mais pra fechar em harmonia).
+   A caixa do BreatheMark é justa ao glifo: o vão entre símbolo e nome é só o gap. */
 const NAME: Record<Size, string> = { sm: "text-xl", md: "text-[1.75rem]", lg: "text-[2.5rem]" };
 const TAG: Record<Size, string> = { sm: "text-[0.72rem]", md: "text-sm", lg: "text-base" };
-const MARK: Record<Size, number> = { sm: 38, md: 54, lg: 76 };
+const MARK: Record<Size, number> = { sm: 26, md: 36, lg: 52 };
+const GAP: Record<Size, string> = { sm: "gap-2", md: "gap-3", lg: "gap-4" };
 const NAME_PX: Record<Size, number> = { sm: 20, md: 28, lg: 40 };
 const TILE: Record<Size, string> = { sm: "size-16 text-[0.7rem]", md: "size-24 text-[0.95rem]", lg: "size-32 text-[1.3rem]" };
 
@@ -49,7 +51,7 @@ export function Lockup({
 }: Props) {
   // No horizontal com tagline, o símbolo cobre o bloco inteiro (nome + tagline),
   // virando um "bookend" proporcional — não só a altura do nome.
-  const markPx = variant === "horizontal" && tagline ? Math.round(NAME_PX[size] * 3.4) : MARK[size];
+  const markPx = variant === "horizontal" && tagline ? Math.round(NAME_PX[size] * 2.3) : MARK[size];
   const mark = logo ?? <BreatheMark size={markPx} animated={animated} title={name} />;
   const nameEl = (
     <span className={`font-heading font-bold leading-none tracking-[-0.02em] text-ink ${NAME[size]}`}>
@@ -81,7 +83,7 @@ export function Lockup({
     return (
       <span className={`inline-flex flex-col items-center text-center ${className}`}>
         {mark}
-        <span className="mt-3 flex flex-col items-center">
+        <span className="mt-4 flex flex-col items-center">
           {nameEl}
           {tagEl && <span className="mt-1.5">{tagEl}</span>}
         </span>
@@ -105,7 +107,7 @@ export function Lockup({
 
   // horizontal (padrão)
   return (
-    <span className={`inline-flex items-center gap-3 ${className}`}>
+    <span className={`inline-flex items-center ${GAP[size]} ${className}`}>
       {mark}
       <span className="flex min-w-0 flex-col">
         {nameEl}

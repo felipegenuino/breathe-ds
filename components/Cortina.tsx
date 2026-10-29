@@ -63,7 +63,7 @@ export function Cortina({ name, tagline, logo, storageKey, onDone, className }: 
     <div ref={el} className={`cg-cortina${className ? ` ${className}` : ""}`} aria-hidden="true">
       <style>{CORTINA_CSS}</style>
       <div className="cg-cortina__lockup">
-        <span className="cg-cortina__mark">{logo ?? <BreatheMark size={64} duration={5} />}</span>
+        <span className="cg-cortina__mark">{logo ?? <BreatheMark size={60} duration={5} />}</span>
         <span className="cg-cortina__text">
           <span className="cg-cortina__name">{name}</span>
           {tagline && <span className="cg-cortina__tag">{tagline}</span>}
@@ -95,11 +95,12 @@ const CORTINA_CSS = `
   pointer-events:none;
   animation:cg-cortina-sobe 700ms cubic-bezier(.77,0,.175,1) 2200ms both;
 }
-.cg-cortina__lockup{ display:flex; align-items:center; gap:clamp(14px,2.6vw,24px); padding:0 24px; }
+/* gap ≈ 1/3 do corpo do nome: o anel é curvo, então o vão óptico lê um pouco maior que o geométrico */
+.cg-cortina__lockup{ display:flex; align-items:center; gap:clamp(10px,1.6vw,16px); padding:0 24px; }
 .cg-cortina__mark{ display:inline-flex; color:var(--color-ink,#14323a);
   animation:cg-cortina-mark 700ms var(--ease-cg,cubic-bezier(.2,.8,.2,1)) both; }
-/* símbolo maior, em harmonia com o nome: ~1.9× o corpo do wordmark, fluido */
-.cg-cortina__mark svg{ width:clamp(60px,11vw,90px); height:auto; }
+/* símbolo ~1.25× o corpo do nome (a caixa do SVG é justa ao glifo), fluido */
+.cg-cortina__mark svg{ width:clamp(40px,7.4vw,60px); height:auto; }
 .cg-cortina__text{ display:flex; flex-direction:column; min-width:0; }
 .cg-cortina__name{
   font-family:var(--font-heading,system-ui,sans-serif);

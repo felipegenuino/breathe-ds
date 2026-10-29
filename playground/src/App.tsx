@@ -275,7 +275,7 @@ export function App() {
       <Cortina key={cortinaKey} name={marca.name} tagline={marca.tagline} />
       {/* dogfooding: o header do DS É o componente Header do Breathe */}
       <Header
-        logo={<span className="flex items-center gap-2 font-heading text-xl font-bold text-ink"><BreatheMark size={30} /> Breathe</span>}
+        logo={<span className="flex items-center gap-2 font-heading text-xl font-bold text-ink"><BreatheMark size={20} /> Breathe</span>}
         cta={<Switcher pal={pal} setPal={setPal} />}
         items={[
           { label: "Símbolo", href: "#symbol" },
@@ -295,21 +295,21 @@ export function App() {
       <main className="min-w-0">
         <div className="border-b border-line py-[clamp(48px,7vw,96px)]">
           <Container>
-            <div className="mb-4 text-ink"><BreatheMark size={64} /></div>
+            <div className="mb-4 text-ink"><BreatheMark size={44} /></div>
             <p className="mb-3 font-heading text-[0.82rem] font-bold tracking-[0.14em] text-ink-soft uppercase">Breathe · @cuidado-global/ui</p>
             <h1 className="font-heading text-[clamp(2.4rem,6vw,4.5rem)] leading-[1.05] font-semibold tracking-[-0.02em] text-ink">Playground do design system</h1>
             <p className="mt-5 max-w-[56ch] text-lg leading-[1.6] text-ink-body">Componentes reais renderizados com a paleta <b>{pal}</b>. Troque no topo e tudo retematiza — o Breathe é neutro, a cor vem de cada app.</p>
-            <button type="button" onClick={() => setCortinaKey((k) => k + 1)} className="mt-6 inline-flex min-h-11 items-center gap-2 rounded-pill border border-line px-5 font-body font-semibold text-ink transition hover:bg-ink/[0.05]"><BreatheMark size={20} animated={false} /> Rever a cortina</button>
+            <button type="button" onClick={() => setCortinaKey((k) => k + 1)} className="mt-6 inline-flex min-h-11 items-center gap-2 rounded-pill border border-line px-5 font-body font-semibold text-ink transition hover:bg-ink/[0.05]"><BreatheMark size={14} animated={false} /> Rever a cortina</button>
           </Container>
         </div>
 
         <Section id="symbol" title="Símbolo vivo">
           <p className="mb-8 max-w-[60ch] text-ink-body">O símbolo do Breathe respira — inspira e expira num pulso suave. Em <code className="rounded bg-ink/[0.07] px-1.5 py-0.5 text-sm">currentColor</code>, herda o token do contexto. Respeita prefers-reduced-motion.</p>
           <div className="flex flex-wrap items-center gap-10">
-            <div className="text-ink"><BreatheMark size={120} /></div>
-            <div className="text-action"><BreatheMark size={88} duration={4.5} /></div>
-            <div className="rounded-2xl bg-ink p-8 text-surface"><BreatheMark size={88} /></div>
-            <div className="text-ink-soft"><BreatheMark size={64} animated={false} /><p className="mt-2 text-xs text-ink-soft">estático</p></div>
+            <div className="text-ink"><BreatheMark size={80} /></div>
+            <div className="text-action"><BreatheMark size={60} duration={4.5} /></div>
+            <div className="rounded-2xl bg-ink p-8 text-surface"><BreatheMark size={60} /></div>
+            <div className="text-ink-soft"><BreatheMark size={44} animated={false} /><p className="mt-2 text-xs text-ink-soft">estático</p></div>
           </div>
         </Section>
 

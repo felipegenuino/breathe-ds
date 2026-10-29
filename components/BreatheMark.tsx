@@ -1,5 +1,7 @@
 type Props = {
-  /** Lado em px (quadrado). */
+  /** Lado em px (quadrado). É o tamanho do glifo visível: a caixa do SVG é
+   *  justa ao anel + ponto, sem ar interno (o espaço entre símbolo e nome
+   *  fica a cargo do layout). */
   size?: number;
   /** Segundos de um ciclo respiratório completo (inspira+expira). */
   duration?: number;
@@ -40,7 +42,8 @@ export function BreatheMark({
       <svg
         width={size}
         height={size}
-        viewBox="0 0 64 64"
+        viewBox="10.5 10 43 43"
+        overflow="visible"
         role="img"
         aria-label={title}
         className={animated ? "" : "breathe-mark--static"}
