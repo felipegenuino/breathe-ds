@@ -329,13 +329,20 @@ export function App() {
     Object.entries(PALETTES[pal]).forEach(([k, v]) => root.style.setProperty(k, v));
   }, [pal]);
   return (
-    <div>
+    <div id="top">
       <Cortina key={cortinaKey} name={marca.wordmark ?? marca.name} tagline={marca.tagline} logo={marca.logo} wordmarkRatio={marca.wordmarkRatio} symbolSide={marca.symbolSide} />
-      {/* dogfooding: o header do DS É o componente Header do Breathe */}
+      {/* dogfooding: o header do DS É o componente Header do Breathe, com as
+          mesmas regras da demo — marca em size md (símbolo 44px) com entrada
+          animada depois da cortina, casa como "Início" (volta ao topo). */}
       <Header
-        logo={<span className="flex items-center gap-2 font-heading text-xl font-bold text-ink"><BreatheMark size={20} /> Breathe</span>}
+        logo={
+          <a href="#top" aria-label="Breathe, início da página" className="inline-flex rounded-xl transition-opacity hover:opacity-70 focus-visible:outline-2 focus-visible:outline-offset-[3px] focus-visible:outline-ink">
+            <Lockup key={cortinaKey} entrance entranceDelay={2700} variant="horizontal" size="md" name="Breathe" />
+          </a>
+        }
         cta={<Switcher pal={pal} setPal={setPal} />}
         items={[
+          { label: "Início", href: "#top", icon: <IconHome size={18} strokeWidth={1.75} />, iconOnly: true },
           { label: "Símbolo", href: "#symbol" },
           { label: "Tokens", href: "#tokens" },
           { label: "Componentes", href: "#buttons", children: [
