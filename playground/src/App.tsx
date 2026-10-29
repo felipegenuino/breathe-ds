@@ -356,6 +356,8 @@ export function App() {
   const [mobW, setMobW] = useState<"phone" | "tablet">("phone");
   const [listMarker, setListMarker] = useState<"check" | "arrow">("check");
   const [mapW, setMapW] = useState<"full" | "half">("half");
+  const [vs, setVs] = useState({ speaker: true, lead: true, preview: false, layout: "stacked" as "stacked" | "side" });
+  const [tc, setTc] = useState({ link: true, two: false, photo: false });
   const [mc, setMc] = useState({ badge: true, arrow: true, eyebrow: false, text: true, link: false, media: "clip" as "image" | "clip" | "hover" });
   const [listLinks, setListLinks] = useState(true);
   // optional parts of the page footer (the footer is its own demo)
@@ -782,15 +784,40 @@ export function App() {
 
       <Section id="videos" title="Videos — VideoStoryCard · TestimonialCard">
         <p className="mb-6 max-w-[62ch] text-ink-body">VideoStoryCard: the vertical Instagram-style card — poster, round play button and duration badge; on hover (mouse) or focus the gradient grows and the lead appears; tap plays the video with sound in place. TestimonialCard: the clip with a play button on the left, the quote, the author and the outbound link on the right.</p>
-        <ul className="grid list-none gap-3 sm:grid-cols-2 md:grid-cols-3 md:gap-5">
-          <VideoStoryCard as="li" title="Card title" speaker="Speaker name" lead="A short lead that appears on hover or focus." src="/demo/clip-vertical.mp4" poster="/demo/clip-poster-vertical.jpg" duration={99} />
-          <VideoStoryCard as="li" title="Card title with a longer line" lead="A short lead." src="/demo/clip-vertical.mp4" poster="/demo/clip-poster-vertical.jpg" duration="1 min 46 s" />
-          <VideoStoryCard as="li" title="Card with hover preview" speaker="Speaker name" lead="This one also plays a muted preview on hover." src="/demo/clip-vertical.mp4" poster="/demo/clip-poster-vertical.jpg" previewSrc="/demo/clip-vertical.mp4" duration={64} />
-        </ul>
-        <ul className="mt-8 grid list-none gap-3 md:grid-cols-2 md:gap-5">
-          <TestimonialCard as="li" quote="A short testimonial quote, two or three sentences long, in the voice of the person who wrote it." author="Author name" link={{ href: "https://github.com/felipegenuino/breathe-ds", label: "Outbound link" }} video={{ src: "/demo/clip.mp4", poster: "/demo/clip-poster.jpg", description: "What the clip shows (1 min 39 s)" }} />
-          <TestimonialCard as="li" quote="A shorter quote, signed by two people." authors={[{ name: "Author name" }, { name: "Second author" }]} link={{ href: "https://github.com/felipegenuino/breathe-ds", label: "Outbound link" }} video={{ src: "/demo/clip.mp4", poster: "/demo/clip-poster.jpg", description: "What the clip shows (1 min 39 s)" }} />
-        </ul>
+        <div className="mb-5 flex flex-wrap items-center gap-x-5 gap-y-3 rounded-2xl border border-line bg-surface p-4">
+          <span className="text-[0.7rem] font-semibold tracking-[0.12em] text-ink-soft uppercase">VideoStoryCard</span>
+          <SegGroup label="Layout" value={vs.layout} set={(v) => setVs((m) => ({ ...m, layout: v }))} options={[["stacked", "Stacked"], ["side", "Side"]]} />
+          {([["speaker", "Speaker"], ["lead", "Lead"], ["preview", "Hover preview"]] as [keyof typeof vs, string][]).map(([k, label]) => (
+            <PillToggle key={k} label={label} on={vs[k] as boolean} set={(v) => setVs((m) => ({ ...m, [k]: v }))} />
+          ))}
+        </div>
+        <div className={vs.layout === "side" ? "max-w-3xl" : "max-w-sm"}>
+          <VideoStoryCard
+            title="Card title"
+            speaker={vs.speaker ? "Speaker name" : undefined}
+            lead={vs.lead ? "A short lead that appears on hover or focus." : undefined}
+            src="/demo/clip-vertical.mp4"
+            poster="/demo/clip-poster-vertical.jpg"
+            previewSrc={vs.preview ? "/demo/clip-vertical.mp4" : undefined}
+            layout={vs.layout}
+            duration={99}
+          />
+        </div>
+
+        <div className="mt-10 mb-5 flex flex-wrap items-center gap-x-5 gap-y-3 rounded-2xl border border-line bg-surface p-4">
+          <span className="text-[0.7rem] font-semibold tracking-[0.12em] text-ink-soft uppercase">TestimonialCard</span>
+          {([["link", "Outbound link"], ["two", "Two authors"], ["photo", "Portrait photo"]] as [keyof typeof tc, string][]).map(([k, label]) => (
+            <PillToggle key={k} label={label} on={tc[k]} set={(v) => setTc((m) => ({ ...m, [k]: v }))} />
+          ))}
+        </div>
+        <div className="max-w-2xl">
+          <TestimonialCard
+            quote="A short testimonial quote, two or three sentences long, in the voice of the person who wrote it."
+            authors={tc.two ? [{ name: "Author name", photo: tc.photo ? "/demo/clip-poster.jpg" : undefined }, { name: "Second author", photo: tc.photo ? "/demo/clip-poster.jpg" : undefined }] : [{ name: "Author name", photo: tc.photo ? "/demo/clip-poster.jpg" : undefined }]}
+            link={tc.link ? { href: "https://github.com/felipegenuino/breathe-ds", label: "Outbound link" } : undefined}
+            video={{ src: "/demo/clip.mp4", poster: "/demo/clip-poster.jpg", description: "What the clip shows (1 min 39 s)" }}
+          />
+        </div>
       </Section>
 
       <Section id="map" title="MapCard">
