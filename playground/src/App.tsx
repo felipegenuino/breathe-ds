@@ -282,8 +282,44 @@ const CORTINA_MARCA: Record<string, { name: string; tagline: string; logo?: Reac
   },
 };
 
+/* Navegação real do playground (a mesma do header): no celular vira o
+   BottomNav de verdade, no rodapé da janela. A seção visível é marcada por
+   scroll-spy; a barra mostra quantas couberem e o resto vai pro "Mais". */
+const PAGE_NAV = [
+  { id: "symbol", label: "Símbolo", Icon: IconWind },
+  { id: "tokens", label: "Tokens", Icon: IconActivity },
+  { id: "lockup", label: "Lockup", Icon: IconHome },
+  { id: "buttons", label: "Button", Icon: IconActivity },
+  { id: "icons", label: "Ícones", Icon: IconSearch },
+  { id: "accordion", label: "Accordion", Icon: IconBook },
+  { id: "pills", label: "PillList", Icon: IconSearch },
+  { id: "header", label: "Header", Icon: IconHome },
+  { id: "mobile", label: "Mobile", Icon: IconMapPin },
+  { id: "anchornav", label: "AnchorNav", Icon: IconMapPin },
+  { id: "hero", label: "Hero", Icon: IconVideo },
+  { id: "footer", label: "Footer", Icon: IconMessage },
+] as const;
+
+function useScrollSpy(ids: readonly string[]) {
+  const [active, setActive] = useState(ids[0]);
+  useEffect(() => {
+    const els = ids.map((id) => document.getElementById(id)).filter((el): el is HTMLElement => !!el);
+    const io = new IntersectionObserver(
+      (entries) => {
+        const vis = entries.filter((e) => e.isIntersecting).sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
+        if (vis.length) setActive(vis[0].target.id);
+      },
+      { rootMargin: "-35% 0px -60% 0px", threshold: 0 }
+    );
+    els.forEach((el) => io.observe(el));
+    return () => io.disconnect();
+  }, [ids]);
+  return active;
+}
+
 export function App() {
   const [pal, setPal] = useState("Neutro");
+  const activeSection = useScrollSpy(PAGE_NAV.map((p) => p.id));
   const [cortinaKey, setCortinaKey] = useState(0);
   // Moldura da demo mobile: celular (390) é o mínimo; tablet (768) ainda mostra o BottomNav (some só no lg+).
   const [mobW, setMobW] = useState<"phone" | "tablet">("phone");
@@ -571,15 +607,8 @@ export function App() {
       </main>
 
       <BottomNav
-        pages={[
-          { label: "Início", href: "#mobile", Icon: IconHome, active: true },
-          { label: "Serviços", href: "#mobile", Icon: IconWind },
-          { label: "Sobre", href: "#mobile", Icon: IconActivity },
-          { label: "Equipe", href: "#mobile", Icon: IconUsers },
-          { label: "Depoimentos", href: "#mobile", Icon: IconMessage },
-          { label: "Contato", href: "#mobile", Icon: IconMapPin },
-        ]}
-        extras={[{ label: "Site parceiro", href: "https://exemplo.com.br", Icon: IconGraduationCap, external: true }]}
+        pages={PAGE_NAV.map(({ id, label, Icon }) => ({ href: `#${id}`, label, Icon, active: id === activeSection }))}
+        extras={[{ label: "Código no GitHub", href: "https://github.com/felipegenuino/cuidado-global-ui", Icon: IconGraduationCap, external: true }]}
       />
     </div>
   );
