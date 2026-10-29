@@ -41,11 +41,15 @@
 
 /* ── Base behaviour the whole family shares ──
    Smooth scrolling for anchors (AnchorNav, "On this page", BottomNav); off
-   for people who asked for reduced motion. The sticky header is 80px, so
-   anchored sections set their own scroll-margin (scroll-mt-24 / -40). */
+   for people who asked for reduced motion. The header sticks at the top
+   (~5rem) and, on phones, the BottomNav sticks at the bottom: without this
+   padding the control that receives keyboard focus would stop hidden behind
+   them (WCAG 2.4.11). Anchored sections may still add their own scroll-margin. */
 @layer base {
   html {
     scroll-behavior: smooth;
+    scroll-padding-top: 6rem;
+    scroll-padding-bottom: 7rem;
   }
   @media (prefers-reduced-motion: reduce) {
     html {

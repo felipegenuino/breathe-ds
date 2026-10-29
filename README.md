@@ -53,7 +53,9 @@ For a site without a ready-made token file, define the roles on `:root` itself:
 ```
 
 `theme.css` also sets the family's base behaviour: smooth scrolling for anchors
-(`html { scroll-behavior: smooth }`), switched off under `prefers-reduced-motion`.
+(`html { scroll-behavior: smooth }`, switched off under `prefers-reduced-motion`)
+and `scroll-padding` (6rem top, 7rem bottom) so keyboard focus never lands
+hidden behind the sticky Header or the BottomNav (WCAG 2.4.11).
 
 ## Token roles
 
