@@ -189,7 +189,8 @@ from color, not from extra markup.
   `marker="arrow"` (corner arrow, one sentence per item, as in the Footer
   notice). An item with `href` is a link: semibold, underline, outbound arrow.
 - **Timeline**: the "Como cuidamos" of novo.creeta — ordered steps, each with a
-  44px icon bubble, a title and a paragraph; a thin line links the drawings.
+  44px icon bubble, a title and a paragraph; a thin line links the drawings. A
+  step may end with a link (strong link + outbound arrow).
 - **Byline** / **PersonChip** / **Avatar**: who signs or explains content
   (novo.creeta) — stacked portraits + eyebrow + linked names, or portrait + name
   + "Watch the video ↗"; the person chip (portrait, name, role · registration,

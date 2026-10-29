@@ -598,7 +598,7 @@ export function App() {
           <div className="max-w-2xl">
             <Timeline steps={[
               { Icon: IconInfo, title: "Step title", body: "Step body: a short paragraph that answers the question in the title, in one to three sentences." },
-              { Icon: IconSearch, title: "Step title", body: "Step body: a short paragraph that answers the question in the title." },
+              { Icon: IconSearch, title: "Step title with a link", body: "Step body: a short paragraph that answers the question in the title.", link: { label: "Outbound link", href: "https://github.com/felipegenuino/breathe-ds", external: true } },
               { Icon: IconActivity, title: "Step title", body: "Step body: a longer paragraph, to show how the line keeps linking the drawings when the text grows over several lines and the step gets taller." },
               { Icon: IconUsers, title: "Last step title", body: "Step body: the last step has no line after its drawing." },
             ]} />
