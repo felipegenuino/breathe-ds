@@ -19,6 +19,16 @@ Cada site define os valores (`--cg-*`) da sua paleta.
 Token nunca é "a cor X": é **papel + contraste medido**. (O Felipe é daltônico;
 decisão de cor sempre por papel e contraste, nunca a olho.)
 
+## Instalar
+
+```bash
+npm i @breathe-ds/ui
+```
+
+Pacote público no npm: https://www.npmjs.com/package/@breathe-ds/ui · código em
+https://github.com/felipegenuino/breathe-ds. Os componentes são TSX fonte (sem
+build): no Next, adicione `transpilePackages: ["@breathe-ds/ui"]` ao `next.config`.
+
 ## Uso (Tailwind v4)
 
 No `globals.css` do site:
