@@ -15,7 +15,7 @@ import { Curtain } from "../../components/Curtain";
 import { Lockup, type LockupVariant } from "../../components/Lockup";
 import { TtcabSymbol, TtcabWordmark, TTCAB_LOCKUP } from "../../components/marks/ttcab";
 import { CreetaSymbol, CreetaWordmark, CREETA_LOCKUP } from "../../components/marks/creeta";
-import { used, IconWind, IconActivity, IconBaby, IconSearch, IconHome, IconBook, IconMessage, IconMapPin, IconGraduationCap, IconVideo, IconUsers, IconArrowUpRight } from "../../components/icons";
+import { used, IconWind, IconActivity, IconBaby, IconSearch, IconHome, IconBook, IconMessage, IconMapPin, IconGraduationCap, IconVideo, IconUsers, IconArrowUpRight, IconPhone, IconMail, IconInstagram } from "../../components/icons";
 import * as Lucide from "lucide-react";
 
 /* ───── palettes (the DS is neutral; color comes from each app) ───── */
@@ -599,14 +599,32 @@ export function App() {
         </section>
 
         <Section id="footer" title="Footer">
+          <p className="mb-6 max-w-[62ch] text-ink-body">The site-footer of novo.creeta, by tokens: signed brand + sentence, "Pages" with the title on the first line and the links in two columns, "Where we are" with "Directions ↗ · Waze ↗", an optional notice band, the legal line with the CNPJ (always), the contact chips and the languages as plain links.</p>
+          {/* the card has its own outer margins (room for the BottomNav below lg) — the demo zeroes them */}
           <Footer
-            logo={<Lockup variant="horizontal" size="sm" name={brand.name} logo={brand.logo} wordmark={brand.wordmark} wordmarkRatio={brand.wordmarkRatio} symbolSide={brand.symbolSide} />}
-            tagline={brand.tagline}
-            columns={[{ title: "Navigation", items: ["Home", "For families", "Testimonials"].map((l) => <a key={l} href="#footer" className="hover:text-ink-soft">{l}</a>) },
-                      { title: "", items: ["Treatment", "Professionals", "Articles"].map((l) => <a key={l} href="#footer" className="hover:text-ink-soft">{l}</a>) }]}
-            contact={{ title: "Contact", lines: ["Rua João Mathias Cordeiro, 33", "Córrego Grande, Florianópolis — SC"], actions: <Button href="#footer" variant="link">View on Google Maps <IconArrowUpRight size={16} /></Button> }}
-            legal={<>© 2026 TTCAB · All rights reserved.</>}
-            chips={[<span className={CHIP}>{IcChat} WhatsApp</span>, <span className={CHIP}>48 3234.9919</span>, <span className={CHIP}>E-mail</span>]}
+            className="!mx-0 !mb-0 !mt-0 border border-line"
+            logo={<Lockup variant="horizontal" size="md" name={brand.name} tagline={brand.tagline} logo={brand.logo} wordmark={brand.wordmark} wordmarkRatio={brand.wordmarkRatio} symbolSide={brand.symbolSide} />}
+            brandName={`${brand.name} — ${brand.tagline}`}
+            quote="Breathing is the backdrop of the stage of life."
+            pages={{ title: "Pages", links: ["Home", "Services", "Method", "Team", "Guidance", "Contact", "The clinic", "Videos", "Facilities for professionals"].map((l) => ({ href: "#footer", label: l })) }}
+            where={{ title: "Where we are", address: ["Travessa João Mathias Cordeiro, 33", "Córrego Grande, Florianópolis/SC"], hours: "Monday to Friday, 8 am to 6 pm", directions: [{ href: "https://maps.google.com", label: "Directions" }, { href: "https://waze.com", label: "Waze" }] }}
+            notice={{
+              title: "Health insurance: we work by reimbursement.",
+              items: ["Care is private, and you can ask your health plan for reimbursement.", "We issue invoices and all the documentation you need.", "Talk to our team to learn how it works."],
+              action: <Button variant="solid">{IcChat} Talk to the team</Button>,
+            }}
+            legal={<>Institutional name · CNPJ 00.000.000/0001-00</>}
+            contacts={[
+              { href: "tel:+554832349919", label: "(48) 3234-9919", Icon: IconPhone },
+              { href: "https://wa.me/5548999999999", label: "WhatsApp", Icon: IconMessage, external: true },
+              { href: "mailto:contato@exemplo.com.br", label: "E-mail", Icon: IconMail },
+              { href: "https://instagram.com", label: "Instagram", Icon: IconInstagram, external: true },
+            ]}
+            languages={[
+              { lang: "pt-BR", label: "Português", href: "#footer", current: true },
+              { lang: "en", label: "English", href: "#footer" },
+              { lang: "es", label: "Español", href: "#footer" },
+            ]}
           />
         </Section>
 

@@ -164,6 +164,12 @@ a short fade.
 - **AnchorNav**: floating capsule of page anchors (scroll-spy + sliding
   indicator), extracted from ttcab's TreatmentAnchorNav. Target sections need
   a `scroll-mt-*` compatible with the sticky header.
+- **Footer**: the site-footer of novo.creeta, by tokens — white card with the
+  signed brand + sentence, "Pages" (title on the first line, links in two
+  columns), "Where we are" (address, hours, "Directions ↗ · Waze ↗"), an optional
+  notice band on `surface`, the legal line with the **CNPJ (always required in
+  the family)** plus the contact chips, and the languages as plain links.
+  `navHiddenFrom` keeps room at the bottom for the BottomNav.
 
 ## Playground (see the components)
 
