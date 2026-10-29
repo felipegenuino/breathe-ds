@@ -35,6 +35,8 @@
     "./components/icons": "./components/icons.tsx",
     "./components/AnchorNav": "./components/AnchorNav.tsx",
     "./components/LanguageSwitcher": "./components/LanguageSwitcher.tsx",
+    "./components/List": "./components/List.tsx",
+    "./components/Timeline": "./components/Timeline.tsx",
     "./components/marks/ttcab": "./components/marks/ttcab.tsx",
     "./components/marks/creeta": "./components/marks/creeta.tsx"
   },

@@ -1,5 +1,6 @@
 import type { ComponentType, ElementType, ReactNode } from "react";
 import { LanguageSwitcher, type Language } from "./LanguageSwitcher";
+import { List } from "./List";
 
 /** lucide-style icon component (the footer sets the size). */
 type IconType = ComponentType<{ size?: number; strokeWidth?: number; className?: string; "aria-hidden"?: boolean | "true" }>;
@@ -55,9 +56,6 @@ type Props = {
 
 const ArrowUpRight = () => (
   <svg aria-hidden="true" viewBox="0 0 24 24" width={18} height={18} className="cg-arrow-go" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M7 17 17 7M9 7h8v8" /></svg>
-);
-const CornerDownRight = () => (
-  <svg aria-hidden="true" viewBox="0 0 24 24" width={18} height={18} className="mt-[0.2rem] shrink-0" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m15 10 5 5-5 5" /><path d="M4 4v7a4 4 0 0 0 4 4h12" /></svg>
 );
 
 const title = "font-heading text-lg font-medium text-ink";
@@ -169,14 +167,7 @@ export function Footer({
                 <h2 id={noticeId} className="font-heading text-2xl font-medium leading-snug md:text-[1.75rem]">
                   {notice.title}
                 </h2>
-                <ul className="mt-4 list-none space-y-2 leading-relaxed text-ink/80">
-                  {notice.items.map((item, i) => (
-                    <li key={i} className="flex gap-2.5">
-                      <CornerDownRight />
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
+                <List marker="arrow" className="mt-4" items={notice.items.map((label) => ({ label }))} />
               </div>
               {notice.action && <div className="w-full shrink-0 sm:w-auto sm:self-start lg:self-center [&>*]:w-full [&>*]:justify-center sm:[&>*]:w-auto">{notice.action}</div>}
             </div>

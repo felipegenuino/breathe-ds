@@ -173,6 +173,12 @@ a short fade.
   the code, opens the three languages; header) or `list` (plain links; the Footer
   uses it). Same page in the other language, each language written in itself,
   current marked by ✓ and `aria-current`.
+- **List**: the family's list with a marker in front of each item (novo.creeta):
+  `marker="check"` (24px bubble, "what we assess / what we treat") or
+  `marker="arrow"` (corner arrow, one sentence per item, as in the Footer
+  notice). An item with `href` is a link: semibold, underline, outbound arrow.
+- **Timeline**: the "Como cuidamos" of novo.creeta — ordered steps, each with a
+  44px icon bubble, a title and a paragraph; a thin line links the drawings.
 - **Footer**: the site-footer of novo.creeta, by tokens — full width like the
   Header, with the signed brand + sentence, "Pages" (title on the first line, links in two
   columns), "Where we are" (address, hours, "Directions ↗ · Waze ↗"), an optional

@@ -10,13 +10,15 @@ import { Footer } from "../../components/Footer";
 import { Header } from "../../components/Header";
 import { AnchorNav } from "../../components/AnchorNav";
 import { LanguageSwitcher } from "../../components/LanguageSwitcher";
+import { List } from "../../components/List";
+import { Timeline } from "../../components/Timeline";
 import { BottomNav } from "../../components/BottomNav";
 import { BreatheMark } from "../../components/BreatheMark";
 import { Curtain } from "../../components/Curtain";
 import { Lockup, type LockupVariant } from "../../components/Lockup";
 import { TtcabSymbol, TtcabWordmark, TTCAB_LOCKUP } from "../../components/marks/ttcab";
 import { CreetaSymbol, CreetaWordmark, CREETA_LOCKUP } from "../../components/marks/creeta";
-import { used, IconWind, IconActivity, IconBaby, IconSearch, IconHome, IconBook, IconMessage, IconMapPin, IconGraduationCap, IconVideo, IconUsers, IconArrowUpRight, IconPhone, IconMail, IconInstagram } from "../../components/icons";
+import { used, IconWind, IconActivity, IconBaby, IconSearch, IconHome, IconBook, IconInfo, IconMessage, IconMapPin, IconGraduationCap, IconVideo, IconUsers, IconArrowUpRight, IconPhone, IconMail, IconInstagram } from "../../components/icons";
 import * as Lucide from "lucide-react";
 
 /* ───── palettes (the DS is neutral; color comes from each app) ───── */
@@ -300,6 +302,8 @@ const PAGE_NAV = [
   { id: "buttons", label: "Button", Icon: IconActivity },
   { id: "icons", label: "Icons", Icon: IconSearch },
   { id: "accordion", label: "Accordion", Icon: IconBook },
+  { id: "list", label: "List", Icon: IconBook },
+  { id: "timeline", label: "Timeline", Icon: IconActivity },
   { id: "pills", label: "PillList", Icon: IconSearch },
   { id: "header", label: "Header", Icon: IconHome },
   { id: "mobile", label: "Mobile", Icon: IconMapPin },
@@ -331,6 +335,8 @@ export function App() {
   const [curtainKey, setCurtainKey] = useState(0);
   // Mobile demo frame: phone (390) is the minimum; tablet (768) still shows the BottomNav (hidden only at lg+).
   const [mobW, setMobW] = useState<"phone" | "tablet">("phone");
+  const [listMarker, setListMarker] = useState<"check" | "arrow">("check");
+  const [listLinks, setListLinks] = useState(true);
   // optional parts of the page footer (the footer is its own demo)
   const [ft, setFt] = useState({ quote: true, pages: true, hours: true, directions: true, notice: true, contacts: true, languages: false, credits: true });
   const brand = BRAND_BY_PALETTE[pal] ?? BRAND_BY_PALETTE.Neutral;
@@ -360,6 +366,8 @@ export function App() {
             { label: "Button", href: "#buttons", icon: IcPulse },
             { label: "Icons", href: "#icons", icon: IcSearch },
             { label: "Accordion", href: "#accordion", icon: IcBook },
+            { label: "List", href: "#list", icon: IcBook },
+            { label: "Timeline", href: "#timeline", icon: IcPulse },
             { label: "PillList", href: "#pills", icon: IcSearch },
             { label: "Header", href: "#header", icon: IcHome },
             { label: "Mobile · BottomNav", href: "#mobile", icon: IcHome },
@@ -505,6 +513,36 @@ export function App() {
               { id: "a", title: "What the physiotherapist assesses", content: <ul className="space-y-2 text-ink-body"><li>Lung auscultation and vital signs</li><li>Breathing pattern</li><li>Quality of global movement</li></ul> },
               { id: "b", title: "What can change the way you breathe", content: <p className="m-0 text-ink-body">Habits, postures and blocks the body creates in response to the respiratory disorder.</p> },
               { id: "c", title: "The technique, in detail", content: <p className="m-0 text-ink-body">Age-specific handling to reorganize synergies and improve respiratory function.</p> },
+            ]} />
+          </div>
+        </Section>
+
+        <Section id="list" title="List">
+          <p className="mb-6 max-w-[62ch] text-ink-body">The family's list with a marker in front of each item, from novo.creeta: a check bubble ("what we assess", "what we treat") or the corner arrow for one sentence per item. An item with a link gets the underline and the outbound arrow.</p>
+          <div className="mb-6 flex flex-wrap items-center gap-x-5 gap-y-3 rounded-2xl border border-line bg-surface p-4">
+            <span className="text-[0.7rem] font-semibold tracking-[0.12em] text-ink-soft uppercase">Elements</span>
+            <SegGroup label="Marker" value={listMarker} set={setListMarker} options={[["check", "Check"], ["arrow", "Arrow"]]} />
+            <PillToggle label="Link items" on={listLinks} set={setListLinks} />
+          </div>
+          <div className="max-w-2xl">
+            <List marker={listMarker} items={[
+              { label: "List item" },
+              { label: listLinks ? "List item that is a link" : "List item", href: listLinks ? "#list" : undefined },
+              { label: "List item with a longer label that wraps onto a second line to show the alignment of the marker" },
+              { label: listLinks ? "List item that is an external link" : "List item", href: listLinks ? "https://github.com/felipegenuino/breathe-ds" : undefined, external: listLinks },
+              { label: "List item" },
+            ]} />
+          </div>
+        </Section>
+
+        <Section id="timeline" title="Timeline">
+          <p className="mb-6 max-w-[62ch] text-ink-body">The "Como cuidamos" of novo.creeta: an ordered sequence of steps, each with its drawing and a title answered by a paragraph; a thin line links one drawing to the next.</p>
+          <div className="max-w-2xl">
+            <Timeline steps={[
+              { Icon: IconInfo, title: "Step title", body: "Step body: a short paragraph that answers the question in the title, in one to three sentences." },
+              { Icon: IconSearch, title: "Step title", body: "Step body: a short paragraph that answers the question in the title." },
+              { Icon: IconActivity, title: "Step title", body: "Step body: a longer paragraph, to show how the line keeps linking the drawings when the text grows over several lines and the step gets taller." },
+              { Icon: IconUsers, title: "Last step title", body: "Step body: the last step has no line after its drawing." },
             ]} />
           </div>
         </Section>
