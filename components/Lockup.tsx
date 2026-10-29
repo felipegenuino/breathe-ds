@@ -49,7 +49,7 @@ export function Lockup({
 }: Props) {
   // No horizontal com tagline, o símbolo cobre o bloco inteiro (nome + tagline),
   // virando um "bookend" proporcional — não só a altura do nome.
-  const markPx = variant === "horizontal" && tagline ? Math.round(NAME_PX[size] * 2.6) : MARK[size];
+  const markPx = variant === "horizontal" && tagline ? Math.round(NAME_PX[size] * 3.4) : MARK[size];
   const mark = logo ?? <BreatheMark size={markPx} animated={animated} title={name} />;
   const nameEl = (
     <span className={`font-heading font-bold leading-none tracking-[-0.02em] text-ink ${NAME[size]}`}>
@@ -57,7 +57,7 @@ export function Lockup({
     </span>
   );
   const tagEl = tagline ? (
-    <span className={`font-body leading-tight text-ink-soft ${TAG[size]}`}>{tagline}</span>
+    <span className={`font-body leading-[1.4] text-ink-soft ${TAG[size]}`}>{tagline}</span>
   ) : null;
 
   if (variant === "symbol") {
@@ -109,7 +109,7 @@ export function Lockup({
       {mark}
       <span className="flex min-w-0 flex-col">
         {nameEl}
-        {tagEl && <span className="mt-0.5">{tagEl}</span>}
+        {tagEl && <span className="mt-1">{tagEl}</span>}
       </span>
     </span>
   );
