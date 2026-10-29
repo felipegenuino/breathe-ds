@@ -57,6 +57,20 @@
       scroll-behavior: auto;
     }
   }
+  /* Tailwind v4's reset leaves buttons with the default cursor; in the family
+     everything that can be tapped shows the hand: buttons, links, the summary
+     of a collapse, labels of controls, selects. Disabled ones keep the arrow. */
+  button:not(:disabled),
+  [role="button"]:not([aria-disabled="true"]),
+  a[href],
+  summary,
+  label[for],
+  select:not(:disabled),
+  input[type="checkbox"]:not(:disabled),
+  input[type="radio"]:not(:disabled),
+  input[type="file"]:not(:disabled) {
+    cursor: pointer;
+  }
 }
 
 /* Outbound/anchor arrow on links: takes a small step toward where the link
