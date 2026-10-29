@@ -227,7 +227,7 @@ function SegGroup<T extends string>({ label, value, set, options }: { label: str
 // a YouTube id (16:9 iframe, covers the card, no crop) or an mp4 of the site (generated podcast-style clip).
 const PREVIEW_LOOP = { src: "/demo/clip.mp4", poster: "/demo/clip-poster.jpg" };
 const PLAYER_FILE = { src: "/demo/podcast.mp4", poster: "/demo/podcast-poster.jpg" };
-const PLAYER_YOUTUBE_ID = "AwltovsqPQE";
+const PLAYER_YOUTUBE_ID = "DdOoWDQutmk";
 const PLAYER_CAPTION = "Speaker name, role, explains the method in the studio.";
 
 function HeroDemo() {

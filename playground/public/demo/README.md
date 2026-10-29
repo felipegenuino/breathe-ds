@@ -37,8 +37,8 @@ ao apertar o som, remonta do zero com áudio e controles. Duas fontes na demo:
 
 | Arquivo | Origem | Uso |
 |---|---|---|
-| `podcast.mp4` + `podcast-poster.jpg` | `Woman_speaking_in_podcast_studio_f5167944.mp4` (gerado, 10 s, 1280×720, com fala) | Player · MP4 |
-| YouTube `AwltovsqPQE` | vídeo genérico, sem arquivo local | Player · YouTube |
+| `podcast.mp4` + `podcast-poster.jpg` | `Woman_speaking_in_podcast_studio_7d7f2157.mp4` (gerado, 10 s, 1280×720, com fala) | Player · MP4 |
+| YouTube `DdOoWDQutmk` | vídeo genérico, sem arquivo local | Player · YouTube |
 
 ```bash
 ffmpeg -i gerado.mp4 -c:v libx264 -preset slow -crf 26 -pix_fmt yuv420p -movflags +faststart -c:a aac -b:a 96k podcast.mp4
