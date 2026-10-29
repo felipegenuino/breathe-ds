@@ -608,13 +608,20 @@ export function App() {
         <Container>
           <div className="mt-16 flex flex-wrap items-center gap-x-5 gap-y-3 rounded-2xl border border-line bg-surface p-4 lg:mt-24">
             <span className="text-[0.7rem] font-semibold tracking-[0.12em] text-ink-soft uppercase">Footer parts</span>
-            <PillToggle label="Brand sentence" on={ft.quote} set={(v) => setFt((f) => ({ ...f, quote: v }))} />
-            <PillToggle label="Info line" on={ft.hours} set={(v) => setFt((f) => ({ ...f, hours: v }))} />
-            <PillToggle label="Outbound links" on={ft.directions} set={(v) => setFt((f) => ({ ...f, directions: v }))} />
-            <PillToggle label="Notice band" on={ft.notice} set={(v) => setFt((f) => ({ ...f, notice: v }))} />
-            <PillToggle label="Contact chips" on={ft.contacts} set={(v) => setFt((f) => ({ ...f, contacts: v }))} />
-            <PillToggle label="Language links" on={ft.languages} set={(v) => setFt((f) => ({ ...f, languages: v }))} />
-            <PillToggle label="Credits line" on={ft.credits} set={(v) => setFt((f) => ({ ...f, credits: v }))} />
+            {/* grouped by region of the footer, left to right, top to bottom */}
+            {([
+              ["Brand column", [["quote", "Sentence"]]],
+              ["Where column", [["hours", "Info line"], ["directions", "Outbound links"]]],
+              ["Notice band", [["notice", "Band"]]],
+              ["Bottom bar", [["contacts", "Contact chips"], ["languages", "Language links"], ["credits", "Credits line"]]],
+            ] as [string, [keyof typeof ft, string][]][]).map(([region, parts]) => (
+              <div key={region} className="flex items-center gap-2">
+                <span className="text-xs font-semibold text-ink-soft">{region}</span>
+                {parts.map(([k, label]) => (
+                  <PillToggle key={k} label={label} on={ft[k]} set={(v) => setFt((f) => ({ ...f, [k]: v }))} />
+                ))}
+              </div>
+            ))}
           </div>
         </Container>
         <Footer
