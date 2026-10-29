@@ -65,7 +65,10 @@
     "./components/PhotoSequence": "./components/PhotoSequence.tsx",
     "./components/PauseButton": "./components/PauseButton.tsx",
     "./components/useOnAppear": "./components/useOnAppear.ts",
-    "./components/StoryPanel": "./components/StoryPanel.tsx"
+    "./components/StoryPanel": "./components/StoryPanel.tsx",
+    "./components/PostCard": "./components/PostCard.tsx",
+    "./components/FeaturedPosts": "./components/FeaturedPosts.tsx",
+    "./components/PostArticle": "./components/PostArticle.tsx"
   },
   "publishConfig": {
     "access": "public"

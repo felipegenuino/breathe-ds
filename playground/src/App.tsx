@@ -11,6 +11,9 @@ import { PageVideoHero } from "../../components/PageVideoHero";
 import { Footer } from "../../components/Footer";
 import { CareSteps } from "../../components/CareSteps";
 import { StoryPanel } from "../../components/StoryPanel";
+import { PostCard } from "../../components/PostCard";
+import { FeaturedPosts } from "../../components/FeaturedPosts";
+import { PostArticle } from "../../components/PostArticle";
 import { BackgroundVideo } from "../../components/BackgroundVideo";
 import { ChatPreview } from "../../components/ChatPreview";
 import { PlanTimeline } from "../../components/PlanTimeline";
@@ -348,6 +351,7 @@ const PAGE_NAV = [
   { id: "hero", label: "Hero", Icon: IconVideo },
   { id: "care", label: "CareSteps", Icon: IconActivity },
   { id: "story", label: "StoryPanel", Icon: IconBook },
+  { id: "blog", label: "Blog", Icon: IconBook },
   { id: "cta", label: "CtaCard", Icon: IconMessage },
   { id: "footer", label: "Footer", Icon: IconMessage },
 ] as const;
@@ -358,7 +362,7 @@ const FOOTER_GROUPS = (
     ["Foundations", ["symbol", "tokens", "type", "lockup", "icons"]],
     ["Navigation", ["header", "mobile", "anchornav", "breadcrumb", "footer"]],
     ["Content", ["buttons", "action", "accordion", "list", "rows", "timeline", "pills"]],
-    ["Cards & media", ["people", "cards", "videos", "map", "hero", "care", "story", "cta"]],
+    ["Cards & media", ["people", "cards", "videos", "map", "hero", "care", "story", "blog", "cta"]],
   ] as const
 ).map(([title, ids]) => ({
   title,
@@ -442,6 +446,7 @@ export function App() {
             { label: "PageVideoHero", href: "#hero", icon: IcVideo },
             { label: "CareSteps (ChatPreview, PlanTimeline, PhotoSequence)", href: "#care", icon: IcPulse },
             { label: "StoryPanel (pillars on the dark panel)", href: "#story", icon: IcBook },
+            { label: "Blog (PostCard, FeaturedPosts, PostArticle)", href: "#blog", icon: IcBook },
             { label: "CtaCard (final call)", href: "#cta", icon: IcChat },
             { label: "Footer", href: "#footer", icon: IcPin },
           ], seeAll: { label: "Mobile · BottomNav", href: "#mobile" } },
@@ -1098,6 +1103,43 @@ export function App() {
             { label: "Learn about the method", href: "#story" },
             { label: "Courses on the school site", href: "https://github.com/felipegenuino/breathe-ds", external: true },
           ]}
+        />
+      </Section>
+
+      <Section id="blog" title="Blog — PostCard · FeaturedPosts · PostArticle">
+        <p className="mb-6 max-w-[62ch] text-ink-body">The "guidance" area of novo.creeta: one subject per page, written from what a professional says in a video. FeaturedPosts is the "in the words of who treats you" block of a treatment page (bento: the first post wide with the cover beside the text; who said it and "Watch the video" at the foot, a Byline). PostCard is the card of the list: cover, category, title (the link, stretched over the whole card), excerpt in three lines, author and date. PostArticle is the page: trail, title, who signs (PersonChip) and when, the text with its notice, the video beside it (sticky from md) and the transcript, open. Generic copy and generated covers.</p>
+
+        <p className="mb-3 text-xs font-semibold text-ink-soft">FeaturedPosts</p>
+        <FeaturedPosts
+          posts={[
+            { cover: { src: "/demo/cover-1.svg" }, title: "A longer featured title that explains the subject", href: "#blog", text: "Three or four sentences in the voice of the person who explains it in the video, cut only where the speech needs it to read well on the page.", speaker: { name: "Person name", photo: "/demo/person-avatar.jpg" }, video: { href: "#videos" } },
+            { cover: { src: "/demo/cover-2.svg" }, title: "Second subject, shorter", href: "#blog", text: "Two sentences in the voice of the person who explains it in the video.", speaker: { name: "Another person", photo: "/demo/person-avatar.jpg" }, video: { href: "#videos" } },
+            { cover: { src: "/demo/cover-3.svg" }, title: "Third subject", href: "#blog", text: "A paragraph in the voice of the person who explains it, a little longer than the other one so the two cards do not look identical.", speaker: { name: "Person name", photo: "/demo/person-avatar.jpg" }, video: { href: "#videos" } },
+          ]}
+        />
+
+        <p className="mt-10 mb-3 text-xs font-semibold text-ink-soft">PostCard · the list</p>
+        <ul className="grid list-none gap-3 sm:grid-cols-2 md:gap-5 lg:grid-cols-3">
+          {[["cover-2", "Category", "Post title over two lines when needed"], ["cover-3", "Category", "Short post title"], ["cover-1", "Another category", "Post title"]].map(([c, cat, title], i) => (
+            <li key={i}>
+              <PostCard cover={{ src: `/demo/${c}.svg` }} category={cat} title={title} href="#blog" excerpt="The first paragraph of the post, clamped to three lines on the card so every card in the row keeps the same rhythm whatever the length of the text." author="Person name" date={{ iso: "2026-10-29", label: "29 October 2026" }} labels={{ read: "Read the post" }} />
+            </li>
+          ))}
+        </ul>
+
+        <p className="mt-10 mb-3 text-xs font-semibold text-ink-soft">PostArticle · the page</p>
+        <PostArticle
+          trail={<Breadcrumb items={[{ label: "Posts", href: "#blog" }, { label: "Parent page", href: "#blog" }]} />}
+          title="Post title: a subject that asks for attention"
+          signature={<PersonChip name="Person name" description="Role · Registration number" href="#people" photo="/demo/person-avatar.jpg" />}
+          date={{ iso: "2026-10-29", label: "29 October 2026" }}
+          paragraphs={[
+            "The first paragraph is the lead: larger, it answers at once what the title asks, in the voice of the person who explains it in the video.",
+            "The following paragraphs keep the reading at body size. Two or three of them, each one a step of the explanation.",
+          ]}
+          notice="This text guides, but does not replace an assessment by a professional."
+          aside={<VideoStoryCard title="Card title" speaker="Speaker name" src="/demo/person-vertical.mp4" poster="/demo/person-poster-vertical.jpg" duration={10} />}
+          transcript={{ title: "Video transcript", paragraphs: ["Hello, my name is the speaker and this is the first paragraph of what is said in the video, in full, so whoever prefers to read does not need to listen.", "The second paragraph of the speech, and the invitation at the end."] }}
         />
       </Section>
 

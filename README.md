@@ -263,6 +263,14 @@ from color, not from extra markup.
   image. All stand still and whole with reduced motion. `useOnAppear` (animate
   when half on screen, only while on screen) and `PauseButton` (44px, 32px
   circle) are exported for your own drawings.
+- **Blog**: creeta's "guidance" area — **PostCard** (the card of the list:
+  cover, category, title as the link stretched over the card, excerpt in three
+  lines, author · date), **FeaturedPosts** ("in the words of who treats you":
+  bento, the first post wide with the cover beside the text, a Byline with the
+  speaker and "Watch the video ↗" at the foot) and **PostArticle** (the page:
+  trail, title, PersonChip and date, the text with its notice, the video beside
+  it sticky from md, the transcript open; children for "other posts" and the
+  final call).
 - **StoryPanel**: creeta's "origin" block — one dark panel (surface-panel)
   grouping a story: media at the top with a film that fades into the panel, the
   logo at its base, title, lead, three pillars in columns with a hairline above
