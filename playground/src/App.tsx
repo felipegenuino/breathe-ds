@@ -332,7 +332,7 @@ export function App() {
   // Mobile demo frame: phone (390) is the minimum; tablet (768) still shows the BottomNav (hidden only at lg+).
   const [mobW, setMobW] = useState<"phone" | "tablet">("phone");
   // optional parts of the page footer (the footer is its own demo)
-  const [ftLayout, setFtLayout] = useState<"card" | "full">("card");
+  const [ftLayout, setFtLayout] = useState<"full" | "card">("full");
   const [ft, setFt] = useState({ quote: true, pages: true, hours: true, directions: true, notice: true, contacts: true, languages: false, credits: true });
   const brand = BRAND_BY_PALETTE[pal] ?? BRAND_BY_PALETTE.Neutral;
   useEffect(() => {
@@ -617,7 +617,7 @@ export function App() {
         <Container>
           <div className="mt-16 flex flex-wrap items-center gap-x-5 gap-y-3 rounded-2xl border border-line bg-surface p-4 lg:mt-24">
             <span className="text-[0.7rem] font-semibold tracking-[0.12em] text-ink-soft uppercase">Footer parts</span>
-            <SegGroup label="Layout" value={ftLayout} set={setFtLayout} options={[["card", "Card"], ["full", "Full width"]]} />
+            <SegGroup label="Layout" value={ftLayout} set={setFtLayout} options={[["full", "Full width"], ["card", "Card"]]} />
             {/* grouped by region of the footer, left to right, top to bottom */}
             {([
               ["Brand column", [["quote", "Sentence"]]],

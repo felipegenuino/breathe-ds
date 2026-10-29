@@ -49,9 +49,10 @@ type Props = {
   /** Breakpoint from which the BottomNav is gone (md on creeta, lg on ttcab):
    *  below it the card keeps room at the bottom for the floating bar. */
   navHiddenFrom?: "md" | "lg";
-  /** `card` (novo.creeta): white rounded card floating over the page color.
-   *  `full`: edge to edge like the Header, same inner width (1600px). */
-  layout?: "card" | "full";
+  /** `full` (default, family decision 2026-10-29): edge to edge like the
+   *  Header, same inner width (1600px); the notice band stays at reading width.
+   *  `card`: the original novo.creeta look, a white rounded card over the page color. */
+  layout?: "full" | "card";
   labels?: Partial<Labels>;
   className?: string;
 };
@@ -94,7 +95,7 @@ export function Footer({
   credits,
   linkComponent,
   navHiddenFrom = "lg",
-  layout = "card",
+  layout = "full",
   labels,
   className = "",
 }: Props) {
