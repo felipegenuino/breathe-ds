@@ -169,8 +169,7 @@ a short fade.
   uses it). Same page in the other language, each language written in itself,
   current marked by ✓ and `aria-current`.
 - **Footer**: the site-footer of novo.creeta, by tokens — full width like the
-  Header by default (`layout="card"` keeps the original rounded white card), with
-  the signed brand + sentence, "Pages" (title on the first line, links in two
+  Header, with the signed brand + sentence, "Pages" (title on the first line, links in two
   columns), "Where we are" (address, hours, "Directions ↗ · Waze ↗"), an optional
   notice band on `surface`, the legal line with the **CNPJ (always required in
   the family)** plus the contact chips, and the languages as plain links.

@@ -49,10 +49,6 @@ type Props = {
   /** Breakpoint from which the BottomNav is gone (md on creeta, lg on ttcab):
    *  below it the card keeps room at the bottom for the floating bar. */
   navHiddenFrom?: "md" | "lg";
-  /** `full` (default, family decision 2026-10-29): edge to edge like the
-   *  Header, same inner width (1600px); the notice band stays at reading width.
-   *  `card`: the original novo.creeta look, a white rounded card over the page color. */
-  layout?: "full" | "card";
   labels?: Partial<Labels>;
   className?: string;
 };
@@ -74,7 +70,7 @@ const chip =
 
 /**
  * Footer of the Cuidado Global family — the site-footer of novo.creeta, by
- * tokens. A clean white card (chosen over a dark version with a giant name):
+ * tokens, edge to edge like the Header (the card version was dropped on 2026-10-29):
  * signed logo + the brand sentence, "Pages" (title on the first line, links in
  * two columns), "Where we are" (address, hours, "Directions ↗ · Waze ↗" — the
  * map only loads on tap, elsewhere), an optional notice band on `surface`
@@ -95,30 +91,22 @@ export function Footer({
   credits,
   linkComponent,
   navHiddenFrom = "lg",
-  layout = "full",
   labels,
   className = "",
 }: Props) {
   const L: ElementType = linkComponent ?? "a";
   const t = { ...EN, ...labels };
   // whole class names: Tailwind only generates what it finds written in the code
-  const outer =
-    layout === "full"
-      ? navHiddenFrom === "md"
-        ? "mt-16 pb-28 md:mt-24 md:pb-14"
-        : "mt-16 pb-28 lg:mt-24 lg:pb-14"
-      : navHiddenFrom === "md"
-        ? "mx-3 mb-28 mt-16 rounded-[32px] md:mx-6 md:mb-6 md:mt-24"
-        : "mx-3 mb-28 mt-16 rounded-[32px] lg:mx-6 lg:mb-6 lg:mt-24";
-  // full: the padding lives on the inner box, so the content aligns with the Header's (px-4 md:px-6)
-  const pad = layout === "full" ? "py-10 md:py-14" : "px-6 py-10 md:px-6 md:py-14";
-  const inner = layout === "full" ? "mx-auto max-w-[1600px] px-4 md:px-6" : "mx-auto max-w-6xl";
+  // Edge to edge like the Header (family decision 2026-10-29), same inner width
+  // and side padding (px-4 md:px-6). Below the BottomNav breakpoint the bottom
+  // padding leaves room for the floating bar.
+  const outer = navHiddenFrom === "md" ? "mt-16 pb-28 md:mt-24 md:pb-14" : "mt-16 pb-28 lg:mt-24 lg:pb-14";
   const noticeId = notice?.id ?? "footer-notice";
 
   return (
-    <footer className={`${outer} ${pad} bg-white text-ink ${className}`}>
+    <footer className={`${outer} bg-white py-10 text-ink md:py-14 ${className}`}>
       <style>{CSS}</style>
-      <div className={inner}>
+      <div className="mx-auto max-w-[1600px] px-4 md:px-6">
         <div className={`grid gap-x-10 gap-y-10 ${pages ? "md:grid-cols-[minmax(0,4fr)_minmax(0,5fr)_minmax(0,3fr)]" : "md:grid-cols-[minmax(0,7fr)_minmax(0,5fr)]"}`}>
           <div>
             {logo}
@@ -171,8 +159,8 @@ export function Footer({
 
         {/* Notice band: `surface` (the page color) over the white card. One
             sentence per item, with the corner arrow; the arrow is decoration,
-            the <ul> is what says "list". Always reading width (max-w-6xl),
-            even in the full-width layout. */}
+            the <ul> is what says "list". Always at reading width (max-w-6xl),
+            narrower than the full-width columns. */}
         {notice && (
           <section aria-labelledby={noticeId} className="mx-auto mt-10 max-w-6xl rounded-[24px] bg-surface px-6 py-8 text-ink md:mt-12 md:px-10 md:py-10">
             <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between lg:gap-10">
