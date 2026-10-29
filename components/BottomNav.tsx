@@ -173,7 +173,8 @@ export function BottomNav({ pages, extras = [], linkComponent, hideFrom = "lg", 
   const inMore = pages.slice(visible);
   const moreActive = inMore.some((p) => p.active) || extras.some((x) => x.active);
   const pos = embedded ? "absolute" : "fixed";
-  const hide = embedded ? "" : ` ${hideFrom}:hidden`;
+  // classes por inteiro (o Tailwind só gera o que acha escrito no código)
+  const hide = embedded ? "" : hideFrom === "md" ? " md:hidden" : " lg:hidden";
 
   const panelInner = (
     <nav aria-label={t.morePages}>
