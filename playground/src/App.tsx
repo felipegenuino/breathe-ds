@@ -354,7 +354,7 @@ export function App() {
   // Mobile demo frame: phone (390) is the minimum; tablet (768) still shows the BottomNav (hidden only at lg+).
   const [mobW, setMobW] = useState<"phone" | "tablet">("phone");
   const [listMarker, setListMarker] = useState<"check" | "arrow">("check");
-  const [mapW, setMapW] = useState<"full" | "half">("full");
+  const [mapW, setMapW] = useState<"full" | "half">("half");
   const [mc, setMc] = useState({ badge: true, arrow: true, eyebrow: false, text: true, link: false, media: "clip" as "image" | "clip" | "hover" });
   const [listLinks, setListLinks] = useState(true);
   // optional parts of the page footer (the footer is its own demo)
@@ -792,7 +792,7 @@ export function App() {
             The selector only narrows the demo, to see it as a half-width cell. */}
         <div className="mb-5 flex flex-wrap items-center gap-x-5 gap-y-3 rounded-2xl border border-line bg-surface p-4">
           <span className="text-[0.7rem] font-semibold tracking-[0.12em] text-ink-soft uppercase">Preview</span>
-          <SegGroup label="Width" value={mapW} set={setMapW} options={[["full", "100%"], ["half", "50%"]]} />
+          <SegGroup label="Width" value={mapW} set={setMapW} options={[["half", "50%"], ["full", "100%"]]} />
         </div>
         <div className={`mx-auto transition-[max-width] duration-300 ease-cg motion-reduce:transition-none ${mapW === "half" ? "max-w-[50%]" : "max-w-full"}`}>
           <MapCard
