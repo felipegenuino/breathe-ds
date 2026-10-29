@@ -11,6 +11,7 @@ import { Header } from "../../components/Header";
 import { BottomNav } from "../../components/BottomNav";
 import { BreatheMark } from "../../components/BreatheMark";
 import { Cortina } from "../../components/Cortina";
+import { Lockup, type LockupVariant } from "../../components/Lockup";
 import { used, IconWind, IconActivity, IconBaby, IconSearch, IconHome, IconBook, IconMessage, IconMapPin, IconGraduationCap, IconVideo, IconUsers, IconArrowUpRight } from "../../components/icons";
 import * as Lucide from "lucide-react";
 
@@ -282,6 +283,7 @@ export function App() {
           { label: "Símbolo", href: "#symbol" },
           { label: "Tokens", href: "#tokens" },
           { label: "Componentes", href: "#buttons", children: [
+            { label: "Lockup (logo)", href: "#lockup", icon: IcHome },
             { label: "Button", href: "#buttons", icon: IcPulse },
             { label: "Ícones", href: "#icons", icon: IcSearch },
             { label: "Accordion", href: "#accordion", icon: IcBook },
@@ -310,6 +312,34 @@ export function App() {
             <div className="text-action"><BreatheMark size={88} duration={4.5} /></div>
             <div className="rounded-2xl bg-ink p-8 text-surface"><BreatheMark size={88} /></div>
             <div className="text-ink-soft"><BreatheMark size={64} animated={false} /><p className="mt-2 text-xs text-ink-soft">estático</p></div>
+          </div>
+        </Section>
+
+        <Section id="lockup" title="Lockup — sistema de logo">
+          <p className="mb-8 max-w-[62ch] text-ink-body">O mesmo símbolo e nome em cinco arranjos, um pra cada contexto. Neutro por token (a cor vem da paleta <b>{pal}</b>) e com a tipografia fixa da família. Troque a paleta no topo — o nome e a cor acompanham.</p>
+          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {([
+              ["Empilhado", "stacked", "Perfis, splash de app, pôster", true],
+              ["Horizontal", "horizontal", "Cabeçalho de site, documento", true],
+              ["Wordmark", "wordmark", "Anúncio, quando a leitura é essencial", true],
+              ["Símbolo", "symbol", "Favicon, ícone de app, marca d'água", false],
+              ["Fundido", "merged", "Avatar, foto de perfil, embalagem", false],
+            ] as [string, LockupVariant, string, boolean][]).map(([label, v, uso, comTag]) => (
+              <div key={v} className="flex flex-col rounded-2xl border border-line bg-surface p-6">
+                <div className="flex min-h-[148px] flex-1 items-center justify-center">
+                  <Lockup
+                    variant={v}
+                    name={marca.name}
+                    tagline={comTag ? marca.tagline : undefined}
+                    size={v === "symbol" || v === "merged" ? "lg" : "md"}
+                  />
+                </div>
+                <div className="mt-4 border-t border-line pt-3">
+                  <p className="font-heading text-sm font-bold text-ink">{label}</p>
+                  <p className="mt-0.5 text-xs text-ink-soft">{uso}</p>
+                </div>
+              </div>
+            ))}
           </div>
         </Section>
 
