@@ -36,7 +36,8 @@ export function CreetaSymbol({ size = 48, color, className, title = "Creeta" }: 
 }
 
 type WordmarkProps = {
-  /** Altura; em `em` acompanha o corpo do texto ao redor (minúsculas com ascendente: ~0.7em). */
+  /** Altura. Padrão `var(--cg-wordmark, 1em)`: dentro do Lockup/Cortina a
+   *  variável vem da razão do manual (`wordmarkPerSymbol`); solto, 1em. */
   height?: string;
   /** Padrão `currentColor`: herda `ink` (ou branco sobre painel). */
   color?: string;
@@ -45,8 +46,12 @@ type WordmarkProps = {
   title?: string;
 };
 
+/** Razão do manual: altura do wordmark ÷ altura do símbolo no logotipo
+ *  horizontal (40.3 / 86 (nome a 1.4643× no logotipo horizontal)). Passe como `wordmarkRatio` ao Lockup/Cortina. */
+export const CREETA_LOCKUP = { wordmarkPerSymbol: 0.469 } as const;
+
 /** Caixa justa ao desenho das letras: 116.66 × 27.53. */
-export function CreetaWordmark({ height = "1em", color = "currentColor", className, style, title = "creeta" }: WordmarkProps) {
+export function CreetaWordmark({ height = "var(--cg-wordmark, 1em)", color = "currentColor", className, style, title = "creeta" }: WordmarkProps) {
   return (
     <svg
       viewBox="0 0 116.66 27.53"

@@ -28,7 +28,8 @@ export function TtcabSymbol({ size = 48, color = TTCAB_ORANGE, className, title 
 }
 
 type WordmarkProps = {
-  /** Altura; em `em` acompanha o corpo do texto ao redor (caixa-alta: ~0.8em). */
+  /** Altura. Padrão `var(--cg-wordmark, 1em)`: dentro do Lockup/Cortina a
+   *  variável vem da razão do manual (`wordmarkPerSymbol`); solto, 1em. */
   height?: string;
   /** Padrão `currentColor`: herda `ink` (ou branco sobre painel). */
   color?: string;
@@ -37,8 +38,12 @@ type WordmarkProps = {
   title?: string;
 };
 
+/** Razão do manual: altura do wordmark ÷ altura do símbolo no logotipo
+ *  horizontal (43.67 / 78.39). Passe como `wordmarkRatio` ao Lockup/Cortina. */
+export const TTCAB_LOCKUP = { wordmarkPerSymbol: 0.557 } as const;
+
 /** Caixa justa ao desenho das letras: 149.75 × 43.67. */
-export function TtcabWordmark({ height = "1em", color = "currentColor", className, style, title = "TTCAB" }: WordmarkProps) {
+export function TtcabWordmark({ height = "var(--cg-wordmark, 1em)", color = "currentColor", className, style, title = "TTCAB" }: WordmarkProps) {
   return (
     <svg
       viewBox="0 21.36 149.75 43.67"

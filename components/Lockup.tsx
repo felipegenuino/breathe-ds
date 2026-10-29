@@ -14,12 +14,13 @@ type Size = "sm" | "md" | "lg";
 
 /* Nome em `font-heading`; símbolo ~1.3× o corpo do nome (o anel é aberto e
    "lê" mais leve, então pede um tamanho a mais pra fechar em harmonia).
-   A caixa do BreatheMark é justa ao glifo: o vão entre símbolo e nome é só o gap. */
-const NAME: Record<Size, string> = { sm: "text-xl", md: "text-[1.75rem]", lg: "text-[2.5rem]" };
-const TAG: Record<Size, string> = { sm: "text-[0.72rem]", md: "text-sm", lg: "text-base" };
-const MARK: Record<Size, number> = { sm: 26, md: 36, lg: 52 };
-const GAP: Record<Size, string> = { sm: "gap-2", md: "gap-3", lg: "gap-4" };
-const NAME_PX: Record<Size, number> = { sm: 20, md: 28, lg: 40 };
+   A caixa do BreatheMark é justa ao glifo: o vão entre símbolo e nome é só o gap.
+   `md` = header dos sites (símbolo de 44px, medido no creeta e no ttcab). */
+const NAME: Record<Size, string> = { sm: "text-2xl", md: "text-[2.125rem]", lg: "text-[2.7rem]" };
+const TAG: Record<Size, string> = { sm: "text-[0.78rem]", md: "text-sm", lg: "text-base" };
+const MARK: Record<Size, number> = { sm: 32, md: 44, lg: 56 };
+const GAP: Record<Size, string> = { sm: "gap-2", md: "gap-2.5", lg: "gap-3" };
+const NAME_PX: Record<Size, number> = { sm: 24, md: 34, lg: 43 };
 const TILE: Record<Size, string> = { sm: "size-16 text-[0.7rem]", md: "size-24 text-[0.95rem]", lg: "size-32 text-[1.3rem]" };
 
 type Props = {
@@ -30,12 +31,21 @@ type Props = {
   /** Símbolo customizado; por padrão o BreatheMark (anel + ponto). Um <svg>
    *  injetado recebe a altura do tamanho (`size`); a largura segue a proporção. */
   logo?: ReactNode;
-  /** Wordmark desenhado (svg) no lugar do nome em texto. Um svg com altura em
-   *  `em` acompanha o corpo do nome. `merged` ignora (lá o nome é texto). */
+  /** Wordmark desenhado (svg) no lugar do nome em texto. `merged` ignora
+   *  (lá o nome é texto). */
   wordmark?: ReactNode;
+  /** Altura do wordmark como fração da altura do símbolo, do manual da marca
+   *  (ex.: `TTCAB_LOCKUP.wordmarkPerSymbol`). Chega ao svg por `--cg-wordmark`. */
+  wordmarkRatio?: number;
   size?: Size;
   /** O símbolo "respira"? Padrão `false` — logo de cabeçalho não fica animando. */
   animated?: boolean;
+  /** Entrada ao montar, como no header do novo.creeta: o símbolo chega
+   *  primeiro, depois o nome, depois a tagline. Respeita prefers-reduced-motion
+   *  (vira só um fade curto). Remonte (key) para repetir. */
+  entrance?: boolean;
+  /** Atraso da entrada em ms (ex.: esperar a Cortina subir). */
+  entranceDelay?: number;
   className?: string;
 };
 
@@ -50,29 +60,37 @@ export function Lockup({
   tagline,
   logo,
   wordmark,
+  wordmarkRatio = 0.5,
   size = "md",
   animated = false,
+  entrance = false,
+  entranceDelay = 0,
   className = "",
 }: Props) {
+  const entranceCls = entrance ? " cg-lockup--entrance" : "";
+  const entranceStyle = entrance ? ({ "--cg-entrance-delay": `${entranceDelay}ms` } as CSSProperties) : undefined;
   // No horizontal com tagline, o símbolo cobre o bloco inteiro (nome + tagline),
   // virando um "bookend" proporcional — não só a altura do nome.
   const markPx = variant === "horizontal" && tagline ? Math.round(NAME_PX[size] * 2.3) : MARK[size];
-  const mark = logo ? (
-    <span className="inline-flex text-ink [&>svg]:h-[var(--mark)] [&>svg]:w-auto" style={{ "--mark": `${markPx}px` } as CSSProperties}>
-      {logo}
+  const mark = (
+    <span className="cg-lockup__mark inline-flex text-ink [&>svg]:h-[var(--mark)] [&>svg]:w-auto" style={{ "--mark": `${markPx}px` } as CSSProperties}>
+      {logo ?? <BreatheMark size={markPx} animated={animated} title={name} />}
     </span>
-  ) : (
-    <BreatheMark size={markPx} animated={animated} title={name} />
   );
+  // O wordmark segue o símbolo-base do tamanho (não o "bookend" do horizontal
+  // com tagline), como no logotipo assinado do creeta: nome ≈ 0.26 do símbolo grande.
   const nameEl = (
-    <span className={`font-heading font-bold leading-none tracking-[-0.02em] text-ink ${NAME[size]}`}>
+    <span
+      className={`cg-lockup__name font-heading font-bold leading-none tracking-[-0.02em] text-ink ${NAME[size]}`}
+      style={wordmark ? ({ "--cg-wordmark": `${Math.round(MARK[size] * wordmarkRatio * 10) / 10}px` } as CSSProperties) : undefined}
+    >
       {wordmark ?? name}
     </span>
   );
   // `block`: como item inline, a entrelinha do pai (1.5 do body) mandava na
   // linha e a tagline de duas linhas ficava folgada demais.
   const tagEl = tagline ? (
-    <span className={`block font-body leading-[1.3] text-ink-soft ${TAG[size]}`}>{tagline}</span>
+    <span className={`cg-lockup__tag block font-body leading-[1.3] text-ink-soft ${TAG[size]}`}>{tagline}</span>
   ) : null;
 
   if (variant === "symbol") {
@@ -85,7 +103,8 @@ export function Lockup({
 
   if (variant === "wordmark") {
     return (
-      <span className={`inline-flex flex-col ${className}`}>
+      <span className={`inline-flex flex-col${entranceCls} ${className}`} style={entranceStyle}>
+        {entrance && <style>{ENTRANCE_CSS}</style>}
         {nameEl}
         {tagEl && <span className="mt-1">{tagEl}</span>}
       </span>
@@ -94,7 +113,8 @@ export function Lockup({
 
   if (variant === "stacked") {
     return (
-      <span className={`inline-flex flex-col items-center text-center ${className}`}>
+      <span className={`inline-flex flex-col items-center text-center${entranceCls} ${className}`} style={entranceStyle}>
+        {entrance && <style>{ENTRANCE_CSS}</style>}
         {mark}
         <span className="mt-4 flex flex-col items-center">
           {nameEl}
@@ -120,7 +140,8 @@ export function Lockup({
 
   // horizontal (padrão)
   return (
-    <span className={`inline-flex items-center ${GAP[size]} ${className}`}>
+    <span className={`inline-flex items-center ${GAP[size]}${entranceCls} ${className}`} style={entranceStyle}>
+      {entrance && <style>{ENTRANCE_CSS}</style>}
       {mark}
       <span className="flex min-w-0 flex-col">
         {nameEl}
@@ -129,3 +150,18 @@ export function Lockup({
     </span>
   );
 }
+
+/* Entrada: símbolo (escala + giro leve) → nome (desliza da esquerda) → tagline.
+   Mesmo vocabulário da Cortina; com movimento reduzido fica só um fade curto. */
+const ENTRANCE_CSS = `
+.cg-lockup--entrance .cg-lockup__mark{ animation: cg-lockup-mark 500ms var(--ease-cg,cubic-bezier(.2,.8,.2,1)) var(--cg-entrance-delay,0ms) both; }
+.cg-lockup--entrance .cg-lockup__name{ animation: cg-lockup-name 420ms var(--ease-cg,cubic-bezier(.2,.8,.2,1)) calc(var(--cg-entrance-delay,0ms) + 420ms) both; }
+.cg-lockup--entrance .cg-lockup__tag{ animation: cg-lockup-tag 360ms ease calc(var(--cg-entrance-delay,0ms) + 700ms) both; }
+@keyframes cg-lockup-mark{ from{ opacity:0; transform:scale(.6) rotate(-16deg); } }
+@keyframes cg-lockup-name{ from{ opacity:0; transform:translateX(-8px); } }
+@keyframes cg-lockup-tag{ from{ opacity:0; transform:translateY(4px); } }
+@media (prefers-reduced-motion:reduce){
+  .cg-lockup--entrance .cg-lockup__mark, .cg-lockup--entrance .cg-lockup__name, .cg-lockup--entrance .cg-lockup__tag{ animation: cg-lockup-fade 240ms ease var(--cg-entrance-delay,0ms) both; }
+  @keyframes cg-lockup-fade{ from{ opacity:0; } }
+}
+`;

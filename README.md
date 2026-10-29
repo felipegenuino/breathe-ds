@@ -6,9 +6,8 @@ própria paleta sobre o mesmo contrato.
 
 > Pacote npm: `@cuidado-global/ui` (endereço técnico). **Breathe** é o nome do sistema.
 
-> **v0.1 — tokens-first.** Só a camada de tokens. Os primitivos (Button,
-> PageHero/PageVideoHero, SectionKicker, Container, nav flutuante + dropdown,
-> Card) entram nas próximas versões.
+> **v0.1** — tokens + componentes (ver `components/`) + marcas dos sites.
+> Confira tudo renderizado no playground (abaixo).
 
 ## Ideia
 
@@ -125,14 +124,35 @@ marca (`public/brand`) dos repositórios, separados em dois componentes para a
 | Creeta | `CreetaSymbol` (três ondas + ponto, cores da marca) | `CreetaWordmark` (minúsculas, `currentColor`) | `@cuidado-global/ui/components/marks/creeta` |
 
 ```tsx
-<Cortina logo={<TtcabSymbol size={60} />} name={<TtcabWordmark height="0.8em" />} tagline="…" />
-<Lockup variant="horizontal" logo={<CreetaSymbol />} wordmark={<CreetaWordmark height="0.7em" />} name="creeta" tagline="…" />
+<Cortina logo={<TtcabSymbol />} name={<TtcabWordmark />} wordmarkRatio={TTCAB_LOCKUP.wordmarkPerSymbol} tagline="…" />
+<Lockup variant="horizontal" size="md" logo={<CreetaSymbol />} wordmark={<CreetaWordmark />} wordmarkRatio={CREETA_LOCKUP.wordmarkPerSymbol} name="creeta" />
 ```
 
-O wordmark em `em` acompanha o corpo do nome (`0.8em` para caixa-alta, `0.7em`
-para minúsculas com ascendente). O símbolo injetado no `Lockup` recebe a altura
-do tamanho (`size`); o símbolo aceita `color` para versão monocromática (branco
-sobre painel escuro). O desenho não se edita à mão: é o do manual de cada marca.
+**Proporção vem do manual, não do olho.** Cada arquivo de marca exporta
+`*_LOCKUP.wordmarkPerSymbol` (altura do wordmark ÷ altura do símbolo no
+logotipo horizontal: TTCAB 0,557 · creeta 0,469). O `Lockup` e a `Cortina`
+passam isso ao svg pela variável `--cg-wordmark`; o símbolo injetado recebe a
+altura do tamanho (`size`). Medido nos sites (29/10/2026): no header dos dois o
+símbolo tem **44px** de altura — é o `size="md"` do Lockup. O símbolo aceita
+`color` para versão monocromática (branco sobre painel escuro). O desenho não se
+edita à mão: é o do manual de cada marca.
+
+`Lockup` com `entrance` (e `entranceDelay` em ms) faz a entrada do header do
+novo.creeta: símbolo, depois o nome, depois a tagline; com movimento reduzido vira
+um fade curto.
+
+## Navegação
+
+- **Header**: marca (o app passa o link para a home) · itens · item com dropdown
+  (ícones nos subitens; link final com seta → ou ↗ se `external`) · idioma · CTA.
+  Padrão dos sites: "Início" é só a casa (`icon` + `iconOnly`), rótulo para
+  leitor de tela.
+- **BottomNav**: no celular/tablet a navegação sai do header e vira a barra
+  flutuante inferior (+ painel "Mais"). `embedded` para mostrar numa moldura em
+  qualquer largura (demo).
+- **AnchorNav**: cápsula flutuante de âncoras da página (scroll-spy + indicador
+  deslizante), extraída do TreatmentAnchorNav do ttcab. As seções-alvo precisam
+  de `scroll-mt-*` compatível com o sticky.
 
 ## Playground (ver os componentes)
 
@@ -159,13 +179,13 @@ sobre painel escuro). O desenho não se edita à mão: é o do manual de cada ma
       e **big** (foto + nome + função + CREFITO + accordions "Trajetória"/"Orientações").
       Variante com **vídeo**: badge "Apresentação", hover anima o vídeo, e **modal** (vídeo + bio).
       **Regra de dado:** todo profissional PRECISA ter **CREFITO** vinculado (exigência COFFITO).
-- [ ] **PillList** (chips tipo "Condições que atendemos": rótulo + seta, grade que quebra, link "Ver todos") — aprovado
-- [ ] **ContextualAnchorNav** (nav flutuante de âncoras) — aprovado. Cápsula flutuante +
-      aba ativa **deslizante** (scroll-spy). **Já existe no ttcab** (TreatmentAnchorNav) → extrair.
-- [ ] **Footer** (aprovado) · **PageVideoHero** (hero full-bleed) · **Header** (dropdown)
+- [x] **PillList** (chips tipo "Condições que atendemos": rótulo + seta, grade que quebra, link "Ver todos")
+- [x] **AnchorNav** (cápsula flutuante de âncoras, scroll-spy + indicador deslizante) — extraída do ttcab (29/10)
+- [x] **Footer** · **PageVideoHero** (loop e player) · **Header** (dropdown, casa) · **BottomNav** · **Cortina** · **Lockup** (5 arranjos) · **BreatheMark**
+- [x] **Marcas dos sites** (`components/marks/`): símbolo + wordmark reais do TTCAB e do Creeta (29/10)
 - [ ] **ThreadRail** (grafismo lateral — fio que desce pela esquerda ligando seções) — aprovado,
       **já existe no ttcab** → extrair.
 - [ ] **OrganicFrame** (recorte de imagem orgânico, tipo blob) — registrado como **OPÇÃO**
       (não default pra todos os sites). **Já existe no ttcab** → extrair como variante opcional.
-- [ ] Primitivos: Button, Container, SectionKicker, Card
+- [x] Primitivos: Button (com variant link), Container, SectionKicker, Card
 - [ ] Migrar ttcab e creeta para consumir o pacote + `npm publish`

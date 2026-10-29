@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
 import { BreatheMark } from "./BreatheMark";
 
 type Props = {
@@ -11,6 +11,9 @@ type Props = {
   /** Símbolo à esquerda do nome. Padrão: o BreatheMark (anel + ponto). Cada
    *  site injeta o seu logotipo aqui. */
   logo?: ReactNode;
+  /** Quando `name` é um wordmark svg: altura dele como fração da altura do
+   *  símbolo, do manual da marca (ex.: `CREETA_LOCKUP.wordmarkPerSymbol`). */
+  wordmarkRatio?: number;
   /** Chave do sessionStorage (quando há o script de cabeça). */
   storageKey?: string;
   /** Chamado quando a cortina termina de subir. */
@@ -35,7 +38,7 @@ type Props = {
  * Ao terminar de subir, o <html> ganha data-cg-cortina-fim (para o topo das
  * páginas "pousar" só depois dela, nunca numa troca de tela) e chama onDone.
  */
-export function Cortina({ name, tagline, logo, storageKey, onDone, className }: Props) {
+export function Cortina({ name, tagline, logo, wordmarkRatio, storageKey, onDone, className }: Props) {
   const el = useRef<HTMLDivElement>(null);
   const [gone, setGone] = useState(false);
 
@@ -65,7 +68,12 @@ export function Cortina({ name, tagline, logo, storageKey, onDone, className }: 
       <div className="cg-cortina__lockup">
         <span className="cg-cortina__mark">{logo ?? <BreatheMark size={60} duration={5} />}</span>
         <span className="cg-cortina__text">
-          <span className="cg-cortina__name">{name}</span>
+          <span
+            className="cg-cortina__name"
+            style={wordmarkRatio ? ({ "--cg-wordmark": `calc(var(--cg-cortina-mark) * ${wordmarkRatio})` } as CSSProperties) : undefined}
+          >
+            {name}
+          </span>
           {tagline && <span className="cg-cortina__tag">{tagline}</span>}
         </span>
       </div>
@@ -87,6 +95,7 @@ export function cortinaHeadScript(storageKey = "cg-cortina") {
 
 const CORTINA_CSS = `
 .cg-cortina{
+  --cg-cortina-mark: clamp(40px,7.4vw,60px); /* altura do símbolo */
   position:fixed; inset:0 0 -40px; padding-bottom:40px;
   z-index:120; display:grid; place-items:center;
   border-radius:0 0 32px 32px;
@@ -99,8 +108,9 @@ const CORTINA_CSS = `
 .cg-cortina__lockup{ display:flex; align-items:center; gap:clamp(10px,1.6vw,16px); padding:0 24px; }
 .cg-cortina__mark{ display:inline-flex; color:var(--color-ink,#14323a);
   animation:cg-cortina-mark 700ms var(--ease-cg,cubic-bezier(.2,.8,.2,1)) both; }
-/* símbolo ~1.25× o corpo do nome (a caixa do SVG é justa ao glifo), fluido */
-.cg-cortina__mark svg{ width:clamp(40px,7.4vw,60px); height:auto; }
+/* símbolo ~1.25× o corpo do nome (a caixa do SVG é justa ao glifo), fluido.
+   Por altura: um símbolo injetado não-quadrado (TTCAB) mantém a proporção. */
+.cg-cortina__mark svg{ height:var(--cg-cortina-mark); width:auto; }
 .cg-cortina__text{ display:flex; flex-direction:column; min-width:0; }
 .cg-cortina__name{
   font-family:var(--font-heading,system-ui,sans-serif);

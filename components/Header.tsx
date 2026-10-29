@@ -12,8 +12,14 @@ export type NavItem = {
   label: ReactNode;
   href?: string;
   active?: boolean;
+  /** Ícone antes do rótulo (ex.: casa no "Início"). */
+  icon?: ReactNode;
+  /** Só o ícone aparece; o rótulo fica para leitor de tela (padrão dos sites: "Início" é a casa). */
+  iconOnly?: boolean;
   children?: NavChild[];
-  seeAll?: { label: ReactNode; href: string };
+  /** Link final do dropdown. Seta → (vai para outra página do site); com
+   *  `external` vira ↗ (sai para outro site), como nos demais componentes. */
+  seeAll?: { label: ReactNode; href: string; external?: boolean };
 };
 
 type Props = {
@@ -46,7 +52,7 @@ function Chevron({ open }: { open: boolean }) {
 }
 
 const linkCls = (active?: boolean) =>
-  `relative flex min-h-11 items-center font-heading text-[0.95rem] font-semibold whitespace-nowrap text-ink underline decoration-2 underline-offset-[6px] ${
+  `relative flex min-h-11 items-center gap-1.5 font-heading text-[0.95rem] font-semibold whitespace-nowrap text-ink underline decoration-2 underline-offset-[6px] ${
     active ? "decoration-ink" : "decoration-transparent hover:decoration-ink/40"
   } transition-[text-decoration-color] duration-150 motion-reduce:transition-none focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ink`;
 
@@ -118,7 +124,9 @@ function Dropdown({ item, L }: { item: NavItem; L: ElementType }) {
                 className="flex items-center justify-between gap-2 rounded-xl px-3.5 py-2.5 font-heading text-[0.92rem] font-semibold text-ink transition-colors hover:bg-ink/[0.05]"
               >
                 {item.seeAll.label}
-                <svg aria-hidden="true" viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2.25" strokeLinecap="round" strokeLinejoin="round"><path d="M7 17 17 7M9 7h8v8" /></svg>
+                <svg aria-hidden="true" viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2.25" strokeLinecap="round" strokeLinejoin="round">
+                  {item.seeAll.external ? <path d="M7 17 17 7M9 7h8v8" /> : <path d="M5 12h14M13 6l6 6-6 6" />}
+                </svg>
               </L>
             </li>
           )}
@@ -146,8 +154,9 @@ export function Header({ logo, items, linkComponent, cta, localeSwitcher }: Prop
             item.children?.length ? (
               <Dropdown key={i} item={item} L={L} />
             ) : (
-              <L key={i} href={item.href} className={linkCls(item.active)}>
-                {item.label}
+              <L key={i} href={item.href} aria-current={item.active ? "page" : undefined} className={linkCls(item.active)}>
+                {item.icon && <span aria-hidden="true" className="flex">{item.icon}</span>}
+                {item.iconOnly ? <span className="sr-only">{item.label}</span> : item.label}
               </L>
             )
           )}

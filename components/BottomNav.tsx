@@ -21,6 +21,9 @@ type Props = {
   /** Painel "Mais" (lista extra que não cabe na barra). */
   more?: { label?: ReactNode; items: MoreItem[] };
   linkComponent?: ElementType;
+  /** Embutido num contêiner `relative` (demo, moldura de celular): a barra e o
+   *  painel ficam `absolute` dentro dele e aparecem em qualquer largura. */
+  embedded?: boolean;
 };
 
 function MoreIcon() {
@@ -41,9 +44,11 @@ function ArrowUpRight() {
  * descrição e marcação de link externo). Deps injetáveis (ícones por slot,
  * `Link` por `linkComponent`).
  */
-export function BottomNav({ items, more, linkComponent }: Props) {
+export function BottomNav({ items, more, linkComponent, embedded = false }: Props) {
   const L: ElementType = linkComponent ?? "a";
   const [openMore, setOpenMore] = useState(false);
+  const pos = embedded ? "absolute" : "fixed";
+  const hide = embedded ? "" : " lg:hidden";
 
   const Cell = ({ it }: { it: BottomItem }) => {
     const inner = (
@@ -72,9 +77,9 @@ export function BottomNav({ items, more, linkComponent }: Props) {
           <div
             aria-hidden="true"
             onClick={() => setOpenMore(false)}
-            className="fixed inset-0 z-40 bg-ink/40 backdrop-blur-[2px] lg:hidden"
+            className={`${pos} inset-0 z-40 bg-ink/40 backdrop-blur-[2px]${hide}`}
           />
-          <div className="fixed inset-x-3 bottom-[88px] z-50 rounded-3xl border border-line bg-surface p-2 shadow-[0_24px_48px_-16px_rgba(20,71,83,0.5)] lg:hidden">
+          <div className={`${pos} inset-x-3 bottom-[88px] z-50 rounded-3xl border border-line bg-surface p-2 shadow-[0_24px_48px_-16px_rgba(20,71,83,0.5)]${hide}`}>
             <ul className="list-none divide-y divide-line">
               {more.items.map((m, i) => (
                 <li key={i}>
@@ -108,7 +113,7 @@ export function BottomNav({ items, more, linkComponent }: Props) {
       {/* Barra */}
       <nav
         aria-label="Navegação principal"
-        className="fixed inset-x-3 bottom-3 z-50 flex items-center justify-between gap-1 rounded-3xl bg-ink px-2 py-2 text-surface shadow-[0_18px_40px_-12px_rgba(20,71,83,0.6)] lg:hidden"
+        className={`${pos} inset-x-3 bottom-3 z-50 flex items-center justify-between gap-1 rounded-3xl bg-ink px-2 py-2 text-surface shadow-[0_18px_40px_-12px_rgba(20,71,83,0.6)]${hide}`}
       >
         {items.map((it, i) => (
           <Cell key={i} it={it} />

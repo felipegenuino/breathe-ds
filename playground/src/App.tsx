@@ -8,12 +8,13 @@ import { PillList } from "../../components/PillList";
 import { PageVideoHero } from "../../components/PageVideoHero";
 import { Footer } from "../../components/Footer";
 import { Header } from "../../components/Header";
+import { AnchorNav } from "../../components/AnchorNav";
 import { BottomNav } from "../../components/BottomNav";
 import { BreatheMark } from "../../components/BreatheMark";
 import { Cortina } from "../../components/Cortina";
 import { Lockup, type LockupVariant } from "../../components/Lockup";
-import { TtcabSymbol, TtcabWordmark } from "../../components/marks/ttcab";
-import { CreetaSymbol, CreetaWordmark } from "../../components/marks/creeta";
+import { TtcabSymbol, TtcabWordmark, TTCAB_LOCKUP } from "../../components/marks/ttcab";
+import { CreetaSymbol, CreetaWordmark, CREETA_LOCKUP } from "../../components/marks/creeta";
 import { used, IconWind, IconActivity, IconBaby, IconSearch, IconHome, IconBook, IconMessage, IconMapPin, IconGraduationCap, IconVideo, IconUsers, IconArrowUpRight } from "../../components/icons";
 import * as Lucide from "lucide-react";
 
@@ -259,21 +260,23 @@ function HeroDemo() {
 }
 
 /* Marca de cada paleta: o Breathe é neutro; TTCAB e Creeta trazem o símbolo e
-   o wordmark reais dos sites (components/marks). A altura do wordmark é em
-   `em` do nome: caixa-alta do TTCAB 0.8em, minúsculas do creeta 0.7em. */
-const CORTINA_MARCA: Record<string, { name: string; tagline: string; logo?: ReactNode; wordmark?: ReactNode }> = {
+   o wordmark reais dos sites (components/marks). A altura do wordmark vem da
+   razão do manual de cada marca (wordmarkRatio), não de um valor a olho. */
+const CORTINA_MARCA: Record<string, { name: string; tagline: string; logo?: ReactNode; wordmark?: ReactNode; wordmarkRatio?: number }> = {
   Neutro: { name: "Breathe", tagline: "Design system da família Cuidado Global" },
   TTCAB: {
     name: "TTCAB",
     tagline: "Torcicolo Congênito e Assimetrias do Bebê",
     logo: <TtcabSymbol size={60} />,
-    wordmark: <TtcabWordmark height="0.8em" />,
+    wordmark: <TtcabWordmark />,
+    wordmarkRatio: TTCAB_LOCKUP.wordmarkPerSymbol,
   },
   Creeta: {
     name: "creeta",
     tagline: "Centro de Reequilíbrio Toracoabdominal",
     logo: <CreetaSymbol size={60} />,
-    wordmark: <CreetaWordmark height="0.7em" />,
+    wordmark: <CreetaWordmark />,
+    wordmarkRatio: CREETA_LOCKUP.wordmarkPerSymbol,
   },
 };
 
@@ -287,7 +290,7 @@ export function App() {
   }, [pal]);
   return (
     <div>
-      <Cortina key={cortinaKey} name={marca.wordmark ?? marca.name} tagline={marca.tagline} logo={marca.logo} />
+      <Cortina key={cortinaKey} name={marca.wordmark ?? marca.name} tagline={marca.tagline} logo={marca.logo} wordmarkRatio={marca.wordmarkRatio} />
       {/* dogfooding: o header do DS É o componente Header do Breathe */}
       <Header
         logo={<span className="flex items-center gap-2 font-heading text-xl font-bold text-ink"><BreatheMark size={20} /> Breathe</span>}
@@ -302,6 +305,7 @@ export function App() {
             { label: "Accordion", href: "#accordion", icon: IcBook },
             { label: "PillList", href: "#pills", icon: IcSearch },
             { label: "Header", href: "#header", icon: IcHome },
+            { label: "AnchorNav", href: "#anchornav", icon: IcPin },
             { label: "PageVideoHero", href: "#hero", icon: IcVideo },
             { label: "Footer", href: "#footer", icon: IcPin },
           ], seeAll: { label: "Mobile · BottomNav", href: "#mobile" } },
@@ -345,6 +349,7 @@ export function App() {
                     name={marca.name}
                     logo={marca.logo}
                     wordmark={marca.wordmark}
+                    wordmarkRatio={marca.wordmarkRatio}
                     tagline={comTag ? marca.tagline : undefined}
                     size={v === "symbol" || v === "merged" ? "lg" : "md"}
                   />
@@ -452,26 +457,46 @@ export function App() {
         </Section>
 
         <Section id="header" title="Header (nav + dropdown)">
-          {/* sem overflow-hidden: o dropdown precisa sair da caixa da demo */}
+          {/* sem overflow-hidden: o dropdown precisa sair da caixa da demo.
+              Estrutura genérica: marca (link pra home) · casa · item com dropdown · itens · idioma · CTA. */}
           <div className="relative z-10 rounded-2xl border border-line [&>header]:rounded-t-2xl">
             <Header
-              logo={<Lockup variant="horizontal" size="sm" name={marca.name} logo={marca.logo} wordmark={marca.wordmark} />}
+              logo={
+                <a href="#" aria-label="Página inicial" className="inline-flex rounded-xl transition-opacity hover:opacity-70 focus-visible:outline-2 focus-visible:outline-offset-[3px] focus-visible:outline-ink">
+                  {/* entrada como no novo.creeta: símbolo, depois o nome; espera a Cortina subir (2200 + 700ms) */}
+                  <Lockup key={cortinaKey} entrance entranceDelay={2700} variant="horizontal" size="md" name={marca.name} logo={marca.logo} wordmark={marca.wordmark} wordmarkRatio={marca.wordmarkRatio} />
+                </a>
+              }
               cta={<Button variant="accent" size="sm">WhatsApp</Button>}
               localeSwitcher={<span className={CHIP}>{IcPin} PT</span>}
               items={[
-                { label: "Início", href: "#", active: true },
-                { label: "Tratamento", href: "#", children: [
-                  { label: "O que é o TTCAB", href: "#", icon: IcWind },
-                  { label: "Idealizadora", href: "#", icon: IcUsers },
-                  { label: "Como saber", href: "#", icon: IcSearch },
-                ], seeAll: { label: "Ir para o Tratamento", href: "#" } },
-                { label: "Para famílias", href: "#" },
-                { label: "Profissionais", href: "#" },
+                { label: "Início", href: "#", active: true, icon: <IconHome size={18} strokeWidth={1.75} />, iconOnly: true },
+                { label: "Serviços", href: "#", children: [
+                  { label: "Primeiro serviço", href: "#", icon: IcWind },
+                  { label: "Segundo serviço", href: "#", icon: IcUsers },
+                  { label: "Terceiro serviço", href: "#", icon: IcSearch },
+                ], seeAll: { label: "Ver todos os serviços", href: "#" } },
+                { label: "Sobre", href: "#" },
+                { label: "Equipe", href: "#" },
                 { label: "Depoimentos", href: "#" },
-                { label: "Artigos", href: "#" },
+                { label: "Contato", href: "#" },
               ]}
             />
-            <div className="p-6 text-sm text-ink-soft">Passe o mouse em "Tratamento" para o dropdown.</div>
+            <div className="p-6 text-sm text-ink-soft">Passe o mouse em "Serviços" para o dropdown. "Início" é só a casa; o rótulo fica para o leitor de tela. Marca no tamanho do header dos sites (símbolo de 44px), com a entrada animada (símbolo, depois o nome) — "Rever a cortina" repete.</div>
+          </div>
+        </Section>
+
+        <Section id="anchornav" title="AnchorNav — âncoras da página">
+          <p className="mb-6 max-w-[62ch] text-ink-body">Cápsula flutuante que acompanha a rolagem numa página longa (extraída da página de Tratamento do ttcab): scroll-spy marca a seção visível e o indicador desliza até ela. Role por estas três seções.</p>
+          <AnchorNav items={[{ id: "an-1", label: "Primeira seção" }, { id: "an-2", label: "Segunda seção" }, { id: "an-3", label: "Terceira seção, com título mais longo" }]} />
+          <div className="space-y-10 pt-6">
+            {["an-1", "an-2", "an-3"].map((id, i) => (
+              <section key={id} id={id} className="scroll-mt-40 rounded-2xl border border-line p-8">
+                <h3 className="font-heading text-2xl font-bold text-ink">{["Primeira", "Segunda", "Terceira"][i]} seção</h3>
+                <p className="mt-3 max-w-[60ch] text-ink-body">Conteúdo genérico só para dar altura à página e a nav ter o que acompanhar. Cada seção precisa de um <code className="rounded bg-ink/[0.07] px-1.5 py-0.5 text-sm">scroll-mt</code> compatível com a altura do header mais a cápsula.</p>
+                <div className="mt-6 h-48 rounded-2xl bg-ink/[0.06]" aria-hidden="true" />
+              </section>
+            ))}
           </div>
         </Section>
 
@@ -484,7 +509,7 @@ export function App() {
 
         <Section id="footer" title="Footer">
           <Footer
-            logo={<Lockup variant="horizontal" size="sm" name={marca.name} logo={marca.logo} wordmark={marca.wordmark} />}
+            logo={<Lockup variant="horizontal" size="sm" name={marca.name} logo={marca.logo} wordmark={marca.wordmark} wordmarkRatio={marca.wordmarkRatio} />}
             tagline={marca.tagline}
             columns={[{ title: "Navegação", items: ["Início", "Para famílias", "Depoimentos"].map((l) => <a key={l} href="#" className="hover:text-ink-soft">{l}</a>) },
                       { title: "", items: ["Tratamento", "Profissionais", "Artigos"].map((l) => <a key={l} href="#" className="hover:text-ink-soft">{l}</a>) }]}
@@ -495,7 +520,33 @@ export function App() {
         </Section>
 
         <Section id="mobile" title="Mobile · BottomNav">
-          <p className="max-w-[60ch] text-ink-body">Estreite a janela (abaixo de ~1024px) para ver o <b>BottomNav</b> flutuante aparecer no rodapé e o header mobile. Toque em "Mais" para o painel.</p>
+          <p className="mb-8 max-w-[60ch] text-ink-body">No celular e no tablet a navegação sai do header e vira esta barra flutuante no rodapé. Aqui ela fica embutida numa moldura para você ver no desktop; abaixo de ~1024px ela aparece de verdade no rodapé da janela. Toque em "Mais" para o painel.</p>
+          <div className="relative mx-auto h-[640px] w-[390px] max-w-full overflow-hidden rounded-[2.5rem] border border-line bg-surface shadow-[0_24px_48px_-24px_rgba(20,71,83,0.35)]">
+            <div className="flex h-16 items-center justify-between px-5">
+              <Lockup variant="horizontal" size="sm" name={marca.name} logo={marca.logo} wordmark={marca.wordmark} wordmarkRatio={marca.wordmarkRatio} />
+              <span className={CHIP}>{IcPin} PT</span>
+            </div>
+            <div className="space-y-3 px-5 pt-6" aria-hidden="true">
+              <div className="h-40 rounded-2xl bg-ink/[0.07]" />
+              <div className="h-4 w-4/5 rounded-full bg-ink/[0.09]" />
+              <div className="h-4 w-3/5 rounded-full bg-ink/[0.09]" />
+              <div className="h-4 w-2/3 rounded-full bg-ink/[0.09]" />
+            </div>
+            <BottomNav
+              embedded
+              items={[
+                { label: "Início", href: "#", icon: IcHome, active: true },
+                { label: "Serviços", href: "#", icon: IcWind },
+                { label: "Sobre", href: "#", icon: IcPulse },
+                { label: "Equipe", href: "#", icon: IcUsers },
+              ]}
+              more={{ items: [
+                { label: "Depoimentos", href: "#", icon: IcChat },
+                { label: "Contato", href: "#", icon: IcPin },
+                { label: "Site parceiro", href: "#", icon: IcCap, description: "abre em outro site", external: true },
+              ] }}
+            />
+          </div>
         </Section>
 
         <div className="h-24" />
