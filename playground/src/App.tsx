@@ -628,8 +628,26 @@ export function App() {
           />
         </Section>
 
-        <div className="h-24" />
       </main>
+
+      {/* dogfooding: the page footer IS the Footer of Breathe DS */}
+      <Footer
+        logo={<Lockup variant="horizontal" size="md" name="Breathe" tagline="Design system of the Cuidado Global family" />}
+        brandName="Breathe DS — design system of the Cuidado Global family"
+        quote="Token decisions by role and measured contrast, never by eye."
+        pages={{ title: "On this page", links: PAGE_NAV.map(({ id, label }) => ({ href: `#${id}`, label })) }}
+        where={{
+          title: "Where to find it",
+          address: ["npm: @breathe-ds/ui", "GitHub: felipegenuino/breathe-ds"],
+          hours: "Built for creeta, ttcab and metodorta.",
+          directions: [{ href: "https://www.npmjs.com/package/@breathe-ds/ui", label: "npm" }, { href: "https://github.com/felipegenuino/breathe-ds", label: "GitHub" }],
+        }}
+        legal={<>Breathe DS · MIT License · © 2026 Felipe Genuino</>}
+        contacts={[
+          { href: "https://github.com/felipegenuino/breathe-ds/issues", label: "Issues", Icon: IconMessage, external: true },
+          { href: "https://github.com/felipegenuino", label: "felipegenuino", Icon: IconInstagram, external: true },
+        ]}
+      />
 
       <BottomNav
         pages={PAGE_NAV.map(({ id, label, Icon }) => ({ href: `#${id}`, label, Icon, active: id === activeSection }))}
