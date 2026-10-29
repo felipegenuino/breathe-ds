@@ -107,7 +107,8 @@ export function Footer({
     <footer className={`${outer} bg-white py-10 text-ink md:py-14 ${className}`}>
       <style>{CSS}</style>
       <div className="mx-auto max-w-[1600px] px-4 md:px-6">
-        <div className={`grid gap-x-10 gap-y-10 ${pages ? "md:grid-cols-[minmax(0,4fr)_minmax(0,5fr)_minmax(0,3fr)]" : "md:grid-cols-[minmax(0,7fr)_minmax(0,5fr)]"}`}>
+        {/* without the pages column, "where" keeps to the right edge (auto width) */}
+        <div className={`grid gap-x-10 gap-y-10 ${pages ? "md:grid-cols-[minmax(0,4fr)_minmax(0,5fr)_minmax(0,3fr)]" : "md:grid-cols-[minmax(0,1fr)_auto]"}`}>
           <div>
             {logo}
             {brandName && <p className="sr-only">{brandName}</p>}
