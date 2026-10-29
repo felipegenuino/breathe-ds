@@ -500,7 +500,7 @@ export function App() {
         </Section>
 
         <Section id="accordion" title="Accordion">
-          <div className="max-w-[760px]">
+          <div>
             <Accordion items={[
               { id: "a", title: "What the physiotherapist assesses", content: <ul className="space-y-2 text-ink-body"><li>Lung auscultation and vital signs</li><li>Breathing pattern</li><li>Quality of global movement</li></ul> },
               { id: "b", title: "What can change the way you breathe", content: <p className="m-0 text-ink-body">Habits, postures and blocks the body creates in response to the respiratory disorder.</p> },

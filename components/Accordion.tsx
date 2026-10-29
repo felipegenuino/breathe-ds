@@ -91,7 +91,8 @@ export function Accordion({ items, defaultOpenId, single = true }: Props) {
               }`}
             >
               <div className="min-h-0 overflow-hidden">
-                <div className="px-[clamp(18px,3vw,28px)] pt-0 pb-[clamp(18px,2.6vw,26px)] text-ink-body">
+                {/* full-width item, reading-width body (max-w-2xl), as the Perguntas of novo.creeta */}
+                <div className="max-w-2xl px-[clamp(18px,3vw,28px)] pt-0 pb-[clamp(18px,2.6vw,26px)] text-ink-body">
                   {it.content}
                 </div>
               </div>
