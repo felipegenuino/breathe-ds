@@ -1152,21 +1152,24 @@ export function App() {
       </Section>
 
       <Section id="course" title="CourseCard — the class card">
-        <p className="mb-6 max-w-[62ch] text-ink-body">The class card (ttcab's "Formação", the school's class list) in the family's own vocabulary: the course name as the category line, the city as the title with the seats pill (as the EventRow), the facts as tiles (the calendar tile for the start, the pin for the venue with its map link, a clock for the workload, as the EventFacts), who teaches as a Byline, and the Button accent pinned at the foot, the one full-colour element. "soldOut" puts the pill in the button's place. By tone: no border, no shadow, no lift.</p>
-        <div className="grid gap-3 md:gap-5 lg:grid-cols-3">
+        <p className="mb-6 max-w-[62ch] text-ink-body">The class card (ttcab's "Formação", the school's class list) in the family's own vocabulary: the course name as the category line, the city as the title with the seats pill (as the EventRow), the facts as tiles (the calendar tile for the start, the pin for the venue with its map link, a clock for the workload, as the EventFacts), who teaches as a Byline, and at the foot the price with its instalment note on the left and the Button accent on the right, the one full-colour element. The cover photo at the top, as every class page of the school has one. "soldOut" puts the pill in the button's place. By tone: no border, no shadow, no lift.</p>
+        <div className="grid gap-3 md:grid-cols-2 md:gap-5">
           <CourseCard
+            cover={{ src: "/demo/assessment.jpg" }}
             course="Course name"
             title="City · ST"
-            seats="28 seats"
+            seats="14 seats"
             start={{ month: "Nov", day: "3" }}
             when={{ title: "3 to 9 November 2026 · 08:30–17:30", subtitle: "+ 10 November · 08:30–13:00" }}
             where={{ title: "Venue name", subtitle: "Street name, 1000, auditorium, neighbourhood", href: "https://www.google.com/maps/search/?api=1&query=Florian%C3%B3polis", external: true }}
             workload="69 class hours"
             instructors={[{ name: "Person name", href: "#people", photo: "/demo/person-avatar.jpg" }]}
+            price={{ value: "R$ 7.280", note: "up to 12 instalments" }}
             footnote="Only physiotherapists can attend."
             action={<Button variant="accent" href="https://github.com/felipegenuino/breathe-ds" target="_blank" rel="noopener noreferrer">Secure my seat</Button>}
           />
           <CourseCard
+            cover={{ src: "/demo/clip-poster.jpg", position: "50% 40%" }}
             course="Course name"
             title="Big city · ST"
             soldOut
@@ -1175,9 +1178,11 @@ export function App() {
             where={{ title: "Venue name", subtitle: "Avenue name, 928, room 1202, neighbourhood" }}
             workload="69 class hours"
             instructors={[{ name: "Person name", href: "#people", photo: "/demo/person-avatar.jpg" }, { name: "Another person", href: "#people", photo: "/demo/person-avatar.jpg" }, { name: "Third person", href: "#people", photo: "/demo/person-avatar.jpg" }]}
+            price={{ value: "R$ 7.280", note: "up to 12 instalments" }}
             footnote="Only physiotherapists can attend."
           />
           <CourseCard
+            cover={{ src: "/demo/podcast-poster.jpg" }}
             course="Course name"
             title="Another city · ST"
             seats="Limited seats"
@@ -1185,6 +1190,7 @@ export function App() {
             when={{ title: "Dates to be confirmed" }}
             where={{ title: "Venue to be confirmed" }}
             workload="69 class hours"
+            price={{ value: "R$ 7.280", note: "up to 12 instalments" }}
             footnote="Only physiotherapists can attend."
             action={<Button variant="accent" href="https://github.com/felipegenuino/breathe-ds" target="_blank" rel="noopener noreferrer">Secure my seat</Button>}
           />

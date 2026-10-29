@@ -12,6 +12,9 @@ type Labels = {
 const EN: Labels = { with: "With", soldOut: "Sold out" };
 
 type Props = {
+  /** Cover photo at the top (the school's pages always have one), 4:3,
+   *  focused near the top for the portrait photos the school uses. */
+  cover?: { src: string; alt?: string; position?: string };
   /** Small line above the title: the course name ("Basic course"). */
   course?: ReactNode;
   /** "City · ST". */
@@ -28,6 +31,8 @@ type Props = {
   seats?: ReactNode;
   /** Who teaches: portraits and names, each a link when it has an href. */
   instructors?: Person[];
+  /** The price beside the button ("R$ 7.280") and a small note ("up to 12 instalments"). */
+  price?: { value: ReactNode; note?: ReactNode };
   /** Small note at the foot ("Only physiotherapists can attend."). */
   footnote?: ReactNode;
   /** The call to action: a Button `accent`, the one full-colour element of the card. */
@@ -51,7 +56,7 @@ const PILL = "inline-flex items-center rounded-pill bg-ink/[0.08] px-2.5 py-0.5 
  * a Byline, and the Button accent pinned at the foot. By tone: no border, no
  * shadow, no lift.
  */
-export function CourseCard({ course, title, start, when, where, workload, seats, instructors, footnote, action, soldOut = false, headingLevel: Title = "h3", linkComponent, labels, className = "" }: Props) {
+export function CourseCard({ cover, course, title, start, when, where, workload, seats, instructors, price, footnote, action, soldOut = false, headingLevel: Title = "h3", linkComponent, labels, className = "" }: Props) {
   const t = { ...EN, ...labels };
   const facts: EventFact[] = [{ tile: <DateBadge month={start.month} day={start.day} />, title: when.title, subtitle: when.subtitle }];
   if (where) facts.push({ tile: "pin", title: where.title, subtitle: where.subtitle, href: where.href, external: where.external });
@@ -66,8 +71,21 @@ export function CourseCard({ course, title, start, when, where, workload, seats,
     });
   const pill = soldOut ? t.soldOut : seats;
 
+  const foot = soldOut ? (
+    <span className="inline-flex min-h-11 items-center rounded-pill bg-ink/[0.08] px-5 font-heading font-semibold text-ink">{t.soldOut}</span>
+  ) : (
+    action
+  );
+
   return (
-    <article className={`flex flex-col rounded-[28px] bg-card p-6 md:p-7 ${className}`}>
+    <article className={`flex flex-col overflow-hidden rounded-[28px] bg-card ${className}`}>
+      {cover && (
+        <div className="relative aspect-[4/3] overflow-hidden">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={cover.src} alt={cover.alt ?? ""} loading="lazy" decoding="async" className="absolute inset-0 h-full w-full object-cover" style={{ objectPosition: cover.position ?? "50% 25%" }} />
+        </div>
+      )}
+      <div className="flex flex-1 flex-col p-6 md:p-7">
       {course && <p className="mb-2 text-sm font-semibold text-ink-soft">{course}</p>}
       <Title className="font-heading text-xl font-medium leading-snug text-ink md:text-[1.375rem]">
         {title}
@@ -85,14 +103,19 @@ export function CourseCard({ course, title, start, when, where, workload, seats,
 
       {footnote && <p className="mt-5 text-sm text-ink-soft">{footnote}</p>}
 
-      {/* at the foot: cards side by side align their buttons */}
-      {soldOut ? (
-        <p className="mt-auto pt-6">
-          <span className="inline-flex min-h-11 items-center rounded-pill bg-ink/[0.08] px-5 font-heading font-semibold text-ink">{t.soldOut}</span>
-        </p>
-      ) : (
-        action && <div className="mt-auto pt-6">{action}</div>
+      {/* at the foot: the price on the left, the button on the right; cards side by side align here */}
+      {(foot || price) && (
+        <div className="mt-auto flex flex-wrap items-center justify-between gap-x-4 gap-y-3 pt-6">
+          {price && (
+            <p className="leading-tight">
+              <span className="block font-heading text-xl font-semibold text-ink">{price.value}</span>
+              {price.note && <span className="block text-sm text-ink-soft">{price.note}</span>}
+            </p>
+          )}
+          {foot}
+        </div>
       )}
+      </div>
     </article>
   );
 }
