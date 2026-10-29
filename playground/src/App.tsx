@@ -354,7 +354,7 @@ export function App() {
   // Mobile demo frame: phone (390) is the minimum; tablet (768) still shows the BottomNav (hidden only at lg+).
   const [mobW, setMobW] = useState<"phone" | "tablet">("phone");
   const [listMarker, setListMarker] = useState<"check" | "arrow">("check");
-  const [mc, setMc] = useState({ badge: true, arrow: true, eyebrow: false, text: true, link: false, media: "image" as "image" | "clip" | "hover" });
+  const [mc, setMc] = useState({ badge: true, arrow: true, eyebrow: false, text: true, link: false, media: "clip" as "image" | "clip" | "hover" });
   const [listLinks, setListLinks] = useState(true);
   // optional parts of the page footer (the footer is its own demo)
   const [ft, setFt] = useState({ quote: true, pages: true, hours: true, directions: true, notice: true, contacts: true, languages: false, credits: true });
@@ -749,7 +749,7 @@ export function App() {
         </div>
         <div className="mt-8 mb-5 flex flex-wrap items-center gap-x-5 gap-y-3 rounded-2xl border border-line bg-surface p-4">
           <span className="text-[0.7rem] font-semibold tracking-[0.12em] text-ink-soft uppercase">MediaCard</span>
-          <SegGroup label="Media" value={mc.media} set={(v) => setMc((m) => ({ ...m, media: v }))} options={[["image", "Image"], ["clip", "Clip"], ["hover", "Clip on hover"]]} />
+          <SegGroup label="Media" value={mc.media} set={(v) => setMc((m) => ({ ...m, media: v }))} options={[["clip", "Clip"], ["hover", "Clip on hover"], ["image", "Image"]]} />
           {([["badge", "Badge"], ["arrow", "Arrow button"], ["eyebrow", "Eyebrow"], ["text", "Text"], ["link", "Link line"]] as [keyof typeof mc, string][]).map(([k, label]) => (
             <PillToggle key={k} label={label} on={mc[k] as boolean} set={(v) => setMc((m) => ({ ...m, [k]: v }))} />
           ))}
@@ -767,7 +767,7 @@ export function App() {
             badge={mc.badge ? <MediaCardBadge Icon={IconMapPin}>Badge</MediaCardBadge> : undefined}
           />
           {/* the portrait preset of novo.creeta ("Who created the method"): no badge, no arrow button, eyebrow + name + link line */}
-          <MediaCard href="#cards" title="Person name" eyebrow="Eyebrow" linkLabel="Link line" arrowButton={false} src="/demo/clip-poster.jpg" aspect="aspect-[3/4] md:aspect-auto md:min-h-[420px]" padding="p-6" />
+          <MediaCard href="#cards" title="Person name" eyebrow="Eyebrow" linkLabel="Link line" arrowButton={false} src="/demo/clip-poster.jpg" video={{ src: "/demo/clip.mp4", poster: "/demo/clip-poster.jpg" }} aspect="aspect-[3/4] md:aspect-auto md:min-h-[420px]" padding="p-6" />
         </div>
       </Section>
 
