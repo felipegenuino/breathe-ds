@@ -170,9 +170,10 @@ export function Footer({
 
         {/* Notice band: `surface` (the page color) over the white card. One
             sentence per item, with the corner arrow; the arrow is decoration,
-            the <ul> is what says "list". */}
+            the <ul> is what says "list". Always reading width (max-w-6xl),
+            even in the full-width layout. */}
         {notice && (
-          <section aria-labelledby={noticeId} className="mt-10 rounded-[24px] bg-surface px-6 py-8 text-ink md:mt-12 md:px-10 md:py-10">
+          <section aria-labelledby={noticeId} className="mx-auto mt-10 max-w-6xl rounded-[24px] bg-surface px-6 py-8 text-ink md:mt-12 md:px-10 md:py-10">
             <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between lg:gap-10">
               <div>
                 <h2 id={noticeId} className="font-heading text-2xl font-medium leading-snug md:text-[1.75rem]">
