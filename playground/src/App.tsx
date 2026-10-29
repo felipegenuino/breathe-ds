@@ -561,7 +561,7 @@ export function App() {
           >
             <div className="flex h-16 items-center justify-between px-5">
               <Lockup variant="horizontal" size="sm" name={brand.name} logo={brand.logo} wordmark={brand.wordmark} wordmarkRatio={brand.wordmarkRatio} symbolSide={brand.symbolSide} />
-              <span className={CHIP}>{IcPin} EN</span>
+              <LanguageSwitcher languages={DEMO_LANGUAGES} />
             </div>
             <div className="space-y-3 px-5 pt-6" aria-hidden="true">
               <div className="h-40 rounded-2xl bg-ink/[0.07]" />
