@@ -52,6 +52,9 @@ For a site without a ready-made token file, define the roles on `:root` itself:
 }
 ```
 
+`theme.css` also sets the family's base behaviour: smooth scrolling for anchors
+(`html { scroll-behavior: smooth }`), switched off under `prefers-reduced-motion`.
+
 ## Token roles
 
 | Token (Tailwind) | Role | `--cg-*` |

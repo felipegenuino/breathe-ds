@@ -38,3 +38,18 @@
   /* ── Motion — the family's signature curve ── */
   --ease-cg: cubic-bezier(0.2, 0.8, 0.2, 1);
 }
+
+/* ── Base behaviour the whole family shares ──
+   Smooth scrolling for anchors (AnchorNav, "On this page", BottomNav); off
+   for people who asked for reduced motion. The sticky header is 80px, so
+   anchored sections set their own scroll-margin (scroll-mt-24 / -40). */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+}
