@@ -766,8 +766,9 @@ export function App() {
             video={mc.media === "image" ? undefined : { src: "/demo/clip.mp4", poster: "/demo/clip-poster.jpg", when: mc.media === "hover" ? "hover" : "always" }}
             badge={mc.badge ? <MediaCardBadge Icon={IconMapPin}>Badge</MediaCardBadge> : undefined}
           />
-          {/* the portrait preset of novo.creeta ("Who created the method"): no badge, no arrow button, eyebrow + name + link line */}
-          <MediaCard href="#cards" title="Person name" eyebrow="Eyebrow" linkLabel="Link line" arrowButton={false} src="/demo/clip-poster.jpg" video={{ src: "/demo/clip.mp4", poster: "/demo/clip-poster.jpg" }} aspect="aspect-[3/4] md:aspect-auto md:min-h-[420px]" padding="p-6" />
+          {/* the portrait preset of novo.creeta ("Who created the method"): no badge, no arrow button, eyebrow + name + link line.
+              Same default padding as the card on the left; the site passes padding="p-6" on its big cards. */}
+          <MediaCard href="#cards" title="Person name" eyebrow="Eyebrow" linkLabel="Link line" arrowButton={false} src="/demo/clip-poster.jpg" video={{ src: "/demo/clip.mp4", poster: "/demo/clip-poster.jpg" }} aspect="aspect-[3/4] md:aspect-auto md:min-h-[420px]" />
         </div>
       </Section>
 
