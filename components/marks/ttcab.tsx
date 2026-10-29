@@ -1,15 +1,15 @@
 import type { CSSProperties } from "react";
 
 /**
- * Marca do TTCAB (Torcicolo Congênito e Assimetrias do Bebê), copiada dos
- * arquivos de public/brand do site. Símbolo (mãe + bebê, laranja) e
- * wordmark "TTCAB" separados, para a Curtain e o Lockup montarem os arranjos.
- * Não editar à mão: o desenho é o do manual da marca.
+ * TTCAB brand (Torcicolo Congênito e Assimetrias do Bebê), copied from the
+ * site's public/brand files. Symbol (mother + baby, orange) and "TTCAB"
+ * wordmark kept separate, so the Curtain and the Lockup can assemble the
+ * arrangements. Do not edit by hand: the drawing is the one from the brand manual.
  */
 type SymbolProps = {
-  /** Largura em px; a altura segue a proporção (136:126). */
+  /** Width in px; height follows the aspect ratio (136:126). */
   size?: number;
-  /** Cor única (ex.: "currentColor" ou "#fff" sobre painel escuro). Padrão: o laranja da marca. */
+  /** Single color (e.g. "currentColor" or "#fff" on a dark panel). Default: the brand orange. */
   color?: string;
   className?: string;
   title?: string;
@@ -28,22 +28,22 @@ export function TtcabSymbol({ size = 48, color = TTCAB_ORANGE, className, title 
 }
 
 type WordmarkProps = {
-  /** Altura. Padrão `var(--cg-wordmark, 1em)`: dentro do Lockup/Curtain a
-   *  variável vem da razão do manual (`wordmarkPerSymbol`); solto, 1em. */
+  /** Height. Default `var(--cg-wordmark, 1em)`: inside the Lockup/Curtain the
+   *  variable comes from the manual's ratio (`wordmarkPerSymbol`); standalone, 1em. */
   height?: string;
-  /** Padrão `currentColor`: herda `ink` (ou branco sobre painel). */
+  /** Default `currentColor`: inherits `ink` (or white on a panel). */
   color?: string;
   className?: string;
   style?: CSSProperties;
   title?: string;
 };
 
-/** Razão do manual: altura do wordmark ÷ altura do símbolo no logotipo
- *  horizontal (43.67 / 78.39). Passe como `wordmarkRatio` ao Lockup/Curtain. */
-/** No TTCAB o símbolo fica à DIREITA do nome (logotipo horizontal do manual). */
+/** Ratio from the manual: wordmark height ÷ symbol height in the horizontal
+ *  logo (43.67 / 78.39). Pass it as `wordmarkRatio` to the Lockup/Curtain. */
+/** In TTCAB the symbol sits to the RIGHT of the name (the manual's horizontal logo). */
 export const TTCAB_LOCKUP = { wordmarkPerSymbol: 0.557, symbolSide: "right" } as const;
 
-/** Caixa justa ao desenho das letras: 149.75 × 43.67. */
+/** Box tight to the letterforms: 149.75 × 43.67. */
 export function TtcabWordmark({ height = "var(--cg-wordmark, 1em)", color = "currentColor", className, style, title = "TTCAB" }: WordmarkProps) {
   return (
     <svg

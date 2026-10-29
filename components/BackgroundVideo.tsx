@@ -3,31 +3,31 @@
 import { useEffect, useRef, useState } from "react";
 
 type Props = {
-  /** Clipe curto, sem som, em repetição (arquivo do próprio site). */
+  /** Short, muted, looping clip (file hosted by the site itself). */
   src: string;
-  /** Versão maior, baixada só em telas largas (a partir de `from`). */
+  /** Larger version, downloaded only on wide screens (from `from` up). */
   srcLarge?: string;
-  /** Largura mínima (px) para a versão maior. 1024 por padrão. */
+  /** Minimum width (px) for the larger version. Defaults to 1024. */
   from?: 768 | 1024;
-  /** Quadro parado: aparece antes de o vídeo carregar, sem JS e com movimento reduzido. */
+  /** Still frame: shown before the video loads, without JS, and with reduced motion. */
   poster: string;
-  /** Quadro parado da versão maior, quando ela é outro vídeo (ex.: vertical no celular, deitado no desktop). */
+  /** Still frame of the larger version, when it is a different video (e.g. vertical on mobile, landscape on desktop). */
   posterLarge?: string;
-  /** Aproxima o vídeo para cortar bordas gravadas no arquivo. */
+  /** Zooms the video in to crop edges baked into the file. */
   trimEdges?: boolean;
-  /** object-position do vídeo (ex.: "center 20%" p/ manter o rosto num clipe vertical). */
+  /** object-position of the video (e.g. "center 20%" to keep the face in a vertical clip). */
   objectPosition?: string;
-  /** Rótulos do botão de pausa (injetáveis p/ i18n). */
+  /** Pause button labels (injectable for i18n). */
   labels?: { pause?: string; play?: string };
   className?: string;
 };
 
 /**
- * Vídeo de fundo da família Cuidado Global — espelha o `VideoFundo` do creeta
- * com os tokens do Breathe (ink/surface). Clipe mudo em repetição, é enfeite:
- * fica fora da leitura de tela (aria-hidden). Não usa o atributo `autoplay`:
- * só começa depois de conferir prefers-reduced-motion e economia de dados
- * (save-data). Tem botão de pausa (WCAG 2.2.2) no canto superior-direito.
+ * Background video of the Cuidado Global family — mirrors creeta's `VideoFundo`
+ * with the Breathe tokens (ink/surface). Muted looping clip, purely decorative:
+ * hidden from screen readers (aria-hidden). Does not use the `autoplay`
+ * attribute: it only starts after checking prefers-reduced-motion and data
+ * saver (save-data). Has a pause button (WCAG 2.2.2) in the top-right corner.
  */
 export function BackgroundVideo({
   src,
@@ -93,7 +93,7 @@ export function BackgroundVideo({
       <button
         type="button"
         onClick={toggle}
-        aria-label={running ? labels?.pause ?? "Pausar vídeo" : labels?.play ?? "Reproduzir vídeo"}
+        aria-label={running ? labels?.pause ?? "Pause video" : labels?.play ?? "Play video"}
         className="absolute top-4 right-4 z-10 flex h-11 w-11 items-center justify-center rounded-full bg-ink/85 text-surface backdrop-blur-md transition-colors duration-200 hover:bg-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-surface motion-reduce:transition-none"
       >
         {running ? (

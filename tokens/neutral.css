@@ -1,10 +1,10 @@
 /*
-  Paleta NEUTRA — o padrão do Breathe. O design system é neutro de propósito:
-  a cor vem de CADA aplicação (ttcab, creeta…). Use isto como base e sobrescreva
-  os --cg-* no :root do seu site. Monocromático (cinza/quase-preto) pra deixar
-  claro que é um placeholder "traga sua cor".
+  NEUTRAL palette — the Breathe default. The design system is neutral on
+  purpose: color comes from EACH application (ttcab, creeta…). Use this as the
+  base and override the --cg-* in your site's :root. Monochrome (gray/near-black)
+  to make it clear it is a "bring your own color" placeholder.
    - surface #ffffff / ink #18181b ............ ~17:1 (AAA)
-   - surface #ffffff / ink-soft #71717a ....... ~4,8:1 (AA)
+   - surface #ffffff / ink-soft #71717a ....... ~4.8:1 (AA)
 */
 :root {
   --cg-surface: #ffffff;
@@ -16,6 +16,6 @@
   --cg-action-text: #52525b;
   --cg-on-action: #ffffff;
   --cg-line: rgb(0 0 0 / 0.12);
-  --cg-font-heading: var(--font-quicksand), system-ui, sans-serif;  /* Quicksand (fixo da família) */
-  --cg-font-body: var(--font-figtree), system-ui, sans-serif;       /* Figtree (fixo da família) */
+  --cg-font-heading: var(--font-quicksand), system-ui, sans-serif;  /* Quicksand (fixed across the family) */
+  --cg-font-body: var(--font-figtree), system-ui, sans-serif;       /* Figtree (fixed across the family) */
 }

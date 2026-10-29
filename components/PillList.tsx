@@ -6,7 +6,7 @@ export type Pill = { label: ReactNode; href?: string };
 type Props = {
   title?: ReactNode;
   items: Pill[];
-  /** Link "Ver todos" opcional. */
+  /** Optional "See all" link. */
   seeAll?: { label: ReactNode; href?: string };
 };
 
@@ -28,9 +28,9 @@ function ArrowUpRight() {
 }
 
 /**
- * Lista de pills (ex.: "Condições que atendemos"): chips brancos com rótulo +
- * seta, em grade que quebra, e um link "Ver todos". Chip clicável vira `<a>`.
- * Estilo de card discreto do DS (borda + sombra suaves), raio pill.
+ * Pill list (e.g. "Conditions we treat"): white chips with label + arrow, in
+ * a wrapping grid, plus a "See all" link. A clickable chip renders as `<a>`.
+ * The DS's subtle card style (soft border + shadow), pill radius.
  */
 export function PillList({ title, items, seeAll }: Props) {
   return (

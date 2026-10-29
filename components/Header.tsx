@@ -12,26 +12,40 @@ export type NavItem = {
   label: ReactNode;
   href?: string;
   active?: boolean;
-  /** Ícone antes do rótulo (ex.: casa no "Início"). */
+  /** Icon before the label (e.g. a house on "Home"). */
   icon?: ReactNode;
-  /** Só o ícone aparece; o rótulo fica para leitor de tela (padrão dos sites: "Início" é a casa). */
+  /** Only the icon shows; the label is left for screen readers (site convention: "Home" is the house). */
   iconOnly?: boolean;
   children?: NavChild[];
-  /** Link final do dropdown. Seta → (vai para outra página do site); com
-   *  `external` vira ↗ (sai para outro site), como nos demais componentes. */
+  /** Final link of the dropdown. Arrow → (goes to another page of the site); with
+   *  `external` it becomes ↗ (leaves to another site), as in the other components. */
   seeAll?: { label: ReactNode; href: string; external?: boolean };
 };
 
+type Labels = {
+  /** aria-label of the desktop nav */
+  nav: string;
+  /** aria-label of the chevron button that toggles a dropdown */
+  openSubmenu: string;
+};
+
+const EN: Labels = {
+  nav: "Main",
+  openSubmenu: "Open submenu",
+};
+
 type Props = {
-  /** Marca (passe o seu logo, já com link para a home se quiser). */
+  /** Brand (pass your own logo, already linked to the home page if you want). */
   logo: ReactNode;
   items: NavItem[];
-  /** Componente de link do app (ex.: next-intl Link). Default: <a>. */
+  /** The app's link component (e.g. next-intl Link). Default: <a>. */
   linkComponent?: ElementType;
-  /** CTA à direita (ex.: Agendar/WhatsApp). */
+  /** CTA on the right (e.g. Book/WhatsApp). */
   cta?: ReactNode;
-  /** Seletor de idioma (slot). */
+  /** Locale switcher (slot). */
   localeSwitcher?: ReactNode;
+  /** Strings (English defaults); the app passes the ones for its locale. */
+  labels?: Partial<Labels>;
 };
 
 function Chevron({ open }: { open: boolean }) {
@@ -56,7 +70,7 @@ const linkCls = (active?: boolean) =>
     active ? "decoration-ink" : "decoration-transparent hover:decoration-ink/40"
   } transition-[text-decoration-color] duration-150 motion-reduce:transition-none focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ink`;
 
-function Dropdown({ item, L }: { item: NavItem; L: ElementType }) {
+function Dropdown({ item, L, t }: { item: NavItem; L: ElementType; t: Labels }) {
   const [open, setOpen] = useState(false);
   return (
     <div
@@ -79,7 +93,7 @@ function Dropdown({ item, L }: { item: NavItem; L: ElementType }) {
         <button
           type="button"
           aria-expanded={open}
-          aria-label="Abrir submenu"
+          aria-label={t.openSubmenu}
           onClick={() => setOpen((o) => !o)}
           className="flex min-h-11 items-center rounded-md px-0.5 text-ink/70 transition-colors hover:text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink"
         >
@@ -137,22 +151,23 @@ function Dropdown({ item, L }: { item: NavItem; L: ElementType }) {
 }
 
 /**
- * Header da família Cuidado Global. No desktop (lg+): marca + nav com dropdowns
- * (hover/teclado, ícones nos subitens) + idioma + CTA. No mobile: marca +
- * idioma + CTA (a navegação vai para o BottomNav). Deps injetáveis: `logo`,
- * `cta`, `localeSwitcher` por slot; o `Link` do app por `linkComponent`.
+ * Header of the Cuidado Global family. On desktop (lg+): brand + nav with
+ * dropdowns (hover/keyboard, icons on sub-items) + locale + CTA. On mobile:
+ * brand + locale + CTA (navigation moves to the BottomNav). Injectable deps:
+ * `logo`, `cta`, `localeSwitcher` as slots; the app's `Link` via `linkComponent`.
  */
-export function Header({ logo, items, linkComponent, cta, localeSwitcher }: Props) {
+export function Header({ logo, items, linkComponent, cta, localeSwitcher, labels }: Props) {
   const L: ElementType = linkComponent ?? "a";
+  const t = { ...EN, ...labels };
   return (
     <header className="sticky top-0 z-50 bg-surface/90 backdrop-blur">
       <div className="mx-auto flex h-20 w-full max-w-[1600px] items-center justify-between gap-3 px-4 md:px-6">
         <div className="shrink-0">{logo}</div>
 
-        <nav aria-label="Principal" className="hidden items-center gap-6 lg:flex xl:gap-7">
+        <nav aria-label={t.nav} className="hidden items-center gap-6 lg:flex xl:gap-7">
           {items.map((item, i) =>
             item.children?.length ? (
-              <Dropdown key={i} item={item} L={L} />
+              <Dropdown key={i} item={item} L={L} t={t} />
             ) : (
               <L key={i} href={item.href} aria-current={item.active ? "page" : undefined} className={linkCls(item.active)}>
                 {item.icon && <span aria-hidden="true" className="flex">{item.icon}</span>}

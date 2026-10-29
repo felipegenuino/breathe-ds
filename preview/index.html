@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="pt-BR">
+<html lang="en">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -58,83 +58,83 @@
 <div class="wrap">
   <header>
     <p class="k">Breathe · @breathe-ds/ui · v0.1</p>
-    <h1>Breathe <span style='font-weight:600;color:var(--ink-soft);font-size:.5em'>— design system do Cuidado Global</span></h1>
-    <p class="lead">Os sites da família herdam os <b>papéis de token</b> (surface, ink, action, line…).
-      Cada site define os próprios hex. Todo token traz <b>papel + contraste medido</b> — nunca "a cor X".</p>
+    <h1>Breathe <span style='font-weight:600;color:var(--ink-soft);font-size:.5em'>— design system of Cuidado Global</span></h1>
+    <p class="lead">The family's sites inherit the <b>token roles</b> (surface, ink, action, line…).
+      Each site defines its own hex values. Every token comes with <b>role + measured contrast</b> — never "color X".</p>
   </header>
 
   <!-- TTCAB -->
-  <h2>Paleta TTCAB <span>— petróleo + creme (precisa)</span></h2>
+  <h2>TTCAB palette <span>— petrol + cream (exact)</span></h2>
   <div class="grid" id="ttcab"></div>
   <div class="pair" id="ttcab-pairs"></div>
 
   <!-- CREETA -->
-  <h2>Paleta Creeta <span>— petróleo + névoa + magenta (ilustrativa, a conferir)</span></h2>
+  <h2>Creeta palette <span>— petrol + mist + magenta (illustrative, to be checked)</span></h2>
   <div class="grid" id="creeta"></div>
   <div class="pair" id="creeta-pairs"></div>
 
-  <!-- ESCALAS -->
-  <h2>Escalas compartilhadas <span>— iguais em toda a família</span></h2>
+  <!-- SCALES -->
+  <h2>Shared scales <span>— the same across the family</span></h2>
   <div class="radii">
     <div style="border-radius:24px">radius-xl<br>24px</div>
     <div style="border-radius:28px">radius-2xl<br>28px</div>
     <div style="border-radius:9999px">radius-pill</div>
   </div>
-  <p class="note" style="margin-top:18px">Motion — curva assinatura: <code>--ease-cg: cubic-bezier(.2,.8,.2,1)</code>
-    (a mesma do indicador deslizante da nav e dos hovers).</p>
-  <p class="note">Tipografia por papel: <code>font-heading</code> (Quicksand no ttcab) · <code>font-body</code>.</p>
+  <p class="note" style="margin-top:18px">Motion — signature curve: <code>--ease-cg: cubic-bezier(.2,.8,.2,1)</code>
+    (the same one used by the nav's sliding indicator and the hovers).</p>
+  <p class="note">Typography by role: <code>font-heading</code> (Quicksand on ttcab) · <code>font-body</code>.</p>
 
-  <!-- COMPONENTES -->
-  <h2>Componentes <span>— renderizados de verdade</span></h2>
-  <p class="note" style="margin-bottom:18px">Accordion (1º componente). Estilo de card do DS:
-    <b>borda discreta + sombra discreta</b>, raio 28px, só um aberto por vez, animação na curva da família.</p>
+  <!-- COMPONENTS -->
+  <h2>Components <span>— actually rendered</span></h2>
+  <p class="note" style="margin-bottom:18px">Accordion (1st component). DS card style:
+    <b>subtle border + subtle shadow</b>, 28px radius, only one open at a time, animation on the family curve.</p>
   <div class="acc" id="acc">
     <div class="acc-item" data-open>
-      <button class="acc-btn" type="button">O que o fisioterapeuta avalia
+      <button class="acc-btn" type="button">What the physiotherapist assesses
         <svg class="acc-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
       </button>
       <div class="acc-panel"><div class="acc-inner"><ul class="checks">
-        <li>Ausculta pulmonar e sinais vitais</li>
-        <li>Padrão de respiração</li>
-        <li>Bloqueio inspiratório e padrão de postura</li>
-        <li>Qualidade da movimentação global do paciente</li>
+        <li>Lung auscultation and vital signs</li>
+        <li>Breathing pattern</li>
+        <li>Inspiratory block and posture pattern</li>
+        <li>Quality of the patient's global movement</li>
       </ul></div></div>
     </div>
     <div class="acc-item">
-      <button class="acc-btn" type="button">O que pode mudar a forma de respirar
+      <button class="acc-btn" type="button">What can change the way you breathe
         <svg class="acc-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
       </button>
-      <div class="acc-panel"><div class="acc-inner"><p style="margin:0">Hábitos, posturas e bloqueios
-        que o corpo cria em resposta ao distúrbio respiratório — avaliados caso a caso.</p></div></div>
+      <div class="acc-panel"><div class="acc-inner"><p style="margin:0">Habits, postures and blocks
+        the body creates in response to the respiratory disorder — assessed case by case.</p></div></div>
     </div>
     <div class="acc-item">
-      <button class="acc-btn" type="button">A técnica, em detalhe
+      <button class="acc-btn" type="button">The technique, in detail
         <svg class="acc-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
       </button>
-      <div class="acc-panel"><div class="acc-inner"><p style="margin:0">Manuseios específicos por faixa
-        etária, conduzindo o corpo a reorganizar sinergias e melhorar a função respiratória.</p></div></div>
+      <div class="acc-panel"><div class="acc-inner"><p style="margin:0">Age-specific handling,
+        guiding the body to reorganize synergies and improve respiratory function.</p></div></div>
     </div>
   </div>
 
   <div class="foot">
-    Consumo: <code>@import "@breathe-ds/ui/theme.css";</code> +
-    <code>@import "@breathe-ds/ui/tokens/ttcab.css";</code> no globals.css. Local, ainda sem publish.
+    Usage: <code>@import "@breathe-ds/ui/theme.css";</code> +
+    <code>@import "@breathe-ds/ui/tokens/ttcab.css";</code> in globals.css. Local, not published yet.
   </div>
 </div>
 
 <script>
-// contraste WCAG
+// WCAG contrast
 function lin(c){c/=255;return c<=.03928?c/12.92:Math.pow((c+.055)/1.055,2.4)}
 function L(hex){const m=hex.replace('#','');const r=parseInt(m.slice(0,2),16),g=parseInt(m.slice(2,4),16),b=parseInt(m.slice(4,6),16);return .2126*lin(r)+.7152*lin(g)+.0722*lin(b)}
 function ratio(a,b){const la=L(a),lb=L(b);const hi=Math.max(la,lb),lo=Math.min(la,lb);return (hi+.05)/(lo+.05)}
-function lvl(r){return r>=7?"AAA":r>=4.5?"AA":r>=3?"AA grande":"baixo"}
+function lvl(r){return r>=7?"AAA":r>=4.5?"AA":r>=3?"AA large":"low"}
 
 const TTCAB={surface:"#fbf5e9","surface-panel":"#144753",ink:"#144753","ink-soft":"#54707a","ink-body":"#1e4f5b",action:"#f6a22a","action-text":"#9a5d07"};
 const CREETA={surface:"#eef3f4","surface-panel":"#144753",ink:"#144753","ink-soft":"#4a6b73","ink-body":"#1e4f5b",action:"#ab2781","action-text":"#8f1f6c"};
 const roles={
-  surface:"fundo base", "surface-panel":"painel escuro (footer/CTA)", ink:"texto principal / títulos",
-  "ink-soft":"texto secundário","ink-body":"corpo de leitura", action:"CTA/destaque — nunca texto",
-  "action-text":"texto na cor de ação", line:"hairline/borda"
+  surface:"base background", "surface-panel":"dark panel (footer/CTA)", ink:"main text / headings",
+  "ink-soft":"secondary text","ink-body":"reading body", action:"CTA/highlight — never text",
+  "action-text":"text in the action color", line:"hairline/border"
 };
 function textColorFor(hex){return L(hex)>.4?"#144753":"#fbf5e9"}
 function swatch(name,hex){
@@ -149,11 +149,11 @@ function pairs(id,pal){
   document.getElementById(id).innerHTML=P.map(([t,b])=>{
     const r=ratio(pal[t],pal[b]).toFixed(2);
     return `<div class="pcard" style="background:${pal[b]};color:${pal[t]}">
-      <b>${t}</b> sobre <b>${b}</b>
+      <b>${t}</b> on <b>${b}</b>
       <div class="c">${pal[t].toUpperCase()} / ${pal[b].toUpperCase()} · ${r}:1 · ${lvl(r)}</div></div>`;
   }).join("")+
   `<div class="pcard" style="background:${pal.action};color:${textColorFor(pal.action)}">
-     <b>action</b> — decorativo/CTA<div class="c">${pal.action.toUpperCase()} · não usar como texto sobre o fundo</div></div>`;
+     <b>action</b> — decorative/CTA<div class="c">${pal.action.toUpperCase()} · do not use as text on the background</div></div>`;
 }
 render("ttcab",TTCAB); pairs("ttcab-pairs",TTCAB);
 render("creeta",CREETA); pairs("creeta-pairs",CREETA);

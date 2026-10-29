@@ -1,9 +1,9 @@
 /**
- * Biblioteca de ícones do Breathe. Re-exporta a lib INTEIRA do lucide-react
- * (centenas de ícones), para você escolher qualquer um ao montar interfaces:
+ * Breathe icon library. Re-exports the ENTIRE lucide-react lib (hundreds of
+ * icons), so you can pick any of them when building interfaces:
  *   import { Heart, Wind, Baby } from "@breathe-ds/ui/components/icons";
- * Os ícones usam `currentColor` e aceitam `size`/`strokeWidth`. Os componentes
- * do DS recebem ícones por slot, então injete o que quiser.
+ * Icons use `currentColor` and accept `size`/`strokeWidth`. The DS components
+ * take icons through slots, so inject whichever you want.
  */
 export * from "lucide-react";
 
@@ -13,7 +13,7 @@ import {
   Quote, Menu, X, ChevronDown, ArrowUpRight, Globe,
 } from "lucide-react";
 
-/* Aliases semânticos dos ícones usados pela família (os "principais"). */
+/* Semantic aliases for the icons the family uses (the "core" ones). */
 export const IconHome = House;
 export const IconWind = Wind;
 export const IconActivity = Activity;
@@ -39,7 +39,7 @@ export const IconChevronDown = ChevronDown;
 export const IconArrowUpRight = ArrowUpRight;
 export const IconGlobe = Globe;
 
-/* Mapa dos usados (principais) — nome → componente. */
+/* Map of the icons in use (core) — name → component. */
 export const used = {
   Home: IconHome, Wind: IconWind, Activity: IconActivity, Baby: IconBaby,
   Search: IconSearch, Users: IconUsers, GraduationCap: IconGraduationCap,

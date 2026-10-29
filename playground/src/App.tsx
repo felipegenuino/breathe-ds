@@ -18,9 +18,9 @@ import { CreetaSymbol, CreetaWordmark, CREETA_LOCKUP } from "../../components/ma
 import { used, IconWind, IconActivity, IconBaby, IconSearch, IconHome, IconBook, IconMessage, IconMapPin, IconGraduationCap, IconVideo, IconUsers, IconArrowUpRight } from "../../components/icons";
 import * as Lucide from "lucide-react";
 
-/* ───── paletas (o DS é neutro; a cor vem de cada app) ───── */
+/* ───── palettes (the DS is neutral; color comes from each app) ───── */
 const PALETTES: Record<string, Record<string, string>> = {
-  Neutro: {
+  Neutral: {
     "--color-surface": "#ffffff", "--color-surface-panel": "#18181b", "--color-ink": "#18181b",
     "--color-ink-soft": "#71717a", "--color-ink-body": "#3f3f46", "--color-action": "#18181b",
     "--color-action-text": "#52525b", "--color-on-action": "#ffffff", "--color-line": "rgb(0 0 0 / 0.12)",
@@ -37,7 +37,7 @@ const PALETTES: Record<string, Record<string, string>> = {
   },
 };
 
-/* ───── ícones do DS (dogfooding a lib de ícones) ───── */
+/* ───── DS icons (dogfooding the icon lib) ───── */
 const IcWind = <IconWind size={18} />;
 const IcPulse = <IconActivity size={18} />;
 const IcBaby = <IconBaby size={18} />;
@@ -52,7 +52,7 @@ const IcUsers = <IconUsers size={18} />;
 
 function SideNav({ pal, setPal }: { pal: string; setPal: (p: string) => void }) {
   const items = [
-    ["symbol", "Símbolo vivo"],
+    ["symbol", "Living symbol"],
     ["tokens", "Tokens"], ["buttons", "Button"], ["accordion", "Accordion"],
     ["pills", "PillList"], ["header", "Header"], ["hero", "PageVideoHero"],
     ["footer", "Footer"], ["mobile", "Mobile · BottomNav"],
@@ -62,7 +62,7 @@ function SideNav({ pal, setPal }: { pal: string; setPal: (p: string) => void }) 
       <p className="mb-1 font-heading text-xl font-bold text-ink">Breathe</p>
       <p className="mb-4 text-sm text-ink-soft">design system · Cuidado Global</p>
       <div className="mb-6">
-        <p className="mb-2 text-[0.7rem] font-semibold tracking-[0.1em] text-ink-soft uppercase">Paleta</p>
+        <p className="mb-2 text-[0.7rem] font-semibold tracking-[0.1em] text-ink-soft uppercase">Palette</p>
         <div className="inline-flex rounded-pill border border-line p-0.5">
           {Object.keys(PALETTES).map((name) => (
             <button key={name} type="button" onClick={() => setPal(name)}
@@ -133,45 +133,45 @@ function IconsSection() {
   const shown = filtered.slice(0, ICON_CAP);
   return (
     <div className="grid gap-8 lg:grid-cols-[256px_1fr]">
-      {/* coluna 1 — título, busca, filtro */}
+      {/* column 1 — title, search, filter */}
       <div className="lg:sticky lg:top-24 lg:self-start">
-        <p className="mb-4 max-w-[34ch] text-ink-body">A lib do lucide inteira. Busque e use em qualquer interface — os componentes recebem ícones por slot.</p>
+        <p className="mb-4 max-w-[34ch] text-ink-body">The whole lucide lib. Search and use in any interface — components take icons through slots.</p>
         <div className="relative mb-5">
           <span className="pointer-events-none absolute top-1/2 left-3.5 -translate-y-1/2 text-ink-soft"><IconSearch size={18} /></span>
-          <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Buscar ícone…"
+          <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search icon…"
             className="w-full rounded-pill border border-line bg-surface py-2.5 pr-4 pl-10 text-ink placeholder:text-ink-soft focus:outline-2 focus:outline-offset-2 focus:outline-ink" />
         </div>
-        <p className="mb-2 text-[0.7rem] font-semibold tracking-[0.12em] text-ink-soft uppercase">Filtro</p>
+        <p className="mb-2 text-[0.7rem] font-semibold tracking-[0.12em] text-ink-soft uppercase">Filter</p>
         <div className="inline-flex rounded-pill border border-line p-0.5">
-          {([["used", "Mais usados"], ["all", "Todos"]] as const).map(([m, label]) => (
+          {([["used", "Most used"], ["all", "All"]] as const).map(([m, label]) => (
             <button key={m} type="button" onClick={() => setMode(m)}
               className={`rounded-pill px-3 py-1.5 text-xs font-semibold transition-colors ${mode === m ? "bg-ink text-surface" : "text-ink-soft hover:text-ink"}`}>{label}</button>
           ))}
         </div>
         <p className="mt-4 text-sm text-ink-soft">
-          {query ? `${filtered.length} resultado(s)` : mode === "all" ? `${LUCIDE_ALL.length} ícones na lib` : `${USED_ENTRIES.length} principais`}
+          {query ? `${filtered.length} result(s)` : mode === "all" ? `${LUCIDE_ALL.length} icons in the lib` : `${USED_ENTRIES.length} main ones`}
         </p>
       </div>
 
-      {/* coluna 2 — grade */}
+      {/* column 2 — grid */}
       <div>
         {filtered.length === 0 ? (
-          <p className="text-ink-soft">Nenhum ícone encontrado.</p>
+          <p className="text-ink-soft">No icon found.</p>
         ) : (
           <div className="grid grid-cols-[repeat(auto-fill,minmax(88px,1fr))] gap-3">
             {shown.map(([name, Ic]) => <IconCard key={name} name={name} Ic={Ic} />)}
           </div>
         )}
         {filtered.length > ICON_CAP && (
-          <p className="mt-5 text-sm text-ink-soft">Mostrando {ICON_CAP} de {filtered.length}. Refine a busca pra achar os demais.</p>
+          <p className="mt-5 text-sm text-ink-soft">Showing {ICON_CAP} of {filtered.length}. Refine the search to find the rest.</p>
         )}
       </div>
     </div>
   );
 }
 
-function HeroCTA({ primary = "Ação principal", secondary }: { primary?: ReactNode; secondary: ReactNode }) {
-  // Estrutura do novo.creeta: container escuro + pílula branca + link claro (com ícone na lateral).
+function HeroCTA({ primary = "Primary action", secondary }: { primary?: ReactNode; secondary: ReactNode }) {
+  // Structure from novo.creeta: dark container + white pill + light link (with icon on the side).
   return (
     <div className="inline-flex items-center gap-x-6 rounded-full border border-surface/15 bg-ink/80 py-2 pr-7 pl-2 backdrop-blur-md">
       <a href="#hero" className="inline-flex min-h-11 items-center gap-2 rounded-full bg-surface px-5 font-body font-semibold text-ink transition hover:-translate-y-px">
@@ -205,65 +205,65 @@ function SegGroup<T extends string>({ label, value, set, options }: { label: str
   );
 }
 
-// Loop = clipe local de assimetrias (paisagem). Player = o próprio vídeo do YouTube rodando mudo, em loop (16:9, cobre o cartão, sem corte).
+// Loop = local clip of asymmetries (landscape). Player = the YouTube video itself playing muted, looping (16:9, covers the card, no crop).
 const PREVIEW_LOOP = { src: "/demo/clip.mp4", poster: "/demo/clip-poster.jpg" };
 
 function HeroDemo() {
-  const [tipo, setTipo] = useState<"player" | "loop">("player");
-  const [local, setLocal] = useState(true);
-  const [conteudo, setConteudo] = useState<"painel" | "legenda" | "nenhum">("painel");
-  const [acao, setAcao] = useState<"assistir" | "cta" | "nenhum">("assistir");
+  const [kind, setKind] = useState<"player" | "loop">("player");
+  const [showLocation, setShowLocation] = useState(true);
+  const [content, setContent] = useState<"panel" | "caption" | "none">("panel");
+  const [action, setAction] = useState<"watch" | "cta" | "none">("watch");
   const [kicker, setKicker] = useState(true);
   const [lead, setLead] = useState(true);
 
-  // No modo loop nao ha player: a acao "assistir" nao se aplica.
-  const acaoEfetiva = tipo === "loop" && acao === "assistir" ? "cta" : acao;
-  const acoesOpcoes: ["assistir" | "cta" | "nenhum", string][] =
-    tipo === "player"
-      ? [["assistir", "Assistir"], ["cta", "CTA"], ["nenhum", "Nenhum"]]
-      : [["cta", "CTA"], ["nenhum", "Nenhum"]];
+  // In loop mode there is no player: the "watch" action does not apply.
+  const effectiveAction = kind === "loop" && action === "watch" ? "cta" : action;
+  const actionOptions: ["watch" | "cta" | "none", string][] =
+    kind === "player"
+      ? [["watch", "Watch"], ["cta", "CTA"], ["none", "None"]]
+      : [["cta", "CTA"], ["none", "None"]];
 
   const video =
-    tipo === "player"
+    kind === "player"
       ? { mode: "player" as const, youtubeId: "h3a7DHFd6L4", playerCaption: "Mariangela Pinheiro de Lima, criadora do método, explica o Reequilíbrio Toracoabdominal." }
       : { mode: "loop" as const, preview: PREVIEW_LOOP };
 
   const actions =
-    acaoEfetiva === "cta" ? <HeroCTA primary="Ação principal" secondary="Ação secundária" />
-      : acaoEfetiva === "nenhum" ? null
+    effectiveAction === "cta" ? <HeroCTA primary="Primary action" secondary="Secondary action" />
+      : effectiveAction === "none" ? null
         : undefined;
 
   return (
     <>
-      {/* seletor de elementos do hero */}
+      {/* hero element selector */}
       <Container>
         <div className="mb-5 flex flex-wrap items-center gap-x-5 gap-y-3 rounded-2xl border border-line bg-surface p-4">
-          <span className="text-[0.7rem] font-semibold tracking-[0.12em] text-ink-soft uppercase">Elementos</span>
-          <SegGroup label="Tipo" value={tipo} set={setTipo} options={[["player", "Player"], ["loop", "Loop"]]} />
-          <PillToggle label="Local" on={local} set={setLocal} />
-          <SegGroup label="Conteúdo" value={conteudo} set={setConteudo} options={[["painel", "Painel"], ["legenda", "Legenda"], ["nenhum", "Nenhum"]]} />
-          <SegGroup label="Ação" value={acaoEfetiva} set={setAcao} options={acoesOpcoes} />
-          {conteudo === "painel" && (<><PillToggle label="Kicker" on={kicker} set={setKicker} /><PillToggle label="Lead" on={lead} set={setLead} /></>)}
+          <span className="text-[0.7rem] font-semibold tracking-[0.12em] text-ink-soft uppercase">Elements</span>
+          <SegGroup label="Type" value={kind} set={setKind} options={[["player", "Player"], ["loop", "Loop"]]} />
+          <PillToggle label="Location" on={showLocation} set={setShowLocation} />
+          <SegGroup label="Content" value={content} set={setContent} options={[["panel", "Panel"], ["caption", "Caption"], ["none", "None"]]} />
+          <SegGroup label="Action" value={effectiveAction} set={setAction} options={actionOptions} />
+          {content === "panel" && (<><PillToggle label="Kicker" on={kicker} set={setKicker} /><PillToggle label="Lead" on={lead} set={setLead} /></>)}
         </div>
       </Container>
       <PageVideoHero
         video={video}
-        videoTitle="Vídeo de demonstração"
-        topLeft={local ? <span className={HERO_PILL}><IconMapPin size={16} /> Localização · Cidade</span> : undefined}
-        panel={conteudo === "painel" ? { kicker: kicker ? "Sobrelinha do hero" : undefined, title: <>Título do hero<br />em duas linhas.</>, lead: lead ? "Um parágrafo curto de apoio que resume a proposta em uma ou duas frases." : undefined } : undefined}
-        caption={conteudo === "legenda" ? "Legenda curta do vídeo." : undefined}
+        videoTitle="Demo video"
+        topLeft={showLocation ? <span className={HERO_PILL}><IconMapPin size={16} /> Location · City</span> : undefined}
+        panel={content === "panel" ? { kicker: kicker ? "Hero kicker" : undefined, title: <>Hero title<br />on two lines.</>, lead: lead ? "A short supporting paragraph that sums up the offer in one or two sentences." : undefined } : undefined}
+        caption={content === "caption" ? "Short video caption." : undefined}
         actions={actions}
-        watch={{ label: "Assistir ao vídeo", meta: "Com som, 2 min 45 s" }}
+        watch={{ label: "Watch the video", meta: "With sound, 2 min 45 s" }}
       />
     </>
   );
 }
 
-/* Marca de cada paleta: o Breathe é neutro; TTCAB e Creeta trazem o símbolo e
-   o wordmark reais dos sites (components/marks). A altura do wordmark vem da
-   razão do manual de cada marca (wordmarkRatio), não de um valor a olho. */
+/* Brand for each palette: Breathe is neutral; TTCAB and Creeta bring the real
+   symbol and wordmark from the sites (components/marks). The wordmark height
+   comes from each brand manual's ratio (wordmarkRatio), not an eyeballed value. */
 const BRAND_BY_PALETTE: Record<string, { name: string; tagline: string; logo?: ReactNode; wordmark?: ReactNode; wordmarkRatio?: number; symbolSide?: "left" | "right" }> = {
-  Neutro: { name: "Breathe", tagline: "Design system da família Cuidado Global" },
+  Neutral: { name: "Breathe", tagline: "Design system of the Cuidado Global family" },
   TTCAB: {
     name: "TTCAB",
     tagline: "Torcicolo Congênito e Assimetrias do Bebê",
@@ -282,15 +282,15 @@ const BRAND_BY_PALETTE: Record<string, { name: string; tagline: string; logo?: R
   },
 };
 
-/* Navegação real do playground (a mesma do header): no celular vira o
-   BottomNav de verdade, no rodapé da janela. A seção visível é marcada por
-   scroll-spy; a barra mostra quantas couberem e o resto vai pro "Mais". */
+/* Real playground navigation (same as the header): on phones it becomes the
+   actual BottomNav at the bottom of the window. The visible section is marked
+   by scroll-spy; the bar shows as many as fit and the rest goes to "More". */
 const PAGE_NAV = [
-  { id: "symbol", label: "Símbolo", Icon: IconWind },
+  { id: "symbol", label: "Symbol", Icon: IconWind },
   { id: "tokens", label: "Tokens", Icon: IconActivity },
   { id: "lockup", label: "Lockup", Icon: IconHome },
   { id: "buttons", label: "Button", Icon: IconActivity },
-  { id: "icons", label: "Ícones", Icon: IconSearch },
+  { id: "icons", label: "Icons", Icon: IconSearch },
   { id: "accordion", label: "Accordion", Icon: IconBook },
   { id: "pills", label: "PillList", Icon: IconSearch },
   { id: "header", label: "Header", Icon: IconHome },
@@ -318,37 +318,37 @@ function useScrollSpy(ids: readonly string[]) {
 }
 
 export function App() {
-  const [pal, setPal] = useState("Neutro");
+  const [pal, setPal] = useState("Neutral");
   const activeSection = useScrollSpy(PAGE_NAV.map((p) => p.id));
   const [curtainKey, setCurtainKey] = useState(0);
-  // Moldura da demo mobile: celular (390) é o mínimo; tablet (768) ainda mostra o BottomNav (some só no lg+).
+  // Mobile demo frame: phone (390) is the minimum; tablet (768) still shows the BottomNav (hidden only at lg+).
   const [mobW, setMobW] = useState<"phone" | "tablet">("phone");
-  const marca = BRAND_BY_PALETTE[pal] ?? BRAND_BY_PALETTE.Neutro;
+  const brand = BRAND_BY_PALETTE[pal] ?? BRAND_BY_PALETTE.Neutral;
   useEffect(() => {
     const root = document.documentElement;
     Object.entries(PALETTES[pal]).forEach(([k, v]) => root.style.setProperty(k, v));
   }, [pal]);
   return (
     <div id="top">
-      <Curtain key={curtainKey} name={marca.wordmark ?? marca.name} tagline={marca.tagline} logo={marca.logo} wordmarkRatio={marca.wordmarkRatio} symbolSide={marca.symbolSide} />
-      {/* dogfooding: o header do DS É o componente Header do Breathe, com as
-          mesmas regras da demo — marca em size md (símbolo 44px) com entrada
-          animada depois da cortina, casa como "Início" (volta ao topo). */}
+      <Curtain key={curtainKey} name={brand.wordmark ?? brand.name} tagline={brand.tagline} logo={brand.logo} wordmarkRatio={brand.wordmarkRatio} symbolSide={brand.symbolSide} />
+      {/* dogfooding: the DS header IS Breathe's Header component, with the
+          same rules as the demo — brand at size md (44px symbol) with an
+          animated entrance after the curtain, home icon as "Home" (back to top). */}
       <Header
         logo={
-          <a href="#top" aria-label="Breathe, início da página" className="inline-flex rounded-xl transition-opacity hover:opacity-70 focus-visible:outline-2 focus-visible:outline-offset-[3px] focus-visible:outline-ink">
+          <a href="#top" aria-label="Breathe, top of page" className="inline-flex rounded-xl transition-opacity hover:opacity-70 focus-visible:outline-2 focus-visible:outline-offset-[3px] focus-visible:outline-ink">
             <Lockup key={curtainKey} entrance entranceDelay={2700} variant="horizontal" size="md" name="Breathe" />
           </a>
         }
         cta={<Switcher pal={pal} setPal={setPal} />}
         items={[
-          { label: "Início", href: "#top", icon: <IconHome size={18} strokeWidth={1.75} />, iconOnly: true },
-          { label: "Símbolo", href: "#symbol" },
+          { label: "Home", href: "#top", icon: <IconHome size={18} strokeWidth={1.75} />, iconOnly: true },
+          { label: "Symbol", href: "#symbol" },
           { label: "Tokens", href: "#tokens" },
-          { label: "Componentes", href: "#buttons", children: [
+          { label: "Components", href: "#buttons", children: [
             { label: "Lockup (logo)", href: "#lockup", icon: IcHome },
             { label: "Button", href: "#buttons", icon: IcPulse },
-            { label: "Ícones", href: "#icons", icon: IcSearch },
+            { label: "Icons", href: "#icons", icon: IcSearch },
             { label: "Accordion", href: "#accordion", icon: IcBook },
             { label: "PillList", href: "#pills", icon: IcSearch },
             { label: "Header", href: "#header", icon: IcHome },
@@ -364,47 +364,47 @@ export function App() {
           <Container>
             <div className="mb-4 text-ink"><BreatheMark size={44} /></div>
             <p className="mb-3 font-heading text-[0.82rem] font-bold tracking-[0.14em] text-ink-soft uppercase">Breathe · @breathe-ds/ui</p>
-            <h1 className="font-heading text-[clamp(2.4rem,6vw,4.5rem)] leading-[1.05] font-semibold tracking-[-0.02em] text-ink">Playground do design system</h1>
-            <p className="mt-5 max-w-[56ch] text-lg leading-[1.6] text-ink-body">Componentes reais renderizados com a paleta <b>{pal}</b>. Troque no topo e tudo retematiza — o Breathe é neutro, a cor vem de cada app.</p>
-            <button type="button" onClick={() => setCurtainKey((k) => k + 1)} className="mt-6 inline-flex min-h-11 items-center gap-2 rounded-pill border border-line px-5 font-body font-semibold text-ink transition hover:bg-ink/[0.05]"><BreatheMark size={14} animated={false} /> Rever a cortina</button>
+            <h1 className="font-heading text-[clamp(2.4rem,6vw,4.5rem)] leading-[1.05] font-semibold tracking-[-0.02em] text-ink">Design system playground</h1>
+            <p className="mt-5 max-w-[56ch] text-lg leading-[1.6] text-ink-body">Real components rendered with the <b>{pal}</b> palette. Switch it at the top and everything re-themes — Breathe is neutral, color comes from each app.</p>
+            <button type="button" onClick={() => setCurtainKey((k) => k + 1)} className="mt-6 inline-flex min-h-11 items-center gap-2 rounded-pill border border-line px-5 font-body font-semibold text-ink transition hover:bg-ink/[0.05]"><BreatheMark size={14} animated={false} /> Replay the curtain</button>
           </Container>
         </div>
 
-        <Section id="symbol" title="Símbolo vivo">
-          <p className="mb-8 max-w-[60ch] text-ink-body">O símbolo do Breathe respira — inspira e expira num pulso suave. Em <code className="rounded bg-ink/[0.07] px-1.5 py-0.5 text-sm">currentColor</code>, herda o token do contexto. Respeita prefers-reduced-motion.</p>
+        <Section id="symbol" title="Living symbol">
+          <p className="mb-8 max-w-[60ch] text-ink-body">The Breathe symbol breathes — it inhales and exhales in a soft pulse. In <code className="rounded bg-ink/[0.07] px-1.5 py-0.5 text-sm">currentColor</code>, it inherits the token from its context. Respects prefers-reduced-motion.</p>
           <div className="flex flex-wrap items-center gap-10">
             <div className="text-ink"><BreatheMark size={80} /></div>
             <div className="text-action"><BreatheMark size={60} duration={4.5} /></div>
             <div className="rounded-2xl bg-ink p-8 text-surface"><BreatheMark size={60} /></div>
-            <div className="text-ink-soft"><BreatheMark size={44} animated={false} /><p className="mt-2 text-xs text-ink-soft">estático</p></div>
+            <div className="text-ink-soft"><BreatheMark size={44} animated={false} /><p className="mt-2 text-xs text-ink-soft">static</p></div>
           </div>
         </Section>
 
-        <Section id="lockup" title="Lockup — sistema de logo">
-          <p className="mb-8 max-w-[62ch] text-ink-body">O mesmo símbolo e nome em cinco arranjos, um pra cada contexto. Neutro por token (a cor vem da paleta <b>{pal}</b>) e com a tipografia fixa da família. Troque a paleta no topo — o nome e a cor acompanham.</p>
+        <Section id="lockup" title="Lockup — logo system">
+          <p className="mb-8 max-w-[62ch] text-ink-body">The same symbol and name in five arrangements, one for each context. Neutral by token (color comes from the <b>{pal}</b> palette) and with the family's fixed typography. Switch the palette at the top — name and color follow.</p>
           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {([
-              ["Empilhado", "stacked", "Perfis, splash de app, pôster", true],
-              ["Horizontal", "horizontal", "Cabeçalho de site, documento", true],
-              ["Wordmark", "wordmark", "Anúncio, quando a leitura é essencial", true],
-              ["Símbolo", "symbol", "Favicon, ícone de app, marca d'água", false],
-              ["Fundido", "merged", "Avatar, foto de perfil, embalagem", false],
-            ] as [string, LockupVariant, string, boolean][]).map(([label, v, uso, comTag]) => (
+              ["Stacked", "stacked", "Profiles, app splash, poster", true],
+              ["Horizontal", "horizontal", "Site header, document", true],
+              ["Wordmark", "wordmark", "Ads, when readability is essential", true],
+              ["Symbol", "symbol", "Favicon, app icon, watermark", false],
+              ["Merged", "merged", "Avatar, profile picture, packaging", false],
+            ] as [string, LockupVariant, string, boolean][]).map(([label, v, usage, withTag]) => (
               <div key={v} className="flex flex-col rounded-2xl border border-line bg-surface p-6">
                 <div className="flex min-h-[148px] flex-1 items-center justify-center">
                   <Lockup
                     variant={v}
-                    name={marca.name}
-                    logo={marca.logo}
-                    wordmark={marca.wordmark}
-                    wordmarkRatio={marca.wordmarkRatio} symbolSide={marca.symbolSide}
-                    tagline={comTag ? marca.tagline : undefined}
+                    name={brand.name}
+                    logo={brand.logo}
+                    wordmark={brand.wordmark}
+                    wordmarkRatio={brand.wordmarkRatio} symbolSide={brand.symbolSide}
+                    tagline={withTag ? brand.tagline : undefined}
                     size={v === "symbol" || v === "merged" ? "lg" : "md"}
                   />
                 </div>
                 <div className="mt-4 border-t border-line pt-3">
                   <p className="font-heading text-sm font-bold text-ink">{label}</p>
-                  <p className="mt-0.5 text-xs text-ink-soft">{uso}</p>
+                  <p className="mt-0.5 text-xs text-ink-soft">{usage}</p>
                 </div>
               </div>
             ))}
@@ -426,10 +426,10 @@ export function App() {
         </Section>
 
         <Section id="buttons" title="Button">
-          <p className="mb-8 max-w-[64ch] text-ink-body">O mesmo botão da família — o mesmo que está no nav, no hero e no footer. Cinco variantes (incluindo <b>link</b>, a ação de texto sublinhada de "Ver todos" / "Ação secundária"), três tamanhos, com ícone e desabilitado. Com <code className="rounded bg-ink/[0.07] px-1.5 py-0.5 text-sm">href</code> qualquer variante vira <code className="rounded bg-ink/[0.07] px-1.5 py-0.5 text-sm">&lt;a&gt;</code>.</p>
+          <p className="mb-8 max-w-[64ch] text-ink-body">The family's one button — the same one in the nav, the hero and the footer. Five variants (including <b>link</b>, the underlined text action of "See all" / "Secondary action"), three sizes, with icon and disabled. With <code className="rounded bg-ink/[0.07] px-1.5 py-0.5 text-sm">href</code> any variant becomes an <code className="rounded bg-ink/[0.07] px-1.5 py-0.5 text-sm">&lt;a&gt;</code>.</p>
           <div className="space-y-8">
             <div>
-              <p className="mb-3 text-xs font-bold tracking-[0.12em] text-ink-soft uppercase">Variantes</p>
+              <p className="mb-3 text-xs font-bold tracking-[0.12em] text-ink-soft uppercase">Variants</p>
               <div className="flex flex-wrap items-center gap-3">
                 <Button variant="solid">Solid</Button>
                 <Button variant="accent">Accent</Button>
@@ -439,44 +439,44 @@ export function App() {
               </div>
             </div>
             <div>
-              <p className="mb-3 text-xs font-bold tracking-[0.12em] text-ink-soft uppercase">Tamanhos</p>
+              <p className="mb-3 text-xs font-bold tracking-[0.12em] text-ink-soft uppercase">Sizes</p>
               <div className="flex flex-wrap items-center gap-3">
-                <Button variant="solid" size="sm">Pequeno</Button>
-                <Button variant="solid" size="md">Médio</Button>
-                <Button variant="solid" size="lg">Grande</Button>
+                <Button variant="solid" size="sm">Small</Button>
+                <Button variant="solid" size="md">Medium</Button>
+                <Button variant="solid" size="lg">Large</Button>
               </div>
             </div>
             <div>
-              <p className="mb-3 text-xs font-bold tracking-[0.12em] text-ink-soft uppercase">Com ícone (lucide injetado)</p>
+              <p className="mb-3 text-xs font-bold tracking-[0.12em] text-ink-soft uppercase">With icon (lucide injected)</p>
               <div className="flex flex-wrap items-center gap-3">
-                <Button variant="accent"><IconWind size={18} /> Ícone à esquerda</Button>
-                <Button variant="outline">Ícone à direita <IconArrowUpRight size={18} /></Button>
-                <Button variant="ghost" aria-label="Só ícone"><IconMessage size={18} /></Button>
+                <Button variant="accent"><IconWind size={18} /> Icon on the left</Button>
+                <Button variant="outline">Icon on the right <IconArrowUpRight size={18} /></Button>
+                <Button variant="ghost" aria-label="Icon only"><IconMessage size={18} /></Button>
               </div>
             </div>
             <div>
-              <p className="mb-3 text-xs font-bold tracking-[0.12em] text-ink-soft uppercase">Estados</p>
+              <p className="mb-3 text-xs font-bold tracking-[0.12em] text-ink-soft uppercase">States</p>
               <div className="flex flex-wrap items-center gap-3">
-                <Button variant="solid" disabled>Desabilitado</Button>
-                <Button variant="outline" disabled>Desabilitado</Button>
+                <Button variant="solid" disabled>Disabled</Button>
+                <Button variant="outline" disabled>Disabled</Button>
               </div>
             </div>
             <div>
-              <p className="mb-3 text-xs font-bold tracking-[0.12em] text-ink-soft uppercase">Variante link · no claro</p>
+              <p className="mb-3 text-xs font-bold tracking-[0.12em] text-ink-soft uppercase">Link variant · on light</p>
               <div className="flex flex-wrap items-center gap-x-8 gap-y-4 text-ink">
-                <Button href="#buttons" variant="link">Ver todos <IconArrowUpRight size={16} /></Button>
-                <Button href="#buttons" variant="link">Sem seta</Button>
+                <Button href="#buttons" variant="link">See all <IconArrowUpRight size={16} /></Button>
+                <Button href="#buttons" variant="link">No arrow</Button>
               </div>
             </div>
             <div>
-              <p className="mb-3 text-xs font-bold tracking-[0.12em] text-ink-soft uppercase">Variante link · sobre fundo escuro (herda a cor)</p>
+              <p className="mb-3 text-xs font-bold tracking-[0.12em] text-ink-soft uppercase">Link variant · on dark background (inherits color)</p>
               <div className="inline-flex flex-wrap items-center gap-x-8 gap-y-4 rounded-2xl bg-ink px-6 py-5 text-surface">
-                <Button href="#buttons" variant="link">Ação secundária <IconArrowUpRight size={16} /></Button>
-                <Button href="#buttons" variant="link">Ver no Google Maps <IconArrowUpRight size={16} /></Button>
+                <Button href="#buttons" variant="link">Secondary action <IconArrowUpRight size={16} /></Button>
+                <Button href="#buttons" variant="link">View on Google Maps <IconArrowUpRight size={16} /></Button>
               </div>
             </div>
             <div>
-              <p className="mb-3 text-xs font-bold tracking-[0.12em] text-ink-soft uppercase">Polimorfismo · qualquer variante com href vira &lt;a&gt;</p>
+              <p className="mb-3 text-xs font-bold tracking-[0.12em] text-ink-soft uppercase">Polymorphism · any variant with href becomes &lt;a&gt;</p>
               <div className="flex flex-wrap items-center gap-3">
                 <Button href="#buttons" variant="solid">Link solid</Button>
                 <Button href="#buttons" variant="outline">Link outline</Button>
@@ -485,61 +485,61 @@ export function App() {
           </div>
         </Section>
 
-        <Section id="icons" title="Ícones">
+        <Section id="icons" title="Icons">
           <IconsSection />
         </Section>
 
         <Section id="accordion" title="Accordion">
           <div className="max-w-[760px]">
             <Accordion items={[
-              { id: "a", title: "O que o fisioterapeuta avalia", content: <ul className="space-y-2 text-ink-body"><li>Ausculta pulmonar e sinais vitais</li><li>Padrão de respiração</li><li>Qualidade da movimentação global</li></ul> },
-              { id: "b", title: "O que pode mudar a forma de respirar", content: <p className="m-0 text-ink-body">Hábitos, posturas e bloqueios que o corpo cria em resposta ao distúrbio respiratório.</p> },
-              { id: "c", title: "A técnica, em detalhe", content: <p className="m-0 text-ink-body">Manuseios específicos por faixa etária para reorganizar sinergias e melhorar a função respiratória.</p> },
+              { id: "a", title: "What the physiotherapist assesses", content: <ul className="space-y-2 text-ink-body"><li>Lung auscultation and vital signs</li><li>Breathing pattern</li><li>Quality of global movement</li></ul> },
+              { id: "b", title: "What can change the way you breathe", content: <p className="m-0 text-ink-body">Habits, postures and blocks the body creates in response to the respiratory disorder.</p> },
+              { id: "c", title: "The technique, in detail", content: <p className="m-0 text-ink-body">Age-specific handling to reorganize synergies and improve respiratory function.</p> },
             ]} />
           </div>
         </Section>
 
         <Section id="pills" title="PillList">
-          <PillList title="Condições que atendemos" seeAll={{ label: "Ver todos os tratamentos", href: "#pills" }}
-            items={["Asma e bronquiolite", "DPOC", "Torcicolo congênito", "Dor crônica", "Assimetrias cranianas e corporais", "Ronco e apneia do sono", "Enxaqueca, cefaleia e ATM"].map((label) => ({ label, href: "#pills" }))} />
+          <PillList title="Conditions we treat" seeAll={{ label: "See all treatments", href: "#pills" }}
+            items={["Asthma and bronchiolitis", "COPD", "Congenital torticollis", "Chronic pain", "Cranial and body asymmetries", "Snoring and sleep apnea", "Migraine, headache and TMJ"].map((label) => ({ label, href: "#pills" }))} />
         </Section>
 
         <Section id="header" title="Header (nav + dropdown)">
-          {/* sem overflow-hidden: o dropdown precisa sair da caixa da demo.
-              Estrutura genérica: marca (link pra home) · casa · item com dropdown · itens · idioma · CTA. */}
+          {/* no overflow-hidden: the dropdown needs to escape the demo box.
+              Generic structure: brand (link to home) · home icon · item with dropdown · items · locale · CTA. */}
           <div className="relative z-10 rounded-2xl border border-line [&>header]:rounded-t-2xl">
             <Header
               logo={
-                <a href="#header" aria-label="Página inicial" className="inline-flex rounded-xl transition-opacity hover:opacity-70 focus-visible:outline-2 focus-visible:outline-offset-[3px] focus-visible:outline-ink">
-                  {/* entrada como no novo.creeta: símbolo, depois o nome; espera a Curtain subir (2200 + 700ms) */}
-                  <Lockup key={curtainKey} entrance entranceDelay={2700} variant="horizontal" size="md" name={marca.name} logo={marca.logo} wordmark={marca.wordmark} wordmarkRatio={marca.wordmarkRatio} symbolSide={marca.symbolSide} />
+                <a href="#header" aria-label="Home page" className="inline-flex rounded-xl transition-opacity hover:opacity-70 focus-visible:outline-2 focus-visible:outline-offset-[3px] focus-visible:outline-ink">
+                  {/* entrance as in novo.creeta: symbol, then the name; waits for the Curtain to lift (2200 + 700ms) */}
+                  <Lockup key={curtainKey} entrance entranceDelay={2700} variant="horizontal" size="md" name={brand.name} logo={brand.logo} wordmark={brand.wordmark} wordmarkRatio={brand.wordmarkRatio} symbolSide={brand.symbolSide} />
                 </a>
               }
               cta={<Button variant="accent" size="sm">WhatsApp</Button>}
-              localeSwitcher={<span className={CHIP}>{IcPin} PT</span>}
+              localeSwitcher={<span className={CHIP}>{IcPin} EN</span>}
               items={[
-                { label: "Início", href: "#header", active: true, icon: <IconHome size={18} strokeWidth={1.75} />, iconOnly: true },
-                { label: "Serviços", href: "#header", children: [
-                  { label: "Primeiro serviço", href: "#header", icon: IcWind },
-                  { label: "Segundo serviço", href: "#header", icon: IcUsers },
-                  { label: "Terceiro serviço", href: "#header", icon: IcSearch },
-                ], seeAll: { label: "Ver todos os serviços", href: "#header" } },
-                { label: "Sobre", href: "#header" },
-                { label: "Equipe", href: "#header" },
-                { label: "Depoimentos", href: "#header" },
-                { label: "Contato", href: "#header" },
+                { label: "Home", href: "#header", active: true, icon: <IconHome size={18} strokeWidth={1.75} />, iconOnly: true },
+                { label: "Services", href: "#header", children: [
+                  { label: "First service", href: "#header", icon: IcWind },
+                  { label: "Second service", href: "#header", icon: IcUsers },
+                  { label: "Third service", href: "#header", icon: IcSearch },
+                ], seeAll: { label: "See all services", href: "#header" } },
+                { label: "About", href: "#header" },
+                { label: "Team", href: "#header" },
+                { label: "Testimonials", href: "#header" },
+                { label: "Contact", href: "#header" },
               ]}
             />
-            <div className="p-6 text-sm text-ink-soft">Passe o mouse em "Serviços" para o dropdown. "Início" é só a casa; o rótulo fica para o leitor de tela. Marca no tamanho do header dos sites (símbolo de 44px), com a entrada animada (símbolo, depois o nome) — "Rever a cortina" repete.</div>
+            <div className="p-6 text-sm text-ink-soft">Hover "Services" for the dropdown. "Home" is just the house icon; the label stays for screen readers. Brand at the sites' header size (44px symbol), with the animated entrance (symbol, then the name) — "Replay the curtain" repeats it.</div>
           </div>
         </Section>
 
         <Section id="mobile" title="Mobile · BottomNav">
-          <p className="mb-8 max-w-[60ch] text-ink-body">No celular e no tablet a navegação sai do header e vira esta barra flutuante no rodapé. Aqui ela fica embutida numa moldura para você ver no desktop; abaixo de ~1024px ela aparece de verdade no rodapé da janela. Toque em "Mais" para o painel.</p>
+          <p className="mb-8 max-w-[60ch] text-ink-body">On phones and tablets the navigation leaves the header and becomes this floating bar at the bottom. Here it is embedded in a frame so you can see it on desktop; below ~1024px it actually appears at the bottom of the window. Tap "More" for the panel.</p>
           <div className="mb-6">
-            <p className="mb-2 text-[0.7rem] font-semibold tracking-[0.12em] text-ink-soft uppercase">Tamanho</p>
+            <p className="mb-2 text-[0.7rem] font-semibold tracking-[0.12em] text-ink-soft uppercase">Size</p>
             <div className="inline-flex rounded-pill border border-line p-0.5">
-              {([["phone", "Celular · 390"], ["tablet", "Tablet · 768"]] as const).map(([m, label]) => (
+              {([["phone", "Phone · 390"], ["tablet", "Tablet · 768"]] as const).map(([m, label]) => (
                 <button key={m} type="button" onClick={() => setMobW(m)} aria-pressed={mobW === m}
                   className={`rounded-pill px-3 py-1.5 text-xs font-semibold transition-colors ${mobW === m ? "bg-ink text-surface" : "text-ink-soft hover:text-ink"}`}>{label}</button>
               ))}
@@ -550,8 +550,8 @@ export function App() {
             style={mobW === "tablet" ? { width: 768, height: 820 } : { width: 390, height: 640 }}
           >
             <div className="flex h-16 items-center justify-between px-5">
-              <Lockup variant="horizontal" size="sm" name={marca.name} logo={marca.logo} wordmark={marca.wordmark} wordmarkRatio={marca.wordmarkRatio} symbolSide={marca.symbolSide} />
-              <span className={CHIP}>{IcPin} PT</span>
+              <Lockup variant="horizontal" size="sm" name={brand.name} logo={brand.logo} wordmark={brand.wordmark} wordmarkRatio={brand.wordmarkRatio} symbolSide={brand.symbolSide} />
+              <span className={CHIP}>{IcPin} EN</span>
             </div>
             <div className="space-y-3 px-5 pt-6" aria-hidden="true">
               <div className="h-40 rounded-2xl bg-ink/[0.07]" />
@@ -559,32 +559,32 @@ export function App() {
               <div className="h-4 w-3/5 rounded-full bg-ink/[0.09]" />
               <div className="h-4 w-2/3 rounded-full bg-ink/[0.09]" />
             </div>
-            {/* Todas as páginas em ordem de importância: a barra mostra as que
-                couberem (64px por aba) e o resto vai pro "Mais" — no celular
-                4 + Mais, no tablet todas. A saída externa fica sempre no Mais. */}
+            {/* All pages in order of importance: the bar shows as many as fit
+                (64px per tab) and the rest goes to "More" — on phones 4 + More,
+                on tablets all of them. The external link always lives in More. */}
             <BottomNav
               embedded
               pages={[
-                { label: "Início", href: "#mobile", Icon: IconHome, active: true },
-                { label: "Serviços", href: "#mobile", Icon: IconWind },
-                { label: "Sobre", href: "#mobile", Icon: IconActivity },
-                { label: "Equipe", href: "#mobile", Icon: IconUsers },
-                { label: "Depoimentos", href: "#mobile", Icon: IconMessage },
-                { label: "Contato", href: "#mobile", Icon: IconMapPin },
+                { label: "Home", href: "#mobile", Icon: IconHome, active: true },
+                { label: "Services", href: "#mobile", Icon: IconWind },
+                { label: "About", href: "#mobile", Icon: IconActivity },
+                { label: "Team", href: "#mobile", Icon: IconUsers },
+                { label: "Testimonials", href: "#mobile", Icon: IconMessage },
+                { label: "Contact", href: "#mobile", Icon: IconMapPin },
               ]}
-              extras={[{ label: "Site parceiro", href: "https://exemplo.com.br", Icon: IconGraduationCap, external: true }]}
+              extras={[{ label: "Partner site", href: "https://exemplo.com.br", Icon: IconGraduationCap, external: true }]}
             />
           </div>
         </Section>
 
-        <Section id="anchornav" title="AnchorNav — âncoras da página">
-          <p className="mb-6 max-w-[62ch] text-ink-body">Cápsula flutuante que acompanha a rolagem numa página longa (extraída da página de Tratamento do ttcab): scroll-spy marca a seção visível e o indicador desliza até ela. Role por estas três seções.</p>
-          <AnchorNav items={[{ id: "an-1", label: "Primeira seção" }, { id: "an-2", label: "Segunda seção" }, { id: "an-3", label: "Terceira seção, com título mais longo" }]} />
+        <Section id="anchornav" title="AnchorNav — page anchors">
+          <p className="mb-6 max-w-[62ch] text-ink-body">Floating capsule that follows the scroll on a long page (extracted from ttcab's Treatment page): scroll-spy marks the visible section and the indicator slides to it. Scroll through these three sections.</p>
+          <AnchorNav items={[{ id: "an-1", label: "First section" }, { id: "an-2", label: "Second section" }, { id: "an-3", label: "Third section, with a longer title" }]} />
           <div className="space-y-10 pt-6">
             {["an-1", "an-2", "an-3"].map((id, i) => (
               <section key={id} id={id} className="scroll-mt-40 rounded-2xl border border-line p-8">
-                <h3 className="font-heading text-2xl font-bold text-ink">{["Primeira", "Segunda", "Terceira"][i]} seção</h3>
-                <p className="mt-3 max-w-[60ch] text-ink-body">Conteúdo genérico só para dar altura à página e a nav ter o que acompanhar. Cada seção precisa de um <code className="rounded bg-ink/[0.07] px-1.5 py-0.5 text-sm">scroll-mt</code> compatível com a altura do header mais a cápsula.</p>
+                <h3 className="font-heading text-2xl font-bold text-ink">{["First", "Second", "Third"][i]} section</h3>
+                <p className="mt-3 max-w-[60ch] text-ink-body">Generic content just to give the page height so the nav has something to follow. Each section needs a <code className="rounded bg-ink/[0.07] px-1.5 py-0.5 text-sm">scroll-mt</code> that matches the header height plus the capsule.</p>
                 <div className="mt-6 h-48 rounded-2xl bg-ink/[0.06]" aria-hidden="true" />
               </section>
             ))}
@@ -593,19 +593,19 @@ export function App() {
 
         <section id="hero" className="scroll-mt-24 border-b border-line py-[clamp(40px,6vw,72px)]">
           <Container>
-            <SectionKicker>PageVideoHero <span className="font-heading text-base font-semibold text-ink-soft">— largura real (full-bleed)</span></SectionKicker>
+            <SectionKicker>PageVideoHero <span className="font-heading text-base font-semibold text-ink-soft">— real width (full-bleed)</span></SectionKicker>
           </Container>
           <HeroDemo />
         </section>
 
         <Section id="footer" title="Footer">
           <Footer
-            logo={<Lockup variant="horizontal" size="sm" name={marca.name} logo={marca.logo} wordmark={marca.wordmark} wordmarkRatio={marca.wordmarkRatio} symbolSide={marca.symbolSide} />}
-            tagline={marca.tagline}
-            columns={[{ title: "Navegação", items: ["Início", "Para famílias", "Depoimentos"].map((l) => <a key={l} href="#footer" className="hover:text-ink-soft">{l}</a>) },
-                      { title: "", items: ["Tratamento", "Profissionais", "Artigos"].map((l) => <a key={l} href="#footer" className="hover:text-ink-soft">{l}</a>) }]}
-            contact={{ title: "Contato", lines: ["Rua João Mathias Cordeiro, 33", "Córrego Grande, Florianópolis — SC"], actions: <Button href="#footer" variant="link">Ver no Google Maps <IconArrowUpRight size={16} /></Button> }}
-            legal={<>© 2026 TTCAB · Todos os direitos reservados.</>}
+            logo={<Lockup variant="horizontal" size="sm" name={brand.name} logo={brand.logo} wordmark={brand.wordmark} wordmarkRatio={brand.wordmarkRatio} symbolSide={brand.symbolSide} />}
+            tagline={brand.tagline}
+            columns={[{ title: "Navigation", items: ["Home", "For families", "Testimonials"].map((l) => <a key={l} href="#footer" className="hover:text-ink-soft">{l}</a>) },
+                      { title: "", items: ["Treatment", "Professionals", "Articles"].map((l) => <a key={l} href="#footer" className="hover:text-ink-soft">{l}</a>) }]}
+            contact={{ title: "Contact", lines: ["Rua João Mathias Cordeiro, 33", "Córrego Grande, Florianópolis — SC"], actions: <Button href="#footer" variant="link">View on Google Maps <IconArrowUpRight size={16} /></Button> }}
+            legal={<>© 2026 TTCAB · All rights reserved.</>}
             chips={[<span className={CHIP}>{IcChat} WhatsApp</span>, <span className={CHIP}>48 3234.9919</span>, <span className={CHIP}>E-mail</span>]}
           />
         </Section>
@@ -615,7 +615,7 @@ export function App() {
 
       <BottomNav
         pages={PAGE_NAV.map(({ id, label, Icon }) => ({ href: `#${id}`, label, Icon, active: id === activeSection }))}
-        extras={[{ label: "Código no GitHub", href: "https://github.com/felipegenuino/breathe-ds", Icon: IconGraduationCap, external: true }]}
+        extras={[{ label: "Code on GitHub", href: "https://github.com/felipegenuino/breathe-ds", Icon: IconGraduationCap, external: true }]}
       />
     </div>
   );

@@ -1,11 +1,11 @@
 /*
-  Paleta TTCAB (petróleo + creme). Contrastes medidos:
-   - surface #fbf5e9 / ink #144753 ............ 9,41:1 (AAA)
-   - surface #fbf5e9 / ink-soft #54707a ....... 4,86:1 (AA)
-   - surface #fbf5e9 / ink-body #1e4f5b ....... 8,32:1 (AAA)
-   - surface #fbf5e9 / action-text #9a5d07 .... 4,90:1 (AA)
-   - surface-panel #144753 / surface (texto) .. 9,41:1 (AAA)
-   - action #f6a22a é DECORATIVO/CTA — nunca texto sobre creme.
+  TTCAB palette (petrol + cream). Measured contrasts:
+   - surface #fbf5e9 / ink #144753 ............ 9.41:1 (AAA)
+   - surface #fbf5e9 / ink-soft #54707a ....... 4.86:1 (AA)
+   - surface #fbf5e9 / ink-body #1e4f5b ....... 8.32:1 (AAA)
+   - surface #fbf5e9 / action-text #9a5d07 .... 4.90:1 (AA)
+   - surface-panel #144753 / surface (text) ... 9.41:1 (AAA)
+   - action #f6a22a is DECORATIVE/CTA — never text on cream.
 */
 :root {
   --cg-surface: #fbf5e9;
@@ -14,7 +14,7 @@
   --cg-ink-soft: #54707a;
   --cg-ink-body: #1e4f5b;
   --cg-action: #f6a22a;
-  --cg-on-action: #144753;   /* ink sobre orange */
+  --cg-on-action: #144753;   /* ink on orange */
   --cg-action-text: #9a5d07;
   --cg-line: rgb(20 71 83 / 0.16);
   --cg-font-heading: var(--font-quicksand), system-ui, sans-serif;  /* Quicksand */

@@ -1,21 +1,22 @@
 type Props = {
-  /** Lado em px (quadrado). É o tamanho do glifo visível: a caixa do SVG é
-   *  justa ao anel + ponto, sem ar interno (o espaço entre símbolo e nome
-   *  fica a cargo do layout). */
+  /** Side in px (square). This is the size of the visible glyph: the SVG box
+   *  is tight to the ring + dot, with no inner padding (the space between
+   *  symbol and name is up to the layout). */
   size?: number;
-  /** Segundos de um ciclo respiratório completo (inspira+expira). */
+  /** Seconds of one full breathing cycle (inhale + exhale). */
   duration?: number;
-  /** Anima? (ainda respeita prefers-reduced-motion). */
+  /** Animate? (still respects prefers-reduced-motion). */
   animated?: boolean;
   className?: string;
   title?: string;
 };
 
 /**
- * Símbolo vivo do Breathe — um anel aberto (gesto fluido, contínuo) com um
- * ponto no respiro, abstração do logotipo do creeta (forma redonda + ponto).
- * NEUTRO: usa currentColor, herda a cor do contexto (a paleta vem de cada app).
- * "Respira" num pulso suave de escala; respeita prefers-reduced-motion.
+ * Living symbol of Breathe: an open ring (a fluid, continuous gesture) with a
+ * dot at the breath gap, an abstraction of the creeta logo (round shape + dot).
+ * NEUTRAL: uses currentColor and inherits the color from context (the palette
+ * comes from each app). It "breathes" with a soft scale pulse; respects
+ * prefers-reduced-motion.
  */
 export function BreatheMark({
   size = 96,
@@ -50,7 +51,7 @@ export function BreatheMark({
         style={{ ["--breathe-dur" as string]: `${duration}s` }}
       >
         <g className="breathe-mark__g">
-          {/* anel aberto — gesto contínuo com um respiro no topo */}
+          {/* open ring: a continuous gesture with a breath gap at the top */}
           <path
             d="M 42 17.5 A 17 17 0 1 1 22 17.5"
             fill="none"
@@ -58,7 +59,7 @@ export function BreatheMark({
             strokeWidth="8.5"
             strokeLinecap="round"
           />
-          {/* ponto do respiro */}
+          {/* the breath dot */}
           <circle cx="32" cy="14.5" r="4.4" fill="currentColor" />
         </g>
       </svg>

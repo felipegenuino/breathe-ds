@@ -2,20 +2,20 @@ import type { CSSProperties, ReactNode } from "react";
 import { BreatheMark } from "./BreatheMark";
 
 /**
- * Arranjos do logo (sistema de branding flexível da família Cuidado Global).
- * - `stacked`     empilhado: símbolo em cima, nome embaixo — perfis, splash, pôster.
- * - `horizontal`  símbolo + nome lado a lado (+ tagline) — cabeçalho, documento.
- * - `wordmark`    só texto (nome + tagline) — anúncio, quando a leitura é essencial.
- * - `symbol`      só o símbolo — favicon, ícone de app, marca d'água.
- * - `merged`      fundido: símbolo preenchido com o nome dentro — avatar, embalagem.
+ * Logo arrangements (flexible branding system of the Cuidado Global family).
+ * - `stacked`     symbol on top, name below: profiles, splash, poster.
+ * - `horizontal`  symbol + name side by side (+ tagline): header, documents.
+ * - `wordmark`    text only (name + tagline): ads, when legibility is essential.
+ * - `symbol`      symbol only: favicon, app icon, watermark.
+ * - `merged`      filled symbol with the name inside: avatar, packaging.
  */
 export type LockupVariant = "stacked" | "horizontal" | "wordmark" | "symbol" | "merged";
 type Size = "sm" | "md" | "lg";
 
-/* Nome em `font-heading`; símbolo ~1.3× o corpo do nome (o anel é aberto e
-   "lê" mais leve, então pede um tamanho a mais pra fechar em harmonia).
-   A caixa do BreatheMark é justa ao glifo: o vão entre símbolo e nome é só o gap.
-   `md` = header dos sites (símbolo de 44px, medido no creeta e no ttcab). */
+/* Name in `font-heading`; symbol ~1.3× the name's body size (the ring is open
+   and "reads" lighter, so it needs one size up to sit in harmony).
+   The BreatheMark box is tight to the glyph: the space between symbol and name is just the gap.
+   `md` = the sites' header (44px symbol, measured on creeta and ttcab). */
 const NAME: Record<Size, string> = { sm: "text-2xl", md: "text-[2.125rem]", lg: "text-[2.7rem]" };
 const TAG: Record<Size, string> = { sm: "text-[0.78rem]", md: "text-sm", lg: "text-base" };
 const MARK: Record<Size, number> = { sm: 32, md: 44, lg: 56 };
@@ -25,37 +25,38 @@ const TILE: Record<Size, string> = { sm: "size-16 text-[0.7rem]", md: "size-24 t
 
 type Props = {
   variant?: LockupVariant;
-  /** Nome da marca (cada site passa o seu). */
+  /** Brand name (each site passes its own). */
   name?: string;
   tagline?: ReactNode;
-  /** Símbolo customizado; por padrão o BreatheMark (anel + ponto). Um <svg>
-   *  injetado recebe a altura do tamanho (`size`); a largura segue a proporção. */
+  /** Custom symbol; defaults to the BreatheMark (ring + dot). An injected <svg>
+   *  gets the height of the size (`size`); width follows the aspect ratio. */
   logo?: ReactNode;
-  /** Wordmark desenhado (svg) no lugar do nome em texto. `merged` ignora
-   *  (lá o nome é texto). */
+  /** Drawn wordmark (svg) in place of the text name. Ignored by `merged`
+   *  (there the name is text). */
   wordmark?: ReactNode;
-  /** Altura do wordmark como fração da altura do símbolo, do manual da marca
-   *  (ex.: `TTCAB_LOCKUP.wordmarkPerSymbol`). Chega ao svg por `--cg-wordmark`. */
+  /** Wordmark height as a fraction of the symbol height, from the brand manual
+   *  (e.g. `TTCAB_LOCKUP.wordmarkPerSymbol`). Reaches the svg via `--cg-wordmark`. */
   wordmarkRatio?: number;
-  /** Lado do símbolo no horizontal. Padrão `left` (creeta e os demais); o TTCAB
-   *  é `right` (`TTCAB_LOCKUP.symbolSide`). */
+  /** Which side the symbol sits on in `horizontal`. Default `left` (creeta and
+   *  the others); TTCAB is `right` (`TTCAB_LOCKUP.symbolSide`). */
   symbolSide?: "left" | "right";
   size?: Size;
-  /** O símbolo "respira"? Padrão `false` — logo de cabeçalho não fica animando. */
+  /** Does the symbol "breathe"? Default `false`: a header logo should not keep animating. */
   animated?: boolean;
-  /** Entrada ao montar, como no header do novo.creeta: o símbolo chega
-   *  primeiro, depois o nome, depois a tagline. Respeita prefers-reduced-motion
-   *  (vira só um fade curto). Remonte (key) para repetir. */
+  /** Entrance on mount, as in the novo.creeta header: the symbol arrives first,
+   *  then the name, then the tagline. Respects prefers-reduced-motion (becomes
+   *  just a short fade). Remount (key) to replay. */
   entrance?: boolean;
-  /** Atraso da entrada em ms (ex.: esperar a Curtain subir). */
+  /** Entrance delay in ms (e.g. to wait for the Curtain to rise). */
   entranceDelay?: number;
   className?: string;
 };
 
 /**
- * Lockup — monta o logo da família num dos arranjos acima. Neutro por tokens:
- * nome/símbolo em `ink`, tagline em `ink-soft`; a cor real vem de cada app.
- * Tipografia é fixa da família (Quicksand no nome, Figtree na tagline).
+ * Lockup: assembles the family logo in one of the arrangements above. Neutral
+ * through tokens: name/symbol in `ink`, tagline in `ink-soft`; the actual color
+ * comes from each app. Typography is fixed by the family (Quicksand for the
+ * name, Figtree for the tagline).
  */
 export function Lockup({
   variant = "horizontal",
@@ -73,16 +74,16 @@ export function Lockup({
 }: Props) {
   const entranceCls = entrance ? " cg-lockup--entrance" : "";
   const entranceStyle = entrance ? ({ "--cg-entrance-delay": `${entranceDelay}ms` } as CSSProperties) : undefined;
-  // No horizontal com tagline, o símbolo cobre o bloco inteiro (nome + tagline),
-  // virando um "bookend" proporcional — não só a altura do nome.
+  // In horizontal with a tagline, the symbol spans the whole block (name + tagline),
+  // becoming a proportional "bookend", not just the name height.
   const markPx = variant === "horizontal" && tagline && symbolSide !== "right" ? Math.round(NAME_PX[size] * 2.3) : MARK[size];
   const mark = (
     <span className="cg-lockup__mark inline-flex text-ink [&>svg]:h-[var(--mark)] [&>svg]:w-auto" style={{ "--mark": `${markPx}px` } as CSSProperties}>
       {logo ?? <BreatheMark size={markPx} animated={animated} title={name} />}
     </span>
   );
-  // O wordmark segue o símbolo-base do tamanho (não o "bookend" do horizontal
-  // com tagline), como no logotipo assinado do creeta: nome ≈ 0.26 do símbolo grande.
+  // The wordmark follows the size's base symbol (not the "bookend" of horizontal
+  // with tagline), as in creeta's signed logo: name ≈ 0.26 of the large symbol.
   const nameEl = (
     <span
       className={`cg-lockup__name font-heading font-bold leading-none tracking-[-0.02em] text-ink ${NAME[size]}`}
@@ -91,8 +92,8 @@ export function Lockup({
       {wordmark ?? name}
     </span>
   );
-  // `block`: como item inline, a entrelinha do pai (1.5 do body) mandava na
-  // linha e a tagline de duas linhas ficava folgada demais.
+  // `block`: as an inline item, the parent's line-height (1.5 from body) ruled
+  // the line and a two-line tagline came out too loose.
   const tagEl = tagline ? (
     <span className={`cg-lockup__tag block font-body leading-[1.3] text-ink-soft ${TAG[size]}`}>{tagline}</span>
   ) : null;
@@ -129,8 +130,8 @@ export function Lockup({
   }
 
   if (variant === "merged") {
-    // Fundido: nome dentro de um disco preenchido (ink). Avatar / ícone de app.
-    // Nomes curtos (creeta, ttcab) fecham melhor; nome longo reduz o corpo.
+    // Merged: name inside a filled disc (ink). Avatar / app icon.
+    // Short names (creeta, ttcab) fit best; a long name needs a smaller body size.
     return (
       <span
         className={`inline-flex items-center justify-center whitespace-nowrap rounded-full bg-ink px-2 text-center font-heading font-bold leading-none tracking-[-0.01em] text-surface ${TILE[size]} ${className}`}
@@ -142,8 +143,8 @@ export function Lockup({
     );
   }
 
-  // horizontal (padrão). Símbolo à direita (TTCAB): encosta no nome, na mesma
-  // linha; a tagline fica embaixo (senão o símbolo iria parar depois da tagline).
+  // horizontal (default). Symbol on the right (TTCAB): sits next to the name, on
+  // the same line; the tagline goes below (otherwise the symbol would end up after the tagline).
   if (symbolSide === "right") {
     return (
       <span className={`inline-flex flex-col items-start${entranceCls} ${className}`} style={entranceStyle}>
@@ -168,8 +169,8 @@ export function Lockup({
   );
 }
 
-/* Entrada: símbolo (escala + giro leve) → nome (desliza da esquerda) → tagline.
-   Mesmo vocabulário da Curtain; com movimento reduzido fica só um fade curto. */
+/* Entrance: symbol (scale + slight rotation) → name (slides in from the left) → tagline.
+   Same vocabulary as the Curtain; with reduced motion it becomes just a short fade. */
 const ENTRANCE_CSS = `
 .cg-lockup--entrance .cg-lockup__mark{ animation: cg-lockup-mark 500ms var(--ease-cg,cubic-bezier(.2,.8,.2,1)) var(--cg-entrance-delay,0ms) both; }
 .cg-lockup--entrance .cg-lockup__name{ animation: cg-lockup-name 420ms var(--ease-cg,cubic-bezier(.2,.8,.2,1)) calc(var(--cg-entrance-delay,0ms) + 420ms) both; }

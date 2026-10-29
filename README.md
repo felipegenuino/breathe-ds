@@ -1,207 +1,202 @@
 # Breathe
 
-**Breathe** — o design system da **família Cuidado Global** (ecossistema RTA / Mariangela:
-creeta, ttcab, metodorta…). Os sites **herdam** este pacote e aplicam a
-própria paleta sobre o mesmo contrato.
+**Breathe** — the design system of the **Cuidado Global family** (the RTA / Mariangela
+ecosystem: creeta, ttcab, metodorta…). The sites **inherit** this package and apply
+their own palette on top of the same contract.
 
-> Pacote npm: `@breathe-ds/ui` (endereço técnico). **Breathe** é o nome do sistema.
+> npm package: `@breathe-ds/ui` (the technical address). **Breathe** is the system's name.
 
-> **v0.1** — tokens + componentes (ver `components/`) + marcas dos sites.
-> Confira tudo renderizado no playground (abaixo).
+> **v0.1** — tokens + components (see `components/`) + the sites' brand marks.
+> See everything rendered in the playground (below).
 
-## Ideia
+## Idea
 
-Os sites da família **não compartilham paleta** (ttcab é petróleo/creme,
-creeta é petróleo/névoa/magenta). O que se compartilha são os **papéis de
-token** — `surface`, `ink`, `action`, `line`… — com nomes e estrutura iguais.
-Cada site define os valores (`--cg-*`) da sua paleta.
+The family's sites **do not share a palette** (ttcab is teal/cream,
+creeta is teal/mist/magenta). What they share are the **token roles** —
+`surface`, `ink`, `action`, `line`… — with the same names and structure.
+Each site defines the values (`--cg-*`) of its own palette.
 
-Token nunca é "a cor X": é **papel + contraste medido**. (O Felipe é daltônico;
-decisão de cor sempre por papel e contraste, nunca a olho.)
+A token is never "color X": it is **role + measured contrast**. (Felipe is color-blind;
+color decisions are always made by role and contrast, never by eye.)
 
-## Instalar
+## Install
 
 ```bash
 npm i @breathe-ds/ui
 ```
 
-Pacote público no npm: https://www.npmjs.com/package/@breathe-ds/ui · código em
-https://github.com/felipegenuino/breathe-ds (licença MIT). Os componentes são TSX fonte (sem
-build): no Next, adicione `transpilePackages: ["@breathe-ds/ui"]` ao `next.config`.
+Public package on npm: https://www.npmjs.com/package/@breathe-ds/ui · source at
+https://github.com/felipegenuino/breathe-ds (MIT license). The components ship as TSX source (no
+build step): in Next, add `transpilePackages: ["@breathe-ds/ui"]` to `next.config`.
 
-## Uso (Tailwind v4)
+## Usage (Tailwind v4)
 
-No `globals.css` do site:
+In the site's `globals.css`:
 
 ```css
 @import "tailwindcss";
 @import "@breathe-ds/ui/theme.css";
-@import "@breathe-ds/ui/tokens/ttcab.css";   /* ou defina os --cg-* inline */
+@import "@breathe-ds/ui/tokens/ttcab.css";   /* or define the --cg-* inline */
 ```
 
-Depois, as utilitárias do Tailwind usam os papéis: `bg-surface`, `text-ink`,
+Then Tailwind utilities use the roles: `bg-surface`, `text-ink`,
 `border-line`, `bg-action`, `text-action-text`, `rounded-2xl`, etc.
 
-Para um site sem arquivo de tokens pronto, defina os papéis no próprio `:root`:
+For a site without a ready-made token file, define the roles on `:root` itself:
 
 ```css
 :root {
   --cg-surface: #fbf5e9;
   --cg-ink: #144753;
-  /* … ver tokens/ttcab.css para a lista completa */
+  /* … see tokens/ttcab.css for the full list */
 }
 ```
 
-## Papéis de token
+## Token roles
 
-| Token (Tailwind) | Papel | `--cg-*` |
+| Token (Tailwind) | Role | `--cg-*` |
 |---|---|---|
-| `surface` | fundo base | `--cg-surface` |
-| `surface-panel` | painel escuro (footer, CTA final) | `--cg-surface-panel` |
-| `ink` | texto principal / títulos | `--cg-ink` |
-| `ink-soft` | texto secundário | `--cg-ink-soft` |
-| `ink-body` | corpo de leitura | `--cg-ink-body` |
-| `action` | CTA / destaque — **nunca texto puro** | `--cg-action` |
-| `action-text` | texto na cor de ação (AA) | `--cg-action-text` |
-| `line` | hairlines / bordas | `--cg-line` |
-| `font-heading` / `font-body` | tipografia | `--cg-font-*` |
-| `radius-xl/2xl/pill` · `ease-cg` | raio e curva de motion | fixos |
+| `surface` | base background | `--cg-surface` |
+| `surface-panel` | dark panel (footer, final CTA) | `--cg-surface-panel` |
+| `ink` | primary text / headings | `--cg-ink` |
+| `ink-soft` | secondary text | `--cg-ink-soft` |
+| `ink-body` | reading body text | `--cg-ink-body` |
+| `action` | CTA / highlight — **never plain text** | `--cg-action` |
+| `action-text` | text in the action color (AA) | `--cg-action-text` |
+| `line` | hairlines / borders | `--cg-line` |
+| `font-heading` / `font-body` | typography | `--cg-font-*` |
+| `radius-xl/2xl/pill` · `ease-cg` | radius and motion curve | fixed |
 
-## Contrastes medidos — TTCAB (`tokens/ttcab.css`)
+## Measured contrast — TTCAB (`tokens/ttcab.css`)
 
-Valores pela fórmula WCAG padrão (os mesmos que o `preview/` calcula ao vivo):
+Values from the standard WCAG formula (the same ones `preview/` computes live):
 
-| Par | Contraste | Nível |
+| Pair | Contrast | Level |
 |---|---|---|
-| surface `#fbf5e9` / ink `#144753` | 9,41:1 | AAA |
-| surface `#fbf5e9` / ink-soft `#54707a` | 4,86:1 | AA |
-| surface `#fbf5e9` / ink-body `#1e4f5b` | 8,32:1 | AAA |
-| surface `#fbf5e9` / action-text `#9a5d07` | 4,90:1 | AA |
-| surface-panel `#144753` / texto creme | 9,41:1 | AAA |
+| surface `#fbf5e9` / ink `#144753` | 9.41:1 | AAA |
+| surface `#fbf5e9` / ink-soft `#54707a` | 4.86:1 | AA |
+| surface `#fbf5e9` / ink-body `#1e4f5b` | 8.32:1 | AAA |
+| surface `#fbf5e9` / action-text `#9a5d07` | 4.90:1 | AA |
+| surface-panel `#144753` / cream text | 9.41:1 | AAA |
 
-`action` `#f6a22a` é decorativo/CTA — não usar como texto sobre creme.
+`action` `#f6a22a` is decorative/CTA only — do not use it as text on cream.
 
-## Tipografia da família
+## Family typography
 
-Decisão (28/10/2026): **só fontes open-source** — nada de licenciadas (Gotham saiu).
+Decision (2026-10-28): **open-source fonts only** — no licensed ones (Gotham is out).
 
-| Papel | Fonte | Observação |
+| Role | Font | Note |
 |---|---|---|
-| `font-heading` | **Quicksand** | títulos, toda a família (Google Fonts) |
-| `font-body` | **Figtree** | corpo, toda a família (Google Fonts) |
+| `font-heading` | **Quicksand** | headings, whole family (Google Fonts) |
+| `font-body` | **Figtree** | body, whole family (Google Fonts) |
 
-**Hierarquia/escala tipográfica:** usar a do **novo.creeta** como guia (bem trabalhada
-e refinada). _A extrair para tokens de tamanho/peso/entrelinha._
+**Type hierarchy/scale:** use **novo.creeta**'s as the guide (well worked out
+and refined). _To be extracted into size/weight/line-height tokens._
 
-## Primeiros consumidores
+## First consumers
 
-**ttcab** e **creeta**. A paleta do creeta em `tokens/creeta.css` está
-ilustrativa (marcada `[conferir]`) — fecha ao migrar o creeta.
+**ttcab** and **creeta**. The creeta palette in `tokens/creeta.css` is
+illustrative (marked `[conferir]`) — to be finalized when creeta migrates.
 
-## O que muda por tema (e o que é fixo)
+## What changes per theme (and what is fixed)
 
-**Muda por tema:** apenas **cores** e **grafismos** (ThreadRail, OrganicFrame,
-marca d'água…). Cada site/marca da família tem a sua cor e os seus grafismos.
+**Changes per theme:** only **colors** and **graphic devices** (ThreadRail, OrganicFrame,
+watermark…). Each site/brand in the family has its own color and its own graphic devices.
 
-**Fixo em toda a família:** **tipografia** (Quicksand nos títulos + Figtree no
-corpo, em qualquer tema — inclusive o Neutro) e os **ícones** (lucide). Botões
-usam a fonte de corpo semibold (o 600 da Quicksand rende leve demais).
+**Fixed across the whole family:** **typography** (Quicksand for headings + Figtree for
+body, in any theme — including Neutral) and the **icons** (lucide). Buttons
+use the body font at semibold (Quicksand's 600 renders too light).
 
-## Decisão — estilo de card
+## Decision — card style
 
-Linguagem de card do DS: **bordas discretas + sombra discreta** (referência: "Famílias
- contam" do novo.creeta). Nada de borda forte ou sombra pesada. _A virar tokens `--shadow-card` + `--border`._
+The DS card language: **subtle borders + subtle shadow** (reference: "Famílias contam" on novo.creeta). No strong borders or heavy shadows. _To become `--shadow-card` + `--border` tokens._
 
-## Decisão — estilo de card
+## Decision — hero width
 
-Linguagem de card do DS: **bordas discretas + sombra discreta** (referência: "Famílias contam" do novo.creeta). Nada de borda forte ou sombra pesada. _A virar tokens `--shadow-card` + `--border`._
+**Wider / full-bleed** heroes, in **novo.creeta**'s proportion (more immersive, less
+side margin). Applies to `PageVideoHero` and `PageHero`. ttcab's current hero is more contained
+— widen it to the creeta standard when migrating. _Becomes a hero-width token/scale._
 
-## Decisão — largura de hero
+## Site brand marks (`components/marks/`)
 
-Heros **mais largos / full-bleed**, na proporção do **novo.creeta** (mais imersivos, menos
-margem lateral). Vale para `PageVideoHero` e `PageHero`. O hero atual do ttcab é mais contido
-— alargar para o padrão creeta ao migrar. _Vira token/escala de largura de hero._
+Each site in the family has its real symbol and wordmark, copied from the brand
+files (`public/brand`) in the repositories, split into two components so the
+`Curtain` and the `Lockup` can compose the arrangements:
 
-## Marcas dos sites (`components/marks/`)
-
-Cada site da família tem o símbolo e o wordmark reais, copiados dos arquivos de
-marca (`public/brand`) dos repositórios, separados em dois componentes para a
-`Curtain` e o `Lockup` montarem os arranjos:
-
-| Site | Símbolo | Wordmark | Import |
+| Site | Symbol | Wordmark | Import |
 |---|---|---|---|
-| TTCAB | `TtcabSymbol` (mãe + bebê, laranja `#F6A22A`) | `TtcabWordmark` (caixa-alta, `currentColor`) | `@breathe-ds/ui/components/marks/ttcab` |
-| Creeta | `CreetaSymbol` (três ondas + ponto, cores da marca) | `CreetaWordmark` (minúsculas, `currentColor`) | `@breathe-ds/ui/components/marks/creeta` |
+| TTCAB | `TtcabSymbol` (mother + baby, orange `#F6A22A`) | `TtcabWordmark` (uppercase, `currentColor`) | `@breathe-ds/ui/components/marks/ttcab` |
+| Creeta | `CreetaSymbol` (three waves + dot, brand colors) | `CreetaWordmark` (lowercase, `currentColor`) | `@breathe-ds/ui/components/marks/creeta` |
 
 ```tsx
 <Curtain logo={<TtcabSymbol />} name={<TtcabWordmark />} wordmarkRatio={TTCAB_LOCKUP.wordmarkPerSymbol} tagline="…" />
 <Lockup variant="horizontal" size="md" logo={<CreetaSymbol />} wordmark={<CreetaWordmark />} wordmarkRatio={CREETA_LOCKUP.wordmarkPerSymbol} name="creeta" />
 ```
 
-**Proporção vem do manual, não do olho.** Cada arquivo de marca exporta
-`*_LOCKUP.wordmarkPerSymbol` (altura do wordmark ÷ altura do símbolo no
-logotipo horizontal: TTCAB 0,557 · creeta 0,469) e `symbolSide` (no TTCAB o
-símbolo fica à **direita** do nome; no creeta e nos demais, à esquerda). O `Lockup` e a `Curtain`
-passam isso ao svg pela variável `--cg-wordmark`; o símbolo injetado recebe a
-altura do tamanho (`size`). Medido nos sites (29/10/2026): no header dos dois o
-símbolo tem **44px** de altura — é o `size="md"` do Lockup. O símbolo aceita
-`color` para versão monocromática (branco sobre painel escuro). O desenho não se
-edita à mão: é o do manual de cada marca.
+**The proportion comes from the brand manual, not from the eye.** Each brand file exports
+`*_LOCKUP.wordmarkPerSymbol` (wordmark height ÷ symbol height in the
+horizontal logo: TTCAB 0.557 · creeta 0.469) and `symbolSide` (in TTCAB the
+symbol sits to the **right** of the name; in creeta and the others, to the left). The `Lockup` and the `Curtain`
+pass this to the svg through the `--cg-wordmark` variable; the injected symbol takes the
+height of the size (`size`). Measured on the sites (2026-10-29): in both headers the
+symbol is **44px** tall — that is the Lockup's `size="md"`. The symbol accepts
+`color` for a monochrome version (white on a dark panel). The artwork is never
+edited by hand: it is the one from each brand's manual.
 
-`Lockup` com `entrance` (e `entranceDelay` em ms) faz a entrada do header do
-novo.creeta: símbolo, depois o nome, depois a tagline; com movimento reduzido vira
-um fade curto.
+`Lockup` with `entrance` (and `entranceDelay` in ms) reproduces the header entrance of
+novo.creeta: symbol, then name, then tagline; with reduced motion it becomes
+a short fade.
 
-## Navegação
+## Navigation
 
-- **Header**: marca (o app passa o link para a home) · itens · item com dropdown
-  (ícones nos subitens; link final com seta → ou ↗ se `external`) · idioma · CTA.
-  Padrão dos sites: "Início" é só a casa (`icon` + `iconOnly`), rótulo para
-  leitor de tela.
-- **BottomNav**: no celular/tablet a navegação sai do header e vira a barra
-  flutuante inferior. É o código da BarraNavegacao do novo.creeta (= BottomNav
-  do ttcab), neutro por tokens: recebe TODAS as páginas em ordem de importância
-  (`pages`, com o `Icon` lucide) e mostra quantas couberem (64px por aba,
-  ResizeObserver); o resto e as saídas externas (`extras`, com o domínio escrito
-  e seta ↗) vão para o painel "Mais", um popover nativo (Esc, toque fora, sem
-  JS). Véu de gradiente atrás da barra. `hideFrom` = `md` (creeta) ou `lg`
-  (ttcab). `labels` para outro idioma. `embedded` para a moldura da demo.
-- **AnchorNav**: cápsula flutuante de âncoras da página (scroll-spy + indicador
-  deslizante), extraída do TreatmentAnchorNav do ttcab. As seções-alvo precisam
-  de `scroll-mt-*` compatível com o sticky.
+- **Header**: brand (the app passes the link to the home page) · items · item with dropdown
+  (icons on sub-items; final link with a → arrow, or ↗ if `external`) · language · CTA.
+  Site convention: "Home" is just the house (`icon` + `iconOnly`), with a label for
+  screen readers.
+- **BottomNav**: on phone/tablet, navigation leaves the header and becomes the
+  floating bottom bar. It is the code of novo.creeta's BarraNavegacao (= ttcab's
+  BottomNav), made neutral through tokens: it receives ALL pages in order of importance
+  (`pages`, with the lucide `Icon`) and shows as many as fit (64px per tab,
+  ResizeObserver); the rest and the external exits (`extras`, with the domain spelled out
+  and a ↗ arrow) go to the "More" panel, a native popover (Esc, tap outside, no
+  JS). Gradient veil behind the bar. `hideFrom` = `md` (creeta) or `lg`
+  (ttcab). `labels` for another language. `embedded` for the demo frame.
+- **AnchorNav**: floating capsule of page anchors (scroll-spy + sliding
+  indicator), extracted from ttcab's TreatmentAnchorNav. Target sections need
+  a `scroll-mt-*` compatible with the sticky header.
 
-## Playground (ver os componentes)
+## Playground (see the components)
 
-`cd playground && npm install && npm run dev` → kitchen-sink em http://localhost:5177 com os componentes reais renderizados (paleta ttcab).
+`cd playground && npm install && npm run dev` → kitchen sink at http://localhost:5177 with the real components rendered (ttcab palette).
 
 ## Roadmap
 
-- [x] v0.1 — tokens (preset + paletas ttcab/creeta) + preview
-- [x] Accordion (1º componente; padrão de deps injetáveis)
-- [x] Tipografia da família (Quicksand + Figtree, só livres)
-- [ ] **Escalas do novo.creeta** (referência total, aprovado): **tipografia** (tamanhos/pesos/entrelinha)
-      **+ espaçamento/ritmo** (padding de seção, gaps) **+ border-radius padrão** → viram tokens do DS
-- [ ] **Ícones**: empacotar o conjunto do lucide usado pela família, para os
-      componentes importarem/injetarem (sem cada site depender do lucide direto)
-- [ ] **MediaCard** (vídeo/imagem atrás + badge de ícone + título + lead + seta;
-      variante **carrossel horizontal no mobile** com barra de progresso + pause) — aprovado
-- [ ] **TestimonialCard** (depoimento) — aprovado. Variantes: **citação** (card de texto),
-      **vídeo hero** (full-bleed com citação sobreposta), **vídeo ao lado** ("Famílias contam": vídeo + texto).
-      Avaliar um **mix** das duas. **Já existe no ttcab** (TestimonialVideoHero/Card) → extrair/generalizar.
-- [ ] **VideoStoryCard** (vídeo curto, vertical) — aprovado. Play + badge de duração +
-      título + lead + **"Ler a transcrição"** (colapso, reusa o Accordion). Padrão da página de Vídeos.
-      _Nota: o card ainda pode melhorar num update futuro (ok deixar pra depois)._
-- [ ] **ProfessionalCard** (equipe) — aprovado. Duas versões: **small** (foto + nome, fila/linha)
-      e **big** (foto + nome + função + CREFITO + accordions "Trajetória"/"Orientações").
-      Variante com **vídeo**: badge "Apresentação", hover anima o vídeo, e **modal** (vídeo + bio).
-      **Regra de dado:** todo profissional PRECISA ter **CREFITO** vinculado (exigência COFFITO).
-- [x] **PillList** (chips tipo "Condições que atendemos": rótulo + seta, grade que quebra, link "Ver todos")
-- [x] **AnchorNav** (cápsula flutuante de âncoras, scroll-spy + indicador deslizante) — extraída do ttcab (29/10)
-- [x] **Footer** · **PageVideoHero** (loop e player) · **Header** (dropdown, casa) · **BottomNav** · **Curtain** · **Lockup** (5 arranjos) · **BreatheMark**
-- [x] **Marcas dos sites** (`components/marks/`): símbolo + wordmark reais do TTCAB e do Creeta (29/10)
-- [ ] **ThreadRail** (grafismo lateral — fio que desce pela esquerda ligando seções) — aprovado,
-      **já existe no ttcab** → extrair.
-- [ ] **OrganicFrame** (recorte de imagem orgânico, tipo blob) — registrado como **OPÇÃO**
-      (não default pra todos os sites). **Já existe no ttcab** → extrair como variante opcional.
-- [x] Primitivos: Button (com variant link), Container, SectionKicker, Card
-- [ ] Migrar ttcab e creeta para consumir o pacote + `npm publish`
+- [x] v0.1 — tokens (preset + ttcab/creeta palettes) + preview
+- [x] Accordion (1st component; injectable-deps pattern)
+- [x] Family typography (Quicksand + Figtree, free fonts only)
+- [ ] **novo.creeta scales** (full reference, approved): **typography** (sizes/weights/line-height)
+      **+ spacing/rhythm** (section padding, gaps) **+ default border-radius** → become DS tokens
+- [ ] **Icons**: package the lucide set used by the family, so components can
+      import/inject it (without each site depending on lucide directly)
+- [ ] **MediaCard** (video/image behind + icon badge + title + lead + arrow;
+      **horizontal carousel on mobile** variant with progress bar + pause) — approved
+- [ ] **TestimonialCard** — approved. Variants: **quote** (text card),
+      **video hero** (full-bleed with overlaid quote), **video beside** ("Famílias contam": video + text).
+      Consider a **mix** of the two. **Already exists in ttcab** (TestimonialVideoHero/Card) → extract/generalize.
+- [ ] **VideoStoryCard** (short vertical video) — approved. Play + duration badge +
+      title + lead + **"Read the transcript"** (collapsible, reuses the Accordion). Pattern of the Videos page.
+      _Note: the card can still improve in a future update (fine to leave for later)._
+- [ ] **ProfessionalCard** (team) — approved. Two versions: **small** (photo + name, in a row)
+      and **big** (photo + name + role + CREFITO + "Trajetória"/"Orientações" accordions).
+      **Video** variant: "Apresentação" badge, hover plays the video, and a **modal** (video + bio).
+      **Data rule:** every professional MUST have a **CREFITO** attached (COFFITO requirement).
+- [x] **PillList** (chips like "Condições que atendemos": label + arrow, wrapping grid, "View all" link)
+- [x] **AnchorNav** (floating capsule of anchors, scroll-spy + sliding indicator) — extracted from ttcab (10/29)
+- [x] **Footer** · **PageVideoHero** (loop and player) · **Header** (dropdown, house) · **BottomNav** · **Curtain** · **Lockup** (5 arrangements) · **BreatheMark**
+- [x] **Site brand marks** (`components/marks/`): real symbol + wordmark for TTCAB and Creeta (10/29)
+- [ ] **ThreadRail** (side graphic device — a thread running down the left linking sections) — approved,
+      **already exists in ttcab** → extract.
+- [ ] **OrganicFrame** (organic, blob-like image crop) — recorded as an **OPTION**
+      (not the default for every site). **Already exists in ttcab** → extract as an optional variant.
+- [x] Primitives: Button (with link variant), Container, SectionKicker, Card
+- [ ] Migrate ttcab and creeta to consume the package + `npm publish`

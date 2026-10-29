@@ -1,14 +1,14 @@
 import type { ReactNode } from "react";
 
 type Props = {
-  /** Numeral da seção (ex.: "01"). */
+  /** Section numeral (e.g. "01"). */
   num?: string;
   children: ReactNode;
 };
 
 /**
- * Sobrelinha de seção numerada (ex.: "01 — TRATAMENTO"), padrão da família.
- * Numeral em `action-text`, rótulo em `ink-soft` caixa-alta. Sem dependência.
+ * Numbered section overline (e.g. "01 — TRATAMENTO"), the family's standard.
+ * Numeral in `action-text`, uppercase label in `ink-soft`. No dependencies.
  */
 export function SectionKicker({ num, children }: Props) {
   return (

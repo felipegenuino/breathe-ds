@@ -1,23 +1,23 @@
 import type { CSSProperties } from "react";
 
 /**
- * Marca do Creeta (Centro de Reequilíbrio Toracoabdominal), copiada de
- * public/brand/creeta-simbolo.svg e creeta-tipo.svg do site. Símbolo (três
- * ondas + ponto magenta) e wordmark "creeta" separados, para a Curtain e o
- * Lockup montarem os arranjos. Não editar à mão: o desenho é o do manual.
- * As cores do símbolo são as do logotipo, não os tokens do site.
+ * Creeta brand (Centro de Reequilíbrio Toracoabdominal), copied from the site's
+ * public/brand/creeta-simbolo.svg and creeta-tipo.svg. Symbol (three waves +
+ * magenta dot) and "creeta" wordmark kept separate, so the Curtain and the
+ * Lockup can assemble the arrangements. Do not edit by hand: the drawing is
+ * the one from the manual. The symbol colors are the logo's, not the site tokens.
  */
 export const CREETA_COLORS = {
-  ondaMedia: "#3B9BAF",
-  arco: "#266675",
-  ondaClara: "#63CACD",
-  ponto: "#A2158A",
+  midWave: "#3B9BAF",
+  arc: "#266675",
+  lightWave: "#63CACD",
+  dot: "#A2158A",
 } as const;
 
 type SymbolProps = {
-  /** Lado em px (caixa quadrada 86 × 86). */
+  /** Side in px (square box, 86 × 86). */
   size?: number;
-  /** Cor única para todas as partes (ex.: "#fff" sobre painel escuro). Padrão: as cores da marca. */
+  /** Single color for every part (e.g. "#fff" on a dark panel). Default: the brand colors. */
   color?: string;
   className?: string;
   title?: string;
@@ -27,31 +27,31 @@ export function CreetaSymbol({ size = 48, color, className, title = "Creeta" }: 
   const c = (k: keyof typeof CREETA_COLORS) => color ?? CREETA_COLORS[k];
   return (
     <svg width={size} height={size} viewBox="0 0 86 86" fill="none" role="img" aria-label={title} className={className}>
-      <path d="M85.4746 46.2096C83.9959 65.2746 70.0266 80.8266 51.7546 84.696C51.6493 84.7214 51.544 84.7481 51.4507 84.761C48.7053 85.3293 45.8666 85.62 42.9613 85.6334H42.816C26.4706 84.973 13.4266 71.5053 13.4266 54.9892C13.4266 44.1626 19.0387 34.6309 27.5147 29.1908C30.7093 27.1309 34.3133 25.6397 38.196 24.9001C30.5106 26.8798 24.7547 33.6668 24.3453 41.8653C24.3187 42.1824 24.3186 42.4986 24.3186 42.8157C24.3186 43.1334 24.3187 43.449 24.3453 43.7668C24.8347 60.2574 38.3666 73.473 54.9893 73.473C61.1026 73.473 66.7919 71.6908 71.5719 68.6012C79.1506 63.7293 84.4319 55.6096 85.4746 46.2096Z" fill={c("ondaMedia")} />
-      <path d="M55.98 12.16V12.173C55.9667 18.8012 50.672 24.1746 44.084 24.32H43.8067C43.6747 24.32 43.5427 24.32 43.4107 24.3334H43.3587C43.1733 24.32 43.0014 24.32 42.8174 24.32C41.2854 24.32 39.7933 24.5038 38.38 24.861C38.3147 24.8746 38.2614 24.8881 38.196 24.9012C34.3147 25.6397 30.7094 27.132 27.5147 29.1918C19.0387 34.6309 13.428 44.1642 13.428 54.9892C13.428 71.5064 26.472 84.973 42.8174 85.6334C19.1707 85.6334 0 66.4626 0 42.8173C0 19.1705 19.1707 -3.8147e-05 42.8174 -3.8147e-05C43.028 -3.8147e-05 43.2387 -3.52981e-05 43.4507 0.013298C43.9 0.013298 44.3613 0.0266218 44.8107 0.0399551C51.056 0.554622 55.98 5.78262 55.98 12.16Z" fill={c("arco")} />
-      <path d="M73.4467 31.2278C70.6867 31.2278 68.152 32.1387 66.1187 33.684C63.188 35.9012 61.2867 39.4267 61.2867 43.3882V42.8335C61.2867 53.0387 53.0093 61.3174 42.8027 61.3174C32.9013 61.3174 24.8214 53.5534 24.332 43.784C24.8214 60.2747 38.3534 73.4908 54.976 73.4908C61.0894 73.4908 66.7787 71.708 71.5587 68.619C79.0947 63.7731 84.3547 55.7158 85.44 46.3824C85.4694 45.6944 85.6067 43.4491 85.6067 43.1892C85.5014 36.5611 80.1013 31.2278 73.4467 31.2278Z" fill={c("ondaClara")} />
-      <path d="M71.2799 26.5798C77.1253 26.5798 81.8626 21.8252 81.8626 15.9585C81.8626 10.0933 77.1253 5.33731 71.2799 5.33731C65.4346 5.33731 60.6973 10.0933 60.6973 15.9585C60.6973 21.8252 65.4346 26.5798 71.2799 26.5798Z" fill={c("ponto")} />
+      <path d="M85.4746 46.2096C83.9959 65.2746 70.0266 80.8266 51.7546 84.696C51.6493 84.7214 51.544 84.7481 51.4507 84.761C48.7053 85.3293 45.8666 85.62 42.9613 85.6334H42.816C26.4706 84.973 13.4266 71.5053 13.4266 54.9892C13.4266 44.1626 19.0387 34.6309 27.5147 29.1908C30.7093 27.1309 34.3133 25.6397 38.196 24.9001C30.5106 26.8798 24.7547 33.6668 24.3453 41.8653C24.3187 42.1824 24.3186 42.4986 24.3186 42.8157C24.3186 43.1334 24.3187 43.449 24.3453 43.7668C24.8347 60.2574 38.3666 73.473 54.9893 73.473C61.1026 73.473 66.7919 71.6908 71.5719 68.6012C79.1506 63.7293 84.4319 55.6096 85.4746 46.2096Z" fill={c("midWave")} />
+      <path d="M55.98 12.16V12.173C55.9667 18.8012 50.672 24.1746 44.084 24.32H43.8067C43.6747 24.32 43.5427 24.32 43.4107 24.3334H43.3587C43.1733 24.32 43.0014 24.32 42.8174 24.32C41.2854 24.32 39.7933 24.5038 38.38 24.861C38.3147 24.8746 38.2614 24.8881 38.196 24.9012C34.3147 25.6397 30.7094 27.132 27.5147 29.1918C19.0387 34.6309 13.428 44.1642 13.428 54.9892C13.428 71.5064 26.472 84.973 42.8174 85.6334C19.1707 85.6334 0 66.4626 0 42.8173C0 19.1705 19.1707 -3.8147e-05 42.8174 -3.8147e-05C43.028 -3.8147e-05 43.2387 -3.52981e-05 43.4507 0.013298C43.9 0.013298 44.3613 0.0266218 44.8107 0.0399551C51.056 0.554622 55.98 5.78262 55.98 12.16Z" fill={c("arc")} />
+      <path d="M73.4467 31.2278C70.6867 31.2278 68.152 32.1387 66.1187 33.684C63.188 35.9012 61.2867 39.4267 61.2867 43.3882V42.8335C61.2867 53.0387 53.0093 61.3174 42.8027 61.3174C32.9013 61.3174 24.8214 53.5534 24.332 43.784C24.8214 60.2747 38.3534 73.4908 54.976 73.4908C61.0894 73.4908 66.7787 71.708 71.5587 68.619C79.0947 63.7731 84.3547 55.7158 85.44 46.3824C85.4694 45.6944 85.6067 43.4491 85.6067 43.1892C85.5014 36.5611 80.1013 31.2278 73.4467 31.2278Z" fill={c("lightWave")} />
+      <path d="M71.2799 26.5798C77.1253 26.5798 81.8626 21.8252 81.8626 15.9585C81.8626 10.0933 77.1253 5.33731 71.2799 5.33731C65.4346 5.33731 60.6973 10.0933 60.6973 15.9585C60.6973 21.8252 65.4346 26.5798 71.2799 26.5798Z" fill={c("dot")} />
     </svg>
   );
 }
 
 type WordmarkProps = {
-  /** Altura. Padrão `var(--cg-wordmark, 1em)`: dentro do Lockup/Curtain a
-   *  variável vem da razão do manual (`wordmarkPerSymbol`); solto, 1em. */
+  /** Height. Default `var(--cg-wordmark, 1em)`: inside the Lockup/Curtain the
+   *  variable comes from the manual's ratio (`wordmarkPerSymbol`); standalone, 1em. */
   height?: string;
-  /** Padrão `currentColor`: herda `ink` (ou branco sobre painel). */
+  /** Default `currentColor`: inherits `ink` (or white on a panel). */
   color?: string;
   className?: string;
   style?: CSSProperties;
   title?: string;
 };
 
-/** Razão do manual: altura do wordmark ÷ altura do símbolo no logotipo
- *  horizontal (40.3 / 86 (nome a 1.4643× no logotipo horizontal)). Passe como `wordmarkRatio` ao Lockup/Curtain. */
-/** No creeta o símbolo fica à esquerda do nome (padrão da família). */
+/** Ratio from the manual: wordmark height ÷ symbol height in the horizontal
+ *  logo (40.3 / 86, with the name at 1.4643× in the horizontal logo). Pass it as `wordmarkRatio` to the Lockup/Curtain. */
+/** In creeta the symbol sits to the left of the name (the family default). */
 export const CREETA_LOCKUP = { wordmarkPerSymbol: 0.469, symbolSide: "left" } as const;
 
-/** Caixa justa ao desenho das letras: 116.66 × 27.53. */
+/** Box tight to the letterforms: 116.66 × 27.53. */
 export function CreetaWordmark({ height = "var(--cg-wordmark, 1em)", color = "currentColor", className, style, title = "creeta" }: WordmarkProps) {
   return (
     <svg

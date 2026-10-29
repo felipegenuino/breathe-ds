@@ -10,20 +10,21 @@ export type AccordionItem = {
 
 type Props = {
   items: AccordionItem[];
-  /** id aberto inicialmente (padrão: o primeiro). null = todos fechados. */
+  /** id open initially (default: the first). null = all closed. */
   defaultOpenId?: string | null;
-  /** true (padrão): só um aberto por vez, como no creeta. */
+  /** true (default): only one open at a time, as on creeta. */
   single?: boolean;
 };
 
 /**
- * Accordion / collapse da família Cuidado Global. Cartões em `surface` com
- * borda `line`, título `ink` e chevron que gira ao abrir. Sem dependência de
- * app: o ícone é um SVG inline. Anima a altura pelo truque grid-rows (0fr→1fr),
- * sem medir nada em JS, e respeita prefers-reduced-motion.
+ * Accordion / collapse of the Cuidado Global family. Cards in `surface` with
+ * `line` border, `ink` title and a chevron that rotates on open. No app
+ * dependency: the icon is an inline SVG. Animates height with the grid-rows
+ * trick (0fr→1fr), without measuring anything in JS, and respects
+ * prefers-reduced-motion.
  *
- * Cores: texto `ink` sobre `surface` (contraste do papel definido pelo site).
- * Consome os tokens via classes do Tailwind (surface/ink/line) — ver theme.css.
+ * Colors: `ink` text on `surface` (contrast of the role defined by the site).
+ * Consumes the tokens via Tailwind classes (surface/ink/line) — see theme.css.
  */
 export function Accordion({ items, defaultOpenId, single = true }: Props) {
   const initial =
@@ -78,12 +79,12 @@ export function Accordion({ items, defaultOpenId, single = true }: Props) {
                 </svg>
               </button>
             </h3>
-            {/* grid-rows 0fr→1fr: anima a altura sem medir em JS */}
+            {/* grid-rows 0fr→1fr: animates height without measuring in JS */}
             <div
               id={panelId}
               role="region"
               aria-labelledby={btnId}
-              // React 18 não conhece `inert` como booleano: string vazia liga, undefined desliga (no 19 o booleano funciona igual).
+              // React 18 does not know `inert` as a boolean: empty string turns it on, undefined turns it off (in 19 the boolean works the same way).
               {...({ inert: isOpen ? undefined : "" } as Record<string, unknown>)}
               className={`grid transition-[grid-template-rows] duration-300 ease-[cubic-bezier(.2,.8,.2,1)] motion-reduce:transition-none ${
                 isOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]"

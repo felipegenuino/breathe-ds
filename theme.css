@@ -1,40 +1,40 @@
 /*
   @breathe-ds/ui — theme.css  (tokens-first, v0.1)
 
-  Contrato de tokens da família Cuidado Global (ecossistema RTA/Mariangela).
-  As CORES são PAPÉIS: o valor de cada uma vem de uma CSS var `--cg-*` que
-  CADA SITE define (ttcab petróleo/creme, creeta petróleo/névoa/magenta…).
-  Assim os sites herdam a MESMA estrutura e nomes, com a própria paleta.
+  Token contract of the Cuidado Global family (RTA/Mariangela ecosystem).
+  COLORS are ROLES: the value of each one comes from a `--cg-*` CSS var that
+  EACH SITE defines (ttcab petrol/cream, creeta petrol/mist/magenta…).
+  This way the sites inherit the SAME structure and names, with their own palette.
 
-  Uso no globals.css de um site (Tailwind v4):
+  Usage in a site's globals.css (Tailwind v4):
     @import "tailwindcss";
     @import "@breathe-ds/ui/theme.css";
-    @import "@breathe-ds/ui/tokens/ttcab.css";   (ou defina os --cg-* inline)
+    @import "@breathe-ds/ui/tokens/ttcab.css";   (or define the --cg-* inline)
 
-  Escalas fixas (tipografia-papel, raio, motion) são compartilhadas aqui.
-  Contrastes medidos de cada paleta: ver README.md e os arquivos tokens/*.
+  Fixed scales (typography roles, radius, motion) are shared here.
+  Measured contrasts of each palette: see README.md and the tokens/* files.
 */
 @theme {
-  /* ── Cores (papéis) — valor vem dos --cg-* do site ── */
-  --color-surface: var(--cg-surface);              /* fundo base */
-  --color-surface-panel: var(--cg-surface-panel);  /* painel escuro (footer/CTA) */
-  --color-ink: var(--cg-ink);                      /* texto principal / títulos */
-  --color-ink-soft: var(--cg-ink-soft);            /* texto secundário */
-  --color-ink-body: var(--cg-ink-body);            /* corpo de leitura */
-  --color-action: var(--cg-action);                /* CTA/destaque — nunca texto puro */
-  --color-action-text: var(--cg-action-text);      /* texto na cor de ação (AA) */
-  --color-on-action: var(--cg-on-action);          /* texto SOBRE a cor de ação (botão) */
-  --color-line: var(--cg-line);                    /* hairlines/bordas */
+  /* ── Colors (roles) — value comes from the site's --cg-* ── */
+  --color-surface: var(--cg-surface);              /* base background */
+  --color-surface-panel: var(--cg-surface-panel);  /* dark panel (footer/CTA) */
+  --color-ink: var(--cg-ink);                      /* primary text / headings */
+  --color-ink-soft: var(--cg-ink-soft);            /* secondary text */
+  --color-ink-body: var(--cg-ink-body);            /* body copy */
+  --color-action: var(--cg-action);                /* CTA/highlight — never plain text */
+  --color-action-text: var(--cg-action-text);      /* text in the action color (AA) */
+  --color-on-action: var(--cg-on-action);          /* text ON the action color (button) */
+  --color-line: var(--cg-line);                    /* hairlines/borders */
 
-  /* ── Tipografia (papéis; família real vem dos --cg-font-*) ── */
+  /* ── Typography (roles; actual family comes from --cg-font-*) ── */
   --font-heading: var(--cg-font-heading, system-ui, sans-serif);
   --font-body: var(--cg-font-body, Arial, system-ui, sans-serif);
 
-  /* ── Raio ── */
+  /* ── Radius ── */
   --radius-xl: 24px;
   --radius-2xl: 28px;
   --radius-pill: 9999px;
 
-  /* ── Motion — curva assinatura da família ── */
+  /* ── Motion — the family's signature curve ── */
   --ease-cg: cubic-bezier(0.2, 0.8, 0.2, 1);
 }

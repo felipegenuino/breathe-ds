@@ -5,30 +5,42 @@ import { Container } from "./Container";
 
 export type AnchorItem = { id: string; label: string };
 
+type Labels = {
+  /** aria-label of the anchor nav */
+  nav: string;
+};
+
+const EN: Labels = {
+  nav: "On this page",
+};
+
 type Props = {
   items: AnchorItem[];
-  /** Classe de deslocamento do sticky (altura do header). Padrão `top-20` (header de 80px). */
+  /** Sticky offset class (header height). Default `top-20` (80px header). */
   stickyTop?: string;
-  /** Componente de link do app (ex.: next-intl Link). Default: <a>. */
+  /** The app's link component (e.g. next-intl Link). Default: <a>. */
   linkComponent?: ElementType;
   className?: string;
+  /** Strings (English defaults); the app passes the ones for its locale. */
+  labels?: Partial<Labels>;
 };
 
 /**
- * Navegação contextual de âncoras — cápsula flutuante que acompanha a rolagem
- * (extraída do TreatmentAnchorNav do ttcab). Dois comportamentos:
- *  1. Scroll-spy: um IntersectionObserver marca como ativa a seção que cruza a
- *     faixa ~35% do topo; o pill correspondente acende.
- *  2. Indicador deslizante: um <span> absoluto mede o pill ativo (offsetLeft/
- *     Width, imune ao scroll horizontal da cápsula) e desliza até ele na curva
- *     da família. Em tela estreita a cápsula rola e centraliza o ativo.
- * Sinal do ativo = o indicador (preenchimento ink/12 + contorno), NÃO cor do
- * texto: o texto fica sempre `ink` sobre `surface`, sem frame de contraste
- * fraco. prefers-reduced-motion corta o deslize. As seções-alvo precisam de
- * `scroll-mt-*` compatível com o sticky (ex.: `scroll-mt-40`).
+ * Contextual anchor navigation — floating capsule that follows the scroll
+ * (extracted from ttcab's TreatmentAnchorNav). Two behaviors:
+ *  1. Scroll-spy: an IntersectionObserver marks as active the section that
+ *     crosses the band at ~35% from the top; the matching pill lights up.
+ *  2. Sliding indicator: an absolute <span> measures the active pill (offsetLeft/
+ *     Width, immune to the capsule's horizontal scroll) and slides to it on the
+ *     family's curve. On narrow screens the capsule scrolls and centers the active one.
+ * The active signal = the indicator (ink/12 fill + outline), NOT text color:
+ * the text is always `ink` on `surface`, with no low-contrast frame.
+ * prefers-reduced-motion removes the slide. Target sections need a
+ * `scroll-mt-*` compatible with the sticky offset (e.g. `scroll-mt-40`).
  */
-export function AnchorNav({ items, stickyTop = "top-20", linkComponent, className = "" }: Props) {
+export function AnchorNav({ items, stickyTop = "top-20", linkComponent, className = "", labels }: Props) {
   const L: ElementType = linkComponent ?? "a";
+  const t = { ...EN, ...labels };
   const [active, setActive] = useState(items[0]?.id ?? "");
   const listRef = useRef<HTMLUListElement>(null);
   const linkRefs = useRef<Record<string, HTMLAnchorElement | null>>({});
@@ -53,9 +65,9 @@ export function AnchorNav({ items, stickyTop = "top-20", linkComponent, classNam
     return () => io.disconnect();
   }, [items]);
 
-  // Chegada com #hash por navegação client-side: rola até a âncora (no full
-  // load o browser já faz; aqui é idempotente). Reaplica algumas vezes para
-  // vencer o reset tardio de scroll do roteador.
+  // Arriving with a #hash via client-side navigation: scrolls to the anchor (on
+  // a full load the browser already does it; here it's idempotent). Reapplies a
+  // few times to beat the router's late scroll reset.
   useEffect(() => {
     const hash = window.location.hash.slice(1);
     if (!hash || !items.some((it) => it.id === hash)) return;
@@ -76,7 +88,7 @@ export function AnchorNav({ items, stickyTop = "top-20", linkComponent, classNam
     setPill({ x: el.offsetLeft, y: el.offsetTop, w: el.offsetWidth, h: el.offsetHeight, ready: true });
   };
 
-  // Mede o pill ativo + revela na cápsula em telas estreitas
+  // Measures the active pill + reveals it in the capsule on narrow screens
   useLayoutEffect(() => {
     measure();
     const el = linkRefs.current[active];
@@ -88,7 +100,7 @@ export function AnchorNav({ items, stickyTop = "top-20", linkComponent, classNam
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [active]);
 
-  // Recalcula em resize (quebras/fontes mudam a largura)
+  // Recalculates on resize (line breaks/fonts change the width)
   useEffect(() => {
     window.addEventListener("resize", measure);
     return () => window.removeEventListener("resize", measure);
@@ -96,14 +108,14 @@ export function AnchorNav({ items, stickyTop = "top-20", linkComponent, classNam
   }, [active]);
 
   return (
-    <nav aria-label="Nesta página" className={`sticky ${stickyTop} z-30 py-3 ${className}`}>
+    <nav aria-label={t.nav} className={`sticky ${stickyTop} z-30 py-3 ${className}`}>
       <Container>
         <div className="flex justify-center">
           <ul
             ref={listRef}
             className="relative flex max-w-full list-none gap-1 overflow-x-auto rounded-pill border border-line bg-surface/95 p-1.5 shadow-[0_10px_28px_-14px_rgba(0,0,0,0.35)] backdrop-blur [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
           >
-            {/* Indicador deslizante */}
+            {/* Sliding indicator */}
             <span
               aria-hidden="true"
               className="pointer-events-none absolute top-0 left-0 rounded-pill bg-ink/[0.12] shadow-[inset_0_0_0_1px_var(--color-line)] transition-[transform,width,height,opacity] duration-[320ms] ease-cg motion-reduce:transition-none"

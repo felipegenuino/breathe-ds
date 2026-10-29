@@ -2,75 +2,75 @@
 
 import { useEffect, useId, useRef, useState, type ComponentType, type ElementType, type ReactNode } from "react";
 
-/** Ícone no padrão lucide (o componente, não o nó): a barra decide o tamanho. */
+/** Icon in the lucide pattern (the component, not the node): the bar decides the size. */
 export type IconType = ComponentType<{ size?: number; strokeWidth?: number; className?: string; "aria-hidden"?: boolean | "true" }>;
 
-/** Uma página do site, em ordem de importância. As primeiras ficam na barra;
- *  as que não couberem vão para o "Mais". */
+/** One page of the site, in order of importance. The first ones stay on the bar;
+ *  those that don't fit go into "More". */
 export type BottomPage = {
   href: string;
   label: ReactNode;
   Icon: IconType;
-  /** A página atual é esta? (o app decide: rota/idioma são dele) */
+  /** Is this the current page? (the app decides: route/locale are its own) */
   active?: boolean;
 };
 
-/** Saída extra do painel "Mais" (ex.: cursos em outro site): endereço escrito
- *  embaixo e seta para fora, como no novo.creeta. */
+/** Extra exit in the "More" panel (e.g. courses on another site): address written
+ *  underneath and an outward arrow, as on novo.creeta. */
 export type BottomExtra = {
   href: string;
   label: ReactNode;
   Icon: IconType;
-  /** Linha menor sob o rótulo (ex.: o domínio). Com `external` e sem isto, mostra o domínio do href. */
+  /** Smaller line under the label (e.g. the domain). With `external` and without this, shows the href's domain. */
   description?: ReactNode;
   external?: boolean;
   active?: boolean;
 };
 
 type Labels = {
-  /** aria-label da barra */
+  /** aria-label of the bar */
   nav: string;
-  /** rótulo da aba "Mais" */
+  /** label of the "More" tab */
   more: string;
-  /** aria-label do painel */
+  /** aria-label of the panel */
   morePages: string;
-  /** sr-only depois de "Mais": "mais páginas" */
+  /** sr-only after "More": "more pages" */
   morePagesSr: string;
-  /** sr-only quando a página atual está no "Mais" */
+  /** sr-only when the current page is inside "More" */
   currentHere: string;
-  /** sr-only em link externo */
+  /** sr-only on an external link */
   newTab: string;
 };
 
-const PT: Labels = {
-  nav: "Navegação principal",
-  more: "Mais",
-  morePages: "Mais páginas",
-  morePagesSr: "mais páginas",
-  currentHere: "(a página atual está aqui)",
-  newTab: "(abre em outra aba)",
+const EN: Labels = {
+  nav: "Main navigation",
+  more: "More",
+  morePages: "More pages",
+  morePagesSr: "more pages",
+  currentHere: "(the current page is here)",
+  newTab: "(opens in a new tab)",
 };
 
 type Props = {
   pages: BottomPage[];
   extras?: BottomExtra[];
-  /** Componente de link do app (ex.: next-intl Link). Default: <a>. */
+  /** The app's link component (e.g. next-intl Link). Default: <a>. */
   linkComponent?: ElementType;
-  /** A partir de que largura o header assume e a barra some. creeta: `md`; ttcab: `lg`. */
+  /** From which width the header takes over and the bar disappears. creeta: `md`; ttcab: `lg`. */
   hideFrom?: "md" | "lg";
-  /** Textos (padrão pt-BR); o app passa os do idioma. */
+  /** Strings (English defaults); the app passes the ones for its locale. */
   labels?: Partial<Labels>;
-  /** Embutida num contêiner `relative` (demo, moldura de celular): barra, véu e
-   *  painel ficam `absolute` dentro dele e aparecem em qualquer largura. */
+  /** Embedded in a `relative` container (demo, phone frame): bar, veil and
+   *  panel are `absolute` inside it and show at any width. */
   embedded?: boolean;
 };
 
-/** Largura mínima de uma aba, em px: abaixo disso o rótulo não cabe. */
+/** Minimum width of a tab, in px: below this the label doesn't fit. */
 export const TAB_MIN_WIDTH = 64;
 
-/** Quantas páginas aparecem direto na barra, para uma largura útil. A última
- *  aba é sempre o "Mais" (é nele que ficam as páginas que não couberam e as
- *  saídas extras), então cabe uma página a menos que o número de abas. */
+/** How many pages show directly on the bar, for a given usable width. The last
+ *  tab is always "More" (that's where the pages that didn't fit and the extra
+ *  exits live), so one page fewer than the number of tabs fits. */
 export function howManyFit(width: number, total: number): number {
   const tabs = Math.floor(width / TAB_MIN_WIDTH);
   return Math.max(2, Math.min(total, tabs - 1));
@@ -83,9 +83,9 @@ const ArrowUpRight = () => (
   <svg aria-hidden="true" viewBox="0 0 24 24" className="h-[18px] w-[18px] shrink-0" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M7 17 17 7M9 7h8v8" /></svg>
 );
 
-// Aba: coluna ícone+rótulo. Ativa ganha FORMA (pílula clara), não só cor —
-// legível pra quem não distingue cor. Encolhe no toque, como botão de app.
-// O nome de transição faz o destaque deslizar entre as abas na troca de página.
+// Tab: icon+label column. The active one gets a SHAPE (light pill), not just color —
+// readable for people who can't tell colors apart. Shrinks on touch, like an app button.
+// The view-transition name makes the highlight slide between tabs on page change.
 const tab = (active: boolean) =>
   [
     "flex h-14 w-full flex-col items-center justify-center gap-1 rounded-[20px] px-1 text-[10.5px] font-medium leading-none tracking-tight",
@@ -101,29 +101,29 @@ const row = (active?: boolean) =>
 const bubble = "flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-ink/[0.12] text-ink";
 
 /**
- * Navegação principal no celular: barra flutuante ao alcance do polegar, como
- * em app. É o código da BarraNavegacao do novo.creeta (e do BottomNav do
- * ttcab), neutro por tokens: `ink` na barra, `surface` na aba ativa.
+ * Main navigation on mobile: floating bar within thumb reach, app-like. It is
+ * the code of novo.creeta's BarraNavegacao (and ttcab's BottomNav), made
+ * neutral through tokens: `ink` on the bar, `surface` on the active tab.
  *
- * - Dinâmica: mostra quantas páginas couberem na largura (ResizeObserver,
- *   64px por aba). A última aba é sempre o "Mais", com o resto e as saídas
- *   extras. Num celular comum são quatro páginas e o "Mais".
- * - Véu atrás da barra: o conteúdo some aos poucos antes de chegar nela.
- * - O painel "Mais" é um popover nativo: fecha com Esc e com toque fora,
- *   devolve o foco ao botão e abre mesmo sem JavaScript. Embutido (demo),
- *   vira um painel absoluto dentro da moldura, com a mesma entrada.
- * - Some a partir de `hideFrom` (md no creeta, lg no ttcab), onde o header assume.
+ * - Dynamic: shows as many pages as fit the width (ResizeObserver, 64px per
+ *   tab). The last tab is always "More", holding the rest and the extra
+ *   exits. On a typical phone that's four pages plus "More".
+ * - Veil behind the bar: content fades out gradually before reaching it.
+ * - The "More" panel is a native popover: closes on Esc and on tap outside,
+ *   returns focus to the button and opens even without JavaScript. Embedded
+ *   (demo), it becomes an absolute panel inside the frame, with the same entrance.
+ * - Hidden from `hideFrom` up (md on creeta, lg on ttcab), where the header takes over.
  */
 export function BottomNav({ pages, extras = [], linkComponent, hideFrom = "lg", labels, embedded = false }: Props) {
   const L: ElementType = linkComponent ?? "a";
-  const t = { ...PT, ...labels };
+  const t = { ...EN, ...labels };
   const list = useRef<HTMLUListElement>(null);
   const panel = useRef<HTMLDivElement>(null);
   const wrap = useRef<HTMLDivElement>(null);
   const panelId = useId();
-  // antes de medir: o caso do celular comum (5 abas = 4 páginas + Mais)
+  // before measuring: the typical phone case (5 tabs = 4 pages + More)
   const [visible, setVisible] = useState(() => howManyFit(5 * TAB_MIN_WIDTH, pages.length));
-  const [open, setOpen] = useState(false); // só no modo embutido
+  const [open, setOpen] = useState(false); // embedded mode only
 
   useEffect(() => {
     const ul = list.current;
@@ -145,15 +145,15 @@ export function BottomNav({ pages, extras = [], linkComponent, hideFrom = "lg", 
     try {
       if (el?.matches(":popover-open")) el.hidePopover?.();
     } catch {
-      /* navegador sem popover: não há o que fechar */
+      /* browser without popover support: nothing to close */
     }
   };
 
-  // Trocou de página: o painel fecha.
+  // Page changed: the panel closes.
   const activeHref = pages.find((p) => p.active)?.href;
   useEffect(close, [activeHref]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  // Embutido: fecha com Esc e com toque fora (o popover nativo faz isso sozinho).
+  // Embedded: closes on Esc and on tap outside (the native popover does this by itself).
   useEffect(() => {
     if (!embedded || !open) return;
     const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
@@ -173,12 +173,12 @@ export function BottomNav({ pages, extras = [], linkComponent, hideFrom = "lg", 
   const inMore = pages.slice(visible);
   const moreActive = inMore.some((p) => p.active) || extras.some((x) => x.active);
   const pos = embedded ? "absolute" : "fixed";
-  // classes por inteiro (o Tailwind só gera o que acha escrito no código)
+  // full class names (Tailwind only generates what it finds written in the code)
   const hide = embedded ? "" : hideFrom === "md" ? " md:hidden" : " lg:hidden";
 
   const panelInner = (
     <nav aria-label={t.morePages}>
-      {/* Um item por linha: em duas colunas o painel ficava confuso. */}
+      {/* One item per row: in two columns the panel got confusing. */}
       {inMore.length > 0 && (
         <ul className="grid list-none gap-1">
           {inMore.map(({ href, label, Icon, active }, i) => (
@@ -224,8 +224,8 @@ export function BottomNav({ pages, extras = [], linkComponent, hideFrom = "lg", 
   return (
     <div ref={wrap} className={embedded ? "contents" : undefined}>
       <style>{CSS}</style>
-      {/* Véu atrás da barra: o conteúdo que rola some aos poucos antes de
-          chegar nela, em vez de aparecer cortado pelas bordas. */}
+      {/* Veil behind the bar: scrolling content fades out gradually before
+          reaching it, instead of showing up clipped by the edges. */}
       <div
         aria-hidden="true"
         className={`pointer-events-none ${pos} inset-x-0 bottom-0 z-40 h-28 bg-gradient-to-t from-surface from-35% via-surface/85 via-65% to-transparent [view-transition-name:veu]${hide}`}
@@ -247,7 +247,7 @@ export function BottomNav({ pages, extras = [], linkComponent, hideFrom = "lg", 
             </li>
           ))}
           <li className="min-w-0 flex-1">
-            {/* popovertarget em minúsculas: o React 18 não conhece o atributo e o repassa como está. */}
+            {/* popovertarget in lowercase: React 18 doesn't know the attribute and passes it through as is. */}
             <button
               type="button"
               {...(embedded ? { "aria-expanded": open, "aria-controls": panelId, onClick: () => setOpen((o) => !o) } : { popovertarget: panelId })}
@@ -276,8 +276,8 @@ export function BottomNav({ pages, extras = [], linkComponent, hideFrom = "lg", 
   );
 }
 
-/* Painel "Mais": logo acima da barra; entra crescendo a partir do canto do
-   botão "Mais", em 0,18s (igual ao .mais-painel do novo.creeta). */
+/* "More" panel: right above the bar; enters growing from the corner of the
+   "More" button, in 0.18s (same as novo.creeta's .mais-painel). */
 const CSS = `
 .cg-more-panel{
   position:fixed; inset:auto .75rem calc(5.75rem + env(safe-area-inset-bottom)) .75rem;
@@ -295,7 +295,7 @@ const CSS = `
   .cg-more-panel{ transform:none; transition:opacity 120ms ease; }
   @starting-style{ .cg-more-panel:popover-open, .cg-more-panel--embedded{ transform:none; } }
 }
-/* A partir do breakpoint a barra não existe: o painel também não. */
+/* From the breakpoint up the bar doesn't exist: neither does the panel. */
 @media (min-width:768px){ .cg-more-panel--md{ display:none !important; } }
 @media (min-width:1024px){ .cg-more-panel--lg{ display:none !important; } }
 `;
