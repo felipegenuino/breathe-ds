@@ -51,9 +51,10 @@ const EN: Labels = {
 };
 
 export type VideoInviteCardProps = {
-  /** Who appears: ink text without background, top-left, in both phases. */
-  name: ReactNode;
-  role?: ReactNode;
+  /** Overlay title, top-left, in both phases (on the site: who appears). Ink text, no background. */
+  title: ReactNode;
+  /** Second line under the title (on the site: the person's role). */
+  description?: ReactNode;
   /** Idle phase: muted looping clip. */
   loop: InviteLoop;
   /** Tap phase: the full video with sound, browser controls and captions. */
@@ -77,7 +78,7 @@ function PlayGlyph({ size = 22 }: { size?: number }) {
  *
  * Idle, it is a background video: the speaker on a muted loop (BackgroundVideo:
  * respects reduced motion and data saver, has the pause button top-right —
- * WCAG 2.2.2). Over it, the name and role top-left and a play button
+ * WCAG 2.2.2). Over it, the title and description top-left and a play button
  * bottom-right, outside the face. On tap, the second video takes over, with
  * sound: the invitation itself, with captions and the browser's controls.
  * Because play is a click by the person, the browser allows the audio. When
@@ -87,7 +88,7 @@ function PlayGlyph({ size = 22 }: { size?: number }) {
  * (`rounded-2xl` in the DS scale); the consumer sets aspect/min-height via
  * `className`.
  */
-export function VideoInviteCard({ name, role, loop, video, onPlay, onEnded, labels, className = "" }: VideoInviteCardProps) {
+export function VideoInviteCard({ title, description, loop, video, onPlay, onEnded, labels, className = "" }: VideoInviteCardProps) {
   const [inviting, setInviting] = useState(false);
   const t = { ...EN, ...labels };
 
@@ -97,8 +98,8 @@ export function VideoInviteCard({ name, role, loop, video, onPlay, onEnded, labe
      holds it on the darker frames. */
   const caption = (
     <p className="inline-block text-sm font-medium leading-snug text-ink [text-shadow:0_1px_2px_rgba(255,255,255,0.5)]">
-      <span className="block">{name}</span>
-      {role && <span className="block font-normal">{role}</span>}
+      <span className="block">{title}</span>
+      {description && <span className="block font-normal">{description}</span>}
     </p>
   );
 
