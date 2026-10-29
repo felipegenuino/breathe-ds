@@ -14,6 +14,7 @@ import { StoryPanel } from "../../components/StoryPanel";
 import { PostCard } from "../../components/PostCard";
 import { FeaturedPosts } from "../../components/FeaturedPosts";
 import { PostArticle } from "../../components/PostArticle";
+import { CourseCard } from "../../components/CourseCard";
 import { BackgroundVideo } from "../../components/BackgroundVideo";
 import { ChatPreview } from "../../components/ChatPreview";
 import { PlanTimeline } from "../../components/PlanTimeline";
@@ -352,6 +353,7 @@ const PAGE_NAV = [
   { id: "care", label: "CareSteps", Icon: IconActivity },
   { id: "story", label: "StoryPanel", Icon: IconBook },
   { id: "blog", label: "Blog", Icon: IconBook },
+  { id: "course", label: "CourseCard", Icon: IconGraduationCap },
   { id: "cta", label: "CtaCard", Icon: IconMessage },
   { id: "footer", label: "Footer", Icon: IconMessage },
 ] as const;
@@ -362,7 +364,7 @@ const FOOTER_GROUPS = (
     ["Foundations", ["symbol", "tokens", "type", "lockup", "icons"]],
     ["Navigation", ["header", "mobile", "anchornav", "breadcrumb", "footer"]],
     ["Content", ["buttons", "action", "accordion", "list", "rows", "timeline", "pills"]],
-    ["Cards & media", ["people", "cards", "videos", "map", "hero", "care", "story", "blog", "cta"]],
+    ["Cards & media", ["people", "cards", "videos", "map", "hero", "care", "story", "blog", "course", "cta"]],
   ] as const
 ).map(([title, ids]) => ({
   title,
@@ -447,6 +449,7 @@ export function App() {
             { label: "CareSteps (ChatPreview, PlanTimeline, PhotoSequence)", href: "#care", icon: IcPulse },
             { label: "StoryPanel (pillars on the dark panel)", href: "#story", icon: IcBook },
             { label: "Blog (PostCard, FeaturedPosts, PostArticle)", href: "#blog", icon: IcBook },
+            { label: "CourseCard (class card)", href: "#course", icon: IcCap },
             { label: "CtaCard (final call)", href: "#cta", icon: IcChat },
             { label: "Footer", href: "#footer", icon: IcPin },
           ], seeAll: { label: "Mobile · BottomNav", href: "#mobile" } },
@@ -1141,6 +1144,36 @@ export function App() {
           aside={<VideoStoryCard title="Card title" speaker="Speaker name" src="/demo/person-vertical.mp4" poster="/demo/person-poster-vertical.jpg" duration={10} />}
           transcript={{ title: "Video transcript", paragraphs: ["Hello, my name is the speaker and this is the first paragraph of what is said in the video, in full, so whoever prefers to read does not need to listen.", "The second paragraph of the speech, and the invitation at the end."] }}
         />
+      </Section>
+
+      <Section id="course" title="CourseCard — the class card">
+        <p className="mb-6 max-w-[62ch] text-ink-body">The class card of ttcab's "Formação" section, by tokens and by the action-colour dose: the year is the one large element in the action family (action-text), the rows sit on neutral hairlines, the footnote carries a dot in the action colour and the Button accent is the only full-colour element (white on it, one per card). The card reads by tone: no border, no shadow, no lift. Switch to TTCAB to see the vivid orange.</p>
+        <div className="grid gap-6 lg:grid-cols-2">
+          <CourseCard
+            year="2026"
+            title="City · ST"
+            note="Limited seats"
+            rows={[
+              { label: "When", lines: ["3 to 9 November 2026 · 08:30–17:30", "+ 10 November 2026 · 08:30–13:00"] },
+              { label: "Where", lines: ["Venue name", "Street name, 1000, auditorium, neighbourhood"] },
+              { label: "Workload", lines: ["69 class hours"] },
+            ]}
+            footnote="Only physiotherapists can attend."
+            action={<Button variant="accent" href="https://github.com/felipegenuino/breathe-ds" target="_blank" rel="noopener noreferrer">Secure my seat</Button>}
+          />
+          <CourseCard
+            year="2027"
+            title="Another city · ST"
+            note="Limited seats"
+            rows={[
+              { label: "When", lines: ["Dates to be confirmed"], muted: true },
+              { label: "Where", lines: ["Venue to be confirmed"], muted: true },
+              { label: "Workload", lines: ["69 class hours"] },
+            ]}
+            footnote="Only physiotherapists can attend."
+            action={<Button variant="accent" href="https://github.com/felipegenuino/breathe-ds" target="_blank" rel="noopener noreferrer">Secure my seat</Button>}
+          />
+        </div>
       </Section>
 
       <Section id="cta" title="CtaCard — final call">

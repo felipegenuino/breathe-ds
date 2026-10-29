@@ -68,7 +68,8 @@
     "./components/StoryPanel": "./components/StoryPanel.tsx",
     "./components/PostCard": "./components/PostCard.tsx",
     "./components/FeaturedPosts": "./components/FeaturedPosts.tsx",
-    "./components/PostArticle": "./components/PostArticle.tsx"
+    "./components/PostArticle": "./components/PostArticle.tsx",
+    "./components/CourseCard": "./components/CourseCard.tsx"
   },
   "publishConfig": {
     "access": "public"
