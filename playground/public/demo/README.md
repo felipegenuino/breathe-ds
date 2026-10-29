@@ -9,9 +9,20 @@ abaixo para o demo rodar:
 |---------------------|----------------------|----------------------------------------|
 | `clip.mp4`          | Hero tipo **Loop**   | paisagem 16:9, ~1280×720, mudo, 8–12s  |
 | `clip-poster.jpg`   | Capa do Loop         | 16:9, 1 frame do clip                  |
+| `clip-vertical.mp4` | VideoStoryCard (9:16) | retrato 720×1280, mudo, recorte central do clip gerado |
+| `clip-poster-vertical.jpg` | Capa do vertical | 9:16, 1 frame                          |
 
 Clipes ambiente devem ser **genéricos** (sem pessoa real identificável) —
-preferir stock livre ou geração por IA.
+preferir stock livre ou geração por IA. Os que estão aqui são o clipe gerado
+(animação 2D) e o seu recorte vertical:
+
+```bash
+ffmpeg -i gerado.mp4 -vf "crop=405:720:437:0,scale=720:1280" -an -crf 24 clip-vertical.mp4
+ffmpeg -ss 1 -i clip-vertical.mp4 -frames:v 1 -q:v 3 clip-poster-vertical.jpg
+```
+
+Nunca usar aqui filmagem real de paciente, mesmo fora do git: o playground é
+visto em tela compartilhada e em capturas.
 
 ## Modo Player → não precisa de arquivo local
 
