@@ -253,6 +253,20 @@ from color, not from extra markup.
 - **CtaCard** / **VideoInviteCard**: the final call of a novo.creeta page — white
   card (title, lead, CTA slot) beside a video card: muted loop with the speaker's
   name over it, pause control, play button that plays the full video with sound.
+- **CareSteps**: "how the care works" of novo.creeta — a bento mosaic of
+  numbered steps (drawing above, text below; the first takes two columns) with
+  the invite on the dark panel closing the sequence. The drawings are slots:
+  **ChatPreview** (a sample chat, bubble by bubble, the clinic "types"; loops
+  while on screen, pause button), **PlanTimeline** (three stages, the line comes
+  down and each dot lights up; 6s loop, pause button), **PhotoSequence** (photos
+  with fade and a slow zoom, CSS only, paused by a hidden checkbox), or a still
+  image. All stand still and whole with reduced motion. `useOnAppear` (animate
+  when half on screen, only while on screen) and `PauseButton` (44px, 32px
+  circle) are exported for your own drawings.
+- **StoryPanel**: creeta's "origin" block — one dark panel (surface-panel)
+  grouping a story: media at the top with a film that fades into the panel, the
+  logo at its base, title, lead, three pillars in columns with a hairline above
+  each, and the outbound links. For "who we are" and "why us" blocks.
 - **Footer**: the site-footer of novo.creeta, by tokens — full width like the
   Header, with the signed brand + sentence, "Pages" (title on the first line, links in two
   columns; with many pages, `pages.groups` — titled columns, up to four side by

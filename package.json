@@ -58,7 +58,14 @@
     "./components/Breadcrumb": "./components/Breadcrumb.tsx",
     "./components/Timeline": "./components/Timeline.tsx",
     "./components/marks/ttcab": "./components/marks/ttcab.tsx",
-    "./components/marks/creeta": "./components/marks/creeta.tsx"
+    "./components/marks/creeta": "./components/marks/creeta.tsx",
+    "./components/CareSteps": "./components/CareSteps.tsx",
+    "./components/ChatPreview": "./components/ChatPreview.tsx",
+    "./components/PlanTimeline": "./components/PlanTimeline.tsx",
+    "./components/PhotoSequence": "./components/PhotoSequence.tsx",
+    "./components/PauseButton": "./components/PauseButton.tsx",
+    "./components/useOnAppear": "./components/useOnAppear.ts",
+    "./components/StoryPanel": "./components/StoryPanel.tsx"
   },
   "publishConfig": {
     "access": "public"

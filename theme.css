@@ -128,3 +128,119 @@
 .cg-no-scrollbar::-webkit-scrollbar {
   display: none;
 }
+
+/* ── Care flow drawings (CareSteps): ChatPreview, PlanTimeline, PhotoSequence ──
+   Ported from novo.creeta's globals.css. Only opacity and transform. */
+
+/* ChatPreview: each bubble animates when it enters; the component sets the
+   rhythm (and the loop). Nothing animates without data-state="playing". */
+@keyframes cg-bubble-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.96);
+  }
+}
+@keyframes cg-dot-pulse {
+  0%,
+  60%,
+  100% {
+    opacity: 0.35;
+    transform: none;
+  }
+  30% {
+    opacity: 1;
+    transform: translateY(-2px);
+  }
+}
+.cg-chat[data-state="playing"] .cg-bubble {
+  animation: cg-bubble-in 320ms cubic-bezier(0.23, 1, 0.32, 1) both;
+}
+.cg-chat[data-state="playing"] .cg-typing i {
+  animation: cg-dot-pulse 900ms ease-in-out calc(var(--n) * 140ms) infinite;
+}
+.cg-chat[data-paused] .cg-bubble,
+.cg-chat[data-paused] .cg-typing i {
+  animation-play-state: paused;
+}
+
+/* PlanTimeline, 6s loop: the line comes down from 0.2s to 1.7s and each dot
+   lights up when it arrives (0.2s, 0.95s, 1.7s); everything stays lit until
+   5.1s, goes off and restarts. One set of keyframes per dot. */
+@keyframes cg-plan-line {
+  0%, 3.3% { opacity: 1; transform: scaleY(0); }
+  28.3%, 85% { opacity: 1; transform: scaleY(1); }
+  92%, 100% { opacity: 0; transform: scaleY(1); }
+}
+@keyframes cg-plan-dot-1 {
+  0%, 3.3% { opacity: 0; transform: scale(0.3); }
+  8.6%, 85% { opacity: 1; transform: none; }
+  92%, 100% { opacity: 0; transform: scale(0.3); }
+}
+@keyframes cg-plan-dot-2 {
+  0%, 15.8% { opacity: 0; transform: scale(0.3); }
+  21.1%, 85% { opacity: 1; transform: none; }
+  92%, 100% { opacity: 0; transform: scale(0.3); }
+}
+@keyframes cg-plan-dot-3 {
+  0%, 28.3% { opacity: 0; transform: scale(0.3); }
+  33.6%, 85% { opacity: 1; transform: none; }
+  92%, 100% { opacity: 0; transform: scale(0.3); }
+}
+/* The name out of turn stays at 75%, not less: ink at 75% over the card still
+   passes AA (creeta measured 5.03:1; at 45% it failed, WCAG 1.4.3). */
+@keyframes cg-plan-name-1 {
+  0%, 3.3%, 92%, 100% { opacity: 0.75; }
+  8.6%, 85% { opacity: 1; }
+}
+@keyframes cg-plan-name-2 {
+  0%, 15.8%, 92%, 100% { opacity: 0.75; }
+  21.1%, 85% { opacity: 1; }
+}
+@keyframes cg-plan-name-3 {
+  0%, 28.3%, 92%, 100% { opacity: 0.75; }
+  33.6%, 85% { opacity: 1; }
+}
+.cg-plan[data-state="waiting"] .cg-plan-line { transform: scaleY(0); }
+.cg-plan[data-state="waiting"] .cg-plan-dot { opacity: 0; }
+.cg-plan[data-state="waiting"] .cg-plan-name { opacity: 0.75; }
+.cg-plan[data-state="playing"] .cg-plan-line { animation: cg-plan-line 6s linear infinite; }
+.cg-plan[data-state="playing"] .cg-plan-step[data-n="1"] .cg-plan-dot { animation: cg-plan-dot-1 6s cubic-bezier(0.23, 1, 0.32, 1) infinite; }
+.cg-plan[data-state="playing"] .cg-plan-step[data-n="2"] .cg-plan-dot { animation: cg-plan-dot-2 6s cubic-bezier(0.23, 1, 0.32, 1) infinite; }
+.cg-plan[data-state="playing"] .cg-plan-step[data-n="3"] .cg-plan-dot { animation: cg-plan-dot-3 6s cubic-bezier(0.23, 1, 0.32, 1) infinite; }
+.cg-plan[data-state="playing"] .cg-plan-step[data-n="1"] .cg-plan-name { animation: cg-plan-name-1 6s ease infinite; }
+.cg-plan[data-state="playing"] .cg-plan-step[data-n="2"] .cg-plan-name { animation: cg-plan-name-2 6s ease infinite; }
+.cg-plan[data-state="playing"] .cg-plan-step[data-n="3"] .cg-plan-name { animation: cg-plan-name-3 6s ease infinite; }
+/* Paused on the button, or off screen. Same weight as the rules above and after them. */
+.cg-plan[data-state][data-stopped] .cg-plan-line,
+.cg-plan[data-state][data-stopped] .cg-plan-step .cg-plan-dot,
+.cg-plan[data-state][data-stopped] .cg-plan-step .cg-plan-name {
+  animation-play-state: paused;
+}
+
+/* PhotoSequence: the hidden checkbox pauses the photos through CSS. */
+.cg-seq-pause:checked ~ .cg-seq img {
+  animation-play-state: paused !important;
+}
+
+/* Reduced motion: the components do not even start; this is the second lock,
+   in case the preference changes with the page open. The sequence keeps the
+   first photo and loses the control (a nameless checkbox in the tab order
+   would fail WCAG 4.1.2). */
+@media (prefers-reduced-motion: reduce) {
+  .cg-chat .cg-bubble,
+  .cg-chat .cg-typing i,
+  .cg-plan .cg-plan-line,
+  .cg-plan .cg-plan-dot,
+  .cg-plan .cg-plan-name {
+    animation: none !important;
+    opacity: 1;
+    transform: none;
+  }
+  .cg-seq img {
+    animation: none !important;
+  }
+  .cg-seq-control,
+  .cg-seq-pause {
+    display: none;
+  }
+}

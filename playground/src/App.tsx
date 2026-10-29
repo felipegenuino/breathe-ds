@@ -9,6 +9,12 @@ import { SectionKicker } from "../../components/SectionKicker";
 import { PillList } from "../../components/PillList";
 import { PageVideoHero } from "../../components/PageVideoHero";
 import { Footer } from "../../components/Footer";
+import { CareSteps } from "../../components/CareSteps";
+import { StoryPanel } from "../../components/StoryPanel";
+import { BackgroundVideo } from "../../components/BackgroundVideo";
+import { ChatPreview } from "../../components/ChatPreview";
+import { PlanTimeline } from "../../components/PlanTimeline";
+import { PhotoSequence } from "../../components/PhotoSequence";
 import { Header } from "../../components/Header";
 import { AnchorNav } from "../../components/AnchorNav";
 import { LanguageSwitcher } from "../../components/LanguageSwitcher";
@@ -340,6 +346,8 @@ const PAGE_NAV = [
   { id: "videos", label: "Videos", Icon: IconVideo },
   { id: "map", label: "Map", Icon: IconMapPin },
   { id: "hero", label: "Hero", Icon: IconVideo },
+  { id: "care", label: "CareSteps", Icon: IconActivity },
+  { id: "story", label: "StoryPanel", Icon: IconBook },
   { id: "cta", label: "CtaCard", Icon: IconMessage },
   { id: "footer", label: "Footer", Icon: IconMessage },
 ] as const;
@@ -350,7 +358,7 @@ const FOOTER_GROUPS = (
     ["Foundations", ["symbol", "tokens", "type", "lockup", "icons"]],
     ["Navigation", ["header", "mobile", "anchornav", "breadcrumb", "footer"]],
     ["Content", ["buttons", "action", "accordion", "list", "rows", "timeline", "pills"]],
-    ["Cards & media", ["people", "cards", "videos", "map", "hero", "cta"]],
+    ["Cards & media", ["people", "cards", "videos", "map", "hero", "care", "story", "cta"]],
   ] as const
 ).map(([title, ids]) => ({
   title,
@@ -432,6 +440,8 @@ export function App() {
             { label: "Videos (VideoStoryCard, TestimonialCard)", href: "#videos", icon: IcVideo },
             { label: "MapCard", href: "#map", icon: IcPin },
             { label: "PageVideoHero", href: "#hero", icon: IcVideo },
+            { label: "CareSteps (ChatPreview, PlanTimeline, PhotoSequence)", href: "#care", icon: IcPulse },
+            { label: "StoryPanel (pillars on the dark panel)", href: "#story", icon: IcBook },
             { label: "CtaCard (final call)", href: "#cta", icon: IcChat },
             { label: "Footer", href: "#footer", icon: IcPin },
           ], seeAll: { label: "Mobile · BottomNav", href: "#mobile" } },
@@ -1007,6 +1017,88 @@ export function App() {
             caption="Caption on the close bar"
           />
         </div>
+      </Section>
+
+      <Section id="care" title="CareSteps — ChatPreview · PlanTimeline · PhotoSequence">
+        <p className="mb-6 max-w-[62ch] text-ink-body">How the care works, from novo.creeta: a bento mosaic of numbered steps, each with a drawing above and the text below, and the invite on the dark panel closing the sequence. The drawings are decoration and loop only while on screen, with a pause button (WCAG 2.2.2): a sample chat (the person writes, the clinic "types"), a still photo, the plan timeline (the line comes down, each dot lights up) and a photo sequence with a slow zoom (CSS only, paused by a checkbox). With reduced motion everything stands still, whole. Generic copy and generated images here.</p>
+        <CareSteps
+          headingLevel="h3"
+          steps={[
+            {
+              title: "First contact",
+              summary: "Talk to our team on WhatsApp.",
+              text: "Talk to our team on WhatsApp. We are open Monday to Friday, 8am to 6pm.",
+              visual: (
+                <ChatPreview
+                  hours="Monday to Friday, 8am to 6pm"
+                  messages={[
+                    { from: "person", text: "Hi! I'd like to book an assessment." },
+                    { from: "clinic", text: "Hello! Of course. Who is it for?" },
+                    { from: "person", text: "For my son, two years old." },
+                    { from: "clinic", text: "We are open Monday to Friday, 8am to 6pm. Thursday at 9?" },
+                    { from: "person", text: "Perfect!" },
+                    { from: "clinic", text: "Booked. See you Thursday!" },
+                  ]}
+                />
+              ),
+            },
+            {
+              title: "Careful assessment",
+              summary: "Every treatment starts with an assessment.",
+              text: "Every treatment starts with an assessment. The therapist looks at the breathing pattern, the posture and the quality of movement.",
+              visual: <img src="/demo/person-poster.jpg" alt="" loading="lazy" decoding="async" className="absolute inset-0 h-full w-full object-cover" />,
+            },
+            {
+              title: "A plan built for you",
+              summary: "Short, medium and long term.",
+              text: "The assessment helps draw a therapeutic plan for the short, medium and long term.",
+              visual: <PlanTimeline names={["Short", "Medium", "Long"]} suffix=" term" />,
+            },
+            {
+              title: "Gentle treatment",
+              summary: "At the clinic or at home.",
+              text: "Sessions happen at the clinic or in the comfort of your home. Movement is introduced gradually, so it never adds respiratory effort.",
+              visual: (
+                <PhotoSequence
+                  id="care-photos"
+                  className="absolute inset-0 rounded-2xl"
+                  photos={[
+                    { src: "/demo/clip-poster.jpg", alt: "" },
+                    { src: "/demo/invite-loop-poster.jpg", alt: "" },
+                    { src: "/demo/podcast-poster.jpg", alt: "" },
+                  ]}
+                />
+              ),
+            },
+          ]}
+          invite={{
+            text: "Your care can start now.",
+            action: (
+              <a href="#care" className="inline-flex min-h-12 items-center gap-2.5 rounded-pill bg-card px-5 font-body font-semibold text-ink transition-colors duration-200 hover:bg-ink/[0.12] active:scale-[0.97] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-surface motion-reduce:transition-none">
+                <IconMessage size={19} /> Book
+              </a>
+            ),
+          }}
+        />
+      </Section>
+
+      <Section id="story" title="StoryPanel — a story in one dark panel">
+        <p className="mb-6 max-w-[62ch] text-ink-body">The "origin" block of novo.creeta: one rounded panel on surface-panel that groups a whole story. Media at the top (a muted loop or a photo) with a film that fades into the panel, the logo at its base, a title, a lead, three pillars in columns with a hairline above each, and the outbound links. Good for "who we are" and "why us" blocks: everything inside one card.</p>
+        <StoryPanel
+          media={<BackgroundVideo src="/demo/invite-loop.mp4" poster="/demo/invite-loop-poster.jpg" className="absolute inset-0" />}
+          logo={<span className="flex items-center gap-2 text-surface"><BreatheMark size={36} animated={false} /><span className="font-heading text-2xl font-bold">Brand</span></span>}
+          title="The clinic of those who created, teach and apply the method."
+          lead="A supporting sentence about what sets the place apart."
+          pillars={[
+            { title: "Created", text: "A paragraph about who created the method and where they work today." },
+            { title: "Teaches", text: "A paragraph about the school, the courses and how many professionals have trained." },
+            { title: "Applies", text: "A paragraph about the clinic where the method is practised every day." },
+          ]}
+          links={[
+            { label: "Learn about the method", href: "#story" },
+            { label: "Courses on the school site", href: "https://github.com/felipegenuino/breathe-ds", external: true },
+          ]}
+        />
       </Section>
 
       <Section id="cta" title="CtaCard — final call">
