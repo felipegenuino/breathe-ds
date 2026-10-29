@@ -69,7 +69,17 @@ hidden behind the sticky Header or the BottomNav (WCAG 2.4.11).
 | `ink-body` | reading body text | `--cg-ink-body` |
 | `action` | CTA / highlight — **never plain text** | `--cg-action` |
 | `action-text` | text in the action color (AA) | `--cg-action-text` |
+| `on-action` | text ON the action color (the accent button) | `--cg-on-action` |
+| `action-tint` | highlighted panel or card: a 6% wash of the action color over the surface | `--cg-action-tint` |
+| `action-line` | border of a highlighted card (closed tone, 3:1 on the surface; pure ttcab orange is 1.91:1) | `--cg-action-line` |
 | `line` | hairlines / borders | `--cg-line` |
+
+**Dose of the action color** (what brands with a hot accent do, Cloudflare orange,
+Airbnb red): the action color is the fill of ONE element per block, with
+`on-action` text on it; links stay in `ink`/`ink-soft` with an underline; a
+highlighted card is `action-tint` + `action-line`, not the full color; the
+color as text only as `action-text`. The "Action dose" section of the playground
+shows the disciplined and the loud version side by side.
 | `font-heading` / `font-body` | typography | `--cg-font-*` |
 | `radius-xl/2xl/pill` · `ease-cg` | radius and motion curve | fixed |
 

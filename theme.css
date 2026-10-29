@@ -25,6 +25,8 @@
   --color-action: var(--cg-action);                /* CTA/highlight — never plain text */
   --color-action-text: var(--cg-action-text);      /* text in the action color (AA) */
   --color-on-action: var(--cg-on-action);          /* text ON the action color (button) */
+  --color-action-tint: var(--cg-action-tint, var(--cg-surface));  /* highlighted panel/card: a 6% wash of the action color */
+  --color-action-line: var(--cg-action-line, var(--cg-action));   /* border of a highlighted card (3:1 on surface) */
   --color-line: var(--cg-line);                    /* hairlines/borders */
 
   /* ── Typography (roles; actual family comes from --cg-font-*) ── */

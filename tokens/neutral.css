@@ -20,6 +20,8 @@
   --cg-ink-body: #3f3f46;
   --cg-action: #18181b;
   --cg-action-text: #52525b;
+  --cg-action-tint: #e9e9ea;
+  --cg-action-line: #18181b;
   --cg-on-action: #ffffff;
   --cg-line: rgb(0 0 0 / 0.12);
   --cg-font-heading: var(--font-quicksand), system-ui, sans-serif;  /* Quicksand (fixed across the family) */

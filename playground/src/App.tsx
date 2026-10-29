@@ -41,17 +41,17 @@ const PALETTES: Record<string, Record<string, string>> = {
   Neutral: {
     "--color-surface": "#f4f4f5", "--color-card": "#ffffff", "--color-surface-panel": "#18181b", "--color-ink": "#18181b",
     "--color-ink-soft": "#65656e", "--color-ink-body": "#3f3f46", "--color-action": "#18181b",
-    "--color-action-text": "#52525b", "--color-on-action": "#ffffff", "--color-line": "rgb(0 0 0 / 0.12)",
+    "--color-action-text": "#52525b", "--color-on-action": "#ffffff", "--color-line": "rgb(0 0 0 / 0.12)", "--color-action-tint": "#e9e9ea", "--color-action-line": "#18181b",
   },
   TTCAB: {
     "--color-surface": "#fbf5e9", "--color-card": "#ffffff", "--color-surface-panel": "#144753", "--color-ink": "#144753",
     "--color-ink-soft": "#54707a", "--color-ink-body": "#1e4f5b", "--color-action": "#f6a22a",
-    "--color-action-text": "#9a5d07", "--color-on-action": "#144753", "--color-line": "rgb(20 71 83 / 0.16)",
+    "--color-action-text": "#9a5d07", "--color-on-action": "#144753", "--color-line": "rgb(20 71 83 / 0.16)", "--color-action-tint": "#fbf0de", "--color-action-line": "#c47a0c",
   },
   Creeta: {
     "--color-surface": "#eef3f4", "--color-card": "#ffffff", "--color-surface-panel": "#144753", "--color-ink": "#144753",
     "--color-ink-soft": "#266675", "--color-ink-body": "#1e4f5b", "--color-action": "#ab2781",
-    "--color-action-text": "#8f1f6c", "--color-on-action": "#ffffff", "--color-line": "rgb(20 71 83 / 0.16)",
+    "--color-action-text": "#8f1f6c", "--color-on-action": "#ffffff", "--color-line": "rgb(20 71 83 / 0.16)", "--color-action-tint": "#eae7ed", "--color-action-line": "#ab2781",
   },
 };
 
@@ -324,6 +324,7 @@ const PAGE_NAV = [
   { id: "type", label: "Typography", Icon: IconBook },
   { id: "lockup", label: "Lockup", Icon: IconHome },
   { id: "buttons", label: "Button", Icon: IconActivity },
+  { id: "action", label: "Action dose", Icon: IconActivity },
   { id: "icons", label: "Icons", Icon: IconSearch },
   { id: "accordion", label: "Accordion", Icon: IconBook },
   { id: "list", label: "List", Icon: IconBook },
@@ -348,7 +349,7 @@ const FOOTER_GROUPS = (
   [
     ["Foundations", ["symbol", "tokens", "type", "lockup", "icons"]],
     ["Navigation", ["header", "mobile", "anchornav", "breadcrumb", "footer"]],
-    ["Content", ["buttons", "accordion", "list", "rows", "timeline", "pills"]],
+    ["Content", ["buttons", "action", "accordion", "list", "rows", "timeline", "pills"]],
     ["Cards & media", ["people", "cards", "videos", "map", "hero", "cta"]],
   ] as const
 ).map(([title, ids]) => ({
@@ -388,6 +389,7 @@ export function App() {
   const [mc, setMc] = useState({ badge: true, arrow: true, eyebrow: false, text: true, link: false, media: "clip" as "image" | "clip" | "hover" });
   const [listLinks, setListLinks] = useState(true);
   // optional parts of the page footer (the footer is its own demo)
+  const [dose, setDose] = useState<"disciplined" | "loud">("disciplined");
   const [ft, setFt] = useState({ quote: true, pages: true, hours: true, directions: true, notice: true, contacts: true, languages: false, credits: true });
   const brand = BRAND_BY_PALETTE[pal] ?? BRAND_BY_PALETTE.Neutral;
   useEffect(() => {
@@ -415,6 +417,7 @@ export function App() {
           { label: "Components", href: "#buttons", children: [
             { label: "Lockup (logo)", href: "#lockup", icon: IcHome },
             { label: "Button", href: "#buttons", icon: IcPulse },
+            { label: "Action dose (accent rules)", href: "#action", icon: IcPulse },
             { label: "Icons", href: "#icons", icon: IcSearch },
             { label: "Accordion", href: "#accordion", icon: IcBook },
             { label: "List", href: "#list", icon: IcBook },
@@ -488,7 +491,7 @@ export function App() {
 
         <Section id="tokens" title="Tokens">
           <div className="flex flex-wrap gap-3">
-            {([["surface", "--color-surface"], ["ink", "--color-ink"], ["ink-soft", "--color-ink-soft"], ["action", "--color-action"], ["line", "--color-line"]] as const).map(([n, k]) => {
+            {([["surface", "--color-surface"], ["ink", "--color-ink"], ["ink-soft", "--color-ink-soft"], ["action", "--color-action"], ["action-text", "--color-action-text"], ["action-tint", "--color-action-tint"], ["action-line", "--color-action-line"], ["line", "--color-line"]] as const).map(([n, k]) => {
               const v = PALETTES[pal][k];
               return (
               <div key={n} className="w-40 overflow-hidden rounded-2xl border border-line">
@@ -594,6 +597,59 @@ export function App() {
               </div>
             </div>
           </div>
+        </Section>
+
+        <Section id="action" title="Action dose — how a hot accent stays calm">
+          <p className="mb-6 max-w-[62ch] text-ink-body">The rule brands with a hot color follow (Cloudflare orange, Airbnb red): the action color is the fill of ONE element per block, with dark text on it; links stay in ink; a highlighted card is a 6% wash plus a closed border, not the full color; the color as text only in its darker <code className="rounded bg-ink/[0.07] px-1.5 py-0.5 text-sm">action-text</code>. Switch the palette to TTCAB and compare with the loud version.</p>
+          <div className="mb-5 flex flex-wrap items-center gap-x-5 gap-y-3 rounded-2xl border border-line bg-surface p-4">
+            <span className="text-[0.7rem] font-semibold tracking-[0.12em] text-ink-soft uppercase">Dose</span>
+            <SegGroup label="Dose" value={dose} set={setDose} options={[["disciplined", "One accent per block"], ["loud", "Loud (everything in the action color)"]]} />
+          </div>
+          {(() => {
+            const loud = dose === "loud";
+            const kicker = loud ? "text-action" : "text-action-text";
+            const link = loud ? "text-action underline underline-offset-4" : "text-ink-soft underline decoration-ink/30 underline-offset-4 hover:decoration-ink";
+            const featuredBox = loud ? "border-2 border-action bg-card" : "border border-action-line bg-action-tint";
+            return (
+              <div className="space-y-8">
+                {/* 1. panel with a kicker, links in the text and one accent button */}
+                <div className={`rounded-[28px] p-6 md:p-8 ${featuredBox}`}>
+                  <p className={`mb-3 font-heading text-[0.82rem] font-bold tracking-[0.1em] uppercase ${kicker}`}>Kicker in the action color</p>
+                  <h3 className="font-heading text-2xl font-medium text-ink md:text-[1.75rem]">A highlighted panel: a wash of the action color and a closed border.</h3>
+                  <p className="mt-3 max-w-[56ch] text-ink-body">Body text stays in ink-body. Links in the text go in <a href="#action" className={link}>ink-soft with an underline</a>, never in the action color, so the one button below is the only hot element. <a href="#action" className={link}>Another link</a>.</p>
+                  <div className="mt-6 flex flex-wrap gap-3">
+                    <Button variant="accent">Primary action</Button>
+                    <Button variant={loud ? "accent" : "outline"}>Secondary</Button>
+                    <Button variant={loud ? "accent" : "ghost"}>Tertiary</Button>
+                  </div>
+                </div>
+
+                {/* 2. plan cards: the featured one gets the tint + line + the accent button */}
+                <ul className="grid list-none gap-3 md:grid-cols-3 md:gap-5">
+                  {[false, true, false].map((featured, i) => (
+                    <li key={i} className={`rounded-[24px] p-6 ${featured ? featuredBox : "bg-card"}`}>
+                      <p className="font-heading text-lg font-medium text-ink">Plan name</p>
+                      <p className="mt-1 text-sm text-ink-soft">Supporting line about this plan.</p>
+                      <p className={`mt-5 font-heading text-3xl font-semibold ${loud ? "text-action" : featured ? "text-action-text" : "text-ink"}`}>Value</p>
+                      <div className="mt-5 [&>*]:w-full">
+                        <Button variant={featured || loud ? "accent" : "outline"}>Choose</Button>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+
+                {/* 3. segmented control: the selected segment is the one accent */}
+                <div className="rounded-[28px] bg-card p-6 md:p-8">
+                  <p className="mb-4 text-sm text-ink-soft">Segmented control: the selected segment is the only element in the action color.</p>
+                  <div className="inline-flex flex-wrap gap-1 rounded-pill border border-line p-1">
+                    {["Selected", "Option", "Option", "Option"].map((o, i) => (
+                      <span key={i} className={`inline-flex min-h-10 items-center rounded-pill px-4 text-sm font-semibold ${i === 0 || loud ? "bg-action text-on-action" : "text-ink"}`}>{o}</span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            );
+          })()}
         </Section>
 
         <Section id="icons" title="Icons">

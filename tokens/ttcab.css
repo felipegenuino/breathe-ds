@@ -17,6 +17,8 @@
   --cg-action: #f6a22a;
   --cg-on-action: #144753;   /* ink on orange */
   --cg-action-text: #9a5d07;
+  --cg-action-tint: #fbf0de;   /* 6% orange over cream: highlighted card (ink 9.06:1) */
+  --cg-action-line: #c47a0c;   /* closed orange for borders: 3.15:1 on cream (pure orange is 1.91:1) */
   --cg-line: rgb(20 71 83 / 0.16);
   --cg-font-heading: var(--font-quicksand), system-ui, sans-serif;  /* Quicksand */
   --cg-font-body: var(--font-figtree), system-ui, sans-serif;      /* Figtree */
