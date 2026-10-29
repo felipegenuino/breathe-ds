@@ -36,7 +36,8 @@ type Props = {
  * The active signal = the indicator (ink/12 fill + outline), NOT text color:
  * the text is always `ink` on `surface`, with no low-contrast frame.
  * prefers-reduced-motion removes the slide. Target sections need a
- * `scroll-mt-*` compatible with the sticky offset (e.g. `scroll-mt-40`).
+ * `scroll-mt-*` that, added to the theme's `scroll-padding-top` (96px), clears
+ * the header plus the capsule (e.g. `scroll-mt-20` with an 80px header).
  */
 export function AnchorNav({ items, stickyTop = "top-20", linkComponent, className = "", labels }: Props) {
   const L: ElementType = linkComponent ?? "a";
@@ -45,6 +46,10 @@ export function AnchorNav({ items, stickyTop = "top-20", linkComponent, classNam
   const listRef = useRef<HTMLUListElement>(null);
   const linkRefs = useRef<Record<string, HTMLAnchorElement | null>>({});
   const [pill, setPill] = useState({ x: 0, y: 0, w: 0, h: 0, ready: false });
+  // Stable key of the items: sites pass the array inline, so a new reference
+  // on every render. Keyed by reference, the arrival effect below re-ran on
+  // every page scroll and kept dragging the page back to the hash.
+  const key = items.map((it) => it.id).join("|");
 
   // Scroll-spy
   useEffect(() => {
@@ -63,11 +68,13 @@ export function AnchorNav({ items, stickyTop = "top-20", linkComponent, classNam
     );
     sections.forEach((s) => io.observe(s));
     return () => io.disconnect();
-  }, [items]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [key]);
 
   // Arriving with a #hash via client-side navigation: scrolls to the anchor (on
   // a full load the browser already does it; here it's idempotent). Reapplies a
-  // few times to beat the router's late scroll reset.
+  // few times to beat the router's late scroll reset. Runs once, on arrival:
+  // the hash the person sets by clicking a pill is the browser's job.
   useEffect(() => {
     const hash = window.location.hash.slice(1);
     if (!hash || !items.some((it) => it.id === hash)) return;
@@ -80,7 +87,8 @@ export function AnchorNav({ items, stickyTop = "top-20", linkComponent, classNam
       if (++tries >= 4) window.clearInterval(id);
     }, 60);
     return () => window.clearInterval(id);
-  }, [items]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [key]);
 
   const measure = () => {
     const el = linkRefs.current[active];

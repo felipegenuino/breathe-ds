@@ -812,9 +812,9 @@ export function App() {
           <AnchorNav items={[{ id: "an-1", label: "First section" }, { id: "an-2", label: "Second section" }, { id: "an-3", label: "Third section, with a longer title" }]} />
           <div className="space-y-10 pt-6">
             {["an-1", "an-2", "an-3"].map((id, i) => (
-              <section key={id} id={id} className="scroll-mt-40 rounded-2xl border border-line p-8">
+              <section key={id} id={id} className="scroll-mt-20 rounded-2xl border border-line p-8">
                 <h3 className="font-heading text-2xl font-bold text-ink">{["First", "Second", "Third"][i]} section</h3>
-                <p className="mt-3 max-w-[60ch] text-ink-body">Generic content just to give the page height so the nav has something to follow. Each section needs a <code className="rounded bg-ink/[0.07] px-1.5 py-0.5 text-sm">scroll-mt</code> that matches the header height plus the capsule.</p>
+                <p className="mt-3 max-w-[60ch] text-ink-body">Generic content just to give the page height so the nav has something to follow. Each section needs a <code className="rounded bg-ink/[0.07] px-1.5 py-0.5 text-sm">scroll-mt</code> that, added to the theme's 96px scroll-padding, clears the header plus the capsule (here scroll-mt-20).</p>
                 <div className="mt-6 h-48 rounded-2xl bg-ink/[0.06]" aria-hidden="true" />
               </section>
             ))}
