@@ -67,18 +67,32 @@ export function Cortina({ name, tagline, logo, wordmarkRatio, symbolSide = "left
   return (
     <div ref={el} className={`cg-cortina${className ? ` ${className}` : ""}`} aria-hidden="true">
       <style>{CORTINA_CSS}</style>
-      <div className={`cg-cortina__lockup${symbolSide === "right" ? " cg-cortina__lockup--right" : ""}`}>
-        <span className="cg-cortina__mark">{logo ?? <BreatheMark size={60} duration={5} />}</span>
-        <span className="cg-cortina__text">
+      {/* Símbolo à esquerda: ele abraça o bloco nome+tagline. À direita (TTCAB):
+          ele encosta no nome, na mesma linha, e a tagline fica embaixo — senão
+          o símbolo iria parar depois da tagline, longe do wordmark. */}
+      {(() => {
+        const mark = <span className="cg-cortina__mark">{logo ?? <BreatheMark size={60} duration={5} />}</span>;
+        const nameEl = (
           <span
             className="cg-cortina__name"
             style={wordmarkRatio ? ({ "--cg-wordmark": `calc(var(--cg-cortina-mark) * ${wordmarkRatio})` } as CSSProperties) : undefined}
           >
             {name}
           </span>
-          {tagline && <span className="cg-cortina__tag">{tagline}</span>}
-        </span>
-      </div>
+        );
+        const tag = tagline ? <span className="cg-cortina__tag">{tagline}</span> : null;
+        return symbolSide === "right" ? (
+          <div className="cg-cortina__lockup cg-cortina__lockup--right">
+            <span className="cg-cortina__row">{nameEl}{mark}</span>
+            {tag}
+          </div>
+        ) : (
+          <div className="cg-cortina__lockup">
+            {mark}
+            <span className="cg-cortina__text">{nameEl}{tag}</span>
+          </div>
+        );
+      })()}
     </div>
   );
 }
@@ -108,7 +122,8 @@ const CORTINA_CSS = `
 }
 /* gap ≈ 1/3 do corpo do nome: o anel é curvo, então o vão óptico lê um pouco maior que o geométrico */
 .cg-cortina__lockup{ display:flex; align-items:center; gap:clamp(10px,1.6vw,16px); padding:0 24px; }
-.cg-cortina__lockup--right{ flex-direction:row-reverse; }
+.cg-cortina__lockup--right{ flex-direction:column; align-items:flex-start; }
+.cg-cortina__row{ display:flex; align-items:center; gap:clamp(10px,1.6vw,16px); }
 .cg-cortina__lockup--right .cg-cortina__name{ animation-name:cg-cortina-nome-dir; }
 .cg-cortina__mark{ display:inline-flex; color:var(--color-ink,#14323a);
   animation:cg-cortina-mark 700ms var(--ease-cg,cubic-bezier(.2,.8,.2,1)) both; }

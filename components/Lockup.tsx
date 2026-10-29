@@ -75,7 +75,7 @@ export function Lockup({
   const entranceStyle = entrance ? ({ "--cg-entrance-delay": `${entranceDelay}ms` } as CSSProperties) : undefined;
   // No horizontal com tagline, o símbolo cobre o bloco inteiro (nome + tagline),
   // virando um "bookend" proporcional — não só a altura do nome.
-  const markPx = variant === "horizontal" && tagline ? Math.round(NAME_PX[size] * 2.3) : MARK[size];
+  const markPx = variant === "horizontal" && tagline && symbolSide !== "right" ? Math.round(NAME_PX[size] * 2.3) : MARK[size];
   const mark = (
     <span className="cg-lockup__mark inline-flex text-ink [&>svg]:h-[var(--mark)] [&>svg]:w-auto" style={{ "--mark": `${markPx}px` } as CSSProperties}>
       {logo ?? <BreatheMark size={markPx} animated={animated} title={name} />}
@@ -142,9 +142,22 @@ export function Lockup({
     );
   }
 
-  // horizontal (padrão)
+  // horizontal (padrão). Símbolo à direita (TTCAB): encosta no nome, na mesma
+  // linha; a tagline fica embaixo (senão o símbolo iria parar depois da tagline).
+  if (symbolSide === "right") {
+    return (
+      <span className={`inline-flex flex-col items-start${entranceCls} ${className}`} style={entranceStyle}>
+        {entrance && <style>{ENTRANCE_CSS}</style>}
+        <span className={`inline-flex items-center ${GAP[size]}`}>
+          {nameEl}
+          {mark}
+        </span>
+        {tagEl && <span className="mt-1">{tagEl}</span>}
+      </span>
+    );
+  }
   return (
-    <span className={`inline-flex items-center ${symbolSide === "right" ? "flex-row-reverse" : ""} ${GAP[size]}${entranceCls} ${className}`} style={entranceStyle}>
+    <span className={`inline-flex items-center ${GAP[size]}${entranceCls} ${className}`} style={entranceStyle}>
       {entrance && <style>{ENTRANCE_CSS}</style>}
       {mark}
       <span className="flex min-w-0 flex-col">

@@ -307,6 +307,7 @@ export function App() {
             { label: "Accordion", href: "#accordion", icon: IcBook },
             { label: "PillList", href: "#pills", icon: IcSearch },
             { label: "Header", href: "#header", icon: IcHome },
+            { label: "Mobile · BottomNav", href: "#mobile", icon: IcHome },
             { label: "AnchorNav", href: "#anchornav", icon: IcPin },
             { label: "PageVideoHero", href: "#hero", icon: IcVideo },
             { label: "Footer", href: "#footer", icon: IcPin },
@@ -488,6 +489,36 @@ export function App() {
           </div>
         </Section>
 
+        <Section id="mobile" title="Mobile · BottomNav">
+          <p className="mb-8 max-w-[60ch] text-ink-body">No celular e no tablet a navegação sai do header e vira esta barra flutuante no rodapé. Aqui ela fica embutida numa moldura para você ver no desktop; abaixo de ~1024px ela aparece de verdade no rodapé da janela. Toque em "Mais" para o painel.</p>
+          <div className="relative mx-auto h-[640px] w-[390px] max-w-full overflow-hidden rounded-[2.5rem] border border-line bg-surface shadow-[0_24px_48px_-24px_rgba(20,71,83,0.35)]">
+            <div className="flex h-16 items-center justify-between px-5">
+              <Lockup variant="horizontal" size="sm" name={marca.name} logo={marca.logo} wordmark={marca.wordmark} wordmarkRatio={marca.wordmarkRatio} symbolSide={marca.symbolSide} />
+              <span className={CHIP}>{IcPin} PT</span>
+            </div>
+            <div className="space-y-3 px-5 pt-6" aria-hidden="true">
+              <div className="h-40 rounded-2xl bg-ink/[0.07]" />
+              <div className="h-4 w-4/5 rounded-full bg-ink/[0.09]" />
+              <div className="h-4 w-3/5 rounded-full bg-ink/[0.09]" />
+              <div className="h-4 w-2/3 rounded-full bg-ink/[0.09]" />
+            </div>
+            <BottomNav
+              embedded
+              items={[
+                { label: "Início", href: "#", icon: IcHome, active: true },
+                { label: "Serviços", href: "#", icon: IcWind },
+                { label: "Sobre", href: "#", icon: IcPulse },
+                { label: "Equipe", href: "#", icon: IcUsers },
+              ]}
+              more={{ items: [
+                { label: "Depoimentos", href: "#", icon: IcChat },
+                { label: "Contato", href: "#", icon: IcPin },
+                { label: "Site parceiro", href: "#", icon: IcCap, description: "abre em outro site", external: true },
+              ] }}
+            />
+          </div>
+        </Section>
+
         <Section id="anchornav" title="AnchorNav — âncoras da página">
           <p className="mb-6 max-w-[62ch] text-ink-body">Cápsula flutuante que acompanha a rolagem numa página longa (extraída da página de Tratamento do ttcab): scroll-spy marca a seção visível e o indicador desliza até ela. Role por estas três seções.</p>
           <AnchorNav items={[{ id: "an-1", label: "Primeira seção" }, { id: "an-2", label: "Segunda seção" }, { id: "an-3", label: "Terceira seção, com título mais longo" }]} />
@@ -519,36 +550,6 @@ export function App() {
             legal={<>© 2026 TTCAB · Todos os direitos reservados.</>}
             chips={[<span className={CHIP}>{IcChat} WhatsApp</span>, <span className={CHIP}>48 3234.9919</span>, <span className={CHIP}>E-mail</span>]}
           />
-        </Section>
-
-        <Section id="mobile" title="Mobile · BottomNav">
-          <p className="mb-8 max-w-[60ch] text-ink-body">No celular e no tablet a navegação sai do header e vira esta barra flutuante no rodapé. Aqui ela fica embutida numa moldura para você ver no desktop; abaixo de ~1024px ela aparece de verdade no rodapé da janela. Toque em "Mais" para o painel.</p>
-          <div className="relative mx-auto h-[640px] w-[390px] max-w-full overflow-hidden rounded-[2.5rem] border border-line bg-surface shadow-[0_24px_48px_-24px_rgba(20,71,83,0.35)]">
-            <div className="flex h-16 items-center justify-between px-5">
-              <Lockup variant="horizontal" size="sm" name={marca.name} logo={marca.logo} wordmark={marca.wordmark} wordmarkRatio={marca.wordmarkRatio} symbolSide={marca.symbolSide} />
-              <span className={CHIP}>{IcPin} PT</span>
-            </div>
-            <div className="space-y-3 px-5 pt-6" aria-hidden="true">
-              <div className="h-40 rounded-2xl bg-ink/[0.07]" />
-              <div className="h-4 w-4/5 rounded-full bg-ink/[0.09]" />
-              <div className="h-4 w-3/5 rounded-full bg-ink/[0.09]" />
-              <div className="h-4 w-2/3 rounded-full bg-ink/[0.09]" />
-            </div>
-            <BottomNav
-              embedded
-              items={[
-                { label: "Início", href: "#", icon: IcHome, active: true },
-                { label: "Serviços", href: "#", icon: IcWind },
-                { label: "Sobre", href: "#", icon: IcPulse },
-                { label: "Equipe", href: "#", icon: IcUsers },
-              ]}
-              more={{ items: [
-                { label: "Depoimentos", href: "#", icon: IcChat },
-                { label: "Contato", href: "#", icon: IcPin },
-                { label: "Site parceiro", href: "#", icon: IcCap, description: "abre em outro site", external: true },
-              ] }}
-            />
-          </div>
         </Section>
 
         <div className="h-24" />
