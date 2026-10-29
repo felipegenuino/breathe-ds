@@ -107,7 +107,7 @@ export function MediaCard({
               loading={priority ? "eager" : "lazy"}
               decoding="async"
               // React 18 only knows the lowercase attribute (19 accepts fetchPriority too)
-          {...({ fetchpriority: priority ? "high" : undefined } as Record<string, unknown>)}
+              {...({ fetchpriority: priority ? "high" : undefined } as Record<string, unknown>)}
             />
           ))}
       </div>
