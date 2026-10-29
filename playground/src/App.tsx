@@ -354,6 +354,7 @@ export function App() {
   // Mobile demo frame: phone (390) is the minimum; tablet (768) still shows the BottomNav (hidden only at lg+).
   const [mobW, setMobW] = useState<"phone" | "tablet">("phone");
   const [listMarker, setListMarker] = useState<"check" | "arrow">("check");
+  const [mapW, setMapW] = useState<"full" | "half">("full");
   const [mc, setMc] = useState({ badge: true, arrow: true, eyebrow: false, text: true, link: false, media: "clip" as "image" | "clip" | "hover" });
   const [listLinks, setListLinks] = useState(true);
   // optional parts of the page footer (the footer is its own demo)
@@ -787,16 +788,16 @@ export function App() {
 
       <Section id="map" title="MapCard">
         <p className="mb-6 max-w-[62ch] text-ink-body">The Mapa of novo.creeta: a still preview of the map fading into the card, the address, "View the map" and the outbound "Directions" link. Google is only called after the tap (cookies, weight). Open, the map fills the card with the same close bar as the hero video.</p>
-        <div className="grid gap-3 md:grid-cols-2 md:gap-5">
+        {/* the card is full width by default: it fills the grid cell it lives in.
+            The selector only narrows the demo, to see it as a half-width cell. */}
+        <div className="mb-5 flex flex-wrap items-center gap-x-5 gap-y-3 rounded-2xl border border-line bg-surface p-4">
+          <span className="text-[0.7rem] font-semibold tracking-[0.12em] text-ink-soft uppercase">Preview</span>
+          <SegGroup label="Width" value={mapW} set={setMapW} options={[["full", "100%"], ["half", "50%"]]} />
+        </div>
+        <div className={`mx-auto transition-[max-width] duration-300 ease-cg motion-reduce:transition-none ${mapW === "half" ? "max-w-[50%]" : "max-w-full"}`}>
           <MapCard
             address="Street name, 33"
             locality="Neighbourhood, City/ST"
-            preview={{ src: "/demo/map-preview.webp", width: 2200, height: 517 }}
-            embedSrc="https://www.google.com/maps?q=Florian%C3%B3polis&z=12&output=embed"
-            directionsHref="https://www.google.com/maps/search/?api=1&query=Florian%C3%B3polis"
-          />
-          <MapCard
-            address="Street name, 33"
             preview={{ src: "/demo/map-preview.webp", width: 2200, height: 517 }}
             embedSrc="https://www.google.com/maps?q=Florian%C3%B3polis&z=12&output=embed"
             directionsHref="https://www.google.com/maps/search/?api=1&query=Florian%C3%B3polis"
