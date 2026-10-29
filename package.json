@@ -37,7 +37,7 @@
     "./components/marks/creeta": "./components/marks/creeta.tsx"
   },
   "publishConfig": {
-    "access": "restricted"
+    "access": "public"
   },
   "peerDependencies": {
     "react": ">=18",

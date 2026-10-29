@@ -149,8 +149,13 @@ um fade curto.
   Padrão dos sites: "Início" é só a casa (`icon` + `iconOnly`), rótulo para
   leitor de tela.
 - **BottomNav**: no celular/tablet a navegação sai do header e vira a barra
-  flutuante inferior (+ painel "Mais"). `embedded` para mostrar numa moldura em
-  qualquer largura (demo).
+  flutuante inferior. É o código da BarraNavegacao do novo.creeta (= BottomNav
+  do ttcab), neutro por tokens: recebe TODAS as páginas em ordem de importância
+  (`pages`, com o `Icon` lucide) e mostra quantas couberem (64px por aba,
+  ResizeObserver); o resto e as saídas externas (`extras`, com o domínio escrito
+  e seta ↗) vão para o painel "Mais", um popover nativo (Esc, toque fora, sem
+  JS). Véu de gradiente atrás da barra. `hideFrom` = `md` (creeta) ou `lg`
+  (ttcab). `labels` para outro idioma. `embedded` para a moldura da demo.
 - **AnchorNav**: cápsula flutuante de âncoras da página (scroll-spy + indicador
   deslizante), extraída do TreatmentAnchorNav do ttcab. As seções-alvo precisam
   de `scroll-mt-*` compatível com o sticky.

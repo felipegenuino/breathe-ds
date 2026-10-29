@@ -83,7 +83,8 @@ export function Accordion({ items, defaultOpenId, single = true }: Props) {
               id={panelId}
               role="region"
               aria-labelledby={btnId}
-              inert={!isOpen}
+              // React 18 não conhece `inert` como booleano: string vazia liga, undefined desliga (no 19 o booleano funciona igual).
+              {...({ inert: isOpen ? undefined : "" } as Record<string, unknown>)}
               className={`grid transition-[grid-template-rows] duration-300 ease-[cubic-bezier(.2,.8,.2,1)] motion-reduce:transition-none ${
                 isOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
               }`}

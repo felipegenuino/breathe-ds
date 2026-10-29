@@ -174,10 +174,10 @@ function HeroCTA({ primary = "Ação principal", secondary }: { primary?: ReactN
   // Estrutura do novo.creeta: container escuro + pílula branca + link claro (com ícone na lateral).
   return (
     <div className="inline-flex items-center gap-x-6 rounded-full border border-surface/15 bg-ink/80 py-2 pr-7 pl-2 backdrop-blur-md">
-      <a href="#" className="inline-flex min-h-11 items-center gap-2 rounded-full bg-surface px-5 font-body font-semibold text-ink transition hover:-translate-y-px">
+      <a href="#hero" className="inline-flex min-h-11 items-center gap-2 rounded-full bg-surface px-5 font-body font-semibold text-ink transition hover:-translate-y-px">
         <IconMessage size={18} /> {primary}
       </a>
-      <Button href="#" variant="link" className="min-h-11 text-surface">{secondary} <IconArrowUpRight size={16} /></Button>
+      <Button href="#hero" variant="link" className="min-h-11 text-surface">{secondary} <IconArrowUpRight size={16} /></Button>
     </div>
   );
 }
@@ -457,8 +457,8 @@ export function App() {
         </Section>
 
         <Section id="pills" title="PillList">
-          <PillList title="Condições que atendemos" seeAll={{ label: "Ver todos os tratamentos", href: "#" }}
-            items={["Asma e bronquiolite", "DPOC", "Torcicolo congênito", "Dor crônica", "Assimetrias cranianas e corporais", "Ronco e apneia do sono", "Enxaqueca, cefaleia e ATM"].map((label) => ({ label, href: "#" }))} />
+          <PillList title="Condições que atendemos" seeAll={{ label: "Ver todos os tratamentos", href: "#pills" }}
+            items={["Asma e bronquiolite", "DPOC", "Torcicolo congênito", "Dor crônica", "Assimetrias cranianas e corporais", "Ronco e apneia do sono", "Enxaqueca, cefaleia e ATM"].map((label) => ({ label, href: "#pills" }))} />
         </Section>
 
         <Section id="header" title="Header (nav + dropdown)">
@@ -467,7 +467,7 @@ export function App() {
           <div className="relative z-10 rounded-2xl border border-line [&>header]:rounded-t-2xl">
             <Header
               logo={
-                <a href="#" aria-label="Página inicial" className="inline-flex rounded-xl transition-opacity hover:opacity-70 focus-visible:outline-2 focus-visible:outline-offset-[3px] focus-visible:outline-ink">
+                <a href="#header" aria-label="Página inicial" className="inline-flex rounded-xl transition-opacity hover:opacity-70 focus-visible:outline-2 focus-visible:outline-offset-[3px] focus-visible:outline-ink">
                   {/* entrada como no novo.creeta: símbolo, depois o nome; espera a Cortina subir (2200 + 700ms) */}
                   <Lockup key={cortinaKey} entrance entranceDelay={2700} variant="horizontal" size="md" name={marca.name} logo={marca.logo} wordmark={marca.wordmark} wordmarkRatio={marca.wordmarkRatio} symbolSide={marca.symbolSide} />
                 </a>
@@ -475,16 +475,16 @@ export function App() {
               cta={<Button variant="accent" size="sm">WhatsApp</Button>}
               localeSwitcher={<span className={CHIP}>{IcPin} PT</span>}
               items={[
-                { label: "Início", href: "#", active: true, icon: <IconHome size={18} strokeWidth={1.75} />, iconOnly: true },
-                { label: "Serviços", href: "#", children: [
-                  { label: "Primeiro serviço", href: "#", icon: IcWind },
-                  { label: "Segundo serviço", href: "#", icon: IcUsers },
-                  { label: "Terceiro serviço", href: "#", icon: IcSearch },
-                ], seeAll: { label: "Ver todos os serviços", href: "#" } },
-                { label: "Sobre", href: "#" },
-                { label: "Equipe", href: "#" },
-                { label: "Depoimentos", href: "#" },
-                { label: "Contato", href: "#" },
+                { label: "Início", href: "#header", active: true, icon: <IconHome size={18} strokeWidth={1.75} />, iconOnly: true },
+                { label: "Serviços", href: "#header", children: [
+                  { label: "Primeiro serviço", href: "#header", icon: IcWind },
+                  { label: "Segundo serviço", href: "#header", icon: IcUsers },
+                  { label: "Terceiro serviço", href: "#header", icon: IcSearch },
+                ], seeAll: { label: "Ver todos os serviços", href: "#header" } },
+                { label: "Sobre", href: "#header" },
+                { label: "Equipe", href: "#header" },
+                { label: "Depoimentos", href: "#header" },
+                { label: "Contato", href: "#header" },
               ]}
             />
             <div className="p-6 text-sm text-ink-soft">Passe o mouse em "Serviços" para o dropdown. "Início" é só a casa; o rótulo fica para o leitor de tela. Marca no tamanho do header dos sites (símbolo de 44px), com a entrada animada (símbolo, depois o nome) — "Rever a cortina" repete.</div>
@@ -516,19 +516,20 @@ export function App() {
               <div className="h-4 w-3/5 rounded-full bg-ink/[0.09]" />
               <div className="h-4 w-2/3 rounded-full bg-ink/[0.09]" />
             </div>
+            {/* Todas as páginas em ordem de importância: a barra mostra as que
+                couberem (64px por aba) e o resto vai pro "Mais" — no celular
+                4 + Mais, no tablet todas. A saída externa fica sempre no Mais. */}
             <BottomNav
               embedded
-              items={[
-                { label: "Início", href: "#", icon: IcHome, active: true },
-                { label: "Serviços", href: "#", icon: IcWind },
-                { label: "Sobre", href: "#", icon: IcPulse },
-                { label: "Equipe", href: "#", icon: IcUsers },
+              pages={[
+                { label: "Início", href: "#mobile", Icon: IconHome, active: true },
+                { label: "Serviços", href: "#mobile", Icon: IconWind },
+                { label: "Sobre", href: "#mobile", Icon: IconActivity },
+                { label: "Equipe", href: "#mobile", Icon: IconUsers },
+                { label: "Depoimentos", href: "#mobile", Icon: IconMessage },
+                { label: "Contato", href: "#mobile", Icon: IconMapPin },
               ]}
-              more={{ items: [
-                { label: "Depoimentos", href: "#", icon: IcChat },
-                { label: "Contato", href: "#", icon: IcPin },
-                { label: "Site parceiro", href: "#", icon: IcCap, description: "abre em outro site", external: true },
-              ] }}
+              extras={[{ label: "Site parceiro", href: "https://exemplo.com.br", Icon: IconGraduationCap, external: true }]}
             />
           </div>
         </Section>
@@ -558,9 +559,9 @@ export function App() {
           <Footer
             logo={<Lockup variant="horizontal" size="sm" name={marca.name} logo={marca.logo} wordmark={marca.wordmark} wordmarkRatio={marca.wordmarkRatio} symbolSide={marca.symbolSide} />}
             tagline={marca.tagline}
-            columns={[{ title: "Navegação", items: ["Início", "Para famílias", "Depoimentos"].map((l) => <a key={l} href="#" className="hover:text-ink-soft">{l}</a>) },
-                      { title: "", items: ["Tratamento", "Profissionais", "Artigos"].map((l) => <a key={l} href="#" className="hover:text-ink-soft">{l}</a>) }]}
-            contact={{ title: "Contato", lines: ["Rua João Mathias Cordeiro, 33", "Córrego Grande, Florianópolis — SC"], actions: <Button href="#" variant="link">Ver no Google Maps <IconArrowUpRight size={16} /></Button> }}
+            columns={[{ title: "Navegação", items: ["Início", "Para famílias", "Depoimentos"].map((l) => <a key={l} href="#footer" className="hover:text-ink-soft">{l}</a>) },
+                      { title: "", items: ["Tratamento", "Profissionais", "Artigos"].map((l) => <a key={l} href="#footer" className="hover:text-ink-soft">{l}</a>) }]}
+            contact={{ title: "Contato", lines: ["Rua João Mathias Cordeiro, 33", "Córrego Grande, Florianópolis — SC"], actions: <Button href="#footer" variant="link">Ver no Google Maps <IconArrowUpRight size={16} /></Button> }}
             legal={<>© 2026 TTCAB · Todos os direitos reservados.</>}
             chips={[<span className={CHIP}>{IcChat} WhatsApp</span>, <span className={CHIP}>48 3234.9919</span>, <span className={CHIP}>E-mail</span>]}
           />
@@ -570,20 +571,15 @@ export function App() {
       </main>
 
       <BottomNav
-        items={[
-          { label: "Início", href: "#", icon: IcHome, active: true },
-          { label: "Tratamentos", href: "#", icon: IcWind },
-          { label: "Método", href: "#", icon: IcPulse },
-          { label: "Clínica", href: "#", icon: IcPin },
-          { label: "Equipe", href: "#", icon: IcUsers },
-          { label: "Vídeos", href: "#", icon: IcVideo },
+        pages={[
+          { label: "Início", href: "#mobile", Icon: IconHome, active: true },
+          { label: "Serviços", href: "#mobile", Icon: IconWind },
+          { label: "Sobre", href: "#mobile", Icon: IconActivity },
+          { label: "Equipe", href: "#mobile", Icon: IconUsers },
+          { label: "Depoimentos", href: "#mobile", Icon: IconMessage },
+          { label: "Contato", href: "#mobile", Icon: IconMapPin },
         ]}
-        more={{ items: [
-          { label: "Orientações", href: "#", icon: IcBook },
-          { label: "Contato", href: "#", icon: IcChat },
-          { label: "Estrutura", href: "#", icon: IcBaby },
-          { label: "Cursos para fisioterapeutas", href: "#", icon: IcCap, description: "metodorta.com.br", external: true },
-        ] }}
+        extras={[{ label: "Site parceiro", href: "https://exemplo.com.br", Icon: IconGraduationCap, external: true }]}
       />
     </div>
   );
