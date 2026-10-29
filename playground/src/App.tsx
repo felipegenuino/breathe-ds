@@ -363,7 +363,7 @@ export function App() {
         <div className="border-b border-line py-[clamp(48px,7vw,96px)]">
           <Container>
             <div className="mb-4 text-ink"><BreatheMark size={44} /></div>
-            <p className="mb-3 font-heading text-[0.82rem] font-bold tracking-[0.14em] text-ink-soft uppercase">Breathe · @cuidado-global/ui</p>
+            <p className="mb-3 font-heading text-[0.82rem] font-bold tracking-[0.14em] text-ink-soft uppercase">Breathe · @breathe-ds/ui</p>
             <h1 className="font-heading text-[clamp(2.4rem,6vw,4.5rem)] leading-[1.05] font-semibold tracking-[-0.02em] text-ink">Playground do design system</h1>
             <p className="mt-5 max-w-[56ch] text-lg leading-[1.6] text-ink-body">Componentes reais renderizados com a paleta <b>{pal}</b>. Troque no topo e tudo retematiza — o Breathe é neutro, a cor vem de cada app.</p>
             <button type="button" onClick={() => setCortinaKey((k) => k + 1)} className="mt-6 inline-flex min-h-11 items-center gap-2 rounded-pill border border-line px-5 font-body font-semibold text-ink transition hover:bg-ink/[0.05]"><BreatheMark size={14} animated={false} /> Rever a cortina</button>
@@ -615,7 +615,7 @@ export function App() {
 
       <BottomNav
         pages={PAGE_NAV.map(({ id, label, Icon }) => ({ href: `#${id}`, label, Icon, active: id === activeSection }))}
-        extras={[{ label: "Código no GitHub", href: "https://github.com/felipegenuino/cuidado-global-ui", Icon: IconGraduationCap, external: true }]}
+        extras={[{ label: "Código no GitHub", href: "https://github.com/felipegenuino/breathe-ds", Icon: IconGraduationCap, external: true }]}
       />
     </div>
   );

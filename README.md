@@ -4,7 +4,7 @@
 creeta, ttcab, metodorta…). Os sites **herdam** este pacote e aplicam a
 própria paleta sobre o mesmo contrato.
 
-> Pacote npm: `@cuidado-global/ui` (endereço técnico). **Breathe** é o nome do sistema.
+> Pacote npm: `@breathe-ds/ui` (endereço técnico). **Breathe** é o nome do sistema.
 
 > **v0.1** — tokens + componentes (ver `components/`) + marcas dos sites.
 > Confira tudo renderizado no playground (abaixo).
@@ -25,8 +25,8 @@ No `globals.css` do site:
 
 ```css
 @import "tailwindcss";
-@import "@cuidado-global/ui/theme.css";
-@import "@cuidado-global/ui/tokens/ttcab.css";   /* ou defina os --cg-* inline */
+@import "@breathe-ds/ui/theme.css";
+@import "@breathe-ds/ui/tokens/ttcab.css";   /* ou defina os --cg-* inline */
 ```
 
 Depois, as utilitárias do Tailwind usam os papéis: `bg-surface`, `text-ink`,
@@ -120,8 +120,8 @@ marca (`public/brand`) dos repositórios, separados em dois componentes para a
 
 | Site | Símbolo | Wordmark | Import |
 |---|---|---|---|
-| TTCAB | `TtcabSymbol` (mãe + bebê, laranja `#F6A22A`) | `TtcabWordmark` (caixa-alta, `currentColor`) | `@cuidado-global/ui/components/marks/ttcab` |
-| Creeta | `CreetaSymbol` (três ondas + ponto, cores da marca) | `CreetaWordmark` (minúsculas, `currentColor`) | `@cuidado-global/ui/components/marks/creeta` |
+| TTCAB | `TtcabSymbol` (mãe + bebê, laranja `#F6A22A`) | `TtcabWordmark` (caixa-alta, `currentColor`) | `@breathe-ds/ui/components/marks/ttcab` |
+| Creeta | `CreetaSymbol` (três ondas + ponto, cores da marca) | `CreetaWordmark` (minúsculas, `currentColor`) | `@breathe-ds/ui/components/marks/creeta` |
 
 ```tsx
 <Cortina logo={<TtcabSymbol />} name={<TtcabWordmark />} wordmarkRatio={TTCAB_LOCKUP.wordmarkPerSymbol} tagline="…" />

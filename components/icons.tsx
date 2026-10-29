@@ -1,7 +1,7 @@
 /**
  * Biblioteca de ícones do Breathe. Re-exporta a lib INTEIRA do lucide-react
  * (centenas de ícones), para você escolher qualquer um ao montar interfaces:
- *   import { Heart, Wind, Baby } from "@cuidado-global/ui/components/icons";
+ *   import { Heart, Wind, Baby } from "@breathe-ds/ui/components/icons";
  * Os ícones usam `currentColor` e aceitam `size`/`strokeWidth`. Os componentes
  * do DS recebem ícones por slot, então injete o que quiser.
  */
