@@ -29,6 +29,14 @@ type Props = {
   text?: ReactNode;
   /** Top-left corner, over dark glass: a MediaCardBadge (icon, label, address). */
   badge?: ReactNode;
+  /** Small line above the title ("Who created the method"), lighter. */
+  eyebrow?: ReactNode;
+  /** Text link line under the text ("See the team ↗"). The card is already the
+   *  link, so this is a label with the arrow, not a second anchor. */
+  linkLabel?: ReactNode;
+  /** The round arrow button top-right. Off for the portrait card, which says
+   *  where it goes with `linkLabel` instead. */
+  arrowButton?: boolean;
   /** h2 on list pages, h3 inside a section that already has an h2. */
   headingLevel?: "h2" | "h3";
   /** Background media rendered to cover the card: an <img>, a video element or
@@ -70,6 +78,9 @@ export function MediaCard({
   title,
   text,
   badge,
+  eyebrow,
+  linkLabel,
+  arrowButton = true,
   headingLevel: Heading = "h3",
   media,
   src,
@@ -115,19 +126,30 @@ export function MediaCard({
       {video && <CardVideo {...video} className="absolute inset-0 -z-20" />}
       <span aria-hidden="true" className="absolute inset-0 -z-10 bg-gradient-to-t from-ink via-ink/75 via-40% to-ink/15" />
 
-      <div className="flex items-start justify-between gap-3">
-        <div>{badge}</div>
-        <span
-          aria-hidden="true"
-          className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-card text-ink transition-colors duration-200 group-hover:bg-action group-hover:text-on-action motion-reduce:transition-none"
-        >
-          <svg viewBox="0 0 24 24" width={20} height={20} className="cg-arrow-go" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M7 17 17 7M9 7h8v8" /></svg>
-        </span>
-      </div>
+      {(badge || arrowButton) && (
+        <div className="flex items-start justify-between gap-3">
+          <div>{badge}</div>
+          {arrowButton && (
+            <span
+              aria-hidden="true"
+              className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-card text-ink transition-colors duration-200 group-hover:bg-action group-hover:text-on-action motion-reduce:transition-none"
+            >
+              <svg viewBox="0 0 24 24" width={20} height={20} className="cg-arrow-go" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M7 17 17 7M9 7h8v8" /></svg>
+            </span>
+          )}
+        </div>
+      )}
 
-      <div>
-        <Heading className="font-heading text-2xl font-medium leading-tight">{title}</Heading>
-        {text && <p className="mt-2 text-sm leading-relaxed text-white/85">{text}</p>}
+      <div className={badge || arrowButton ? "" : "mt-auto"}>
+        {eyebrow && <span className="block text-sm text-white/75">{eyebrow}</span>}
+        <Heading className={`font-heading text-2xl font-medium leading-tight ${eyebrow ? "mt-1" : ""}`}>{title}</Heading>
+        {text && <p className="m-0 mt-2 text-sm leading-relaxed text-white/85">{text}</p>}
+        {linkLabel && (
+          <span className="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold underline underline-offset-4">
+            {linkLabel}
+            <svg aria-hidden="true" viewBox="0 0 24 24" width={16} height={16} className="cg-arrow-go" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M7 17 17 7M9 7h8v8" /></svg>
+          </span>
+        )}
       </div>
     </L>
   );

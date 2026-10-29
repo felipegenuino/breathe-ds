@@ -202,6 +202,8 @@ from color, not from extra markup.
 - **MediaCard**: photo or muted clip behind a title, badge top-left, arrow button
   top-right, whole card a link; Ken Burns zoom on hover (mouse only), clip plays
   while visible or on hover; pause hooks exported for a page-level pause button.
+  The portrait variant ("Who created the method"): `eyebrow` + title + `linkLabel`
+  ("See the team ↗") with `arrowButton={false}`.
 - **VideoStoryCard**: the vertical Instagram-style video card (poster, play
   button, duration badge; gradient grows and the lead appears on hover/focus;
   tap plays with sound in place; optional muted hover preview). Exports the
