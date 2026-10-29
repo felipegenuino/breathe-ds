@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState, type ElementType, type ReactNode } from "react";
 import { initials } from "./Avatar";
 import { ProfessionalModal, type ProfessionalModalLabels, type ProfessionalPresentation } from "./ProfessionalModal";
-import { CollapseRow, LinkRow, RowList } from "./Rows";
+import { CollapseRow, LinkRow, RowList, type RowLink } from "./Rows";
 
 export type ProfessionalPhoto = {
   src: string;
@@ -22,30 +22,49 @@ export type ProfessionalLiving = {
   poster: string;
 };
 
-export type ProfessionalGuidance = { label: ReactNode; href: string };
+/**
+ * One row at the foot of the full card (RowList). Generic: the site decides
+ * what the rows are. On novo.creeta they are "Trajetória" (collapse with the
+ * bio), "Orientações" (collapse with the links the person signs, with
+ * `openOnArrival`) and "Instagram" (link with icon, new tab).
+ */
+export type ProfessionalCardRow =
+  | {
+      kind: "collapse";
+      label: ReactNode;
+      /** sr-only right after the label, e.g. " of Person name". */
+      srLabel?: ReactNode;
+      /** Text content (a string becomes one paragraph). */
+      content?: ReactNode;
+      /** Or a list of links, with the count beside the label. */
+      links?: RowLink[];
+      count?: number;
+      /** Marks the row with `data-cg-open-on-arrival`: the site opens it when
+       *  the page is reached by the card's anchor (creeta's `abre-ao-chegar`). */
+      openOnArrival?: boolean;
+    }
+  | {
+      kind: "link";
+      label: ReactNode;
+      href: string;
+      srLabel?: ReactNode;
+      /** ↗ another page (default) or ↓ an anchor on this page. */
+      arrow?: "go" | "down";
+      /** Opens in a new tab. */
+      external?: boolean;
+      /** Replaces the arrow (an 18px glyph): the Instagram icon, for instance. */
+      icon?: ReactNode;
+    };
 
 export type ProfessionalCardLabels = ProfessionalModalLabels & {
   /** alt of the portrait. */
   portrait: (name: string) => string;
-  trajectory: string;
-  /** The row of the guidance the person signs; the count goes beside it. */
-  guidance: string;
-  /** sr-only, right after "Trajectory" and "Guidance": " of {name}". */
-  of: (name: string) => string;
-  instagram: string;
-  /** sr-only, right after "Instagram". */
-  instagramOf: (name: string) => string;
   /** The small badge on the medium card's photo, on hover ("Conhecer"). */
   meet: string;
 };
 
 const EN: Omit<ProfessionalCardLabels, keyof ProfessionalModalLabels> = {
   portrait: (name) => `Portrait of ${name}`,
-  trajectory: "Trajectory",
-  guidance: "Guidance",
-  of: (name) => ` of ${name}`,
-  instagram: "Instagram",
-  instagramOf: (name) => ` of ${name} (opens in a new tab)`,
   meet: "Meet",
 };
 
@@ -230,14 +249,14 @@ type Props = {
   living?: ProfessionalLiving;
   /** With a presentation video the portrait opens the modal (ProfessionalModal). */
   presentation?: ProfessionalPresentation;
-  /** The bio: a string (one paragraph) or your own paragraphs. Opens in place
-   *  under "Trajectory". */
+  /** The full bio, shown in the presentation modal: a string (one paragraph)
+   *  or your own paragraphs. To show it on the card too, put it in a
+   *  `rows` collapse. */
   bio?: ReactNode;
-  /** The guidance pages the person signs: the row lists them, with the count. */
-  guidance?: ProfessionalGuidance[];
-  /** Instagram profile URL (outbound row). */
-  instagram?: string;
-  /** Anchor of the card (the authorship link of a guidance page lands here). */
+  /** The rows at the foot of the card (full size): collapses with text or
+   *  links, links with an arrow or an icon. See ProfessionalCardRow. */
+  rows?: ProfessionalCardRow[];
+  /** Anchor of the card (a link elsewhere on the site lands here). */
   id?: string;
   /** `full` (default): the team-page card. `medium`: the home's tile — a
    *  white card with the 3:4 portrait and the name, a link to the full card
@@ -264,13 +283,14 @@ type Props = {
  * (components/professional-card.tsx) with the Breathe tokens. A `card`
  * surface with the portrait on top (plain, living, or opening the video
  * presentation), the name, role and registration, then one list of equal
- * rows separated by hairlines: Trajectory (opens the bio in place), Guidance
- * (opens the links in place) and Instagram (outbound). Six open bios used to
- * make the page 6,700px tall on a phone, hence the rows.
+ * rows separated by hairlines (`rows`): collapses that open in place (a text,
+ * or a list of links with the count) and links (arrow or icon). On creeta:
+ * Trajectory, Guidance and Instagram. Six open bios used to make the page
+ * 6,700px tall on a phone, hence the collapses.
  *
- * The Guidance row carries `data-cg-open-on-arrival`: the site opens it when
- * the page is reached by the card's anchor (creeta's `abre-ao-chegar.tsx`,
- * not part of the DS).
+ * A collapse with `openOnArrival` carries `data-cg-open-on-arrival`: the site
+ * opens it when the page is reached by the card's anchor (creeta's
+ * `abre-ao-chegar.tsx`, not part of the DS).
  */
 export function ProfessionalCard({
   name,
@@ -281,8 +301,7 @@ export function ProfessionalCard({
   living,
   presentation,
   bio,
-  guidance,
-  instagram,
+  rows,
   id,
   size = "full",
   href = "#",
@@ -397,26 +416,30 @@ export function ProfessionalCard({
             <p className="mt-1 text-xs text-ink/80">{registration}</p>
           </>
         )}
-        {/* Trajectory, guidance and Instagram: one list, of equal rows. They
-            used to be three things with three designs (an open button, a loose
-            list of links and a magenta link at the end). The first two open in
-            place: six open bios made 6,700px of page on a phone. */}
-        <RowList className="mt-4">
-          {bio && (
-            <CollapseRow label={t.trajectory} srLabel={t.of(name)}>
-              {bio}
-            </CollapseRow>
-          )}
-
-          {/* What the person signs: it is what makes this card the destination
-              of the authorship link of the guidance pages. Whoever arrives by
-              that link finds this block open (site-side, data-cg-open-on-arrival). */}
-          {guidance && guidance.length > 0 && (
-            <CollapseRow label={t.guidance} srLabel={t.of(name)} links={guidance} linkComponent={L} data-cg-open-on-arrival="" />
-          )}
-
-          {instagram && <LinkRow label={t.instagram} srLabel={t.instagramOf(name)} href={instagram} external />}
-        </RowList>
+        {/* One list of equal rows. On creeta they used to be three things
+            with three designs (an open button, a loose list of links and a
+            magenta link at the end); the collapses open in place. */}
+        {rows && rows.length > 0 && (
+          <RowList className="mt-4">
+            {rows.map((row, i) =>
+              row.kind === "collapse" ? (
+                <CollapseRow
+                  key={i}
+                  label={row.label}
+                  srLabel={row.srLabel}
+                  count={row.count}
+                  links={row.links}
+                  linkComponent={L}
+                  {...(row.openOnArrival ? { "data-cg-open-on-arrival": "" } : {})}
+                >
+                  {row.content}
+                </CollapseRow>
+              ) : (
+                <LinkRow key={i} label={row.label} srLabel={row.srLabel} href={row.href} arrow={row.arrow} external={row.external} icon={row.icon} linkComponent={L} />
+              ),
+            )}
+          </RowList>
+        )}
       </div>
     </As>
   );

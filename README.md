@@ -200,9 +200,10 @@ from color, not from extra markup.
   replace the arrow). The ProfessionalCard is built on them.
 - **ProfessionalCard** / **ProfessionalModal** / **CaptionBand**: the team card of
   novo.creeta — portrait (plain, living clip on hover, or with the "Presentation"
-  chip), name, role, registration (**always**: COFFITO 414/2012), trajectory /
-  guidance / Instagram rows; the modal plays the presentation with sound, the
-  live caption band (active WebVTT cue) above the name, and the full bio.
+  chip), name, role, registration (**always**: COFFITO 414/2012) and generic
+  `rows` (collapse with text or links, link with arrow or icon — on creeta:
+  trajectory, guidance, Instagram); the modal plays the presentation with sound,
+  the live caption band (active WebVTT cue) above the name, and the full `bio`.
   Three sizes (`size`): `full` (team page), `medium` (the home's tile — 3:4
   portrait, name, "Meet" badge on hover, a link to the full card; `shortName`,
   `href`) and `micro` (the "who treats" row — 72px photo, name, role, link).

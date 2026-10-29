@@ -362,7 +362,7 @@ export function App() {
   const [mapW, setMapW] = useState<"full" | "half">("half");
   const [vs, setVs] = useState({ speaker: true, lead: true, preview: false, watched: false, layout: "stacked" as "stacked" | "side" });
   const [tc, setTc] = useState({ link: true, two: false, photo: false });
-  const [pc, setPc] = useState({ photo: true, living: true, presentation: true, captions: true, bio: true, guidance: true, instagram: true });
+  const [pc, setPc] = useState({ photo: true, living: true, presentation: true, captions: true, collapseText: true, collapseLinks: true, pageLink: false, iconLink: true });
   const [pcSize, setPcSize] = useState<"full" | "medium" | "micro">("full");
   const [mc, setMc] = useState({ badge: true, arrow: true, eyebrow: false, text: true, link: false, media: "clip" as "image" | "clip" | "hover" });
   const [listLinks, setListLinks] = useState(true);
@@ -638,12 +638,12 @@ export function App() {
         </Section>
 
         <Section id="people" title="People — ProfessionalCard · Byline · PersonChip">
-          <p className="mb-6 max-w-[62ch] text-ink-body">The team card of novo.creeta in three sizes. Full (team page): portrait (plain, or a living one that plays on hover, or with the "Presentation" chip that opens a modal with the video, its live captions above the name, and the full bio), name, role, registration — always shown, it is a legal duty for health professionals — and the rows: trajectory, guidance, Instagram. Medium (home): a tile with the 3:4 portrait and the name, linking to the full card, on a Rail — a snapping carousel with a progress bar on the phone, a grid from md. Micro ("who treats" on a treatment page): 72px photo, name and role. Below, who signs or explains a piece of content: Byline and PersonChip. Without a photo, the initials in a bubble.</p>
+          <p className="mb-6 max-w-[62ch] text-ink-body">The team card of novo.creeta in three sizes. Full (team page): portrait (plain, or a living one that plays on hover, or with the "Presentation" chip that opens a modal with the video, its live captions above the name, and the full bio), name, role, registration — always shown, it is a legal duty for health professionals — and generic rows: collapses with text or links, links with an arrow or an icon (on creeta: trajectory, guidance, Instagram). Medium (home): a tile with the 3:4 portrait and the name, linking to the full card, on a Rail — a snapping carousel with a progress bar on the phone, a grid from md. Micro ("who treats" on a treatment page): 72px photo, name and role. Below, who signs or explains a piece of content: Byline and PersonChip. Without a photo, the initials in a bubble.</p>
           <div className="mb-5 flex flex-wrap items-center gap-x-5 gap-y-3 rounded-2xl border border-line bg-surface p-4">
             <span className="text-[0.7rem] font-semibold tracking-[0.12em] text-ink-soft uppercase">ProfessionalCard</span>
             <SegGroup label="Size" value={pcSize} set={setPcSize} options={[["full", "Full"], ["medium", "Medium"], ["micro", "Micro"]]} />
             {(pcSize === "full"
-              ? ([["photo", "Photo"], ["living", "Living portrait"], ["presentation", "Presentation"], ["captions", "Captions"], ["bio", "Trajectory"], ["guidance", "Guidance"], ["instagram", "Instagram"]] as [keyof typeof pc, string][])
+              ? ([["photo", "Photo"], ["living", "Living portrait"], ["presentation", "Presentation"], ["captions", "Captions"], ["collapseText", "Collapse · text"], ["collapseLinks", "Collapse · links"], ["pageLink", "Link · page"], ["iconLink", "Link · icon"]] as [keyof typeof pc, string][])
               : pcSize === "medium"
                 ? ([["photo", "Photo"], ["living", "Living portrait"]] as [keyof typeof pc, string][])
                 : ([["photo", "Photo"]] as [keyof typeof pc, string][])
@@ -690,9 +690,13 @@ export function App() {
               photo={pc.photo ? { src: "/demo/person-poster.jpg" } : undefined}
               living={pc.photo && pc.living ? { src: "/demo/person.mp4", poster: "/demo/person-poster.jpg" } : undefined}
               presentation={pc.presentation ? { src: "/demo/person.mp4", poster: "/demo/person-poster.jpg", duration: 10, captions: pc.captions ? { src: "/demo/person.vtt", srcLang: "en", label: "English" } : undefined } : undefined}
-              bio={pc.bio ? "A paragraph of bio: where the person trained, what they work with, and the approach they bring to the care." : undefined}
-              guidance={pc.guidance ? [{ label: "Guidance title", href: "#people" }, { label: "Another guidance title", href: "#people" }] : undefined}
-              instagram={pc.instagram ? "https://instagram.com" : undefined}
+              bio="A paragraph of bio: where the person trained, what they work with, and the approach they bring to the care."
+              rows={[
+                ...(pc.collapseText ? [{ kind: "collapse" as const, label: "Collapse with text", srLabel: " of Person name", content: "A paragraph of bio: where the person trained, what they work with, and the approach they bring to the care." }] : []),
+                ...(pc.collapseLinks ? [{ kind: "collapse" as const, label: "Collapse with links", srLabel: " of Person name", links: [{ label: "Link to another page", href: "#people" }, { label: "Another link", href: "#people" }], openOnArrival: true }] : []),
+                ...(pc.pageLink ? [{ kind: "link" as const, label: "Link to a page", href: "#people" }] : []),
+                ...(pc.iconLink ? [{ kind: "link" as const, label: "Link with icon", srLabel: " (opens in a new tab)", href: "https://instagram.com", external: true, icon: <IconInstagram size={18} aria-hidden="true" /> }] : []),
+              ]}
             />
           </div>
           <div className="grid gap-8 lg:grid-cols-2">
