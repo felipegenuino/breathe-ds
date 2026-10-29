@@ -51,11 +51,13 @@ export function Byline({ people, eyebrow, action, joiners = { sep: ", ", last: "
       )}
     </span>
   ));
+  // min-h-11 keeps the 44px tap target; -my-3 takes those extra 12px out of the
+  // flow, so when the link wraps under the names the two lines read as one caption
   const actionEl = action ? (
     <L
       href={action.href}
       {...(action.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-      className="inline-flex min-h-11 items-center gap-1 font-semibold text-ink underline underline-offset-4"
+      className="-my-3 inline-flex min-h-11 items-center gap-1 font-semibold text-ink underline underline-offset-4"
     >
       {action.label}
       <ArrowUpRight />
