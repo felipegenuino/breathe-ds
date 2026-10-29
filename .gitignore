@@ -9,3 +9,6 @@ playground/public/demo/*.webm
 playground/public/demo/*.jpg
 playground/public/demo/*.jpeg
 playground/public/demo/*.png
+
+# impeccable hook cache
+.impeccable/hook.cache.json

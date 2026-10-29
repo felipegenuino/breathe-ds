@@ -1,0 +1,10 @@
+{
+  "detector": {
+    "ignoreRules": [
+      "cream-palette",
+      "hero-eyebrow-chip"
+    ],
+    "ignoreFiles": [],
+    "ignoreValues": []
+  }
+}
