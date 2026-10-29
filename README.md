@@ -231,7 +231,7 @@ from color, not from extra markup.
 ## Roadmap
 
 - [x] v0.1 — tokens (preset + ttcab/creeta palettes) + preview
-- [x] Accordion (1st component; injectable-deps pattern)
+- [x] Accordion (1st component; injectable-deps pattern) — the Perguntas of novo.creeta: white card (`bg-card`), 22px radius, no border
 - [x] Family typography (Quicksand + Figtree, free fonts only)
 - [ ] **novo.creeta scales** (full reference, approved): **typography** (sizes/weights/line-height)
       **+ spacing/rhythm** (section padding, gaps) **+ default border-radius** → become DS tokens

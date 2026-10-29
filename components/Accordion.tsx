@@ -51,7 +51,8 @@ export function Accordion({ items, defaultOpenId, single = true }: Props) {
         return (
           <div
             key={it.id}
-            className="overflow-hidden rounded-2xl border border-line bg-surface"
+            // the Perguntas of novo.creeta: a white card (bg-card), 22px radius, no border — it reads by tone over the page
+            className="overflow-hidden rounded-[22px] bg-card px-5 md:px-7"
           >
             <h3 className="m-0">
               <button
@@ -60,13 +61,13 @@ export function Accordion({ items, defaultOpenId, single = true }: Props) {
                 aria-expanded={isOpen}
                 aria-controls={panelId}
                 onClick={() => toggle(it.id)}
-                className="flex w-full items-center justify-between gap-4 px-[clamp(18px,3vw,28px)] py-[clamp(16px,2.4vw,22px)] text-left font-heading text-[1.05rem] font-semibold text-ink transition-colors focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ink"
+                className="flex min-h-14 w-full items-center justify-between gap-4 py-1 text-left font-heading text-lg font-medium text-ink transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink"
               >
                 <span>{it.title}</span>
                 <svg
                   aria-hidden="true"
                   viewBox="0 0 24 24"
-                  className={`h-5 w-5 flex-none text-ink-soft transition-transform duration-200 ease-[cubic-bezier(.2,.8,.2,1)] motion-reduce:transition-none ${
+                  className={`h-5 w-5 flex-none text-ink transition-transform duration-200 ease-[cubic-bezier(.2,.8,.2,1)] motion-reduce:transition-none ${
                     isOpen ? "rotate-180" : ""
                   }`}
                   fill="none"
@@ -92,7 +93,7 @@ export function Accordion({ items, defaultOpenId, single = true }: Props) {
             >
               <div className="min-h-0 overflow-hidden">
                 {/* full-width item, reading-width body (max-w-2xl), as the Perguntas of novo.creeta */}
-                <div className="max-w-2xl px-[clamp(18px,3vw,28px)] pt-0 pb-[clamp(18px,2.6vw,26px)] text-ink-body">
+                <div className="max-w-2xl pb-5 leading-relaxed text-ink/80">
                   {it.content}
                 </div>
               </div>
