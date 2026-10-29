@@ -20,6 +20,7 @@ import { InfoCard } from "../../components/InfoCard";
 import { VideoStoryCard } from "../../components/VideoStoryCard";
 import { TestimonialCard } from "../../components/TestimonialCard";
 import { MediaCard, MediaCardBadge } from "../../components/MediaCard";
+import { MapCard } from "../../components/MapCard";
 import { PersonChip } from "../../components/PersonChip";
 import { Breadcrumb } from "../../components/Breadcrumb";
 import { BottomNav } from "../../components/BottomNav";
@@ -323,6 +324,7 @@ const PAGE_NAV = [
   { id: "anchornav", label: "AnchorNav", Icon: IconMapPin },
   { id: "cards", label: "Cards", Icon: IconBook },
   { id: "videos", label: "Videos", Icon: IconVideo },
+  { id: "map", label: "Map", Icon: IconMapPin },
   { id: "hero", label: "Hero", Icon: IconVideo },
   { id: "cta", label: "CtaCard", Icon: IconMessage },
   { id: "footer", label: "Footer", Icon: IconMessage },
@@ -393,6 +395,7 @@ export function App() {
             { label: "AnchorNav", href: "#anchornav", icon: IcPin },
             { label: "Cards (InfoCard, MediaCard)", href: "#cards", icon: IcBook },
             { label: "Videos (VideoStoryCard, TestimonialCard)", href: "#videos", icon: IcVideo },
+            { label: "MapCard", href: "#map", icon: IcPin },
             { label: "PageVideoHero", href: "#hero", icon: IcVideo },
             { label: "CtaCard (final call)", href: "#cta", icon: IcChat },
             { label: "Footer", href: "#footer", icon: IcPin },
@@ -761,6 +764,26 @@ export function App() {
           <TestimonialCard as="li" quote="A short testimonial quote, two or three sentences long, in the voice of the person who wrote it." author="Author name" link={{ href: "https://github.com/felipegenuino/breathe-ds", label: "Outbound link" }} video={{ src: "/demo/clip.mp4", poster: "/demo/clip-poster.jpg", description: "What the clip shows (1 min 39 s)" }} />
           <TestimonialCard as="li" quote="A shorter quote." author="Author name" link={{ href: "https://github.com/felipegenuino/breathe-ds", label: "Outbound link" }} video={{ src: "/demo/clip.mp4", poster: "/demo/clip-poster.jpg", description: "What the clip shows (1 min 39 s)" }} />
         </ul>
+      </Section>
+
+      <Section id="map" title="MapCard">
+        <p className="mb-6 max-w-[62ch] text-ink-body">The Mapa of novo.creeta: a still preview of the map fading into the card, the address, "View the map" and the outbound "Directions" link. Google is only called after the tap (cookies, weight). Open, the map fills the card with the same close bar as the hero video.</p>
+        <div className="grid gap-3 md:grid-cols-2 md:gap-5">
+          <MapCard
+            address="Street name, 33"
+            locality="Neighbourhood, City/ST"
+            preview={{ src: "/demo/map-preview.webp", width: 2200, height: 517 }}
+            embedSrc="https://www.google.com/maps?q=Florian%C3%B3polis&z=12&output=embed"
+            directionsHref="https://www.google.com/maps/search/?api=1&query=Florian%C3%B3polis"
+          />
+          <MapCard
+            address="Street name, 33"
+            preview={{ src: "/demo/map-preview.webp", width: 2200, height: 517 }}
+            embedSrc="https://www.google.com/maps?q=Florian%C3%B3polis&z=12&output=embed"
+            directionsHref="https://www.google.com/maps/search/?api=1&query=Florian%C3%B3polis"
+            caption="Caption on the close bar"
+          />
+        </div>
       </Section>
 
       <Section id="cta" title="CtaCard — final call">

@@ -11,6 +11,7 @@ abaixo para o demo rodar:
 | `clip-poster.jpg`   | Capa do Loop         | 16:9, 1 frame do clip                  |
 | `clip-vertical.mp4` | VideoStoryCard (9:16) | retrato 720×1280, mudo, recorte central do clip gerado |
 | `clip-poster-vertical.jpg` | Capa do vertical | 9:16, 1 frame                          |
+| `map-preview.webp`  | MapCard (prévia parada) | captura larga do mapa (2200×517), alfinete perto do topo/meio |
 
 Clipes ambiente devem ser **genéricos** (sem pessoa real identificável) —
 preferir stock livre ou geração por IA. Os que estão aqui são o clipe gerado

@@ -30,6 +30,7 @@
     "./components/VideoStoryCard": "./components/VideoStoryCard.tsx",
     "./components/TestimonialCard": "./components/TestimonialCard.tsx",
     "./components/MediaCard": "./components/MediaCard.tsx",
+    "./components/MapCard": "./components/MapCard.tsx",
     "./components/VideoInviteCard": "./components/VideoInviteCard.tsx",
     "./components/Text": "./components/Text.tsx",
     "./components/Card": "./components/Card.tsx",

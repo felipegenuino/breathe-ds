@@ -208,6 +208,10 @@ from color, not from extra markup.
   page-level pause contract (`CARD_VIDEOS_PAUSE_EVENT` / `CARD_VIDEOS_PAUSED_ATTR`).
 - **TestimonialCard**: clip with a play button on the left, quote + author +
   outbound link on the right ("Famílias contam").
+- **MapCard**: the Mapa of novo.creeta — a still preview fading into the card,
+  the address, "View the map" and the outbound "Directions" link; Google is only
+  called after the tap (no consent banner, lighter page). Open, the map fills
+  the card with the same close bar as the hero video.
 - **CtaCard** / **VideoInviteCard**: the final call of a novo.creeta page — white
   card (title, lead, CTA slot) beside a video card: muted loop with the speaker's
   name over it, pause control, play button that plays the full video with sound.
