@@ -332,6 +332,7 @@ export function App() {
   // Mobile demo frame: phone (390) is the minimum; tablet (768) still shows the BottomNav (hidden only at lg+).
   const [mobW, setMobW] = useState<"phone" | "tablet">("phone");
   // optional parts of the page footer (the footer is its own demo)
+  const [ftLayout, setFtLayout] = useState<"card" | "full">("card");
   const [ft, setFt] = useState({ quote: true, pages: true, hours: true, directions: true, notice: true, contacts: true, languages: false, credits: true });
   const brand = BRAND_BY_PALETTE[pal] ?? BRAND_BY_PALETTE.Neutral;
   useEffect(() => {
@@ -616,6 +617,7 @@ export function App() {
         <Container>
           <div className="mt-16 flex flex-wrap items-center gap-x-5 gap-y-3 rounded-2xl border border-line bg-surface p-4 lg:mt-24">
             <span className="text-[0.7rem] font-semibold tracking-[0.12em] text-ink-soft uppercase">Footer parts</span>
+            <SegGroup label="Layout" value={ftLayout} set={setFtLayout} options={[["card", "Card"], ["full", "Full width"]]} />
             {/* grouped by region of the footer, left to right, top to bottom */}
             {([
               ["Brand column", [["quote", "Sentence"]]],
@@ -635,6 +637,7 @@ export function App() {
         </Container>
         <Footer
           className="!mt-6"
+          layout={ftLayout}
           logo={<Lockup variant="horizontal" size="md" name="Breathe" tagline="Design system of the Cuidado Global family" />}
           brandName="Breathe DS — design system of the Cuidado Global family"
           quote={ft.quote ? "Token decisions by role and measured contrast, never by eye." : undefined}

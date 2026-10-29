@@ -49,6 +49,9 @@ type Props = {
   /** Breakpoint from which the BottomNav is gone (md on creeta, lg on ttcab):
    *  below it the card keeps room at the bottom for the floating bar. */
   navHiddenFrom?: "md" | "lg";
+  /** `card` (novo.creeta): white rounded card floating over the page color.
+   *  `full`: edge to edge like the Header, same inner width (1600px). */
+  layout?: "card" | "full";
   labels?: Partial<Labels>;
   className?: string;
 };
@@ -91,19 +94,30 @@ export function Footer({
   credits,
   linkComponent,
   navHiddenFrom = "lg",
+  layout = "card",
   labels,
   className = "",
 }: Props) {
   const L: ElementType = linkComponent ?? "a";
   const t = { ...EN, ...labels };
   // whole class names: Tailwind only generates what it finds written in the code
-  const outer = navHiddenFrom === "md" ? "mx-3 mb-28 mt-16 md:mx-6 md:mb-6 md:mt-24" : "mx-3 mb-28 mt-16 lg:mx-6 lg:mb-6 lg:mt-24";
+  const outer =
+    layout === "full"
+      ? navHiddenFrom === "md"
+        ? "mt-16 pb-28 md:mt-24 md:pb-14"
+        : "mt-16 pb-28 lg:mt-24 lg:pb-14"
+      : navHiddenFrom === "md"
+        ? "mx-3 mb-28 mt-16 rounded-[32px] md:mx-6 md:mb-6 md:mt-24"
+        : "mx-3 mb-28 mt-16 rounded-[32px] lg:mx-6 lg:mb-6 lg:mt-24";
+  // full: the padding lives on the inner box, so the content aligns with the Header's (px-4 md:px-6)
+  const pad = layout === "full" ? "py-10 md:py-14" : "px-6 py-10 md:px-6 md:py-14";
+  const inner = layout === "full" ? "mx-auto max-w-[1600px] px-4 md:px-6" : "mx-auto max-w-6xl";
   const noticeId = notice?.id ?? "footer-notice";
 
   return (
-    <footer className={`${outer} rounded-[32px] bg-white px-6 py-10 text-ink md:px-6 md:py-14 ${className}`}>
+    <footer className={`${outer} ${pad} bg-white text-ink ${className}`}>
       <style>{CSS}</style>
-      <div className="mx-auto max-w-6xl">
+      <div className={inner}>
         <div className={`grid gap-x-10 gap-y-10 ${pages ? "md:grid-cols-[minmax(0,4fr)_minmax(0,5fr)_minmax(0,3fr)]" : "md:grid-cols-[minmax(0,7fr)_minmax(0,5fr)]"}`}>
           <div>
             {logo}
