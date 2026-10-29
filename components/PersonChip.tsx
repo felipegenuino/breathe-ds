@@ -21,7 +21,6 @@ type Props = {
  */
 export function PersonChip({ name, description, photo, avatar, href, linkComponent, className = "" }: Props) {
   const L: ElementType = linkComponent ?? "a";
-  const hasPhoto = Boolean(photo || avatar);
   const inner = (
     <>
       <Avatar name={name} photo={photo} size={44}>{avatar}</Avatar>
@@ -31,7 +30,9 @@ export function PersonChip({ name, description, photo, avatar, href, linkCompone
       </span>
     </>
   );
-  const box = `inline-flex min-h-11 items-center gap-3 rounded-full bg-card py-1.5 ${hasPhoto ? "pl-1.5" : "pl-5"}`;
+  /* The avatar (photo or initials) always sits 6px from the edge, like the
+     arrow bubble on the other side; a chip that ends in text gets 20px (Pill). */
+  const box = "inline-flex min-h-11 items-center gap-3 rounded-full bg-card py-1.5 pl-1.5";
   if (!href) return <p className={`m-0 ${box} pr-5 ${className}`}>{inner}</p>;
   return (
     <L
