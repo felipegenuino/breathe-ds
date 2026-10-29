@@ -6,6 +6,8 @@ import { List } from "./List";
 type IconType = ComponentType<{ size?: number; strokeWidth?: number; className?: string; "aria-hidden"?: boolean | "true" }>;
 
 export type FooterLink = { href: string; label: ReactNode };
+/** A titled column of links, for footers with many pages ("Foundations", "Cards…"). */
+export type FooterLinkGroup = { title: ReactNode; links: FooterLink[] };
 export type FooterContact = { href: string; label: ReactNode; Icon: IconType; external?: boolean };
 export type FooterLanguage = Language;
 
@@ -29,8 +31,11 @@ type Props = {
   /** The brand sentence, shown in quotes under the logo. */
   quote?: ReactNode;
   /** "Pages": title on the first line, links in two columns below. Optional:
-   *  a footer with no internal links drops the column (two-column grid). */
-  pages?: { title: ReactNode; links: FooterLink[] };
+   *  a footer with no internal links drops the column (two-column grid).
+   *  Many links (a dozen or more): pass `groups` instead of `links` — each
+   *  group is a column with a small heading, up to four side by side, so the
+   *  list gets wider instead of taller (the 44px rows stay). */
+  pages?: { title: ReactNode; links?: FooterLink[]; groups?: FooterLinkGroup[] };
   /** "Where we are": address lines, opening hours, and the directions links
    *  ("Directions ↗ · Waze ↗", external). */
   where: { title: ReactNode; address: ReactNode[]; hours?: ReactNode; directions?: FooterLink[] };
@@ -59,6 +64,14 @@ const ArrowUpRight = () => (
 );
 
 const title = "font-heading text-lg font-medium text-ink";
+const groupTitle = "text-xs font-semibold uppercase tracking-[0.12em] text-ink-soft";
+// whole class names: as many columns as groups, up to four
+const groupCols: Record<number, string> = {
+  1: "grid-cols-1",
+  2: "grid-cols-2",
+  3: "grid-cols-2 lg:grid-cols-3",
+  4: "grid-cols-2 lg:grid-cols-4",
+};
 const link =
   "flex min-h-11 items-center text-ink/80 underline decoration-transparent underline-offset-4 transition-[color,text-decoration-color] duration-150 hover:text-ink hover:decoration-ink motion-reduce:transition-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink";
 const strongLink =
@@ -100,12 +113,19 @@ export function Footer({
   // padding leaves room for the floating bar.
   const outer = navHiddenFrom === "md" ? "mt-16 pb-28 md:mt-24 md:pb-14" : "mt-16 pb-28 lg:mt-24 lg:pb-14";
   const noticeId = notice?.id ?? "footer-notice";
+  const groups = pages?.groups?.length ? pages.groups : undefined;
+  // grouped pages need the room: the pages column grows and the brand column shrinks
+  const columns = !pages
+    ? "md:grid-cols-[minmax(0,1fr)_auto]"
+    : groups
+      ? "md:grid-cols-[minmax(0,3.5fr)_minmax(0,6.5fr)_minmax(0,3fr)]"
+      : "md:grid-cols-[minmax(0,4fr)_minmax(0,5fr)_minmax(0,3fr)]";
 
   return (
     <footer className={`${outer} bg-card py-10 text-ink md:py-14 ${className}`}>
       <div className="mx-auto max-w-[1600px] px-4 md:px-6">
         {/* without the pages column, "where" keeps to the right edge (auto width) */}
-        <div className={`grid gap-x-10 gap-y-10 ${pages ? "md:grid-cols-[minmax(0,4fr)_minmax(0,5fr)_minmax(0,3fr)]" : "md:grid-cols-[minmax(0,1fr)_auto]"}`}>
+        <div className={`grid gap-x-10 gap-y-10 ${columns}`}>
           <div>
             {logo}
             {brandName && <p className="sr-only">{brandName}</p>}
@@ -117,13 +137,30 @@ export function Footer({
           {pages && (
             <nav aria-label={t.pagesNav}>
               <h2 className={title}>{pages.title}</h2>
-              <div className="mt-3 grid gap-x-6 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2">
-                {pages.links.map((p, i) => (
-                  <L key={`${i}-${p.href}`} href={p.href} className={link}>
-                    {p.label}
-                  </L>
-                ))}
-              </div>
+              {groups ? (
+                <div className={`mt-5 grid gap-x-6 gap-y-8 ${groupCols[Math.min(groups.length, 4)]}`}>
+                  {groups.map((g, gi) => (
+                    <div key={gi}>
+                      <h3 className={groupTitle}>{g.title}</h3>
+                      <div className="mt-2">
+                        {g.links.map((p, i) => (
+                          <L key={`${i}-${p.href}`} href={p.href} className={link}>
+                            {p.label}
+                          </L>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <div className="mt-3 grid gap-x-6 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2">
+                  {(pages.links ?? []).map((p, i) => (
+                    <L key={`${i}-${p.href}`} href={p.href} className={link}>
+                      {p.label}
+                    </L>
+                  ))}
+                </div>
+              )}
             </nav>
           )}
 

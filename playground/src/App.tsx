@@ -335,6 +335,19 @@ const PAGE_NAV = [
   { id: "footer", label: "Footer", Icon: IconMessage },
 ] as const;
 
+// the footer with many pages: titled columns instead of one long list
+const FOOTER_GROUPS = (
+  [
+    ["Foundations", ["symbol", "tokens", "type", "lockup", "icons"]],
+    ["Navigation", ["header", "mobile", "anchornav", "breadcrumb", "footer"]],
+    ["Content", ["buttons", "accordion", "list", "rows", "timeline", "pills"]],
+    ["Cards & media", ["people", "cards", "videos", "map", "hero", "cta"]],
+  ] as const
+).map(([title, ids]) => ({
+  title,
+  links: ids.map((id) => ({ href: `#${id}`, label: PAGE_NAV.find((p) => p.id === id)!.label })),
+}));
+
 function useScrollSpy(ids: readonly string[]) {
   const [active, setActive] = useState(ids[0]);
   useEffect(() => {
@@ -965,7 +978,7 @@ export function App() {
           logo={<Lockup variant="horizontal" size="md" name="Breathe" tagline="Design system of the Cuidado Global family" />}
           brandName="Breathe DS — design system of the Cuidado Global family"
           quote={ft.quote ? "Token decisions by role and measured contrast, never by eye." : undefined}
-          pages={ft.pages ? { title: "On this page", links: PAGE_NAV.map(({ id, label }) => ({ href: `#${id}`, label })) } : undefined}
+          pages={ft.pages ? { title: "On this page", groups: FOOTER_GROUPS } : undefined}
           where={{
             title: "Where to find it",
             address: ["npm: @breathe-ds/ui", "GitHub: felipegenuino/breathe-ds"],

@@ -244,7 +244,9 @@ from color, not from extra markup.
   name over it, pause control, play button that plays the full video with sound.
 - **Footer**: the site-footer of novo.creeta, by tokens — full width like the
   Header, with the signed brand + sentence, "Pages" (title on the first line, links in two
-  columns), "Where we are" (address, hours, "Directions ↗ · Waze ↗"), an optional
+  columns; with many pages, `pages.groups` — titled columns, up to four side by
+  side, so the list gets wider instead of taller), "Where we are" (address, hours,
+  "Directions ↗ · Waze ↗"), an optional
   notice band on `surface`, the legal line with the **CNPJ (always required in
   the family)** plus the contact chips, and the languages as plain links.
   `navHiddenFrom` keeps room at the bottom for the BottomNav.
