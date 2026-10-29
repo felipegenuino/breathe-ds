@@ -1051,7 +1051,7 @@ export function App() {
               title: "Careful assessment",
               summary: "Every treatment starts with an assessment.",
               text: "Every treatment starts with an assessment. The therapist looks at the breathing pattern, the posture and the quality of movement.",
-              visual: <img src="/demo/person-poster.jpg" alt="" loading="lazy" decoding="async" className="absolute inset-0 h-full w-full object-cover" />,
+              visual: <img src="/demo/assessment.jpg" alt="" loading="lazy" decoding="async" className="absolute inset-0 h-full w-full object-cover object-[50%_30%]" />,
             },
             {
               title: "A plan built for you",
