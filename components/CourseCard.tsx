@@ -1,43 +1,38 @@
 import type { ElementType, ReactNode } from "react";
+import { Clock } from "lucide-react";
 import { Byline, type Person } from "./Byline";
-
-export type CourseRow = {
-  /** Small uppercase label ("When", "Where", "Workload"). */
-  label: ReactNode;
-  /** One or more lines. */
-  lines: ReactNode[];
-  /** A line in the soft tone ("Venue to be confirmed"). */
-  muted?: boolean;
-};
+import { EventFacts, DateBadge, type EventFact } from "./EventFacts";
 
 type Labels = {
-  /** Eyebrow of the instructors' byline ("Who teaches"). */
-  instructors: ReactNode;
-  /** The pill that takes the button's place when the class is sold out. */
+  /** Prefix before the instructors' names ("With"). */
+  with: ReactNode;
+  /** The pill on the title line and the one in the button's place when sold out. */
   soldOut: ReactNode;
 };
-const EN: Labels = { instructors: "Who teaches", soldOut: "Sold out" };
+const EN: Labels = { with: "With", soldOut: "Sold out" };
 
 type Props = {
-  /** Small line above the year: the name of the course ("Basic RTA course"). */
+  /** Small line above the title: the course name ("Basic course"). */
   course?: ReactNode;
-  /** The big number at the top: the year of the class. In action-text, large. */
-  year: ReactNode;
   /** "City · ST". */
   title: ReactNode;
-  /** Small line under the title ("Limited seats"). */
-  note?: ReactNode;
-  /** Definition rows with hairlines between them. */
-  rows: CourseRow[];
-  /** Factual note at the foot, with a dot in the action colour ("Only physiotherapists can attend."). */
-  footnote?: ReactNode;
-  /** Who teaches the class: stacked portraits and the names (a Byline), each
-   *  one a link to the person's card when it has an href. */
+  /** The start, for the calendar tile. */
+  start: { month: ReactNode; day: ReactNode };
+  /** The dates: "3 to 9 November 2026 · 08:30–17:30" and, below, the extra day. */
+  when: { title: ReactNode; subtitle?: ReactNode };
+  /** The venue (a link to the map when it has an href) and the address. */
+  where?: { title: ReactNode; subtitle?: ReactNode; href?: string; external?: boolean };
+  /** "69 class hours". */
+  workload?: ReactNode;
+  /** Seats, as a pill on the title line ("28 seats"). */
+  seats?: ReactNode;
+  /** Who teaches: portraits and names, each a link when it has an href. */
   instructors?: Person[];
-  /** The call to action: a Button `accent` (one hot element per card). */
+  /** Small note at the foot ("Only physiotherapists can attend."). */
+  footnote?: ReactNode;
+  /** The call to action: a Button `accent`, the one full-colour element of the card. */
   action?: ReactNode;
-  /** No seats left: the year goes to the soft tone and a pill takes the
-   *  button's place. The information stays readable (no fading). */
+  /** No seats left: the pill says so and takes the button's place. */
   soldOut?: boolean;
   headingLevel?: "h2" | "h3";
   linkComponent?: ElementType;
@@ -45,60 +40,58 @@ type Props = {
   className?: string;
 };
 
-const ROW = "border-t border-ink/10 py-[18px]";
-const LABEL = "font-body text-[0.8rem] font-medium tracking-[0.22em] text-ink-soft uppercase";
-const VALUE = "mt-1.5 text-base leading-[1.7] text-ink-body";
+const PILL = "inline-flex items-center rounded-pill bg-ink/[0.08] px-2.5 py-0.5 text-xs font-semibold text-ink";
 
 /**
- * Course card of the Cuidado Global family — the class card of ttcab's
- * "Formação" section, by tokens and by the action-colour dose: the year is
- * the only large thing in the action family (action-text), the rows sit on
- * neutral hairlines, the footnote carries a dot in the action colour and the
- * button is the one full-colour element. The card reads by tone (bg-card):
- * no border, no shadow, no lift.
+ * Course card of the Cuidado Global family — the class card (ttcab's
+ * "Formação", the school's class list), in the family's own vocabulary: the
+ * course name as the category line, the city as the title with the seats pill
+ * (as the EventRow), the facts as tiles (the DateBadge for the start, the pin
+ * for the venue, a clock for the workload, as the EventFacts), who teaches as
+ * a Byline, and the Button accent pinned at the foot. By tone: no border, no
+ * shadow, no lift.
  */
-export function CourseCard({ course, year, title, note, rows, footnote, instructors, action, soldOut = false, headingLevel: Title = "h3", linkComponent, labels, className = "" }: Props) {
+export function CourseCard({ course, title, start, when, where, workload, seats, instructors, footnote, action, soldOut = false, headingLevel: Title = "h3", linkComponent, labels, className = "" }: Props) {
   const t = { ...EN, ...labels };
+  const facts: EventFact[] = [{ tile: <DateBadge month={start.month} day={start.day} />, title: when.title, subtitle: when.subtitle }];
+  if (where) facts.push({ tile: "pin", title: where.title, subtitle: where.subtitle, href: where.href, external: where.external });
+  if (workload)
+    facts.push({
+      tile: (
+        <span aria-hidden="true" className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-ink/[0.06] text-ink">
+          <Clock size={20} strokeWidth={2} />
+        </span>
+      ),
+      title: workload,
+    });
+  const pill = soldOut ? t.soldOut : seats;
+
   return (
-    <article className={`flex flex-col rounded-[28px] bg-card p-[clamp(28px,4vw,44px)] ${className}`}>
-      {course && <p className="mb-3 font-body text-[0.8rem] font-medium tracking-[0.22em] text-ink-soft uppercase">{course}</p>}
-      <Title>
-        <span className={`block font-heading text-[clamp(2.7rem,4.5vw,3.5rem)] leading-none font-bold tracking-[-0.02em] ${soldOut ? "text-ink-soft" : "text-action-text"}`}>{year}</span>
-        <span className="mt-2.5 block font-heading text-[clamp(1.25rem,1.9vw,1.5rem)] leading-[1.3] font-bold text-ink">{title}</span>
-        {note && <span className="mt-2 block font-body text-[0.9rem] leading-[1.5] text-ink-soft">{note}</span>}
+    <article className={`flex flex-col rounded-[28px] bg-card p-6 md:p-7 ${className}`}>
+      {course && <p className="mb-2 text-sm font-semibold text-ink-soft">{course}</p>}
+      <Title className="font-heading text-xl font-medium leading-snug text-ink md:text-[1.375rem]">
+        {title}
+        {pill && <span className={`${PILL} ml-2 translate-y-[-2px] align-middle`}>{pill}</span>}
       </Title>
 
-      <dl className="mt-7">
-        {rows.map((r, i) => (
-          <div key={i} className={`${ROW} ${i === rows.length - 1 ? "border-b" : ""}`}>
-            <dt className={LABEL}>{r.label}</dt>
-            <dd className={`${VALUE} ${r.muted ? "text-ink-soft" : ""}`}>
-              {r.lines.map((line, j) => (
-                <span key={j} className="block">{line}</span>
-              ))}
-            </dd>
-          </div>
-        ))}
-      </dl>
+      <EventFacts className="mt-5" facts={facts} linkComponent={linkComponent} />
 
       {instructors && instructors.length > 0 && (
-        <Byline className="mt-6" eyebrow={t.instructors} people={instructors} linkComponent={linkComponent} />
+        <div className="mt-5 flex items-center gap-3 text-sm text-ink-body">
+          <span className="shrink-0 text-ink-soft">{t.with}</span>
+          <Byline people={instructors} linkComponent={linkComponent} className="min-w-0" />
+        </div>
       )}
 
-      {footnote && (
-        <p className="mt-6 flex items-baseline gap-2.5 text-base leading-[1.6] text-ink-soft">
-          <span aria-hidden="true" className="h-[9px] w-[9px] flex-none translate-y-px rounded-full bg-action" />
-          {footnote}
-        </p>
-      )}
+      {footnote && <p className="mt-5 text-sm text-ink-soft">{footnote}</p>}
 
       {/* at the foot: cards side by side align their buttons */}
       {soldOut ? (
-        <p className="mt-auto pt-8">
+        <p className="mt-auto pt-6">
           <span className="inline-flex min-h-11 items-center rounded-pill bg-ink/[0.08] px-5 font-heading font-semibold text-ink">{t.soldOut}</span>
         </p>
       ) : (
-        action && <div className="mt-auto pt-8">{action}</div>
+        action && <div className="mt-auto pt-6">{action}</div>
       )}
     </article>
   );

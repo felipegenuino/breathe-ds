@@ -271,13 +271,12 @@ from color, not from extra markup.
   trail, title, PersonChip and date, the text with its notice, the video beside
   it sticky from md, the transcript open; children for "other posts" and the
   final call).
-- **CourseCard**: the class card (ttcab's "Formação", the school's class list):
-  course name as eyebrow, the year large in `action-text`, title, seats note,
-  definition rows on neutral hairlines, who teaches (a Byline with the stacked
-  portraits), a footnote with a dot in the action colour and the Button
-  `accent` as the one full-colour element, pinned at the foot. `soldOut` tones
-  the year down and puts a pill in the button's place. By tone: no border, no
-  shadow, no lift.
+- **CourseCard**: the class card (ttcab's "Formação", the school's class list)
+  in the family's own vocabulary: course name as the category line, the city as
+  the title with the seats pill, the facts as EventFacts tiles (DateBadge for
+  the start, pin for the venue with its map link, clock for the workload), who
+  teaches as a Byline, the Button `accent` pinned at the foot; `soldOut` puts
+  the pill in the button's place. By tone: no border, no shadow, no lift.
 - **Events** (after Luma and Meetup, for the school's classes): **EventList**
   (days down a dotted rail, each with its rows), **EventRow** (time with an
   accented end, title as the stretched link, organizers, location, who is going

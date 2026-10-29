@@ -1152,46 +1152,39 @@ export function App() {
       </Section>
 
       <Section id="course" title="CourseCard — the class card">
-        <p className="mb-6 max-w-[62ch] text-ink-body">The class card of ttcab's "Formação" section, with what the school's own list adds (the course name, who teaches with the portraits, the seats and the sold-out state), by tokens and by the action-colour dose: the year is the one large element in the action family (action-text), the rows sit on neutral hairlines, the footnote carries a dot in the action colour and the Button accent is the only full-colour element (white on it, one per card). The card reads by tone: no border, no shadow, no lift. Switch to TTCAB to see the vivid orange.</p>
-        <div className="grid gap-6 lg:grid-cols-3">
+        <p className="mb-6 max-w-[62ch] text-ink-body">The class card (ttcab's "Formação", the school's class list) in the family's own vocabulary: the course name as the category line, the city as the title with the seats pill (as the EventRow), the facts as tiles (the calendar tile for the start, the pin for the venue with its map link, a clock for the workload, as the EventFacts), who teaches as a Byline, and the Button accent pinned at the foot, the one full-colour element. "soldOut" puts the pill in the button's place. By tone: no border, no shadow, no lift.</p>
+        <div className="grid gap-3 md:gap-5 lg:grid-cols-3">
           <CourseCard
             course="Course name"
-            year="2026"
             title="City · ST"
-            note="28 seats available"
+            seats="28 seats"
+            start={{ month: "Nov", day: "3" }}
+            when={{ title: "3 to 9 November 2026 · 08:30–17:30", subtitle: "+ 10 November · 08:30–13:00" }}
+            where={{ title: "Venue name", subtitle: "Street name, 1000, auditorium, neighbourhood", href: "https://www.google.com/maps/search/?api=1&query=Florian%C3%B3polis", external: true }}
+            workload="69 class hours"
             instructors={[{ name: "Person name", href: "#people", photo: "/demo/person-avatar.jpg" }]}
-            rows={[
-              { label: "When", lines: ["3 to 9 November 2026 · 08:30–17:30", "+ 10 November 2026 · 08:30–13:00"] },
-              { label: "Where", lines: ["Venue name", "Street name, 1000, auditorium, neighbourhood"] },
-              { label: "Workload", lines: ["69 class hours"] },
-            ]}
             footnote="Only physiotherapists can attend."
             action={<Button variant="accent" href="https://github.com/felipegenuino/breathe-ds" target="_blank" rel="noopener noreferrer">Secure my seat</Button>}
           />
           <CourseCard
             course="Course name"
-            year="2026"
             title="Big city · ST"
-            note="Sold out"
             soldOut
+            start={{ month: "Sep", day: "21" }}
+            when={{ title: "21 to 27 September 2026 · 08:30–17:30", subtitle: "+ 28 September · 08:30–13:30" }}
+            where={{ title: "Venue name", subtitle: "Avenue name, 928, room 1202, neighbourhood" }}
+            workload="69 class hours"
             instructors={[{ name: "Person name", href: "#people", photo: "/demo/person-avatar.jpg" }, { name: "Another person", href: "#people", photo: "/demo/person-avatar.jpg" }, { name: "Third person", href: "#people", photo: "/demo/person-avatar.jpg" }]}
-            rows={[
-              { label: "When", lines: ["21 to 27 September 2026 · 08:30–17:30", "+ 28 September 2026 · 08:30–13:30"] },
-              { label: "Where", lines: ["Venue name", "Avenue name, 928, room 1202, neighbourhood"] },
-              { label: "Workload", lines: ["69 class hours"] },
-            ]}
             footnote="Only physiotherapists can attend."
           />
           <CourseCard
             course="Course name"
-            year="2027"
             title="Another city · ST"
-            note="Limited seats"
-            rows={[
-              { label: "When", lines: ["Dates to be confirmed"], muted: true },
-              { label: "Where", lines: ["Venue to be confirmed"], muted: true },
-              { label: "Workload", lines: ["69 class hours"] },
-            ]}
+            seats="Limited seats"
+            start={{ month: "2027", day: "—" }}
+            when={{ title: "Dates to be confirmed" }}
+            where={{ title: "Venue to be confirmed" }}
+            workload="69 class hours"
             footnote="Only physiotherapists can attend."
             action={<Button variant="accent" href="https://github.com/felipegenuino/breathe-ds" target="_blank" rel="noopener noreferrer">Secure my seat</Button>}
           />
