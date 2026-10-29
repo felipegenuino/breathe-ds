@@ -195,6 +195,11 @@ from color, not from extra markup.
   + "Watch the video ↗"; the person chip (portrait, name, role · registration,
   arrow bubble when it links to the person's card). No photo → initials bubble.
 - **Breadcrumb**: the article trail "← Section › Parent" (current page not listed).
+- **InfoCard**: the white info cards of the clinic page (icon bubble, title,
+  lines/address, note, outbound links "Directions ↗ · Waze ↗").
+- **MediaCard**: photo or muted clip behind a title, badge top-left, arrow button
+  top-right, whole card a link; Ken Burns zoom on hover (mouse only), clip plays
+  while visible or on hover; pause hooks exported for a page-level pause button.
 - **CtaCard** / **VideoInviteCard**: the final call of a novo.creeta page — white
   card (title, lead, CTA slot) beside a video card: muted loop with the speaker's
   name over it, pause control, play button that plays the full video with sound.
