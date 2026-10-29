@@ -640,10 +640,17 @@ export function App() {
 
                 {/* 3. segmented control: the selected segment is the one accent */}
                 <div className="rounded-[28px] bg-card p-6 md:p-8">
-                  <p className="mb-4 text-sm text-ink-soft">Small controls (segmented control, chips, tabs) take ink, not the action color: white on the action color only passes as large text, and the accent Button already sets its label at 18.7px bold for that reason.</p>
-                  <div className="inline-flex flex-wrap gap-1 rounded-pill border border-line p-1">
-                    {["Selected", "Option", "Option", "Option"].map((o, i) => (
-                      <span key={i} className={`inline-flex min-h-10 items-center rounded-pill px-4 text-sm font-semibold ${i === 0 || loud ? (loud ? "bg-action text-on-action" : "bg-ink text-surface") : "text-ink"}`}>{o}</span>
+                  <p className="mb-4 text-sm text-ink-soft">Small controls (segmented control, chips, tabs) never put white on the action color: at 14px it only passes as large text, which is why the accent Button sets its label at 18.7px bold. Two options that pass AA for the selected segment: ink, or the action family through the tint (action-tint behind action-text, with an action-line hairline).</p>
+                  <div className="flex flex-wrap gap-x-8 gap-y-4">
+                    {([["ink", "bg-ink text-surface"], ["action tint", "bg-action-tint text-action-text shadow-[inset_0_0_0_1px_var(--color-action-line)]"]] as const).map(([name, selected]) => (
+                      <div key={name}>
+                        <p className="mb-2 text-xs font-semibold text-ink-soft">Selected · {name}</p>
+                        <div className="inline-flex flex-wrap gap-1 rounded-pill border border-line p-1">
+                          {["Selected", "Option", "Option", "Option"].map((o, i) => (
+                            <span key={i} className={`inline-flex min-h-10 items-center rounded-pill px-4 text-sm font-semibold ${i === 0 || loud ? (loud ? "bg-action text-on-action" : selected) : "text-ink"}`}>{o}</span>
+                          ))}
+                        </div>
+                      </div>
                     ))}
                   </div>
                 </div>
