@@ -510,8 +510,8 @@ export function App() {
         </Section>
 
         <Section id="pills" title="PillList">
-          <PillList title="Conditions we treat" seeAll={{ label: "See all treatments", href: "#pills" }}
-            items={["Asthma and bronchiolitis", "COPD", "Congenital torticollis", "Chronic pain", "Cranial and body asymmetries", "Snoring and sleep apnea", "Migraine, headache and TMJ"].map((label) => ({ label, href: "#pills" }))} />
+          <PillList title="Pill list" seeAll={{ label: "See-all link", href: "#pills" }}
+            items={["Pill", "Pill with a longer label", "Pill", "Another pill", "One more pill", "Short", "Pill with the longest label of the list"].map((label) => ({ label, href: "#pills" }))} />
         </Section>
 
         <Section id="header" title="Header (nav + dropdown)">
