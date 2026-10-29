@@ -285,6 +285,8 @@ const CORTINA_MARCA: Record<string, { name: string; tagline: string; logo?: Reac
 export function App() {
   const [pal, setPal] = useState("Neutro");
   const [cortinaKey, setCortinaKey] = useState(0);
+  // Moldura da demo mobile: celular (390) é o mínimo; tablet (768) ainda mostra o BottomNav (some só no lg+).
+  const [mobW, setMobW] = useState<"phone" | "tablet">("phone");
   const marca = CORTINA_MARCA[pal] ?? CORTINA_MARCA.Neutro;
   useEffect(() => {
     const root = document.documentElement;
@@ -491,7 +493,19 @@ export function App() {
 
         <Section id="mobile" title="Mobile · BottomNav">
           <p className="mb-8 max-w-[60ch] text-ink-body">No celular e no tablet a navegação sai do header e vira esta barra flutuante no rodapé. Aqui ela fica embutida numa moldura para você ver no desktop; abaixo de ~1024px ela aparece de verdade no rodapé da janela. Toque em "Mais" para o painel.</p>
-          <div className="relative mx-auto h-[640px] w-[390px] max-w-full overflow-hidden rounded-[2.5rem] border border-line bg-surface shadow-[0_24px_48px_-24px_rgba(20,71,83,0.35)]">
+          <div className="mb-6">
+            <p className="mb-2 text-[0.7rem] font-semibold tracking-[0.12em] text-ink-soft uppercase">Tamanho</p>
+            <div className="inline-flex rounded-pill border border-line p-0.5">
+              {([["phone", "Celular · 390"], ["tablet", "Tablet · 768"]] as const).map(([m, label]) => (
+                <button key={m} type="button" onClick={() => setMobW(m)} aria-pressed={mobW === m}
+                  className={`rounded-pill px-3 py-1.5 text-xs font-semibold transition-colors ${mobW === m ? "bg-ink text-surface" : "text-ink-soft hover:text-ink"}`}>{label}</button>
+              ))}
+            </div>
+          </div>
+          <div
+            className="relative mx-auto max-w-full overflow-hidden rounded-[2.5rem] border border-line bg-surface shadow-[0_24px_48px_-24px_rgba(20,71,83,0.35)] transition-[width,height] duration-300 ease-cg motion-reduce:transition-none"
+            style={mobW === "tablet" ? { width: 768, height: 820 } : { width: 390, height: 640 }}
+          >
             <div className="flex h-16 items-center justify-between px-5">
               <Lockup variant="horizontal" size="sm" name={marca.name} logo={marca.logo} wordmark={marca.wordmark} wordmarkRatio={marca.wordmarkRatio} symbolSide={marca.symbolSide} />
               <span className={CHIP}>{IcPin} PT</span>
