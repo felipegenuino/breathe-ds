@@ -9,6 +9,7 @@ import { PageVideoHero } from "../../components/PageVideoHero";
 import { Footer } from "../../components/Footer";
 import { Header } from "../../components/Header";
 import { AnchorNav } from "../../components/AnchorNav";
+import { LanguageSwitcher } from "../../components/LanguageSwitcher";
 import { BottomNav } from "../../components/BottomNav";
 import { BreatheMark } from "../../components/BreatheMark";
 import { Curtain } from "../../components/Curtain";
@@ -285,6 +286,13 @@ const BRAND_BY_PALETTE: Record<string, { name: string; tagline: string; logo?: R
 /* Real playground navigation (same as the header): on phones it becomes the
    actual BottomNav at the bottom of the window. The visible section is marked
    by scroll-spy; the bar shows as many as fit and the rest goes to "More". */
+/* Demo languages: they don't translate the playground, the three links point back here. */
+const DEMO_LANGUAGES = [
+  { lang: "pt-BR", label: "Português", href: "#header", current: true },
+  { lang: "en", label: "English", href: "#header" },
+  { lang: "es", label: "Español", href: "#header" },
+];
+
 const PAGE_NAV = [
   { id: "symbol", label: "Symbol", Icon: IconWind },
   { id: "tokens", label: "Tokens", Icon: IconActivity },
@@ -517,22 +525,22 @@ export function App() {
                   <Lockup key={curtainKey} entrance entranceDelay={2700} variant="horizontal" size="md" name={brand.name} logo={brand.logo} wordmark={brand.wordmark} wordmarkRatio={brand.wordmarkRatio} symbolSide={brand.symbolSide} />
                 </a>
               }
-              cta={<Button variant="accent" size="sm">WhatsApp</Button>}
-              localeSwitcher={<span className={CHIP}>{IcPin} EN</span>}
+              cta={<Button variant="accent" size="sm">{IcChat} Call to action</Button>}
+              localeSwitcher={<LanguageSwitcher languages={DEMO_LANGUAGES} />}
               items={[
                 { label: "Home", href: "#header", active: true, icon: <IconHome size={18} strokeWidth={1.75} />, iconOnly: true },
-                { label: "Services", href: "#header", children: [
-                  { label: "First service", href: "#header", icon: IcWind },
-                  { label: "Second service", href: "#header", icon: IcUsers },
-                  { label: "Third service", href: "#header", icon: IcSearch },
-                ], seeAll: { label: "See all services", href: "#header" } },
-                { label: "About", href: "#header" },
-                { label: "Team", href: "#header" },
-                { label: "Testimonials", href: "#header" },
-                { label: "Contact", href: "#header" },
+                { label: "Dropdown", href: "#header", children: [
+                  { label: "Dropdown item", href: "#header", icon: IcWind },
+                  { label: "Dropdown item", href: "#header", icon: IcUsers },
+                  { label: "Dropdown item", href: "#header", icon: IcSearch },
+                ], seeAll: { label: "See-all link", href: "#header" } },
+                { label: "Link", href: "#header" },
+                { label: "Link", href: "#header" },
+                { label: "Link", href: "#header" },
+                { label: "Link", href: "#header" },
               ]}
             />
-            <div className="p-6 text-sm text-ink-soft">Hover "Services" for the dropdown. "Home" is just the house icon; the label stays for screen readers. Brand at the sites' header size (44px symbol), with the animated entrance (symbol, then the name) — "Replay the curtain" repeats it.</div>
+            <div className="p-6 text-sm text-ink-soft">Hover "Dropdown" for the dropdown. "Home" is just the house icon; the label stays for screen readers. Brand at the sites' header size (44px symbol), with the animated entrance (symbol, then the name) — "Replay the curtain" repeats it.</div>
           </div>
         </Section>
 

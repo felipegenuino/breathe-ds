@@ -1,18 +1,12 @@
 import type { ComponentType, ElementType, ReactNode } from "react";
+import { LanguageSwitcher, type Language } from "./LanguageSwitcher";
 
 /** lucide-style icon component (the footer sets the size). */
 type IconType = ComponentType<{ size?: number; strokeWidth?: number; className?: string; "aria-hidden"?: boolean | "true" }>;
 
 export type FooterLink = { href: string; label: ReactNode };
 export type FooterContact = { href: string; label: ReactNode; Icon: IconType; external?: boolean };
-export type FooterLanguage = {
-  /** BCP 47 code for `lang`/`hrefLang` (pt-BR, en, es). */
-  lang: string;
-  /** The language written in itself ("Português", "English", "Español"). */
-  label: ReactNode;
-  href: string;
-  current?: boolean;
-};
+export type FooterLanguage = Language;
 
 type Labels = {
   /** aria-label of the pages nav */
@@ -64,9 +58,6 @@ const ArrowUpRight = () => (
 );
 const CornerDownRight = () => (
   <svg aria-hidden="true" viewBox="0 0 24 24" width={18} height={18} className="mt-[0.2rem] shrink-0" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m15 10 5 5-5 5" /><path d="M4 4v7a4 4 0 0 0 4 4h12" /></svg>
-);
-const Check = () => (
-  <svg aria-hidden="true" viewBox="0 0 24 24" width={15} height={15} fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6 9 17l-5-5" /></svg>
 );
 
 const title = "font-heading text-lg font-medium text-ink";
@@ -208,26 +199,9 @@ export function Footer({
 
         {/* Languages as plain links: they work without JavaScript */}
         {languages && languages.length > 0 && (
-          <nav aria-label={t.languages} className="mt-4 border-t border-ink/10 pt-2">
-            <ul className="flex list-none flex-wrap items-center gap-x-1 gap-y-0">
-              {languages.map((l) => (
-                <li key={l.lang}>
-                  <a
-                    href={l.href}
-                    lang={l.lang}
-                    hrefLang={l.lang}
-                    aria-current={l.current ? "true" : undefined}
-                    className={`inline-flex min-h-11 items-center gap-1.5 rounded-full px-3 text-sm ${
-                      l.current ? "font-semibold text-ink" : "text-ink/80 underline underline-offset-4"
-                    }`}
-                  >
-                    {l.current && <Check />}
-                    {l.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </nav>
+          <div className="mt-4 border-t border-ink/10 pt-2">
+            <LanguageSwitcher mode="list" languages={languages} labels={{ nav: t.languages }} />
+          </div>
         )}
 
         {credits && <p className="mt-4 text-xs text-ink/80">{credits}</p>}

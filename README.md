@@ -164,6 +164,10 @@ a short fade.
 - **AnchorNav**: floating capsule of page anchors (scroll-spy + sliding
   indicator), extracted from ttcab's TreatmentAnchorNav. Target sections need
   a `scroll-mt-*` compatible with the sticky header.
+- **LanguageSwitcher**: the SeletorDeIdioma of novo.creeta — `menu` (button with
+  the code, opens the three languages; header) or `list` (plain links; the Footer
+  uses it). Same page in the other language, each language written in itself,
+  current marked by ✓ and `aria-current`.
 - **Footer**: the site-footer of novo.creeta, by tokens — white card with the
   signed brand + sentence, "Pages" (title on the first line, links in two
   columns), "Where we are" (address, hours, "Directions ↗ · Waze ↗"), an optional
