@@ -15,6 +15,8 @@ abaixo para o demo rodar:
 | `person.mp4` / `person-poster.jpg` | CtaCard (convite), retratos | clipe GERADO de uma pessoa (720×1280, mudo, 10s) |
 | `person-vertical.mp4` / `person-poster-vertical.jpg` | VideoStoryCard | o mesmo clipe (já é 9:16) |
 | `person-avatar.jpg` | Avatar / Byline / PersonChip | recorte quadrado do rosto, 320×320 |
+| `invite-loop.mp4` / `invite-loop-poster.jpg` | VideoInviteCard (fase parada) | clipe GERADO da pessoa sorrindo, 1280×720, MUDO, 8s |
+| `invite.mp4` / `invite-poster.jpg` | VideoInviteCard (ao tocar) | clipe GERADO da pessoa falando, 1280×720, com som, 10s |
 
 Clipes ambiente devem ser **genéricos** (sem pessoa real identificável) —
 preferir stock livre ou geração por IA. Os que estão aqui são o clipe gerado
@@ -33,6 +35,7 @@ visto em tela compartilhada e em capturas.
 O hero tipo **Player** agora roda **o próprio vídeo do YouTube** (`h3a7DHFd6L4`)
 mudo, em repetição, como fundo (16:9, cobrindo o cartão). Ao apertar o som, o
 vídeo remonta do zero, com áudio e controles. Não há mais prévia local para o
-Player — os antigos `mariangela.mp4` / `mariangela-poster.jpg` ficaram sem uso.
+Player — os antigos `mariangela.mp4` / `mariangela-poster.jpg` foram retirados
+daqui (filmagem real) e vivem em `~/Developer/_agent-temp/breathe-demo-real/`.
 O quadro parado de movimento reduzido vem da miniatura do próprio YouTube
 (`i.ytimg.com/vi/<id>/maxresdefault.jpg`), ou de um `poster` passado na prop.

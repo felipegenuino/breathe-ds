@@ -868,7 +868,7 @@ export function App() {
           title="Card title"
           lead="A short lead that sums up the invitation in one sentence."
           action={<Button variant="accent" href="#cta">{IcChat} Call to action</Button>}
-          video={{ title: "Overlay title", description: "Overlay description", loop: { src: "/demo/person.mp4", poster: "/demo/person-poster.jpg" }, video: { src: "/demo/person.mp4", poster: "/demo/person-poster.jpg" } }}
+          video={{ title: "Overlay title", description: "Overlay description", loop: { src: "/demo/invite-loop.mp4", poster: "/demo/invite-loop-poster.jpg" }, video: { src: "/demo/invite.mp4", poster: "/demo/invite-poster.jpg" } }}
         />
       </Section>
 
