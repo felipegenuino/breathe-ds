@@ -58,7 +58,9 @@ export function Footer({
                 <p className="mb-4 font-body text-[0.78rem] font-semibold tracking-[0.18em] text-ink-soft uppercase">
                   {col.title}
                 </p>
-                <ul className="flex flex-col gap-3">
+                {/* links herdam hover-underline: sublinhado some→aparece suave,
+                    agnóstico ao que o site passa (<a> ou <Link>) */}
+                <ul className="flex flex-col gap-3 [&_a]:underline [&_a]:decoration-transparent [&_a]:underline-offset-[5px] [&_a]:transition-[text-decoration-color] [&_a]:duration-200 [&_a:hover]:decoration-current">
                   {col.items.map((item, j) => (
                     <li key={j} className="text-[1.02rem] leading-snug text-ink">
                       {item}

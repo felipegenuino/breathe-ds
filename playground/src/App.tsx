@@ -174,9 +174,7 @@ function HeroCTA({ primary = "Ação principal", secondary }: { primary?: ReactN
       <a href="#" className="inline-flex min-h-11 items-center gap-2 rounded-full bg-surface px-5 font-body font-semibold text-ink transition hover:-translate-y-px">
         <IconMessage size={18} /> {primary}
       </a>
-      <a href="#" className="inline-flex min-h-11 items-center gap-1.5 font-body font-semibold text-surface underline underline-offset-4">
-        {secondary} <IconArrowUpRight size={15} />
-      </a>
+      <Button href="#" variant="link" className="min-h-11 text-surface">{secondary} <IconArrowUpRight size={16} /></Button>
     </div>
   );
 }
@@ -358,7 +356,7 @@ export function App() {
         </Section>
 
         <Section id="buttons" title="Button">
-          <p className="mb-8 max-w-[64ch] text-ink-body">O mesmo botão da família — o mesmo que está no nav, no hero e no footer. Quatro variantes, três tamanhos, com ícone, estado desabilitado e a versão <b>link</b> (com <code className="rounded bg-ink/[0.07] px-1.5 py-0.5 text-sm">href</code> vira <code className="rounded bg-ink/[0.07] px-1.5 py-0.5 text-sm">&lt;a&gt;</code>, visual idêntico).</p>
+          <p className="mb-8 max-w-[64ch] text-ink-body">O mesmo botão da família — o mesmo que está no nav, no hero e no footer. Cinco variantes (incluindo <b>link</b>, a ação de texto sublinhada de "Ver todos" / "Ação secundária"), três tamanhos, com ícone e desabilitado. Com <code className="rounded bg-ink/[0.07] px-1.5 py-0.5 text-sm">href</code> qualquer variante vira <code className="rounded bg-ink/[0.07] px-1.5 py-0.5 text-sm">&lt;a&gt;</code>.</p>
           <div className="space-y-8">
             <div>
               <p className="mb-3 text-xs font-bold tracking-[0.12em] text-ink-soft uppercase">Variantes</p>
@@ -367,6 +365,7 @@ export function App() {
                 <Button variant="accent">Accent</Button>
                 <Button variant="outline">Outline</Button>
                 <Button variant="ghost">Ghost</Button>
+                <Button variant="link" href="#buttons">Link <IconArrowUpRight size={16} /></Button>
               </div>
             </div>
             <div>
@@ -393,10 +392,23 @@ export function App() {
               </div>
             </div>
             <div>
-              <p className="mb-3 text-xs font-bold tracking-[0.12em] text-ink-soft uppercase">Como link (vira &lt;a&gt;)</p>
+              <p className="mb-3 text-xs font-bold tracking-[0.12em] text-ink-soft uppercase">Variante link · no claro</p>
+              <div className="flex flex-wrap items-center gap-x-8 gap-y-4 text-ink">
+                <Button href="#buttons" variant="link">Ver todos <IconArrowUpRight size={16} /></Button>
+                <Button href="#buttons" variant="link">Sem seta</Button>
+              </div>
+            </div>
+            <div>
+              <p className="mb-3 text-xs font-bold tracking-[0.12em] text-ink-soft uppercase">Variante link · sobre fundo escuro (herda a cor)</p>
+              <div className="inline-flex flex-wrap items-center gap-x-8 gap-y-4 rounded-2xl bg-ink px-6 py-5 text-surface">
+                <Button href="#buttons" variant="link">Ação secundária <IconArrowUpRight size={16} /></Button>
+                <Button href="#buttons" variant="link">Ver no Google Maps <IconArrowUpRight size={16} /></Button>
+              </div>
+            </div>
+            <div>
+              <p className="mb-3 text-xs font-bold tracking-[0.12em] text-ink-soft uppercase">Polimorfismo · qualquer variante com href vira &lt;a&gt;</p>
               <div className="flex flex-wrap items-center gap-3">
                 <Button href="#buttons" variant="solid">Link solid</Button>
-                <Button href="#buttons" variant="accent">Link accent <IconArrowUpRight size={18} /></Button>
                 <Button href="#buttons" variant="outline">Link outline</Button>
               </div>
             </div>
@@ -458,7 +470,7 @@ export function App() {
             tagline="Tratamento do Torcicolo Congênito e outras Assimetrias no Bebê"
             columns={[{ title: "Navegação", items: ["Início", "Para famílias", "Depoimentos"].map((l) => <a key={l} href="#" className="hover:text-ink-soft">{l}</a>) },
                       { title: "", items: ["Tratamento", "Profissionais", "Artigos"].map((l) => <a key={l} href="#" className="hover:text-ink-soft">{l}</a>) }]}
-            contact={{ title: "Contato", lines: ["Rua João Mathias Cordeiro, 33", "Córrego Grande, Florianópolis — SC"], actions: <a href="#" className="inline-flex items-center gap-1 font-semibold text-ink underline underline-offset-4">Ver no Google Maps ↗</a> }}
+            contact={{ title: "Contato", lines: ["Rua João Mathias Cordeiro, 33", "Córrego Grande, Florianópolis — SC"], actions: <Button href="#" variant="link">Ver no Google Maps <IconArrowUpRight size={16} /></Button> }}
             legal={<>© 2026 TTCAB · Todos os direitos reservados.</>}
             chips={[<span className={CHIP}>{IcChat} WhatsApp</span>, <span className={CHIP}>48 3234.9919</span>, <span className={CHIP}>E-mail</span>]}
           />

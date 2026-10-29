@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { Button } from "./Button";
 
 export type Pill = { label: ReactNode; href?: string };
 
@@ -66,13 +67,11 @@ export function PillList({ title, items, seeAll }: Props) {
       </ul>
       {seeAll && (
         <div className="mt-6">
-          <a
-            href={seeAll.href}
-            className="inline-flex items-center gap-1.5 font-heading text-[1.02rem] font-semibold text-ink underline decoration-action-text/50 underline-offset-4 hover:decoration-action-text focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink"
-          >
-            {seeAll.label}
-            <ArrowUpRight />
-          </a>
+          {seeAll.href ? (
+            <Button href={seeAll.href} variant="link">{seeAll.label} <ArrowUpRight /></Button>
+          ) : (
+            <Button variant="link">{seeAll.label} <ArrowUpRight /></Button>
+          )}
         </div>
       )}
     </div>
