@@ -324,7 +324,7 @@ export function App() {
   // Mobile demo frame: phone (390) is the minimum; tablet (768) still shows the BottomNav (hidden only at lg+).
   const [mobW, setMobW] = useState<"phone" | "tablet">("phone");
   // optional parts of the page footer (the footer is its own demo)
-  const [ft, setFt] = useState({ quote: true, hours: true, directions: true, notice: true, contacts: true, languages: false, credits: true });
+  const [ft, setFt] = useState({ quote: true, pages: true, hours: true, directions: true, notice: true, contacts: true, languages: false, credits: true });
   const brand = BRAND_BY_PALETTE[pal] ?? BRAND_BY_PALETTE.Neutral;
   useEffect(() => {
     const root = document.documentElement;
@@ -611,6 +611,7 @@ export function App() {
             {/* grouped by region of the footer, left to right, top to bottom */}
             {([
               ["Brand column", [["quote", "Sentence"]]],
+              ["Pages column", [["pages", "Page links"]]],
               ["Where column", [["hours", "Info line"], ["directions", "Outbound links"]]],
               ["Notice band", [["notice", "Band"]]],
               ["Bottom bar", [["contacts", "Contact chips"], ["languages", "Language links"], ["credits", "Credits line"]]],
@@ -629,7 +630,7 @@ export function App() {
           logo={<Lockup variant="horizontal" size="md" name="Breathe" tagline="Design system of the Cuidado Global family" />}
           brandName="Breathe DS — design system of the Cuidado Global family"
           quote={ft.quote ? "Token decisions by role and measured contrast, never by eye." : undefined}
-          pages={{ title: "On this page", links: PAGE_NAV.map(({ id, label }) => ({ href: `#${id}`, label })) }}
+          pages={ft.pages ? { title: "On this page", links: PAGE_NAV.map(({ id, label }) => ({ href: `#${id}`, label })) } : undefined}
           where={{
             title: "Where to find it",
             address: ["npm: @breathe-ds/ui", "GitHub: felipegenuino/breathe-ds"],

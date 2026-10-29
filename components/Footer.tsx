@@ -33,8 +33,9 @@ type Props = {
   brandName?: string;
   /** The brand sentence, shown in quotes under the logo. */
   quote?: ReactNode;
-  /** "Pages": title on the first line, links in two columns below. */
-  pages: { title: ReactNode; links: FooterLink[] };
+  /** "Pages": title on the first line, links in two columns below. Optional:
+   *  a footer with no internal links drops the column (two-column grid). */
+  pages?: { title: ReactNode; links: FooterLink[] };
   /** "Where we are": address lines, opening hours, and the directions links
    *  ("Directions ↗ · Waze ↗", external). */
   where: { title: ReactNode; address: ReactNode[]; hours?: ReactNode; directions?: FooterLink[] };
@@ -112,7 +113,7 @@ export function Footer({
     <footer className={`${outer} rounded-[32px] bg-white px-6 py-10 text-ink md:px-6 md:py-14 ${className}`}>
       <style>{CSS}</style>
       <div className="mx-auto max-w-6xl">
-        <div className="grid gap-x-10 gap-y-10 md:grid-cols-[minmax(0,4fr)_minmax(0,5fr)_minmax(0,3fr)]">
+        <div className={`grid gap-x-10 gap-y-10 ${pages ? "md:grid-cols-[minmax(0,4fr)_minmax(0,5fr)_minmax(0,3fr)]" : "md:grid-cols-[minmax(0,7fr)_minmax(0,5fr)]"}`}>
           <div>
             {logo}
             {brandName && <p className="sr-only">{brandName}</p>}
@@ -121,16 +122,18 @@ export function Footer({
             )}
           </div>
 
-          <nav aria-label={t.pagesNav}>
-            <h2 className={title}>{pages.title}</h2>
-            <div className="mt-3 grid gap-x-6 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2">
-              {pages.links.map((p, i) => (
-                <L key={`${i}-${p.href}`} href={p.href} className={link}>
-                  {p.label}
-                </L>
-              ))}
-            </div>
-          </nav>
+          {pages && (
+            <nav aria-label={t.pagesNav}>
+              <h2 className={title}>{pages.title}</h2>
+              <div className="mt-3 grid gap-x-6 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2">
+                {pages.links.map((p, i) => (
+                  <L key={`${i}-${p.href}`} href={p.href} className={link}>
+                    {p.label}
+                  </L>
+                ))}
+              </div>
+            </nav>
+          )}
 
           <div>
             <h2 className={title}>{where.title}</h2>
