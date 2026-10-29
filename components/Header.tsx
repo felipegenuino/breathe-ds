@@ -112,7 +112,9 @@ function Dropdown({ item, L, t }: { item: NavItem; L: ElementType; t: Labels }) 
               <L
                 href={c.href}
                 onClick={() => setOpen(false)}
-                className="flex items-start gap-3 rounded-xl px-2.5 py-2 transition-colors hover:bg-ink/[0.05] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink"
+                // with a description the icon sits with the label's first line (creeta);
+                // label only: centred on the bubble, and a two-line label stays tight
+                className={`flex ${c.description ? "items-start" : "items-center"} gap-3 rounded-xl px-2.5 py-2 transition-colors hover:bg-ink/[0.05] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink`}
               >
                 {c.icon && (
                   <span className="flex h-9 w-9 flex-none items-center justify-center rounded-full bg-ink/[0.08] text-ink">
@@ -120,7 +122,7 @@ function Dropdown({ item, L, t }: { item: NavItem; L: ElementType; t: Labels }) 
                   </span>
                 )}
                 <span>
-                  <span className="block font-heading text-[0.95rem] font-semibold text-ink">
+                  <span className="block font-heading text-[0.95rem] leading-snug font-semibold text-ink">
                     {c.label}
                   </span>
                   {c.description && (
