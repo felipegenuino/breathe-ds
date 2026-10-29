@@ -17,6 +17,8 @@ import { Heading, SectionHeading } from "../../components/Heading";
 import { Text, Prose } from "../../components/Text";
 import { CtaCard } from "../../components/CtaCard";
 import { InfoCard } from "../../components/InfoCard";
+import { VideoStoryCard } from "../../components/VideoStoryCard";
+import { TestimonialCard } from "../../components/TestimonialCard";
 import { MediaCard, MediaCardBadge } from "../../components/MediaCard";
 import { PersonChip } from "../../components/PersonChip";
 import { Breadcrumb } from "../../components/Breadcrumb";
@@ -320,6 +322,7 @@ const PAGE_NAV = [
   { id: "mobile", label: "Mobile", Icon: IconMapPin },
   { id: "anchornav", label: "AnchorNav", Icon: IconMapPin },
   { id: "cards", label: "Cards", Icon: IconBook },
+  { id: "videos", label: "Videos", Icon: IconVideo },
   { id: "hero", label: "Hero", Icon: IconVideo },
   { id: "cta", label: "CtaCard", Icon: IconMessage },
   { id: "footer", label: "Footer", Icon: IconMessage },
@@ -389,6 +392,7 @@ export function App() {
             { label: "Mobile · BottomNav", href: "#mobile", icon: IcHome },
             { label: "AnchorNav", href: "#anchornav", icon: IcPin },
             { label: "Cards (InfoCard, MediaCard)", href: "#cards", icon: IcBook },
+            { label: "Videos (VideoStoryCard, TestimonialCard)", href: "#videos", icon: IcVideo },
             { label: "PageVideoHero", href: "#hero", icon: IcVideo },
             { label: "CtaCard (final call)", href: "#cta", icon: IcChat },
             { label: "Footer", href: "#footer", icon: IcPin },
@@ -744,6 +748,19 @@ export function App() {
           <MediaCard href="#cards" title="Card with a clip" text="Plays muted while visible." src="/demo/clip-poster.jpg" video={{ src: "/demo/clip.mp4", poster: "/demo/clip-poster.jpg" }} badge={<MediaCardBadge Icon={IconVideo} />} />
           <MediaCard href="#cards" title="Card with a clip on hover" text="Plays on mouse over only." src="/demo/clip-poster.jpg" video={{ src: "/demo/clip.mp4", poster: "/demo/clip-poster.jpg", when: "hover" }} badge={<MediaCardBadge>Badge</MediaCardBadge>} />
         </div>
+      </Section>
+
+      <Section id="videos" title="Videos — VideoStoryCard · TestimonialCard">
+        <p className="mb-6 max-w-[62ch] text-ink-body">VideoStoryCard: the vertical Instagram-style card — poster, round play button and duration badge; on hover (mouse) or focus the gradient grows and the lead appears; tap plays the video with sound in place. TestimonialCard: the clip with a play button on the left, the quote, the author and the outbound link on the right.</p>
+        <ul className="grid list-none gap-3 sm:grid-cols-2 md:grid-cols-3 md:gap-5">
+          <VideoStoryCard as="li" title="Card title" speaker="Speaker name" lead="A short lead that appears on hover or focus." src="/demo/clip-vertical.mp4" poster="/demo/clip-poster-vertical.jpg" duration={99} />
+          <VideoStoryCard as="li" title="Card title with a longer line" lead="A short lead." src="/demo/clip-vertical.mp4" poster="/demo/clip-poster-vertical.jpg" duration="1 min 46 s" />
+          <VideoStoryCard as="li" title="Card with hover preview" speaker="Speaker name" lead="This one also plays a muted preview on hover." src="/demo/clip-vertical.mp4" poster="/demo/clip-poster-vertical.jpg" previewSrc="/demo/clip-vertical.mp4" duration={64} />
+        </ul>
+        <ul className="mt-8 grid list-none gap-3 md:grid-cols-2 md:gap-5">
+          <TestimonialCard as="li" quote="A short testimonial quote, two or three sentences long, in the voice of the person who wrote it." author="Author name" link={{ href: "https://github.com/felipegenuino/breathe-ds", label: "Outbound link" }} video={{ src: "/demo/clip.mp4", poster: "/demo/clip-poster.jpg", description: "What the clip shows (1 min 39 s)" }} />
+          <TestimonialCard as="li" quote="A shorter quote." author="Author name" link={{ href: "https://github.com/felipegenuino/breathe-ds", label: "Outbound link" }} video={{ src: "/demo/clip.mp4", poster: "/demo/clip-poster.jpg", description: "What the clip shows (1 min 39 s)" }} />
+        </ul>
       </Section>
 
       <Section id="cta" title="CtaCard — final call">

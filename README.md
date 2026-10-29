@@ -200,6 +200,12 @@ from color, not from extra markup.
 - **MediaCard**: photo or muted clip behind a title, badge top-left, arrow button
   top-right, whole card a link; Ken Burns zoom on hover (mouse only), clip plays
   while visible or on hover; pause hooks exported for a page-level pause button.
+- **VideoStoryCard**: the vertical Instagram-style video card (poster, play
+  button, duration badge; gradient grows and the lead appears on hover/focus;
+  tap plays with sound in place; optional muted hover preview). Exports the
+  page-level pause contract (`CARD_VIDEOS_PAUSE_EVENT` / `CARD_VIDEOS_PAUSED_ATTR`).
+- **TestimonialCard**: clip with a play button on the left, quote + author +
+  outbound link on the right ("Famílias contam").
 - **CtaCard** / **VideoInviteCard**: the final call of a novo.creeta page — white
   card (title, lead, CTA slot) beside a video card: muted loop with the speaker's
   name over it, pause control, play button that plays the full video with sound.
@@ -225,12 +231,8 @@ from color, not from extra markup.
       import/inject it (without each site depending on lucide directly)
 - [ ] **MediaCard** (video/image behind + icon badge + title + lead + arrow;
       **horizontal carousel on mobile** variant with progress bar + pause) — approved
-- [ ] **TestimonialCard** — approved. Variants: **quote** (text card),
-      **video hero** (full-bleed with overlaid quote), **video beside** ("Famílias contam": video + text).
-      Consider a **mix** of the two. **Already exists in ttcab** (TestimonialVideoHero/Card) → extract/generalize.
-- [ ] **VideoStoryCard** (short vertical video) — approved. Play + duration badge +
-      title + lead + **"Read the transcript"** (collapsible, reuses the Accordion). Pattern of the Videos page.
-      _Note: the card can still improve in a future update (fine to leave for later)._
+- [x] **TestimonialCard** — from novo.creeta (10/29): clip + play on the left, quote/author/link on the right. The "video hero" and "video beside" variants from ttcab are still open
+- [x] **VideoStoryCard** — from novo.creeta (10/29): vertical card, play + duration badge, lead on hover/focus, plays with sound in place; "Read the transcript" goes in `children` (Accordion)
 - [ ] **ProfessionalCard** (team) — approved. Two versions: **small** (photo + name, in a row)
       and **big** (photo + name + role + CREFITO + "Trajetória"/"Orientações" accordions).
       **Video** variant: "Apresentação" badge, hover plays the video, and a **modal** (video + bio).
