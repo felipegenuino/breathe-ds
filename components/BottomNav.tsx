@@ -263,12 +263,12 @@ export function BottomNav({ pages, extras = [], linkComponent, hideFrom = "lg", 
 
       {embedded ? (
         open && (
-          <div id={panelId} className="cg-mais-painel cg-mais-painel--embutido">
+          <div id={panelId} className="cg-more-panel cg-more-panel--embedded">
             {panelInner}
           </div>
         )
       ) : (
-        <div ref={panel} id={panelId} {...{ popover: "auto" }} className={`cg-mais-painel cg-mais-painel--${hideFrom}`}>
+        <div ref={panel} id={panelId} {...{ popover: "auto" }} className={`cg-more-panel cg-more-panel--${hideFrom}`}>
           {panelInner}
         </div>
       )}
@@ -279,7 +279,7 @@ export function BottomNav({ pages, extras = [], linkComponent, hideFrom = "lg", 
 /* Painel "Mais": logo acima da barra; entra crescendo a partir do canto do
    botão "Mais", em 0,18s (igual ao .mais-painel do novo.creeta). */
 const CSS = `
-.cg-mais-painel{
+.cg-more-panel{
   position:fixed; inset:auto .75rem calc(5.75rem + env(safe-area-inset-bottom)) .75rem;
   width:auto; margin:0; border:0; border-radius:26px; padding:.5rem;
   background:#fff; color:var(--color-ink);
@@ -287,15 +287,15 @@ const CSS = `
   opacity:0; transform:translateY(8px) scale(.97); transform-origin:88% 100%;
   transition:opacity 180ms cubic-bezier(.23,1,.32,1), transform 180ms cubic-bezier(.23,1,.32,1), overlay 180ms allow-discrete, display 180ms allow-discrete;
 }
-.cg-mais-painel:popover-open, .cg-mais-painel--embutido{ opacity:1; transform:none; }
-@starting-style{ .cg-mais-painel:popover-open, .cg-mais-painel--embutido{ opacity:0; transform:translateY(8px) scale(.97); } }
-.cg-mais-painel::backdrop{ background:transparent; }
-.cg-mais-painel--embutido{ position:absolute; z-index:50; }
+.cg-more-panel:popover-open, .cg-more-panel--embedded{ opacity:1; transform:none; }
+@starting-style{ .cg-more-panel:popover-open, .cg-more-panel--embedded{ opacity:0; transform:translateY(8px) scale(.97); } }
+.cg-more-panel::backdrop{ background:transparent; }
+.cg-more-panel--embedded{ position:absolute; z-index:50; }
 @media (prefers-reduced-motion:reduce){
-  .cg-mais-painel{ transform:none; transition:opacity 120ms ease; }
-  @starting-style{ .cg-mais-painel:popover-open, .cg-mais-painel--embutido{ transform:none; } }
+  .cg-more-panel{ transform:none; transition:opacity 120ms ease; }
+  @starting-style{ .cg-more-panel:popover-open, .cg-more-panel--embedded{ transform:none; } }
 }
 /* A partir do breakpoint a barra não existe: o painel também não. */
-@media (min-width:768px){ .cg-mais-painel--md{ display:none !important; } }
-@media (min-width:1024px){ .cg-mais-painel--lg{ display:none !important; } }
+@media (min-width:768px){ .cg-more-panel--md{ display:none !important; } }
+@media (min-width:1024px){ .cg-more-panel--lg{ display:none !important; } }
 `;

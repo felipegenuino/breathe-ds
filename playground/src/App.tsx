@@ -11,7 +11,7 @@ import { Header } from "../../components/Header";
 import { AnchorNav } from "../../components/AnchorNav";
 import { BottomNav } from "../../components/BottomNav";
 import { BreatheMark } from "../../components/BreatheMark";
-import { Cortina } from "../../components/Cortina";
+import { Curtain } from "../../components/Curtain";
 import { Lockup, type LockupVariant } from "../../components/Lockup";
 import { TtcabSymbol, TtcabWordmark, TTCAB_LOCKUP } from "../../components/marks/ttcab";
 import { CreetaSymbol, CreetaWordmark, CREETA_LOCKUP } from "../../components/marks/creeta";
@@ -225,7 +225,7 @@ function HeroDemo() {
 
   const video =
     tipo === "player"
-      ? { mode: "player" as const, youtubeId: "h3a7DHFd6L4", legenda: "Mariangela Pinheiro de Lima, criadora do método, explica o Reequilíbrio Toracoabdominal." }
+      ? { mode: "player" as const, youtubeId: "h3a7DHFd6L4", playerCaption: "Mariangela Pinheiro de Lima, criadora do método, explica o Reequilíbrio Toracoabdominal." }
       : { mode: "loop" as const, preview: PREVIEW_LOOP };
 
   const actions =
@@ -262,7 +262,7 @@ function HeroDemo() {
 /* Marca de cada paleta: o Breathe é neutro; TTCAB e Creeta trazem o símbolo e
    o wordmark reais dos sites (components/marks). A altura do wordmark vem da
    razão do manual de cada marca (wordmarkRatio), não de um valor a olho. */
-const CORTINA_MARCA: Record<string, { name: string; tagline: string; logo?: ReactNode; wordmark?: ReactNode; wordmarkRatio?: number; symbolSide?: "left" | "right" }> = {
+const BRAND_BY_PALETTE: Record<string, { name: string; tagline: string; logo?: ReactNode; wordmark?: ReactNode; wordmarkRatio?: number; symbolSide?: "left" | "right" }> = {
   Neutro: { name: "Breathe", tagline: "Design system da família Cuidado Global" },
   TTCAB: {
     name: "TTCAB",
@@ -320,24 +320,24 @@ function useScrollSpy(ids: readonly string[]) {
 export function App() {
   const [pal, setPal] = useState("Neutro");
   const activeSection = useScrollSpy(PAGE_NAV.map((p) => p.id));
-  const [cortinaKey, setCortinaKey] = useState(0);
+  const [curtainKey, setCurtainKey] = useState(0);
   // Moldura da demo mobile: celular (390) é o mínimo; tablet (768) ainda mostra o BottomNav (some só no lg+).
   const [mobW, setMobW] = useState<"phone" | "tablet">("phone");
-  const marca = CORTINA_MARCA[pal] ?? CORTINA_MARCA.Neutro;
+  const marca = BRAND_BY_PALETTE[pal] ?? BRAND_BY_PALETTE.Neutro;
   useEffect(() => {
     const root = document.documentElement;
     Object.entries(PALETTES[pal]).forEach(([k, v]) => root.style.setProperty(k, v));
   }, [pal]);
   return (
     <div id="top">
-      <Cortina key={cortinaKey} name={marca.wordmark ?? marca.name} tagline={marca.tagline} logo={marca.logo} wordmarkRatio={marca.wordmarkRatio} symbolSide={marca.symbolSide} />
+      <Curtain key={curtainKey} name={marca.wordmark ?? marca.name} tagline={marca.tagline} logo={marca.logo} wordmarkRatio={marca.wordmarkRatio} symbolSide={marca.symbolSide} />
       {/* dogfooding: o header do DS É o componente Header do Breathe, com as
           mesmas regras da demo — marca em size md (símbolo 44px) com entrada
           animada depois da cortina, casa como "Início" (volta ao topo). */}
       <Header
         logo={
           <a href="#top" aria-label="Breathe, início da página" className="inline-flex rounded-xl transition-opacity hover:opacity-70 focus-visible:outline-2 focus-visible:outline-offset-[3px] focus-visible:outline-ink">
-            <Lockup key={cortinaKey} entrance entranceDelay={2700} variant="horizontal" size="md" name="Breathe" />
+            <Lockup key={curtainKey} entrance entranceDelay={2700} variant="horizontal" size="md" name="Breathe" />
           </a>
         }
         cta={<Switcher pal={pal} setPal={setPal} />}
@@ -366,7 +366,7 @@ export function App() {
             <p className="mb-3 font-heading text-[0.82rem] font-bold tracking-[0.14em] text-ink-soft uppercase">Breathe · @breathe-ds/ui</p>
             <h1 className="font-heading text-[clamp(2.4rem,6vw,4.5rem)] leading-[1.05] font-semibold tracking-[-0.02em] text-ink">Playground do design system</h1>
             <p className="mt-5 max-w-[56ch] text-lg leading-[1.6] text-ink-body">Componentes reais renderizados com a paleta <b>{pal}</b>. Troque no topo e tudo retematiza — o Breathe é neutro, a cor vem de cada app.</p>
-            <button type="button" onClick={() => setCortinaKey((k) => k + 1)} className="mt-6 inline-flex min-h-11 items-center gap-2 rounded-pill border border-line px-5 font-body font-semibold text-ink transition hover:bg-ink/[0.05]"><BreatheMark size={14} animated={false} /> Rever a cortina</button>
+            <button type="button" onClick={() => setCurtainKey((k) => k + 1)} className="mt-6 inline-flex min-h-11 items-center gap-2 rounded-pill border border-line px-5 font-body font-semibold text-ink transition hover:bg-ink/[0.05]"><BreatheMark size={14} animated={false} /> Rever a cortina</button>
           </Container>
         </div>
 
@@ -511,8 +511,8 @@ export function App() {
             <Header
               logo={
                 <a href="#header" aria-label="Página inicial" className="inline-flex rounded-xl transition-opacity hover:opacity-70 focus-visible:outline-2 focus-visible:outline-offset-[3px] focus-visible:outline-ink">
-                  {/* entrada como no novo.creeta: símbolo, depois o nome; espera a Cortina subir (2200 + 700ms) */}
-                  <Lockup key={cortinaKey} entrance entranceDelay={2700} variant="horizontal" size="md" name={marca.name} logo={marca.logo} wordmark={marca.wordmark} wordmarkRatio={marca.wordmarkRatio} symbolSide={marca.symbolSide} />
+                  {/* entrada como no novo.creeta: símbolo, depois o nome; espera a Curtain subir (2200 + 700ms) */}
+                  <Lockup key={curtainKey} entrance entranceDelay={2700} variant="horizontal" size="md" name={marca.name} logo={marca.logo} wordmark={marca.wordmark} wordmarkRatio={marca.wordmarkRatio} symbolSide={marca.symbolSide} />
                 </a>
               }
               cta={<Button variant="accent" size="sm">WhatsApp</Button>}

@@ -3,7 +3,7 @@ import type { CSSProperties } from "react";
 /**
  * Marca do Creeta (Centro de Reequilíbrio Toracoabdominal), copiada de
  * public/brand/creeta-simbolo.svg e creeta-tipo.svg do site. Símbolo (três
- * ondas + ponto magenta) e wordmark "creeta" separados, para a Cortina e o
+ * ondas + ponto magenta) e wordmark "creeta" separados, para a Curtain e o
  * Lockup montarem os arranjos. Não editar à mão: o desenho é o do manual.
  * As cores do símbolo são as do logotipo, não os tokens do site.
  */
@@ -36,7 +36,7 @@ export function CreetaSymbol({ size = 48, color, className, title = "Creeta" }: 
 }
 
 type WordmarkProps = {
-  /** Altura. Padrão `var(--cg-wordmark, 1em)`: dentro do Lockup/Cortina a
+  /** Altura. Padrão `var(--cg-wordmark, 1em)`: dentro do Lockup/Curtain a
    *  variável vem da razão do manual (`wordmarkPerSymbol`); solto, 1em. */
   height?: string;
   /** Padrão `currentColor`: herda `ink` (ou branco sobre painel). */
@@ -47,7 +47,7 @@ type WordmarkProps = {
 };
 
 /** Razão do manual: altura do wordmark ÷ altura do símbolo no logotipo
- *  horizontal (40.3 / 86 (nome a 1.4643× no logotipo horizontal)). Passe como `wordmarkRatio` ao Lockup/Cortina. */
+ *  horizontal (40.3 / 86 (nome a 1.4643× no logotipo horizontal)). Passe como `wordmarkRatio` ao Lockup/Curtain. */
 /** No creeta o símbolo fica à esquerda do nome (padrão da família). */
 export const CREETA_LOCKUP = { wordmarkPerSymbol: 0.469, symbolSide: "left" } as const;
 

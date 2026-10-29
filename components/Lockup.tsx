@@ -47,7 +47,7 @@ type Props = {
    *  primeiro, depois o nome, depois a tagline. Respeita prefers-reduced-motion
    *  (vira só um fade curto). Remonte (key) para repetir. */
   entrance?: boolean;
-  /** Atraso da entrada em ms (ex.: esperar a Cortina subir). */
+  /** Atraso da entrada em ms (ex.: esperar a Curtain subir). */
   entranceDelay?: number;
   className?: string;
 };
@@ -169,7 +169,7 @@ export function Lockup({
 }
 
 /* Entrada: símbolo (escala + giro leve) → nome (desliza da esquerda) → tagline.
-   Mesmo vocabulário da Cortina; com movimento reduzido fica só um fade curto. */
+   Mesmo vocabulário da Curtain; com movimento reduzido fica só um fade curto. */
 const ENTRANCE_CSS = `
 .cg-lockup--entrance .cg-lockup__mark{ animation: cg-lockup-mark 500ms var(--ease-cg,cubic-bezier(.2,.8,.2,1)) var(--cg-entrance-delay,0ms) both; }
 .cg-lockup--entrance .cg-lockup__name{ animation: cg-lockup-name 420ms var(--ease-cg,cubic-bezier(.2,.8,.2,1)) calc(var(--cg-entrance-delay,0ms) + 420ms) both; }

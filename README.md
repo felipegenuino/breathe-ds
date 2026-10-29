@@ -126,7 +126,7 @@ margem lateral). Vale para `PageVideoHero` e `PageHero`. O hero atual do ttcab �
 
 Cada site da família tem o símbolo e o wordmark reais, copiados dos arquivos de
 marca (`public/brand`) dos repositórios, separados em dois componentes para a
-`Cortina` e o `Lockup` montarem os arranjos:
+`Curtain` e o `Lockup` montarem os arranjos:
 
 | Site | Símbolo | Wordmark | Import |
 |---|---|---|---|
@@ -134,14 +134,14 @@ marca (`public/brand`) dos repositórios, separados em dois componentes para a
 | Creeta | `CreetaSymbol` (três ondas + ponto, cores da marca) | `CreetaWordmark` (minúsculas, `currentColor`) | `@breathe-ds/ui/components/marks/creeta` |
 
 ```tsx
-<Cortina logo={<TtcabSymbol />} name={<TtcabWordmark />} wordmarkRatio={TTCAB_LOCKUP.wordmarkPerSymbol} tagline="…" />
+<Curtain logo={<TtcabSymbol />} name={<TtcabWordmark />} wordmarkRatio={TTCAB_LOCKUP.wordmarkPerSymbol} tagline="…" />
 <Lockup variant="horizontal" size="md" logo={<CreetaSymbol />} wordmark={<CreetaWordmark />} wordmarkRatio={CREETA_LOCKUP.wordmarkPerSymbol} name="creeta" />
 ```
 
 **Proporção vem do manual, não do olho.** Cada arquivo de marca exporta
 `*_LOCKUP.wordmarkPerSymbol` (altura do wordmark ÷ altura do símbolo no
 logotipo horizontal: TTCAB 0,557 · creeta 0,469) e `symbolSide` (no TTCAB o
-símbolo fica à **direita** do nome; no creeta e nos demais, à esquerda). O `Lockup` e a `Cortina`
+símbolo fica à **direita** do nome; no creeta e nos demais, à esquerda). O `Lockup` e a `Curtain`
 passam isso ao svg pela variável `--cg-wordmark`; o símbolo injetado recebe a
 altura do tamanho (`size`). Medido nos sites (29/10/2026): no header dos dois o
 símbolo tem **44px** de altura — é o `size="md"` do Lockup. O símbolo aceita
@@ -197,7 +197,7 @@ um fade curto.
       **Regra de dado:** todo profissional PRECISA ter **CREFITO** vinculado (exigência COFFITO).
 - [x] **PillList** (chips tipo "Condições que atendemos": rótulo + seta, grade que quebra, link "Ver todos")
 - [x] **AnchorNav** (cápsula flutuante de âncoras, scroll-spy + indicador deslizante) — extraída do ttcab (29/10)
-- [x] **Footer** · **PageVideoHero** (loop e player) · **Header** (dropdown, casa) · **BottomNav** · **Cortina** · **Lockup** (5 arranjos) · **BreatheMark**
+- [x] **Footer** · **PageVideoHero** (loop e player) · **Header** (dropdown, casa) · **BottomNav** · **Curtain** · **Lockup** (5 arranjos) · **BreatheMark**
 - [x] **Marcas dos sites** (`components/marks/`): símbolo + wordmark reais do TTCAB e do Creeta (29/10)
 - [ ] **ThreadRail** (grafismo lateral — fio que desce pela esquerda ligando seções) — aprovado,
       **já existe no ttcab** → extrair.

@@ -3,7 +3,7 @@ import type { CSSProperties } from "react";
 /**
  * Marca do TTCAB (Torcicolo Congênito e Assimetrias do Bebê), copiada dos
  * arquivos de public/brand do site. Símbolo (mãe + bebê, laranja) e
- * wordmark "TTCAB" separados, para a Cortina e o Lockup montarem os arranjos.
+ * wordmark "TTCAB" separados, para a Curtain e o Lockup montarem os arranjos.
  * Não editar à mão: o desenho é o do manual da marca.
  */
 type SymbolProps = {
@@ -28,7 +28,7 @@ export function TtcabSymbol({ size = 48, color = TTCAB_ORANGE, className, title 
 }
 
 type WordmarkProps = {
-  /** Altura. Padrão `var(--cg-wordmark, 1em)`: dentro do Lockup/Cortina a
+  /** Altura. Padrão `var(--cg-wordmark, 1em)`: dentro do Lockup/Curtain a
    *  variável vem da razão do manual (`wordmarkPerSymbol`); solto, 1em. */
   height?: string;
   /** Padrão `currentColor`: herda `ink` (ou branco sobre painel). */
@@ -39,7 +39,7 @@ type WordmarkProps = {
 };
 
 /** Razão do manual: altura do wordmark ÷ altura do símbolo no logotipo
- *  horizontal (43.67 / 78.39). Passe como `wordmarkRatio` ao Lockup/Cortina. */
+ *  horizontal (43.67 / 78.39). Passe como `wordmarkRatio` ao Lockup/Curtain. */
 /** No TTCAB o símbolo fica à DIREITA do nome (logotipo horizontal do manual). */
 export const TTCAB_LOCKUP = { wordmarkPerSymbol: 0.557, symbolSide: "right" } as const;
 

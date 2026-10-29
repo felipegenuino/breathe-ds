@@ -180,7 +180,7 @@ export function PageVideoHero({
         <div className={`absolute inset-x-0 top-0 ${playing ? "bottom-[4.5rem]" : "bottom-0 -z-10"}`}>
           {playing ? (
             <iframe
-              key="cg-hero-som"
+              key="cg-hero-sound"
               title={videoTitle ?? "Vídeo"}
               src={`https://www.youtube-nocookie.com/embed/${(video as VideoPlayer).youtubeId}?autoplay=1&mute=0&start=0&rel=0&modestbranding=1&playsinline=1&iv_load_policy=3`}
               allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; fullscreen"

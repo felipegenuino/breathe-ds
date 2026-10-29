@@ -29,7 +29,7 @@
     "./components/Header": "./components/Header.tsx",
     "./components/BottomNav": "./components/BottomNav.tsx",
     "./components/BreatheMark": "./components/BreatheMark.tsx",
-    "./components/Cortina": "./components/Cortina.tsx",
+    "./components/Curtain": "./components/Curtain.tsx",
     "./components/Lockup": "./components/Lockup.tsx",
     "./tokens/neutral.css": "./tokens/neutral.css",
     "./components/icons": "./components/icons.tsx",
