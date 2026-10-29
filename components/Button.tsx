@@ -15,14 +15,17 @@ const linkBase =
   "group inline-flex items-center gap-1.5 font-body font-semibold underline decoration-[1.5px] decoration-current/50 underline-offset-4 transition-[text-decoration-color,text-underline-offset] duration-200 hover:decoration-current hover:underline-offset-[5px] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink rounded-[2px] disabled:pointer-events-none disabled:opacity-50 motion-reduce:transition-none [&>svg]:transition-transform [&>svg]:duration-200 hover:[&>svg]:-translate-y-0.5 hover:[&>svg]:translate-x-0.5 motion-reduce:[&>svg]:transform-none";
 
 const variants: Record<Exclude<Variant, "link">, string> = {
-  // solid petrol, cream text (e.g. "Falar com a equipe")
-  solid: "bg-ink text-surface hover:-translate-y-0.5 shadow-[0_6px_18px_rgba(20,71,83,0.28)]",
+  // Flat, as the pill buttons of novo.creeta: no drop shadow, no lift; the hover
+  // is a change of fill and the tap scales the pill (pillBase). A shadow under a
+  // hot action color read as a grey halo (2026-10-29).
+  // solid petrol, cream text (e.g. "Falar com a equipe"): hover goes to ink-soft (creeta's teal-escuro)
+  solid: "bg-ink text-surface hover:bg-ink-soft",
   // action color (orange/magenta) + on-action text (from the token, varies per site).
   // Same type scale as the other variants: buttons side by side must share a size.
   // On ttcab (white on the vivid red-orange) that is 3.67:1, a conscious exception
   // (Cloudflare and Airbnb ship the same): passes the 3:1 of UI components, not
   // the 4.5:1 of normal text. Keep the accent for ONE large button per block.
-  accent: "bg-action text-on-action hover:-translate-y-0.5 shadow-[0_6px_18px_rgba(20,71,83,0.22)]",
+  accent: "bg-action text-on-action hover:brightness-[0.92]",
   outline: "border border-line text-ink hover:bg-ink/[0.05]",
   ghost: "text-ink hover:bg-ink/[0.06]",
 };
