@@ -45,8 +45,8 @@ const PALETTES: Record<string, Record<string, string>> = {
   },
   TTCAB: {
     "--color-surface": "#fbf5e9", "--color-card": "#ffffff", "--color-surface-panel": "#144753", "--color-ink": "#144753",
-    "--color-ink-soft": "#54707a", "--color-ink-body": "#1e4f5b", "--color-action": "#c4500a",
-    "--color-action-text": "#b24a09", "--color-on-action": "#ffffff", "--color-line": "rgb(20 71 83 / 0.16)", "--color-action-tint": "#f8ebdc", "--color-action-line": "#c4500a",
+    "--color-ink-soft": "#54707a", "--color-ink-body": "#1e4f5b", "--color-action": "#e8541e",
+    "--color-action-text": "#bd3f0c", "--color-on-action": "#ffffff", "--color-line": "rgb(20 71 83 / 0.16)", "--color-action-tint": "#faebdd", "--color-action-line": "#e8541e",
   },
   Creeta: {
     "--color-surface": "#eef3f4", "--color-card": "#ffffff", "--color-surface-panel": "#144753", "--color-ink": "#144753",
@@ -600,7 +600,7 @@ export function App() {
         </Section>
 
         <Section id="action" title="Action dose — how a hot accent stays calm">
-          <p className="mb-6 max-w-[62ch] text-ink-body">The rule brands with a hot color follow (Cloudflare orange, Airbnb red): the action color is the fill of ONE element per block, with dark text on it; links stay in ink; a highlighted card is a 6% wash plus a closed border, not the full color; the color as text only in its darker <code className="rounded bg-ink/[0.07] px-1.5 py-0.5 text-sm">action-text</code>. Switch the palette to TTCAB and compare with the loud version.</p>
+          <p className="mb-6 max-w-[62ch] text-ink-body">The rule brands with a hot color follow (Cloudflare orange, Airbnb red): the action color is the fill of ONE element per block, with dark text on it; links stay in ink; a highlighted card is a 6% wash plus a border, not the full color; white on the action color only as large text (the accent Button's label is 18.7px bold); the color as text only in its darker <code className="rounded bg-ink/[0.07] px-1.5 py-0.5 text-sm">action-text</code>. Switch the palette to TTCAB and compare with the loud version.</p>
           <div className="mb-5 flex flex-wrap items-center gap-x-5 gap-y-3 rounded-2xl border border-line bg-surface p-4">
             <span className="text-[0.7rem] font-semibold tracking-[0.12em] text-ink-soft uppercase">Dose</span>
             <SegGroup label="Dose" value={dose} set={setDose} options={[["disciplined", "One accent per block"], ["loud", "Loud (everything in the action color)"]]} />
@@ -640,10 +640,10 @@ export function App() {
 
                 {/* 3. segmented control: the selected segment is the one accent */}
                 <div className="rounded-[28px] bg-card p-6 md:p-8">
-                  <p className="mb-4 text-sm text-ink-soft">Segmented control: the selected segment is the only element in the action color.</p>
+                  <p className="mb-4 text-sm text-ink-soft">Small controls (segmented control, chips, tabs) take ink, not the action color: white on the action color only passes as large text, and the accent Button already sets its label at 18.7px bold for that reason.</p>
                   <div className="inline-flex flex-wrap gap-1 rounded-pill border border-line p-1">
                     {["Selected", "Option", "Option", "Option"].map((o, i) => (
-                      <span key={i} className={`inline-flex min-h-10 items-center rounded-pill px-4 text-sm font-semibold ${i === 0 || loud ? "bg-action text-on-action" : "text-ink"}`}>{o}</span>
+                      <span key={i} className={`inline-flex min-h-10 items-center rounded-pill px-4 text-sm font-semibold ${i === 0 || loud ? (loud ? "bg-action text-on-action" : "bg-ink text-surface") : "text-ink"}`}>{o}</span>
                     ))}
                   </div>
                 </div>
