@@ -16,7 +16,7 @@ abaixo para o demo rodar:
 | `person-vertical.mp4` / `person-poster-vertical.jpg` | VideoStoryCard | o mesmo clipe (já é 9:16) |
 | `person-avatar.jpg` | Avatar / Byline / PersonChip | recorte quadrado do rosto, 320×320 |
 | `invite-loop.mp4` / `invite-loop-poster.jpg` | VideoInviteCard (fase parada) | clipe GERADO da pessoa sorrindo, 1280×720, MUDO, 8s |
-| `invite.mp4` / `invite-poster.jpg` | VideoInviteCard (ao tocar) | clipe GERADO da pessoa falando, 1280×720, com som, 10s |
+| `invite.mp4` / `invite-poster.jpg` | VideoInviteCard (ao tocar) | clipe GERADO da pessoa falando EM INGLÊS (convite para entrar em contato), 1280×720, com som, 10s; a versão anterior está em `~/Developer/_agent-temp/breathe-demo-prev/` |
 
 Clipes ambiente devem ser **genéricos** (sem pessoa real identificável) —
 preferir stock livre ou geração por IA. Os que estão aqui são o clipe gerado
