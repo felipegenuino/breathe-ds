@@ -95,9 +95,11 @@ const CORTINA_CSS = `
   pointer-events:none;
   animation:cg-cortina-sobe 700ms cubic-bezier(.77,0,.175,1) 2200ms both;
 }
-.cg-cortina__lockup{ display:flex; align-items:center; gap:clamp(12px,2.4vw,20px); padding:0 24px; }
+.cg-cortina__lockup{ display:flex; align-items:center; gap:clamp(14px,2.6vw,24px); padding:0 24px; }
 .cg-cortina__mark{ display:inline-flex; color:var(--color-ink,#14323a);
   animation:cg-cortina-mark 700ms var(--ease-cg,cubic-bezier(.2,.8,.2,1)) both; }
+/* símbolo maior, em harmonia com o nome: ~1.9× o corpo do wordmark, fluido */
+.cg-cortina__mark svg{ width:clamp(60px,11vw,90px); height:auto; }
 .cg-cortina__text{ display:flex; flex-direction:column; min-width:0; }
 .cg-cortina__name{
   font-family:var(--font-heading,system-ui,sans-serif);
