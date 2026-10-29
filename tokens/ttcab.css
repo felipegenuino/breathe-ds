@@ -3,9 +3,12 @@
    - surface #fbf5e9 / ink #144753 ............ 9.41:1 (AAA)
    - surface #fbf5e9 / ink-soft #54707a ....... 4.86:1 (AA)
    - surface #fbf5e9 / ink-body #1e4f5b ....... 8.32:1 (AAA)
-   - surface #fbf5e9 / action-text #9a5d07 .... 4.90:1 (AA)
+   - surface #fbf5e9 / action-text #b24a09 .... 4.99:1 (AA)
    - surface-panel #144753 / surface (text) ... 9.41:1 (AAA)
-   - action #f6a22a is DECORATIVE/CTA — never text on cream.
+   - action #c4500a / on-action #ffffff ...... 4.67:1 (AA) — the button
+   The action color is a burnt orange, darker than the logo's #f6a22a on purpose
+   (decided 2026-10-29): white text on the button, and it passes AA. The logo
+   keeps its own orange; the UI does not have to match it.
 */
 :root {
   --cg-surface: #fbf5e9;
@@ -14,11 +17,11 @@
   --cg-ink: #144753;
   --cg-ink-soft: #54707a;
   --cg-ink-body: #1e4f5b;
-  --cg-action: #f6a22a;
-  --cg-on-action: #144753;   /* ink on orange */
-  --cg-action-text: #9a5d07;
-  --cg-action-tint: #fbf0de;   /* 6% orange over cream: highlighted card (ink 9.06:1) */
-  --cg-action-line: #c47a0c;   /* closed orange for borders: 3.15:1 on cream (pure orange is 1.91:1) */
+  --cg-action: #c4500a;      /* burnt orange: white on it 4.67:1 */
+  --cg-on-action: #ffffff;
+  --cg-action-text: #b24a09;   /* 4.99:1 on cream */
+  --cg-action-tint: #f8ebdc;   /* 6% action over cream: highlighted card (ink 8.71:1) */
+  --cg-action-line: #c4500a;   /* the action color itself: 4.3:1 on cream */
   --cg-line: rgb(20 71 83 / 0.16);
   --cg-font-heading: var(--font-quicksand), system-ui, sans-serif;  /* Quicksand */
   --cg-font-body: var(--font-figtree), system-ui, sans-serif;      /* Figtree */

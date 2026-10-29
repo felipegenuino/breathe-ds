@@ -45,8 +45,8 @@ const PALETTES: Record<string, Record<string, string>> = {
   },
   TTCAB: {
     "--color-surface": "#fbf5e9", "--color-card": "#ffffff", "--color-surface-panel": "#144753", "--color-ink": "#144753",
-    "--color-ink-soft": "#54707a", "--color-ink-body": "#1e4f5b", "--color-action": "#f6a22a",
-    "--color-action-text": "#9a5d07", "--color-on-action": "#144753", "--color-line": "rgb(20 71 83 / 0.16)", "--color-action-tint": "#fbf0de", "--color-action-line": "#c47a0c",
+    "--color-ink-soft": "#54707a", "--color-ink-body": "#1e4f5b", "--color-action": "#c4500a",
+    "--color-action-text": "#b24a09", "--color-on-action": "#ffffff", "--color-line": "rgb(20 71 83 / 0.16)", "--color-action-tint": "#f8ebdc", "--color-action-line": "#c4500a",
   },
   Creeta: {
     "--color-surface": "#eef3f4", "--color-card": "#ffffff", "--color-surface-panel": "#144753", "--color-ink": "#144753",

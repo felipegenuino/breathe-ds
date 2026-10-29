@@ -92,10 +92,11 @@ Values from the standard WCAG formula (the same ones `preview/` computes live):
 | surface `#fbf5e9` / ink `#144753` | 9.41:1 | AAA |
 | surface `#fbf5e9` / ink-soft `#54707a` | 4.86:1 | AA |
 | surface `#fbf5e9` / ink-body `#1e4f5b` | 8.32:1 | AAA |
-| surface `#fbf5e9` / action-text `#9a5d07` | 4.90:1 | AA |
+| surface `#fbf5e9` / action-text `#b24a09` | 4.99:1 | AA |
+| action `#c4500a` / on-action `#ffffff` (button) | 4.67:1 | AA |
 | surface-panel `#144753` / cream text | 9.41:1 | AAA |
 
-`action` `#f6a22a` is decorative/CTA only — do not use it as text on cream.
+`action` `#c4500a` is a burnt orange, darker than the logo's `#f6a22a` on purpose: white text on the button passes AA. The UI orange does not have to match the logo. As text, use `action-text`.
 
 ## Family typography
 
