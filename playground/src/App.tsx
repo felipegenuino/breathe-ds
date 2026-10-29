@@ -323,6 +323,8 @@ export function App() {
   const [curtainKey, setCurtainKey] = useState(0);
   // Mobile demo frame: phone (390) is the minimum; tablet (768) still shows the BottomNav (hidden only at lg+).
   const [mobW, setMobW] = useState<"phone" | "tablet">("phone");
+  // optional parts of the page footer (the footer is its own demo)
+  const [ft, setFt] = useState({ quote: true, hours: true, directions: true, notice: true, contacts: true, languages: false, credits: true });
   const brand = BRAND_BY_PALETTE[pal] ?? BRAND_BY_PALETTE.Neutral;
   useEffect(() => {
     const root = document.documentElement;
@@ -598,56 +600,53 @@ export function App() {
           <HeroDemo />
         </section>
 
-        <Section id="footer" title="Footer">
-          <p className="mb-6 max-w-[62ch] text-ink-body">The site-footer of novo.creeta, by tokens: signed brand + sentence, "Pages" with the title on the first line and the links in two columns, "Where we are" with "Directions ↗ · Waze ↗", an optional notice band, the legal line with the CNPJ (always), the contact chips and the languages as plain links.</p>
-          {/* the card has its own outer margins (room for the BottomNav below lg) — the demo zeroes them */}
-          <Footer
-            className="!mx-0 !mb-0 !mt-0 border border-line"
-            logo={<Lockup variant="horizontal" size="md" name={brand.name} tagline={brand.tagline} logo={brand.logo} wordmark={brand.wordmark} wordmarkRatio={brand.wordmarkRatio} symbolSide={brand.symbolSide} />}
-            brandName={`${brand.name} — ${brand.tagline}`}
-            quote="Breathing is the backdrop of the stage of life."
-            pages={{ title: "Pages", links: ["Home", "Services", "Method", "Team", "Guidance", "Contact", "The clinic", "Videos", "Facilities for professionals"].map((l) => ({ href: "#footer", label: l })) }}
-            where={{ title: "Where we are", address: ["Travessa João Mathias Cordeiro, 33", "Córrego Grande, Florianópolis/SC"], hours: "Monday to Friday, 8 am to 6 pm", directions: [{ href: "https://maps.google.com", label: "Directions" }, { href: "https://waze.com", label: "Waze" }] }}
-            notice={{
-              title: "Health insurance: we work by reimbursement.",
-              items: ["Care is private, and you can ask your health plan for reimbursement.", "We issue invoices and all the documentation you need.", "Talk to our team to learn how it works."],
-              action: <Button variant="solid">{IcChat} Talk to the team</Button>,
-            }}
-            legal={<>Institutional name · CNPJ 00.000.000/0001-00</>}
-            contacts={[
-              { href: "tel:+554832349919", label: "(48) 3234-9919", Icon: IconPhone },
-              { href: "https://wa.me/5548999999999", label: "WhatsApp", Icon: IconMessage, external: true },
-              { href: "mailto:contato@exemplo.com.br", label: "E-mail", Icon: IconMail },
-              { href: "https://instagram.com", label: "Instagram", Icon: IconInstagram, external: true },
-            ]}
-            languages={[
-              { lang: "pt-BR", label: "Português", href: "#footer", current: true },
-              { lang: "en", label: "English", href: "#footer" },
-              { lang: "es", label: "Español", href: "#footer" },
-            ]}
-          />
-        </Section>
-
       </main>
 
-      {/* dogfooding: the page footer IS the Footer of Breathe DS */}
-      <Footer
-        logo={<Lockup variant="horizontal" size="md" name="Breathe" tagline="Design system of the Cuidado Global family" />}
-        brandName="Breathe DS — design system of the Cuidado Global family"
-        quote="Token decisions by role and measured contrast, never by eye."
-        pages={{ title: "On this page", links: PAGE_NAV.map(({ id, label }) => ({ href: `#${id}`, label })) }}
-        where={{
-          title: "Where to find it",
-          address: ["npm: @breathe-ds/ui", "GitHub: felipegenuino/breathe-ds"],
-          hours: "Built for creeta, ttcab and metodorta.",
-          directions: [{ href: "https://www.npmjs.com/package/@breathe-ds/ui", label: "npm" }, { href: "https://github.com/felipegenuino/breathe-ds", label: "GitHub" }],
-        }}
-        legal={<>Breathe DS · MIT License · © 2026 Felipe Genuino</>}
-        contacts={[
-          { href: "https://github.com/felipegenuino/breathe-ds/issues", label: "Issues", Icon: IconMessage, external: true },
-          { href: "https://github.com/felipegenuino", label: "felipegenuino", Icon: IconInstagram, external: true },
-        ]}
-      />
+      {/* dogfooding: the page footer IS the Footer of Breathe DS. The bar above
+          it switches the optional parts on and off — the footer is its own demo. */}
+      <div id="footer" className="scroll-mt-24">
+        <Container>
+          <div className="mt-16 flex flex-wrap items-center gap-x-5 gap-y-3 rounded-2xl border border-line bg-surface p-4 lg:mt-24">
+            <span className="text-[0.7rem] font-semibold tracking-[0.12em] text-ink-soft uppercase">Footer</span>
+            <PillToggle label="Quote" on={ft.quote} set={(v) => setFt((f) => ({ ...f, quote: v }))} />
+            <PillToggle label="Hours" on={ft.hours} set={(v) => setFt((f) => ({ ...f, hours: v }))} />
+            <PillToggle label="Directions" on={ft.directions} set={(v) => setFt((f) => ({ ...f, directions: v }))} />
+            <PillToggle label="Notice" on={ft.notice} set={(v) => setFt((f) => ({ ...f, notice: v }))} />
+            <PillToggle label="Contacts" on={ft.contacts} set={(v) => setFt((f) => ({ ...f, contacts: v }))} />
+            <PillToggle label="Languages" on={ft.languages} set={(v) => setFt((f) => ({ ...f, languages: v }))} />
+            <PillToggle label="Credits" on={ft.credits} set={(v) => setFt((f) => ({ ...f, credits: v }))} />
+          </div>
+        </Container>
+        <Footer
+          className="!mt-6"
+          logo={<Lockup variant="horizontal" size="md" name="Breathe" tagline="Design system of the Cuidado Global family" />}
+          brandName="Breathe DS — design system of the Cuidado Global family"
+          quote={ft.quote ? "Token decisions by role and measured contrast, never by eye." : undefined}
+          pages={{ title: "On this page", links: PAGE_NAV.map(({ id, label }) => ({ href: `#${id}`, label })) }}
+          where={{
+            title: "Where to find it",
+            address: ["npm: @breathe-ds/ui", "GitHub: felipegenuino/breathe-ds"],
+            hours: ft.hours ? "Built for creeta, ttcab and metodorta." : undefined,
+            directions: ft.directions ? [{ href: "https://www.npmjs.com/package/@breathe-ds/ui", label: "npm" }, { href: "https://github.com/felipegenuino/breathe-ds", label: "GitHub" }] : undefined,
+          }}
+          notice={ft.notice ? {
+            title: "Themeable by design: the sites don't share a palette.",
+            items: ["Token roles are shared (surface, ink, action, line); each site sets its own hex values.", "Every token carries its role and a measured contrast, never a color picked by eye.", "Brand marks come from each site's manual, with the wordmark ratio and symbol side."],
+            action: <Button variant="solid" href="https://github.com/felipegenuino/breathe-ds#readme">Read the README</Button>,
+          } : undefined}
+          legal={<>Breathe DS · MIT License · © 2026 Felipe Genuino</>}
+          contacts={ft.contacts ? [
+            { href: "https://github.com/felipegenuino/breathe-ds/issues", label: "Issues", Icon: IconMessage, external: true },
+            { href: "https://github.com/felipegenuino", label: "felipegenuino", Icon: IconInstagram, external: true },
+          ] : undefined}
+          languages={ft.languages ? [
+            { lang: "pt-BR", label: "Português", href: "#footer", current: true },
+            { lang: "en", label: "English", href: "#footer" },
+            { lang: "es", label: "Español", href: "#footer" },
+          ] : undefined}
+          credits={ft.credits ? "Icons by Lucide · Quicksand and Figtree, open-source fonts." : undefined}
+        />
+      </div>
 
       <BottomNav
         pages={PAGE_NAV.map(({ id, label, Icon }) => ({ href: `#${id}`, label, Icon, active: id === activeSection }))}
