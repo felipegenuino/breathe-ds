@@ -1,0 +1,94 @@
+import type { ElementType, ReactNode } from "react";
+import { Avatar } from "./Avatar";
+
+export type Person = { name: string; href?: string; photo?: string; avatar?: ReactNode };
+
+type Props = {
+  people: Person[];
+  /** Small line above the names ("Who explains"). With it, the avatars stack
+   *  and the names go on their own line; without it, one inline line:
+   *  avatar · name · action. */
+  eyebrow?: ReactNode;
+  /** Link after the name(s) ("Watch the video ↗"). */
+  action?: { label: ReactNode; href: string; external?: boolean };
+  /** Joiners between names: ", " and " and ". */
+  joiners?: { sep: string; last: string };
+  linkComponent?: ElementType;
+  className?: string;
+};
+
+const ArrowUpRight = () => (
+  <svg aria-hidden="true" viewBox="0 0 24 24" width={16} height={16} className="cg-arrow-go" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M7 17 17 7M9 7h8v8" /></svg>
+);
+
+const nameLink =
+  "underline decoration-ink/30 underline-offset-4 transition-colors duration-150 hover:decoration-ink motion-reduce:transition-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink";
+
+/**
+ * Byline — who signs or explains a piece of content, from novo.creeta:
+ * - group ("Quem explica" under the timeline): stacked portraits, an eyebrow
+ *   and the names, each one a link to the person's card;
+ * - inline (under a topic card): portrait, name and "Watch the video ↗".
+ * Portraits are decorative: the names carry the information.
+ */
+export function Byline({ people, eyebrow, action, joiners = { sep: ", ", last: " and " }, linkComponent, className = "" }: Props) {
+  const L: ElementType = linkComponent ?? "a";
+  const names = people.map((p, i) => (
+    <span key={p.name}>
+      {i > 0 && (i === people.length - 1 ? joiners.last : joiners.sep)}
+      {p.href ? (
+        <L href={p.href} className={nameLink}>{p.name}</L>
+      ) : (
+        p.name
+      )}
+    </span>
+  ));
+  const actionEl = action ? (
+    <L
+      href={action.href}
+      {...(action.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+      className="inline-flex min-h-11 items-center gap-1 font-semibold text-ink underline underline-offset-4"
+    >
+      {action.label}
+      <ArrowUpRight />
+    </L>
+  ) : null;
+
+  if (eyebrow) {
+    return (
+      <div className={`flex items-center gap-3 ${className}`}>
+          <span className="flex shrink-0 -space-x-2">
+          {people.map((p) => (
+            <Avatar key={p.name} name={p.name} photo={p.photo} size={36} ring>{p.avatar}</Avatar>
+          ))}
+        </span>
+        <div className="leading-snug">
+          <p className="m-0 text-sm text-ink/80">{eyebrow}</p>
+          <p className="m-0 mt-0.5 font-semibold text-ink">
+            {names}
+            {actionEl && <> · {actionEl}</>}
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <p className={`m-0 flex items-center gap-3 text-sm text-ink/80 ${className}`}>
+      {people.length === 1 ? (
+        <Avatar name={people[0].name} photo={people[0].photo} size={40}>{people[0].avatar}</Avatar>
+      ) : (
+        <span className="flex shrink-0 -space-x-2">
+          {people.map((p) => (
+            <Avatar key={p.name} name={p.name} photo={p.photo} size={36} ring>{p.avatar}</Avatar>
+          ))}
+        </span>
+      )}
+      <span className="flex flex-wrap items-center gap-x-2">
+        <span className="font-semibold text-ink">{names}</span>
+        {actionEl}
+      </span>
+    </p>
+  );
+}
+

@@ -1,38 +1,29 @@
-import type { ReactNode } from "react";
+import type { ElementType, ReactNode } from "react";
 import { Button } from "./Button";
+import { Pill } from "./Pill";
 
-export type Pill = { label: ReactNode; href?: string };
+export type PillItem = { label: ReactNode; href: string; meta?: ReactNode };
+/** @deprecated use PillItem */
+export type Pill_ = PillItem;
 
 type Props = {
   title?: ReactNode;
-  items: Pill[];
+  /** Each item is a Pill: `#anchor` hrefs get the down arrow, page links the diagonal one. */
+  items: PillItem[];
   /** Optional "See all" link. */
   seeAll?: { label: ReactNode; href?: string };
+  linkComponent?: ElementType;
 };
 
-function ArrowUpRight() {
-  return (
-    <svg
-      aria-hidden="true"
-      viewBox="0 0 24 24"
-      className="h-4 w-4 flex-none"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2.25"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M7 17 17 7M9 7h8v8" />
-    </svg>
-  );
-}
+const ArrowUpRight = () => (
+  <svg aria-hidden="true" viewBox="0 0 24 24" className="h-4 w-4 flex-none" fill="none" stroke="currentColor" strokeWidth="2.25" strokeLinecap="round" strokeLinejoin="round"><path d="M7 17 17 7M9 7h8v8" /></svg>
+);
 
 /**
- * Pill list (e.g. "Conditions we treat"): white chips with label + arrow, in
- * a wrapping grid, plus a "See all" link. A clickable chip renders as `<a>`.
- * The DS's subtle card style (soft border + shadow), pill radius.
+ * Pill list: a wrapping row of Pills ("Conditions we treat", the video groups
+ * of a page with "11 videos" as meta), plus an optional "See all" link.
  */
-export function PillList({ title, items, seeAll }: Props) {
+export function PillList({ title, items, seeAll, linkComponent }: Props) {
   return (
     <div>
       {title && (
@@ -40,30 +31,12 @@ export function PillList({ title, items, seeAll }: Props) {
           {title}
         </h2>
       )}
-      <ul className="flex flex-wrap gap-2.5">
-        {items.map((p, i) => {
-          const inner = (
-            <>
-              <span>{p.label}</span>
-              <span className="grid h-7 w-7 flex-none place-items-center rounded-full bg-ink/[0.06] text-ink-soft transition-colors group-hover:bg-ink/[0.1] group-hover:text-ink">
-                <ArrowUpRight />
-              </span>
-            </>
-          );
-          const cls =
-            "group inline-flex items-center gap-3 rounded-pill border border-line bg-surface py-2 pr-2 pl-5 font-heading text-[0.98rem] font-semibold text-ink shadow-[0_2px_10px_rgba(20,71,83,0.05)] transition hover:-translate-y-0.5 hover:shadow-[0_10px_24px_rgba(20,71,83,0.1)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink";
-          return (
-            <li key={i}>
-              {p.href ? (
-                <a href={p.href} className={cls}>
-                  {inner}
-                </a>
-              ) : (
-                <span className={cls}>{inner}</span>
-              )}
-            </li>
-          );
-        })}
+      <ul className="flex list-none flex-wrap gap-2.5">
+        {items.map((p, i) => (
+          <li key={`${i}-${p.href}`}>
+            <Pill href={p.href} meta={p.meta} linkComponent={linkComponent}>{p.label}</Pill>
+          </li>
+        ))}
       </ul>
       {seeAll && (
         <div className="mt-6">

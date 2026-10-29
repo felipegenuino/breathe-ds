@@ -27,19 +27,6 @@ export function BreatheMark({
 }: Props) {
   return (
     <span className={className} style={{ display: "inline-flex", lineHeight: 0 }}>
-      <style>{`
-        @keyframes breathe-mark-inhale {
-          0%, 100% { transform: scale(0.93); }
-          50%      { transform: scale(1.05); }
-        }
-        .breathe-mark__g {
-          transform-box: fill-box;
-          transform-origin: center;
-          animation: breathe-mark-inhale var(--breathe-dur, 6s) cubic-bezier(0.37, 0, 0.63, 1) infinite;
-        }
-        .breathe-mark--static .breathe-mark__g { animation: none; }
-        @media (prefers-reduced-motion: reduce) { .breathe-mark__g { animation: none; } }
-      `}</style>
       <svg
         width={size}
         height={size}

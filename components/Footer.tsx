@@ -103,7 +103,6 @@ export function Footer({
 
   return (
     <footer className={`${outer} bg-white py-10 text-ink md:py-14 ${className}`}>
-      <style>{CSS}</style>
       <div className="mx-auto max-w-[1600px] px-4 md:px-6">
         {/* without the pages column, "where" keeps to the right edge (auto width) */}
         <div className={`grid gap-x-10 gap-y-10 ${pages ? "md:grid-cols-[minmax(0,4fr)_minmax(0,5fr)_minmax(0,3fr)]" : "md:grid-cols-[minmax(0,1fr)_auto]"}`}>
@@ -206,10 +205,3 @@ export function Footer({
   );
 }
 
-/* Outbound arrow: takes a small step toward where the link goes, on hover. */
-const CSS = `
-@media (prefers-reduced-motion:no-preference){
-  .cg-arrow-go{ transition:transform 150ms var(--ease-cg,cubic-bezier(.2,.8,.2,1)); }
-  a:hover .cg-arrow-go{ transform:translate(2px,-2px); }
-}
-`;

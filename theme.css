@@ -57,3 +57,49 @@
     }
   }
 }
+
+/* Outbound/anchor arrow on links: takes a small step toward where the link
+   goes, on hover. Used by Footer, List, Byline, PersonChip, PillList. */
+@media (prefers-reduced-motion: no-preference) {
+  .cg-arrow-go {
+    transition: transform 150ms var(--ease-cg);
+  }
+  a:hover .cg-arrow-go,
+  .group:hover .cg-arrow-go {
+    transform: translate(2px, -2px);
+  }
+  .cg-arrow-down {
+    transition: transform 150ms var(--ease-cg);
+  }
+  a:hover .cg-arrow-down,
+  .group:hover .cg-arrow-down {
+    transform: translateY(2px);
+  }
+}
+
+/* ── BreatheMark: the symbol "breathes" (scale pulse); off under reduced motion ── */
+@keyframes breathe-mark-inhale {
+  0%, 100% { transform: scale(0.93); }
+  50%      { transform: scale(1.05); }
+}
+.breathe-mark__g {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: breathe-mark-inhale var(--breathe-dur, 6s) cubic-bezier(0.37, 0, 0.63, 1) infinite;
+}
+.breathe-mark--static .breathe-mark__g { animation: none; }
+@media (prefers-reduced-motion: reduce) { .breathe-mark__g { animation: none; } }
+      
+
+/* ── Lockup entrance: symbol (scale + slight turn) → name (slides in) → tagline.
+   Same vocabulary as the Curtain; under reduced motion only a short fade. ── */
+.cg-lockup--entrance .cg-lockup__mark{ animation: cg-lockup-mark 500ms var(--ease-cg,cubic-bezier(.2,.8,.2,1)) var(--cg-entrance-delay,0ms) both; }
+.cg-lockup--entrance .cg-lockup__name{ animation: cg-lockup-name 420ms var(--ease-cg,cubic-bezier(.2,.8,.2,1)) calc(var(--cg-entrance-delay,0ms) + 420ms) both; }
+.cg-lockup--entrance .cg-lockup__tag{ animation: cg-lockup-tag 360ms ease calc(var(--cg-entrance-delay,0ms) + 700ms) both; }
+@keyframes cg-lockup-mark{ from{ opacity:0; transform:scale(.6) rotate(-16deg); } }
+@keyframes cg-lockup-name{ from{ opacity:0; transform:translateX(-8px); } }
+@keyframes cg-lockup-tag{ from{ opacity:0; transform:translateY(4px); } }
+@media (prefers-reduced-motion:reduce){
+  .cg-lockup--entrance .cg-lockup__mark, .cg-lockup--entrance .cg-lockup__name, .cg-lockup--entrance .cg-lockup__tag{ animation: cg-lockup-fade 240ms ease var(--cg-entrance-delay,0ms) both; }
+  @keyframes cg-lockup-fade{ from{ opacity:0; } }
+}

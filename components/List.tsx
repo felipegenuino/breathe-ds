@@ -52,7 +52,6 @@ export function List({ items, marker = "check", linkComponent, newTabLabel = "(o
 
   return (
     <ul className={`list-none ${marker === "check" ? "space-y-3 text-ink" : "space-y-2 leading-relaxed text-ink/80"} ${className}`}>
-      <style>{CSS}</style>
       {items.map((it, i) => (
         <li key={`${i}-${it.href ?? ""}`}>
           {it.href ? (
@@ -80,10 +79,3 @@ export function List({ items, marker = "check", linkComponent, newTabLabel = "(o
   );
 }
 
-/* Outbound arrow: takes a small step toward where the link goes, on hover. */
-const CSS = `
-@media (prefers-reduced-motion:no-preference){
-  .cg-arrow-go{ transition:transform 150ms var(--ease-cg,cubic-bezier(.2,.8,.2,1)); }
-  a:hover .cg-arrow-go{ transform:translate(2px,-2px); }
-}
-`;

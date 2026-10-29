@@ -26,6 +26,7 @@
     "./components/SectionKicker": "./components/SectionKicker.tsx",
     "./components/Card": "./components/Card.tsx",
     "./components/PillList": "./components/PillList.tsx",
+    "./components/Pill": "./components/Pill.tsx",
     "./components/Header": "./components/Header.tsx",
     "./components/BottomNav": "./components/BottomNav.tsx",
     "./components/BreatheMark": "./components/BreatheMark.tsx",
@@ -36,6 +37,10 @@
     "./components/AnchorNav": "./components/AnchorNav.tsx",
     "./components/LanguageSwitcher": "./components/LanguageSwitcher.tsx",
     "./components/List": "./components/List.tsx",
+    "./components/Avatar": "./components/Avatar.tsx",
+    "./components/Byline": "./components/Byline.tsx",
+    "./components/PersonChip": "./components/PersonChip.tsx",
+    "./components/Breadcrumb": "./components/Breadcrumb.tsx",
     "./components/Timeline": "./components/Timeline.tsx",
     "./components/marks/ttcab": "./components/marks/ttcab.tsx",
     "./components/marks/creeta": "./components/marks/creeta.tsx"

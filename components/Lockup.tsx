@@ -109,7 +109,6 @@ export function Lockup({
   if (variant === "wordmark") {
     return (
       <span className={`inline-flex flex-col${entranceCls} ${className}`} style={entranceStyle}>
-        {entrance && <style>{ENTRANCE_CSS}</style>}
         {nameEl}
         {tagEl && <span className="mt-1">{tagEl}</span>}
       </span>
@@ -119,7 +118,6 @@ export function Lockup({
   if (variant === "stacked") {
     return (
       <span className={`inline-flex flex-col items-center text-center${entranceCls} ${className}`} style={entranceStyle}>
-        {entrance && <style>{ENTRANCE_CSS}</style>}
         {mark}
         <span className="mt-4 flex flex-col items-center">
           {nameEl}
@@ -148,7 +146,6 @@ export function Lockup({
   if (symbolSide === "right") {
     return (
       <span className={`inline-flex flex-col items-start${entranceCls} ${className}`} style={entranceStyle}>
-        {entrance && <style>{ENTRANCE_CSS}</style>}
         <span className={`inline-flex items-center ${GAP[size]}`}>
           {nameEl}
           {mark}
@@ -159,7 +156,6 @@ export function Lockup({
   }
   return (
     <span className={`inline-flex items-center ${GAP[size]}${entranceCls} ${className}`} style={entranceStyle}>
-      {entrance && <style>{ENTRANCE_CSS}</style>}
       {mark}
       <span className="flex min-w-0 flex-col">
         {nameEl}
@@ -169,17 +165,3 @@ export function Lockup({
   );
 }
 
-/* Entrance: symbol (scale + slight rotation) → name (slides in from the left) → tagline.
-   Same vocabulary as the Curtain; with reduced motion it becomes just a short fade. */
-const ENTRANCE_CSS = `
-.cg-lockup--entrance .cg-lockup__mark{ animation: cg-lockup-mark 500ms var(--ease-cg,cubic-bezier(.2,.8,.2,1)) var(--cg-entrance-delay,0ms) both; }
-.cg-lockup--entrance .cg-lockup__name{ animation: cg-lockup-name 420ms var(--ease-cg,cubic-bezier(.2,.8,.2,1)) calc(var(--cg-entrance-delay,0ms) + 420ms) both; }
-.cg-lockup--entrance .cg-lockup__tag{ animation: cg-lockup-tag 360ms ease calc(var(--cg-entrance-delay,0ms) + 700ms) both; }
-@keyframes cg-lockup-mark{ from{ opacity:0; transform:scale(.6) rotate(-16deg); } }
-@keyframes cg-lockup-name{ from{ opacity:0; transform:translateX(-8px); } }
-@keyframes cg-lockup-tag{ from{ opacity:0; transform:translateY(4px); } }
-@media (prefers-reduced-motion:reduce){
-  .cg-lockup--entrance .cg-lockup__mark, .cg-lockup--entrance .cg-lockup__name, .cg-lockup--entrance .cg-lockup__tag{ animation: cg-lockup-fade 240ms ease var(--cg-entrance-delay,0ms) both; }
-  @keyframes cg-lockup-fade{ from{ opacity:0; } }
-}
-`;

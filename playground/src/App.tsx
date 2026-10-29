@@ -12,6 +12,9 @@ import { AnchorNav } from "../../components/AnchorNav";
 import { LanguageSwitcher } from "../../components/LanguageSwitcher";
 import { List } from "../../components/List";
 import { Timeline } from "../../components/Timeline";
+import { Byline } from "../../components/Byline";
+import { PersonChip } from "../../components/PersonChip";
+import { Breadcrumb } from "../../components/Breadcrumb";
 import { BottomNav } from "../../components/BottomNav";
 import { BreatheMark } from "../../components/BreatheMark";
 import { Curtain } from "../../components/Curtain";
@@ -304,6 +307,8 @@ const PAGE_NAV = [
   { id: "accordion", label: "Accordion", Icon: IconBook },
   { id: "list", label: "List", Icon: IconBook },
   { id: "timeline", label: "Timeline", Icon: IconActivity },
+  { id: "people", label: "People", Icon: IconUsers },
+  { id: "breadcrumb", label: "Breadcrumb", Icon: IconMapPin },
   { id: "pills", label: "PillList", Icon: IconSearch },
   { id: "header", label: "Header", Icon: IconHome },
   { id: "mobile", label: "Mobile", Icon: IconMapPin },
@@ -368,6 +373,8 @@ export function App() {
             { label: "Accordion", href: "#accordion", icon: IcBook },
             { label: "List", href: "#list", icon: IcBook },
             { label: "Timeline", href: "#timeline", icon: IcPulse },
+            { label: "People (Byline, PersonChip)", href: "#people", icon: IcUsers },
+            { label: "Breadcrumb", href: "#breadcrumb", icon: IcPin },
             { label: "PillList", href: "#pills", icon: IcSearch },
             { label: "Header", href: "#header", icon: IcHome },
             { label: "Mobile · BottomNav", href: "#mobile", icon: IcHome },
@@ -547,9 +554,41 @@ export function App() {
           </div>
         </Section>
 
+        <Section id="people" title="People — Byline · PersonChip">
+          <p className="mb-6 max-w-[62ch] text-ink-body">Who signs or explains a piece of content, from novo.creeta. Important for testimonials and content pages. Without a photo, the initials in a bubble.</p>
+          <div className="grid gap-8 lg:grid-cols-2">
+            <div className="rounded-2xl border border-line bg-white p-6">
+              <p className="mb-3 text-xs font-semibold text-ink-soft">Byline · group (eyebrow + names as links)</p>
+              <Byline eyebrow="Eyebrow" people={[{ name: "Person name", href: "#people" }, { name: "Another person", href: "#people" }]} />
+            </div>
+            <div className="rounded-2xl border border-line bg-white p-6">
+              <p className="mb-3 text-xs font-semibold text-ink-soft">Byline · inline (name + action link)</p>
+              <Byline people={[{ name: "Person name" }]} action={{ label: "Action link", href: "#people" }} />
+            </div>
+            <div className="rounded-2xl border border-line bg-surface p-6">
+              <p className="mb-3 text-xs font-semibold text-ink-soft">PersonChip · link (arrow bubble)</p>
+              <PersonChip name="Person name" description="Role · Registration number" href="#people" />
+            </div>
+            <div className="rounded-2xl border border-line bg-surface p-6">
+              <p className="mb-3 text-xs font-semibold text-ink-soft">PersonChip · text only</p>
+              <PersonChip name="Person name" description="Role · Registration number" />
+            </div>
+          </div>
+        </Section>
+
+        <Section id="breadcrumb" title="Breadcrumb">
+          <p className="mb-6 max-w-[62ch] text-ink-body">The trail of an article: back arrow on the first crumb, chevrons between, the current page not listed (its title follows).</p>
+          <Breadcrumb items={[{ label: "Section", href: "#breadcrumb" }, { label: "Parent page", href: "#breadcrumb" }]} />
+        </Section>
+
         <Section id="pills" title="PillList">
-          <PillList title="Pill list" seeAll={{ label: "See-all link", href: "#pills" }}
-            items={["Pill", "Pill with a longer label", "Pill", "Another pill", "One more pill", "Short", "Pill with the longest label of the list"].map((label) => ({ label, href: "#pills" }))} />
+          <p className="mb-6 max-w-[62ch] text-ink-body">The Atalho of novo.creeta: a white pill, 44px tall, with an arrow in a circle. The arrow says where it goes — down for an anchor on the same page, diagonal for another page. Optional meta after the label ("11 videos").</p>
+          <div className="space-y-10">
+            <PillList title="Pills to other pages" seeAll={{ label: "See-all link", href: "https://github.com/felipegenuino/breathe-ds" }}
+              items={["Pill", "Pill with a longer label", "Pill", "Another pill", "One more pill", "Short", "Pill with the longest label of the list"].map((label) => ({ label, href: "https://github.com/felipegenuino/breathe-ds" }))} />
+            <PillList title="Anchor pills with meta"
+              items={[{ label: "Section one", meta: "11 items", href: "#symbol" }, { label: "Section two", meta: "8 items", href: "#tokens" }, { label: "Section three", meta: "12 items", href: "#lockup" }, { label: "Section four", meta: "7 items", href: "#buttons" }]} />
+          </div>
         </Section>
 
         <Section id="header" title="Header (nav + dropdown)">

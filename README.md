@@ -179,6 +179,11 @@ a short fade.
   notice). An item with `href` is a link: semibold, underline, outbound arrow.
 - **Timeline**: the "Como cuidamos" of novo.creeta — ordered steps, each with a
   44px icon bubble, a title and a paragraph; a thin line links the drawings.
+- **Byline** / **PersonChip** / **Avatar**: who signs or explains content
+  (novo.creeta) — stacked portraits + eyebrow + linked names, or portrait + name
+  + "Watch the video ↗"; the person chip (portrait, name, role · registration,
+  arrow bubble when it links to the person's card). No photo → initials bubble.
+- **Breadcrumb**: the article trail "← Section › Parent" (current page not listed).
 - **Footer**: the site-footer of novo.creeta, by tokens — full width like the
   Header, with the signed brand + sentence, "Pages" (title on the first line, links in two
   columns), "Where we are" (address, hours, "Directions ↗ · Waze ↗"), an optional
@@ -211,7 +216,7 @@ a short fade.
       and **big** (photo + name + role + CREFITO + "Trajetória"/"Orientações" accordions).
       **Video** variant: "Apresentação" badge, hover plays the video, and a **modal** (video + bio).
       **Data rule:** every professional MUST have a **CREFITO** attached (COFFITO requirement).
-- [x] **PillList** (chips like "Condições que atendemos": label + arrow, wrapping grid, "View all" link)
+- [x] **Pill / PillList** — the Atalho of novo.creeta (white 44px pill, arrow bubble: ↓ anchor, ↗ other page, optional meta); wrapping row + "See all"
 - [x] **AnchorNav** (floating capsule of anchors, scroll-spy + sliding indicator) — extracted from ttcab (10/29)
 - [x] **Footer** · **PageVideoHero** (loop and player) · **Header** (dropdown, house) · **BottomNav** · **Curtain** · **Lockup** (5 arrangements) · **BreatheMark**
 - [x] **Site brand marks** (`components/marks/`): real symbol + wordmark for TTCAB and Creeta (10/29)
