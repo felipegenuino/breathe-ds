@@ -220,8 +220,11 @@ from color, not from extra markup.
   ("See the team ↗") with `arrowButton={false}`.
 - **VideoStoryCard**: the vertical Instagram-style video card (poster, play
   button, duration badge; gradient grows and the lead appears on hover/focus;
-  tap plays with sound in place; optional muted hover preview). Exports the
-  page-level pause contract (`CARD_VIDEOS_PAUSE_EVENT` / `CARD_VIDEOS_PAUSED_ATTR`).
+  tap plays with sound in place; optional muted hover preview). When the clip
+  ends the card returns to the poster with a "Watched" badge (check + word,
+  top-right): `watched` sets it from the site, `onWatched` fires once at the end,
+  `remember` keeps the set of watched clips in localStorage (by `src`). Exports
+  the page-level pause contract (`CARD_VIDEOS_PAUSE_EVENT` / `CARD_VIDEOS_PAUSED_ATTR`).
 - **TestimonialCard**: clip with a play button on the left, quote + author +
   outbound link on the right ("Famílias contam").
 - **MapCard**: the Mapa of novo.creeta — a still preview fading into the card,

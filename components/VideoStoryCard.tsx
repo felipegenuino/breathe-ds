@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState, type ElementType, type ReactNode } from "react";
-import { Play } from "lucide-react";
+import { Check, Play } from "lucide-react";
 
 /* ── Pause-all coordination (ported from creeta's `pausa-dos-videos.tsx`) ──
    A page-level "pause the card videos" button (WCAG 2.2.2) does two things:
@@ -28,8 +28,38 @@ export function formatDuration(seconds: number): string {
 type Labels = {
   /** sr-only text of the poster button: "Watch: {title}, {duration}". */
   watch: (title: string, duration: string) => string;
+  /** sr-only text of the poster button once watched: "Watched. Watch again: …". */
+  watchAgain: (title: string, duration: string) => string;
+  /** The badge shown on the poster once the video has been watched to the end. */
+  watched: string;
 };
-const EN: Labels = { watch: (title, duration) => `Watch: ${title}, ${duration}` };
+const EN: Labels = {
+  watch: (title, duration) => `Watch: ${title}, ${duration}`,
+  watchAgain: (title, duration) => `Watched. Watch again: ${title}, ${duration}`,
+  watched: "Watched",
+};
+
+/** localStorage key of the set of watched clips (by `src`), with `remember`. */
+export const WATCHED_STORAGE_KEY = "cg-watched";
+
+function readWatched(): string[] {
+  try {
+    const raw = localStorage.getItem(WATCHED_STORAGE_KEY);
+    const list = raw ? JSON.parse(raw) : [];
+    return Array.isArray(list) ? list : [];
+  } catch {
+    return [];
+  }
+}
+
+function storeWatched(src: string) {
+  try {
+    const list = readWatched();
+    if (!list.includes(src)) localStorage.setItem(WATCHED_STORAGE_KEY, JSON.stringify([...list, src]));
+  } catch {
+    /* private mode, blocked storage: the badge still shows for this visit */
+  }
+}
 
 export type VideoStoryCardCaptions = {
   /** WebVTT file in the page's language. */
@@ -84,6 +114,14 @@ type Props = {
   as?: ElementType;
   /** id of the root (anchor target: scroll-mt-24 is built in). */
   id?: string;
+  /** Marks the card as watched from the start (the site keeps its own record).
+   *  Either way the card marks itself once the video plays to the end. */
+  watched?: boolean;
+  /** Called once when the video plays to the end (to store it on the site). */
+  onWatched?: () => void;
+  /** Remembers watched clips in localStorage (by `src`) across visits, for a
+   *  page with many videos. Off by default: the site decides. */
+  remember?: boolean;
   /** What goes right under the video: a transcript, on the videos page. */
   children?: ReactNode;
   labels?: Partial<Labels>;
@@ -137,6 +175,9 @@ function CaptionLine({ text, lang }: { text: string; lang: string }) {
  * slides open (grid-rows 0fr → 1fr, no height animation). Tap/click swaps the
  * poster for the <video> with sound and controls, and the overlay text leaves.
  * Optional muted preview on hover (`previewSrc`) and caption band (`captions`).
+ * When the video ends the card goes back to the poster with a "Watched" badge
+ * (check + word, never color alone) in the top-right corner, opposite the play:
+ * on a page with many clips it says which ones are done.
  */
 export function VideoStoryCard({
   title,
@@ -155,6 +196,9 @@ export function VideoStoryCard({
   layout = "stacked",
   as: Root = "article",
   id,
+  watched: watchedProp = false,
+  onWatched,
+  remember = false,
   children,
   labels,
   className = "",
@@ -164,6 +208,20 @@ export function VideoStoryCard({
   const durationText = typeof duration === "number" ? formatDuration(duration) : duration;
   const [playing, setPlaying] = useState(false);
   const { line, attach } = useCaptionLine();
+
+  // ── watched: from the prop, from storage (after mount, so SSR and the first
+  // paint agree), or from the video reaching the end ──
+  const [watchedHere, setWatchedHere] = useState(false);
+  useEffect(() => {
+    if (remember && readWatched().includes(src)) setWatchedHere(true);
+  }, [remember, src]);
+  const watched = watchedProp || watchedHere;
+  const onEnded = () => {
+    setPlaying(false);
+    if (!watched) onWatched?.();
+    setWatchedHere(true);
+    if (remember) storeWatched(src);
+  };
 
   // ── hover preview (muted loop over the poster) ──
   const card = useRef<HTMLElement>(null);
@@ -225,6 +283,7 @@ export function VideoStoryCard({
               controls
               autoPlay
               playsInline
+              onEnded={onEnded}
               className="absolute inset-0 h-full w-full bg-ink object-contain"
             >
               {captions && <track ref={attach} kind="subtitles" src={captions.src} srcLang={captions.lang} default />}
@@ -264,6 +323,13 @@ export function VideoStoryCard({
                   className={`pointer-events-none absolute inset-0 h-full w-full object-cover transition-opacity duration-500 ease-out motion-reduce:transition-none ${previewing ? "opacity-100" : "opacity-0"}`}
                 />
               )}
+              {/* watched: top-right, opposite the play, check and word (not color alone) */}
+              {watched && (
+                <span aria-hidden="true" className="absolute right-3 top-3 flex items-center gap-1.5 rounded-full bg-card/90 py-1.5 pl-2.5 pr-3 text-xs font-semibold text-ink backdrop-blur-md">
+                  <Check size={14} strokeWidth={2.5} />
+                  {t.watched}
+                </span>
+              )}
               {/* play and duration, together in the top corner */}
               <span aria-hidden="true" className="absolute left-3 top-3 flex items-center gap-2">
                 <span className="flex h-11 w-11 items-center justify-center rounded-full bg-card text-ink shadow-[0_8px_24px_-8px_rgba(0,0,0,0.6)] transition-transform duration-200 ease-out group-hover:scale-105 group-active:scale-95 motion-reduce:transition-none motion-reduce:group-hover:scale-100 motion-reduce:group-active:scale-100">
@@ -279,7 +345,7 @@ export function VideoStoryCard({
                 aria-hidden="true"
                 className="pointer-events-none absolute inset-x-0 bottom-0 h-[45%] bg-gradient-to-t from-ink from-20% via-ink/80 via-55% to-transparent transition-[height] duration-300 ease-out group-focus-within/card:h-[70%] motion-reduce:transition-none [@media(hover:hover)_and_(pointer:fine)]:group-hover/card:h-[70%]"
               />
-              <span className="sr-only">{t.watch(title, durationText)}</span>
+              <span className="sr-only">{watched ? t.watchAgain(title, durationText) : t.watch(title, durationText)}</span>
             </button>
           )}
           {/* Caption over the gradient. Outside the button so the title stays a

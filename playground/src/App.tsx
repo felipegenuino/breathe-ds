@@ -359,7 +359,7 @@ export function App() {
   const [mobW, setMobW] = useState<"phone" | "tablet">("phone");
   const [listMarker, setListMarker] = useState<"check" | "arrow">("check");
   const [mapW, setMapW] = useState<"full" | "half">("half");
-  const [vs, setVs] = useState({ speaker: true, lead: true, preview: false, layout: "stacked" as "stacked" | "side" });
+  const [vs, setVs] = useState({ speaker: true, lead: true, preview: false, watched: false, layout: "stacked" as "stacked" | "side" });
   const [tc, setTc] = useState({ link: true, two: false, photo: false });
   const [pc, setPc] = useState({ photo: true, living: true, presentation: true, captions: true, bio: true, guidance: true, instagram: true });
   const [mc, setMc] = useState({ badge: true, arrow: true, eyebrow: false, text: true, link: false, media: "clip" as "image" | "clip" | "hover" });
@@ -825,11 +825,11 @@ export function App() {
       </Section>
 
       <Section id="videos" title="Videos — VideoStoryCard · TestimonialCard">
-        <p className="mb-6 max-w-[62ch] text-ink-body">VideoStoryCard: the vertical Instagram-style card — poster, round play button and duration badge; on hover (mouse) or focus the gradient grows and the lead appears; tap plays the video with sound in place. TestimonialCard: the clip with a play button on the left, the quote, the author and the outbound link on the right.</p>
+        <p className="mb-6 max-w-[62ch] text-ink-body">VideoStoryCard: the vertical Instagram-style card — poster, round play button and duration badge; on hover (mouse) or focus the gradient grows and the lead appears; tap plays the video with sound in place; when it ends the card goes back to the poster with the "Watched" badge (also from the site, via the prop, or remembered in localStorage with "remember"). TestimonialCard: the clip with a play button on the left, the quote, the author and the outbound link on the right.</p>
         <div className="mb-5 flex flex-wrap items-center gap-x-5 gap-y-3 rounded-2xl border border-line bg-surface p-4">
           <span className="text-[0.7rem] font-semibold tracking-[0.12em] text-ink-soft uppercase">VideoStoryCard</span>
           <SegGroup label="Layout" value={vs.layout} set={(v) => setVs((m) => ({ ...m, layout: v }))} options={[["stacked", "Stacked"], ["side", "Side"]]} />
-          {([["speaker", "Speaker"], ["lead", "Lead"], ["preview", "Hover preview"]] as [keyof typeof vs, string][]).map(([k, label]) => (
+          {([["speaker", "Speaker"], ["lead", "Lead"], ["preview", "Hover preview"], ["watched", "Watched"]] as [keyof typeof vs, string][]).map(([k, label]) => (
             <PillToggle key={k} label={label} on={vs[k] as boolean} set={(v) => setVs((m) => ({ ...m, [k]: v }))} />
           ))}
         </div>
@@ -842,7 +842,8 @@ export function App() {
             poster="/demo/person-poster-vertical.jpg"
             previewSrc={vs.preview ? "/demo/person-vertical.mp4" : undefined}
             layout={vs.layout}
-            duration={99}
+            duration={10}
+            watched={vs.watched}
           />
         </div>
 
