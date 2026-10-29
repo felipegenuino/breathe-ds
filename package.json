@@ -27,6 +27,7 @@
     "./components/Heading": "./components/Heading.tsx",
     "./components/CtaCard": "./components/CtaCard.tsx",
     "./components/InfoCard": "./components/InfoCard.tsx",
+    "./components/FactStrip": "./components/FactStrip.tsx",
     "./components/VideoStoryCard": "./components/VideoStoryCard.tsx",
     "./components/TestimonialCard": "./components/TestimonialCard.tsx",
     "./components/MediaCard": "./components/MediaCard.tsx",

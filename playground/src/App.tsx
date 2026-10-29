@@ -17,6 +17,7 @@ import { Heading, SectionHeading } from "../../components/Heading";
 import { Text, Prose } from "../../components/Text";
 import { CtaCard } from "../../components/CtaCard";
 import { InfoCard } from "../../components/InfoCard";
+import { FactStrip } from "../../components/FactStrip";
 import { VideoStoryCard } from "../../components/VideoStoryCard";
 import { TestimonialCard } from "../../components/TestimonialCard";
 import { MediaCard, MediaCardBadge } from "../../components/MediaCard";
@@ -395,7 +396,7 @@ export function App() {
             { label: "Header", href: "#header", icon: IcHome },
             { label: "Mobile · BottomNav", href: "#mobile", icon: IcHome },
             { label: "AnchorNav", href: "#anchornav", icon: IcPin },
-            { label: "Cards (InfoCard, MediaCard)", href: "#cards", icon: IcBook },
+            { label: "Cards (FactStrip, InfoCard, MediaCard)", href: "#cards", icon: IcBook },
             { label: "Videos (VideoStoryCard, TestimonialCard)", href: "#videos", icon: IcVideo },
             { label: "MapCard", href: "#map", icon: IcPin },
             { label: "PageVideoHero", href: "#hero", icon: IcVideo },
@@ -741,8 +742,17 @@ export function App() {
           <HeroDemo />
         </section>
 
-      <Section id="cards" title="Cards — InfoCard · MediaCard">
-        <p className="mb-6 max-w-[62ch] text-ink-body">InfoCard: the white cards of the clinic page — a tinted icon bubble, a title, lines and outbound links. MediaCard: a photo or clip behind a title, a badge top-left and the arrow button top-right; the whole card is a link, the image zooms slowly on hover (mouse only), the clip plays muted.</p>
+      <Section id="cards" title="Cards — FactStrip · InfoCard · MediaCard">
+        <p className="mb-6 max-w-[62ch] text-ink-body">FactStrip: the three facts under the hero — icon bubble plus two lines of equal weight, a thin line between columns (between rows on phones). InfoCard: the white cards of the clinic page — a tinted icon bubble, a title, lines and outbound links. MediaCard: a photo or clip behind a title, a badge top-left and the arrow button top-right; the whole card is a link, the image zooms slowly on hover (mouse only), the clip plays muted.</p>
+        <FactStrip
+          className="mb-8"
+          label="Facts"
+          facts={[
+            { Icon: IconActivity, title: "Fact title", text: "Supporting line" },
+            { Icon: IconHome, title: "Fact title", text: "A longer supporting line", separator: " " },
+            { Icon: IconUsers, title: "Longer fact title", text: "Supporting line" },
+          ]}
+        />
         <div className="grid gap-3 md:grid-cols-3 md:gap-5">
           <InfoCard Icon={IconMapPin} title="Card title" address={["Line of text", "Second line of text", "Third line"]} links={[{ href: "https://github.com/felipegenuino/breathe-ds", label: "Outbound link", external: true }, { href: "https://www.npmjs.com/package/@breathe-ds/ui", label: "Another", external: true }]} />
           <InfoCard Icon={IconActivity} title="Card title" lines={["Line of text"]} note="A smaller note line under the text." />

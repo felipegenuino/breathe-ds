@@ -197,6 +197,9 @@ from color, not from extra markup.
   + "Watch the video ↗"; the person chip (portrait, name, role · registration,
   arrow bubble when it links to the person's card). No photo → initials bubble.
 - **Breadcrumb**: the article trail "← Section › Parent" (current page not listed).
+- **FactStrip**: the three facts under the hero of novo.creeta — icon bubble +
+  two lines of equal weight per fact, thin dividers between columns (rows on
+  phones); the separator between the lines is read by screen readers only.
 - **InfoCard**: the white info cards of the clinic page (icon bubble, title,
   lines/address, note, outbound links "Directions ↗ · Waze ↗").
 - **MediaCard**: photo or muted clip behind a title, badge top-left, arrow button
