@@ -26,7 +26,7 @@ npm i @breathe-ds/ui
 ```
 
 Pacote público no npm: https://www.npmjs.com/package/@breathe-ds/ui · código em
-https://github.com/felipegenuino/breathe-ds. Os componentes são TSX fonte (sem
+https://github.com/felipegenuino/breathe-ds (licença MIT). Os componentes são TSX fonte (sem
 build): no Next, adicione `transpilePackages: ["@breathe-ds/ui"]` ao `next.config`.
 
 ## Uso (Tailwind v4)

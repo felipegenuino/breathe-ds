@@ -1,8 +1,8 @@
 {
   "name": "@breathe-ds/ui",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Breathe DS — design system da família Cuidado Global (creeta, ttcab, metodorta). Tokens tematizáveis + componentes React.",
-  "license": "UNLICENSED",
+  "license": "MIT",
   "type": "module",
   "sideEffects": [
     "*.css"
@@ -11,7 +11,8 @@
     "theme.css",
     "tokens",
     "components",
-    "README.md"
+    "README.md",
+    "LICENSE"
   ],
   "exports": {
     "./theme.css": "./theme.css",
