@@ -50,8 +50,10 @@ export function List({ items, marker = "check", linkComponent, newTabLabel = "(o
   const mark = marker === "check" ? bubble : <CornerDownRight />;
   const gap = marker === "check" ? "gap-3" : "gap-2.5";
 
+  // leading-snug (1.375): in a two-line item the lines stay closer than the
+  // items are to each other; relaxed leading read as air inside the item (2026-10-29)
   return (
-    <ul className={`list-none ${marker === "check" ? "space-y-3 text-ink" : "space-y-2 leading-relaxed text-ink/80"} ${className}`}>
+    <ul className={`list-none leading-snug ${marker === "check" ? "space-y-3 text-ink" : "space-y-2.5 text-ink/80"} ${className}`}>
       {items.map((it, i) => (
         <li key={`${i}-${it.href ?? ""}`}>
           {it.href ? (
