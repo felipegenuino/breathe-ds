@@ -197,7 +197,8 @@ from color, not from extra markup.
   Site convention: "Home" is just the house (`icon` + `iconOnly`), with a label for
   screen readers.
   Long dropdowns: `columns: 2` (compact rows, max 2 columns) and `align: "end"` to keep
-  the wider menu inside the viewport.
+  the wider menu inside the viewport; `groups` (in place of `children`) adds labelled
+  groups, e.g. `[{ label: "Navigation", children: [...] }]`.
 - **BottomNav**: on phone/tablet, navigation leaves the header and becomes the
   floating bottom bar. It is the code of novo.creeta's BarraNavegacao (= ttcab's
   BottomNav), made neutral through tokens: it receives ALL pages in order of importance
