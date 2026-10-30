@@ -20,6 +20,10 @@ export type NavItem = {
   /** Final link of the dropdown. Arrow → (goes to another page of the site); with
    *  `external` it becomes ↗ (leaves to another site), as in the other components. */
   seeAll?: { label: ReactNode; href: string; external?: boolean };
+  /** Long dropdowns: 2 columns of compact rows (max 2, as in the rest of the DS). */
+  columns?: 1 | 2;
+  /** Which edge of the trigger the dropdown aligns to; "end" keeps a wide menu inside the viewport. */
+  align?: "start" | "end";
 };
 
 type Labels = {
@@ -72,6 +76,7 @@ const linkCls = (active?: boolean) =>
 
 function Dropdown({ item, L, t }: { item: NavItem; L: ElementType; t: Labels }) {
   const [open, setOpen] = useState(false);
+  const two = item.columns === 2;
   return (
     <div
       className="relative"
@@ -101,9 +106,9 @@ function Dropdown({ item, L, t }: { item: NavItem; L: ElementType; t: Labels }) 
         </button>
       </span>
 
-      <div className={`absolute top-full left-0 z-50 pt-2 ${open ? "" : "pointer-events-none"}`}>
+      <div className={`absolute top-full ${item.align === "end" ? "right-0" : "left-0"} z-50 pt-2 ${open ? "" : "pointer-events-none"}`}>
         <ul
-          className={`w-[19rem] list-none rounded-2xl border border-line bg-surface p-2 shadow-[0_18px_40px_-16px_rgba(20,71,83,0.4)] transition duration-150 ease-out motion-reduce:transition-none ${
+          className={`${two ? "grid w-[34rem] grid-cols-2 gap-x-1" : "w-[19rem]"} list-none rounded-2xl border border-line bg-surface p-2 shadow-[0_18px_40px_-16px_rgba(20,71,83,0.4)] transition duration-150 ease-out motion-reduce:transition-none ${
             open ? "visible scale-100 opacity-100" : "invisible -translate-y-1 scale-[0.98] opacity-0"
           }`}
         >
@@ -114,7 +119,7 @@ function Dropdown({ item, L, t }: { item: NavItem; L: ElementType; t: Labels }) 
                 onClick={() => setOpen(false)}
                 // with a description the icon sits with the label's first line (creeta);
                 // label only: centred on the bubble, and a two-line label stays tight
-                className={`flex ${c.description ? "items-start" : "items-center"} gap-3 rounded-xl px-2.5 py-2 transition-colors hover:bg-ink/[0.05] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink`}
+                className={`flex ${c.description ? "items-start" : "items-center"} gap-3 rounded-xl px-2.5 ${two ? "py-1.5" : "py-2"} transition-colors hover:bg-ink/[0.05] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink`}
               >
                 {c.icon && (
                   <span className="flex h-9 w-9 flex-none items-center justify-center rounded-full bg-ink/[0.08] text-ink">
@@ -122,7 +127,7 @@ function Dropdown({ item, L, t }: { item: NavItem; L: ElementType; t: Labels }) 
                   </span>
                 )}
                 <span>
-                  <span className="block font-heading text-[0.95rem] leading-snug font-semibold text-ink">
+                  <span className={`block font-heading ${two ? "text-[0.9rem]" : "text-[0.95rem]"} leading-snug font-semibold text-ink`}>
                     {c.label}
                   </span>
                   {c.description && (
@@ -133,7 +138,7 @@ function Dropdown({ item, L, t }: { item: NavItem; L: ElementType; t: Labels }) 
             </li>
           ))}
           {item.seeAll && (
-            <li className="mt-1 border-t border-line pt-1">
+            <li className={`mt-1 border-t border-line pt-1 ${two ? "col-span-2" : ""}`}>
               <L
                 href={item.seeAll.href}
                 onClick={() => setOpen(false)}

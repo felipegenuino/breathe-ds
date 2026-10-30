@@ -570,32 +570,32 @@ export function App() {
           { label: "Symbol", href: "#symbol" },
           { label: "Tokens", href: "#tokens" },
           { label: "Typography", href: "#type" },
-          { label: "Components", href: "#buttons", children: [
-            { label: "Lockup (logo)", href: "#lockup", icon: IcHome },
-            { label: "Button", href: "#buttons", icon: IcPulse },
-            { label: "Action dose (accent rules)", href: "#action", icon: IcPulse },
-            { label: "Icons", href: "#icons", icon: IcSearch },
-            { label: "Accordion", href: "#accordion", icon: IcBook },
-            { label: "List", href: "#list", icon: IcBook },
-            { label: "Timeline", href: "#timeline", icon: IcPulse },
-            { label: "People (ProfessionalCard, Byline, PersonChip)", href: "#people", icon: IcUsers },
-            { label: "Breadcrumb", href: "#breadcrumb", icon: IcPin },
-            { label: "PillList", href: "#pills", icon: IcSearch },
-            { label: "Header", href: "#header", icon: IcHome },
-            { label: "Mobile · BottomNav", href: "#mobile", icon: IcHome },
-            { label: "AnchorNav", href: "#anchornav", icon: IcPin },
-            { label: "Cards (FactStrip, InfoCard, MediaCard)", href: "#cards", icon: IcBook },
-            { label: "Videos (VideoStoryCard, TestimonialCard)", href: "#videos", icon: IcVideo },
-            { label: "MapCard", href: "#map", icon: IcPin },
-            { label: "PageVideoHero", href: "#hero", icon: IcVideo },
-            { label: "CareSteps (ChatPreview, PlanTimeline, PhotoSequence)", href: "#care", icon: IcPulse },
-            { label: "StoryPanel (pillars on the dark panel)", href: "#story", icon: IcBook },
-            { label: "Blog (PostCard, FeaturedPosts, PostArticle)", href: "#blog", icon: IcBook },
-            { label: "CourseCard (class card)", href: "#course", icon: IcCap },
-            { label: "Events (EventList, EventRow, EventFacts, RegistrationBox)", href: "#events", icon: IcCap },
-            { label: "CtaCard (final call)", href: "#cta", icon: IcChat },
-            { label: "Footer", href: "#footer", icon: IcPin },
-          ], seeAll: { label: "Mobile · BottomNav", href: "#mobile" } },
+          { label: "Components", href: "#buttons", columns: 2, align: "end", children: [
+            { label: "Lockup", href: "#lockup" },
+            { label: "Button", href: "#buttons" },
+            { label: "Action dose", href: "#action" },
+            { label: "Icons", href: "#icons" },
+            { label: "Accordion", href: "#accordion" },
+            { label: "List", href: "#list" },
+            { label: "Timeline", href: "#timeline" },
+            { label: "People", href: "#people" },
+            { label: "Breadcrumb", href: "#breadcrumb" },
+            { label: "PillList", href: "#pills" },
+            { label: "Header", href: "#header" },
+            { label: "BottomNav", href: "#mobile" },
+            { label: "AnchorNav", href: "#anchornav" },
+            { label: "Cards", href: "#cards" },
+            { label: "Videos", href: "#videos" },
+            { label: "MapCard", href: "#map" },
+            { label: "PageVideoHero", href: "#hero" },
+            { label: "CareSteps", href: "#care" },
+            { label: "StoryPanel", href: "#story" },
+            { label: "Blog", href: "#blog" },
+            { label: "CourseCard", href: "#course" },
+            { label: "Events", href: "#events" },
+            { label: "CtaCard", href: "#cta" },
+            { label: "Footer", href: "#footer" },
+          ] },
         ]}
       />
       <main className="min-w-0">
@@ -1021,7 +1021,8 @@ export function App() {
             </div>
           </div>
           <div
-            className="relative mx-auto max-w-full overflow-hidden rounded-[2.5rem] border border-line bg-surface shadow-[0_24px_48px_-24px_rgba(20,71,83,0.35)] transition-[width,height] duration-300 ease-cg motion-reduce:transition-none"
+            // isolate: the demo bar's z-50 stays inside the frame, under the page header
+            className="relative isolate mx-auto max-w-full overflow-hidden rounded-[2.5rem] border border-line bg-surface shadow-[0_24px_48px_-24px_rgba(20,71,83,0.35)] transition-[width,height] duration-300 ease-cg motion-reduce:transition-none"
             style={mobW === "tablet" ? { width: 768, height: 820 } : { width: 390, height: 640 }}
           >
             <div className="flex h-16 items-center justify-between px-5">

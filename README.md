@@ -196,6 +196,8 @@ from color, not from extra markup.
   (icons on sub-items; final link with a → arrow, or ↗ if `external`) · language · CTA.
   Site convention: "Home" is just the house (`icon` + `iconOnly`), with a label for
   screen readers.
+  Long dropdowns: `columns: 2` (compact rows, max 2 columns) and `align: "end"` to keep
+  the wider menu inside the viewport.
 - **BottomNav**: on phone/tablet, navigation leaves the header and becomes the
   floating bottom bar. It is the code of novo.creeta's BarraNavegacao (= ttcab's
   BottomNav), made neutral through tokens: it receives ALL pages in order of importance
