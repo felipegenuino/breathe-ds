@@ -378,8 +378,22 @@ const FOOTER_GROUPS = (
 
 
 // Real classes of the school, read from the public pages of metodorta.com.br on
-// 2026-10-29 (titles, dates, venues, prices, rules). Instructors are not named
-// on the pages: pending with the school. Covers here are generated images.
+// 2026-10-29 (titles, dates, venues, prices, rules); instructors per class from
+// the portraits on each class (30 Oct). Covers here are generated images.
+
+// Instructors of the school (metodorta.com.br/metodo-rta/equipe, 30 Oct 2026):
+// public portraits, linked from the school's server, not stored here.
+const T = {
+  mariangela: { name: "Mariangela P. de Lima", photo: "https://metodorta.com.br/wp-content/uploads/2000/02/Mariangela.png", href: "https://metodorta.com.br/metodo-rta/equipe/" },
+  gabriela: { name: "Gabriela Di Filippo Souza", photo: "https://metodorta.com.br/wp-content/uploads/2025/07/54b82fa3-85d4-4c8c-b8b0-b261345572e3.jpg", href: "https://metodorta.com.br/metodo-rta/equipe/" },
+  anacarolina: { name: "Ana Carolina Xavier", photo: "https://metodorta.com.br/wp-content/uploads/2024/04/4.png", href: "https://metodorta.com.br/metodo-rta/equipe/" },
+  aline: { name: "Aline Cara Torturete", photo: "https://metodorta.com.br/wp-content/uploads/2024/04/8.png", href: "https://metodorta.com.br/metodo-rta/equipe/" },
+  bianca: { name: "Bianca Peixoto", photo: "https://metodorta.com.br/wp-content/uploads/2025/07/bianca-site.png", href: "https://metodorta.com.br/metodo-rta/equipe/" },
+  danielle: { name: "Danielle Fortuna", photo: "https://metodorta.com.br/wp-content/uploads/2024/04/5.png", href: "https://metodorta.com.br/metodo-rta/equipe/" },
+  mariana: { name: "Mariana Sierra de Cruz", photo: "https://metodorta.com.br/wp-content/uploads/2024/04/9.png", href: "https://metodorta.com.br/metodo-rta/equipe/" },
+  luciana: { name: "Luciana Ribeiro Pienta", photo: "https://metodorta.com.br/wp-content/uploads/2024/04/6.png", href: "https://metodorta.com.br/metodo-rta/equipe/" },
+};
+
 type DemoCourse = {
   id: string;
   course: string;
@@ -400,10 +414,12 @@ type DemoCourse = {
   audience: string;
   discounts: string[];
   rules: string[];
+  instructors: { name: string; photo: string; href: string }[];
 };
 const COURSES: DemoCourse[] = [
   {
     id: "ttcab-2026-fortaleza",
+    instructors: [T.mariangela],
     course: "TTCAB 2026 · Tratamento do Torcicolo Congênito e outras Assimetrias Corporais do Bebê",
     city: "Fortaleza · CE",
     cover: "/demo/assessment.jpg",
@@ -423,6 +439,7 @@ const COURSES: DemoCourse[] = [
   },
   {
     id: "basico-2026-florianopolis",
+    instructors: [T.mariangela],
     course: "Curso Básico de RTA 2026 · Reequilíbrio Toracoabdominal",
     city: "Florianópolis · SC",
     cover: "/demo/clip-poster.jpg",
@@ -443,6 +460,7 @@ const COURSES: DemoCourse[] = [
   },
   {
     id: "basico-2026-rio",
+    instructors: [T.mariangela, T.gabriela, T.anacarolina, T.aline, T.bianca],
     course: "Curso Básico de RTA 2026 · Reequilíbrio Toracoabdominal",
     city: "Rio de Janeiro · RJ",
     cover: "/demo/podcast-poster.jpg",
@@ -461,6 +479,7 @@ const COURSES: DemoCourse[] = [
   },
   {
     id: "avancado-2027-florianopolis",
+    instructors: [T.mariangela, T.luciana, T.mariana],
     course: "Curso Avançado de RTA em Pediatria Ambulatorial 2027",
     city: "Florianópolis · SC",
     cover: "/demo/invite-loop-poster.jpg",
@@ -481,12 +500,12 @@ const COURSES: DemoCourse[] = [
 
 // Curso Básico de RTA 2027: the eight classes of the year (R$ 8.350, 69 horas/aula), as an EventList
 const BASICO_2027 = [
-  { month: "Abril", iso: "2027-04", items: [{ date: "1 a 7 abr", city: "Dourados · MS", venue: "Local a confirmar", seats: 33 }] },
-  { month: "Maio", iso: "2027-05", items: [{ date: "3 a 9 mai", city: "João Pessoa · PB", venue: "Local a confirmar", seats: 36 }, { date: "24 a 30 mai", city: "Curitiba · PR", venue: "Neurointensiva, Rua Victório Malucelli, 360, Hauer", seats: 34 }] },
-  { month: "Junho", iso: "2027-06", items: [{ date: "8 a 14 jun", city: "Florianópolis · SC", venue: "Creeta, Rua João Mathias Cordeiro, 33, Santa Mônica", seats: 31 }, { date: "22 a 28 jun", city: "Rio de Janeiro · RJ", venue: "Centro de Estudos Physioscience, Copacabana", seats: 30 }] },
-  { month: "Julho", iso: "2027-07", items: [{ date: "1 a 6 jul", city: "São Paulo · SP", venue: "Instituto Phorte, Rua Treze de Maio, 681, Bela Vista", seats: 37 }] },
-  { month: "Agosto", iso: "2027-08", items: [{ date: "2 a 8 ago", city: "Foz do Iguaçu · PR", venue: "Local a confirmar", seats: 39 }] },
-  { month: "Outubro", iso: "2027-10", items: [{ date: "18 a 24 out", city: "Fortaleza · CE", venue: "Local a confirmar", seats: 32 }] },
+  { month: "Abril", iso: "2027-04", items: [{ date: "1 a 7 abr", city: "Dourados · MS", venue: "Local a confirmar", seats: 33, people: [T.mariangela, T.gabriela] }] },
+  { month: "Maio", iso: "2027-05", items: [{ date: "3 a 9 mai", city: "João Pessoa · PB", venue: "Local a confirmar", seats: 36, people: [T.mariangela, T.gabriela] }, { date: "24 a 30 mai", city: "Curitiba · PR", venue: "Neurointensiva, Rua Victório Malucelli, 360, Hauer", seats: 34, people: [T.mariangela, T.gabriela] }] },
+  { month: "Junho", iso: "2027-06", items: [{ date: "8 a 14 jun", city: "Florianópolis · SC", venue: "Creeta, Rua João Mathias Cordeiro, 33, Santa Mônica", seats: 31, people: [T.mariangela, T.gabriela] }, { date: "22 a 28 jun", city: "Rio de Janeiro · RJ", venue: "Centro de Estudos Physioscience, Copacabana", seats: 30, people: [T.mariangela, T.gabriela, T.danielle, T.anacarolina] }] },
+  { month: "Julho", iso: "2027-07", items: [{ date: "1 a 6 jul", city: "São Paulo · SP", venue: "Instituto Phorte, Rua Treze de Maio, 681, Bela Vista", seats: 37, people: [T.mariangela, T.gabriela, T.mariana] }] },
+  { month: "Agosto", iso: "2027-08", items: [{ date: "2 a 8 ago", city: "Foz do Iguaçu · PR", venue: "Local a confirmar", seats: 39, people: [T.mariangela, T.gabriela] }] },
+  { month: "Outubro", iso: "2027-10", items: [{ date: "18 a 24 out", city: "Fortaleza · CE", venue: "Local a confirmar", seats: 32, people: [T.mariangela, T.gabriela] }] },
 ];
 
 function useScrollSpy(ids: readonly string[]) {
@@ -1268,7 +1287,7 @@ export function App() {
       </Section>
 
       <Section id="course" title="CourseCard — the class card">
-        <p className="mb-6 max-w-[62ch] text-ink-body">The class card (ttcab's "Formação", the school's class list) in the family's own vocabulary: the course name as the category line, the city as the title with the seats pill, the facts as tiles (the calendar tile for the start, the pin for the venue with its map link, a clock for the workload), who teaches as a Byline, a cover at the top, and at the foot the price with its note beside the Button accent. Click a card: it opens the SidePanel (Luma's drawer) with everything about the class and the button that goes straight to the school's cart. Real classes from the school's public pages (29 Oct 2026); covers are generated images; instructors are not named on the pages, pending with the school.</p>
+        <p className="mb-6 max-w-[62ch] text-ink-body">The class card (ttcab's "Formação", the school's class list) in the family's own vocabulary: the course name as the category line, the city as the title with the seats pill, the facts as tiles (the calendar tile for the start, the pin for the venue with its map link, a clock for the workload), who teaches as a Byline, a cover at the top, and at the foot the price with its note beside the Button accent. Click a card: it opens the SidePanel (Luma's drawer) with everything about the class and the button that goes straight to the school's cart. Real classes from the school's public pages (29 Oct 2026); covers are generated images; instructors from the portraits on each class page.</p>
         <div className="grid gap-3 md:grid-cols-2 md:gap-5">
           {COURSES.map((c) => (
             <CourseCard
@@ -1283,6 +1302,8 @@ export function App() {
               where={c.where ? { ...c.where, external: !!c.where.href } : undefined}
               workload={c.workload}
               price={{ value: c.price.value, note: c.price.note }}
+              instructors={c.instructors}
+              labels={{ with: "Com" }}
               footnote={c.audience}
               onSelect={() => setOpenCourse(c.id)}
               action={c.cart ? <Button variant="accent" href={c.cart} target="_blank" rel="noopener noreferrer">Garantir minha vaga</Button> : <Button variant="outline" href={c.page} target="_blank" rel="noopener noreferrer">Ver a página</Button>}
@@ -1318,6 +1339,7 @@ export function App() {
                   ...(selected.where ? [{ tile: "pin" as const, title: selected.where.title, subtitle: selected.where.subtitle, href: selected.where.href, external: true }] : []),
                 ]}
               />
+              <Byline className="mt-5" eyebrow="Quem ministra" people={selected.instructors} />
               <RegistrationBox
                 className="mt-6"
                 title="Inscrição"
@@ -1362,7 +1384,7 @@ export function App() {
             label="Curso Básico de RTA 2027"
             groups={BASICO_2027.map((g) => ({
               date: g.month, iso: g.iso,
-              events: g.items.map((it) => ({ time: it.date, timeAccent: "08h30–17h30", title: it.city, href: "https://metodorta.com.br/cursos-e-eventos/basico-2027/", location: it.venue, badge: `${it.seats} vagas` })),
+              events: g.items.map((it) => ({ time: it.date, timeAccent: "08h30–17h30", title: it.city, href: "https://metodorta.com.br/cursos-e-eventos/basico-2027/", organizers: it.people, location: it.venue, badge: `${it.seats} vagas` })),
             }))}
           />
         </div>
