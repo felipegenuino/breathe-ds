@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 
-type Level = "h1" | "h2" | "h3" | "h4";
+// "p": heading look without being a heading (a pull quote, a display line)
+type Level = "h1" | "h2" | "h3" | "h4" | "p";
 /** The family's heading scale (novo.creeta):
  *  display — page title (SectionHeading as h1) · hero — title over a full-bleed photo/video
  *  section — section title (h2) · card — title inside a card · small — h3 */
@@ -13,7 +14,7 @@ export const HEADING_SIZE: Record<HeadingSize, string> = {
   card: "text-[1.375rem] leading-snug md:text-2xl",
   small: "text-xl leading-snug",
 };
-const DEFAULT_SIZE: Record<Level, HeadingSize> = { h1: "display", h2: "section", h3: "small", h4: "small" };
+const DEFAULT_SIZE: Record<Level, HeadingSize> = { h1: "display", h2: "section", h3: "small", h4: "small", p: "section" };
 
 type HeadingProps = {
   as?: Level;

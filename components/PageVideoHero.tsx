@@ -177,6 +177,11 @@ export function PageVideoHero({
   videoTitle,
 }: Props) {
   const isPlayer = video.mode === "player";
+  // something sits in the bottom-right corner: the panel leaves room for it (md+)
+  const corner = actions === null ? false : actions ? true : isPlayer;
+  // phones: with a panel, the default watch button moves to the top-left corner
+  // and the panel keeps room for it (pt-24), so the two never overlap
+  const watchOnTop = Boolean(panel) && !topLeft && actions === undefined && isPlayer;
   const [playing, setPlaying] = useState(false);
   const watchRef = useRef<HTMLButtonElement>(null);
   const playedOnce = useRef(false);
@@ -267,9 +272,9 @@ export function PageVideoHero({
             {topLeft && <div className="absolute top-4 left-4 z-10">{topLeft}</div>}
 
             {/* panel / caption — in flow (justify-end), m-6 */}
-            <div className="relative z-10 p-6 md:m-6 md:p-0">
+            <div className={`relative z-10 p-6 md:m-6 md:p-0 ${watchOnTop ? "pt-24" : ""}`}>
               {panel ? (
-                <div className={`inline-flex max-w-full items-center rounded-[24px] bg-ink/75 px-6 py-4 backdrop-blur-md lg:px-7 lg:py-5 ${panel.actions && actions === undefined ? "" : "md:max-w-[calc(100%-16rem)]"}`}>
+                <div className={`inline-flex max-w-full items-center rounded-[24px] bg-ink/75 px-6 py-4 backdrop-blur-md lg:px-7 lg:py-5 ${corner ? "md:max-w-[calc(100%-16rem)]" : ""}`}>
                   <div>
                     {panel.kicker && (
                       <p className="mb-3 font-heading text-[0.82rem] font-bold tracking-[0.1em] text-surface/80 uppercase">{panel.kicker}</p>
@@ -286,7 +291,8 @@ export function PageVideoHero({
               ) : null}
             </div>
 
-            {/* bottom-right action */}
+            {/* bottom-right action (on phones, with a panel, the watch button goes to the
+                free top-left corner so it never covers the panel's buttons) */}
             {actions === null ? null : actions ? (
               <div className="absolute right-4 bottom-4 z-10 flex flex-wrap items-center justify-end gap-2 md:right-6 md:bottom-6">{actions}</div>
             ) : isPlayer ? (
@@ -294,7 +300,7 @@ export function PageVideoHero({
                 ref={watchRef}
                 type="button"
                 onClick={() => setPlaying(true)}
-                className="absolute right-4 bottom-4 z-10 flex items-center gap-3 rounded-full border border-surface/15 bg-ink/80 py-2 pr-7 pl-2 font-body font-semibold text-surface backdrop-blur-md transition-colors duration-200 hover:bg-ink/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-surface motion-reduce:transition-none md:right-6 md:bottom-6"
+                className={`absolute z-10 flex items-center gap-3 rounded-full border border-surface/15 bg-ink/80 py-2 pr-7 pl-2 font-body font-semibold text-surface backdrop-blur-md transition-colors duration-200 hover:bg-ink/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-surface motion-reduce:transition-none md:top-auto md:left-auto md:right-6 md:bottom-6 ${watchOnTop ? "top-4 left-4" : "right-4 bottom-4"}`}
               >
                 <span className="relative flex h-12 w-12 items-center justify-center rounded-full bg-surface text-ink">
                   <PlayGlyph size={20} />
