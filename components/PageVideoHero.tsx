@@ -67,6 +67,9 @@ type Props = {
   /** Labels of the background pause button (player mode, muted preview). */
   previewLabels?: { pause?: string; play?: string };
   videoTitle?: string;
+  /** The page's AnchorNav comes right after the hero: the hero gives up the
+   *  capsule's height so both fit in the first fold. */
+  withAnchorNav?: boolean;
 };
 
 function PlayGlyph({ size = 20 }: { size?: number }) {
@@ -175,6 +178,7 @@ export function PageVideoHero({
   closeLabel = "Close video",
   previewLabels,
   videoTitle,
+  withAnchorNav = false,
 }: Props) {
   const isPlayer = video.mode === "player";
   // something sits in the bottom-right corner: the panel leaves room for it (md+)
@@ -196,7 +200,7 @@ export function PageVideoHero({
 
   return (
     <div className="px-4 pt-2 md:px-6 md:pt-6">
-      <section className="relative isolate mx-auto flex min-h-[min(calc(100svh-7.5rem),560px)] max-w-[1600px] flex-col justify-end overflow-hidden rounded-[32px] bg-ink text-surface lg:min-h-[min(calc(100svh-7.5rem),820px)]">
+      <section className={`relative isolate mx-auto flex max-w-[1600px] flex-col justify-end overflow-hidden rounded-[32px] bg-ink text-surface ${withAnchorNav ? "min-h-[min(calc(100svh-13.5rem),560px)] lg:min-h-[min(calc(100svh-13.5rem),820px)]" : "min-h-[min(calc(100svh-7.5rem),560px)] lg:min-h-[min(calc(100svh-7.5rem),820px)]"}`}>
         {/* media — background (preview) or, when playing, the full video with sound */}
         <div className={`absolute inset-x-0 top-0 ${playing ? "bottom-[4.5rem]" : "bottom-0 -z-10"}`}>
           {playing ? (
