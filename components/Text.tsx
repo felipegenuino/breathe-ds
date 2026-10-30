@@ -27,5 +27,5 @@ export function Text({ as: Tag = "p", variant = "body", children, className = ""
 
 /** Prose — a run of paragraphs at reading width: 1rem between them, relaxed leading, `ink-body`. */
 export function Prose({ children, className = "" }: { children: ReactNode; className?: string }) {
-  return <div className={`max-w-2xl space-y-4 leading-relaxed text-ink-body [&>p]:m-0 ${className}`}>{children}</div>;
+  return <div className={`flex max-w-2xl flex-col gap-4 leading-relaxed text-ink-body [&>p]:m-0 ${className}`}>{children}</div>;
 }

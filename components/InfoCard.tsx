@@ -40,6 +40,11 @@ const ArrowUpRight = () => (
   <svg aria-hidden="true" viewBox="0 0 24 24" width={18} height={18} className="cg-arrow-go" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M7 17 17 7M9 7h8v8" /></svg>
 );
 
+// internal page link: arrow forward (the ↗ is reserved for leaving the site, as in the other components)
+const ArrowRight = () => (
+  <svg aria-hidden="true" viewBox="0 0 24 24" width={18} height={18} className="cg-arrow-go" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+);
+
 const body = "mt-2 leading-relaxed text-ink/80";
 const link =
   "mt-4 inline-flex min-h-11 items-center gap-1.5 font-semibold text-ink underline underline-offset-4 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink";
@@ -106,7 +111,7 @@ export function InfoCard({
           ) : (
             <L href={l.href} className={link}>
               {l.label}
-              <ArrowUpRight />
+              <ArrowRight />
             </L>
           )}
         </span>

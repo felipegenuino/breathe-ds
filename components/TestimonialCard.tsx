@@ -50,8 +50,11 @@ type Props = {
   authors?: { name: string; photo?: string; avatar?: ReactNode }[];
   /** The public source of the quote ("View on Instagram ↗"), opened in a new tab. */
   link?: { href: string; label: ReactNode };
-  /** The family's video, on the left. */
-  video: TestimonialVideo;
+  /** The family's video, on the left. Omit it for a text testimonial (quote +
+   *  portrait), as on ttcab: the card becomes a single column. */
+  video?: TestimonialVideo;
+  /** Small line under the name(s) ("Physiotherapist", "Tereza's mother"). */
+  role?: ReactNode;
   /** Element rendered as the card root (default <div>); `li` inside a <ul>. */
   as?: ElementType;
   labels?: Partial<Labels>;
@@ -116,13 +119,13 @@ function TapVideo({ src, poster, description, withSound = true, captions, media,
  * check the source. The quote is a real <blockquote> with <cite>: it is someone
  * else's words and the screen reader announces it as such.
  */
-export function TestimonialCard({ quote, author, authorPhoto, authorAvatar, authors, link, video, as: Root = "div", labels, className = "" }: Props) {
+export function TestimonialCard({ quote, author, authorPhoto, authorAvatar, authors, link, video, role, as: Root = "div", labels, className = "" }: Props) {
   const t = { ...EN, ...labels };
   const people = authors ?? [{ name: author ?? "", photo: authorPhoto, avatar: authorAvatar }];
   return (
-    <Root className={`grid grid-cols-[minmax(0,2fr)_minmax(0,3fr)] overflow-hidden rounded-[28px] bg-card ${className}`}>
-      <TapVideo {...video} label={t.watch(video.description)} />
-      <figure className="flex flex-col justify-between gap-5 p-5 md:p-7">
+    <Root className={`${video ? "grid grid-cols-[minmax(0,2fr)_minmax(0,3fr)]" : "flex"} overflow-hidden rounded-[28px] bg-card ${className}`}>
+      {video && <TapVideo {...video} label={t.watch(video.description)} />}
+      <figure className={`flex flex-1 flex-col justify-between gap-5 ${video ? "p-5 md:p-7" : "p-6 md:p-8"}`}>
         <blockquote className="font-heading text-[0.9375rem] font-medium leading-relaxed text-ink md:text-base">{quote}</blockquote>
         <figcaption>
           <Byline
@@ -130,6 +133,7 @@ export function TestimonialCard({ quote, author, authorPhoto, authorAvatar, auth
             people={people}
             action={link ? { label: link.label, href: link.href, external: true } : undefined}
             newTabLabel={t.newTab.trim()}
+            subtitle={role}
           />
         </figcaption>
       </figure>

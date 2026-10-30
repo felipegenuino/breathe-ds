@@ -1,6 +1,8 @@
 "use client";
 
-import { useId, useState, type ReactNode } from "react";
+import { version as REACT_VERSION, useId, useState, type ReactNode } from "react";
+
+const INERT_ON = parseInt(REACT_VERSION, 10) >= 19 ? true : "";
 
 export type AccordionItem = {
   id: string;
@@ -85,8 +87,9 @@ export function Accordion({ items, defaultOpenId, single = true }: Props) {
               id={panelId}
               role="region"
               aria-labelledby={btnId}
-              // React 18 does not know `inert` as a boolean: empty string turns it on, undefined turns it off (in 19 the boolean works the same way).
-              {...({ inert: isOpen ? undefined : "" } as Record<string, unknown>)}
+              // closed panel out of the tab order: React 19 takes `inert` as a boolean (an empty
+              // string there means false); React 18 does not know it and needs the empty string
+              {...({ inert: isOpen ? undefined : INERT_ON } as Record<string, unknown>)}
               className={`grid transition-[grid-template-rows] duration-300 ease-[cubic-bezier(.2,.8,.2,1)] motion-reduce:transition-none ${
                 isOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
               }`}

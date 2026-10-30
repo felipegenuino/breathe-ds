@@ -9,6 +9,9 @@ type Props = {
    *  and the names go on their own line; without it, one inline line:
    *  avatar · name · action. */
   eyebrow?: ReactNode;
+  /** Small line under the name(s), aligned with them ("Physiotherapist").
+   *  Ignored when there is an `eyebrow`. */
+  subtitle?: ReactNode;
   /** Link after the name(s) ("Watch the video ↗"). */
   action?: { label: ReactNode; href: string; external?: boolean };
   /** Joiners between names: ", " and " and ". */
@@ -35,7 +38,7 @@ const nameLink =
  * - inline (under a topic card): portrait, name and "Watch the video ↗".
  * Portraits are decorative: the names carry the information.
  */
-export function Byline({ people, eyebrow, action, joiners = { sep: ", ", last: " and " }, cite = false, newTabLabel = "(opens in a new tab)", linkComponent, className = "" }: Props) {
+export function Byline({ people, eyebrow, subtitle, action, joiners = { sep: ", ", last: " and " }, cite = false, newTabLabel = "(opens in a new tab)", linkComponent, className = "" }: Props) {
   const L: ElementType = linkComponent ?? "a";
   // portraits stack with a ring (as on the site); initials would lose their letters, so they sit side by side
   const stack = people.length > 1 && people.every((p) => p.photo || p.avatar);
@@ -64,6 +67,25 @@ export function Byline({ people, eyebrow, action, joiners = { sep: ", ", last: "
       {action.external && <span className="sr-only"> {newTabLabel}</span>}
     </L>
   ) : null;
+
+  if (subtitle && !eyebrow) {
+    return (
+      <div className={`flex items-center gap-3 ${className}`}>
+        <span className={row}>
+          {people.map((p) => (
+            <Avatar key={p.name} name={p.name} photo={p.photo} size={people.length === 1 ? 40 : 36} ring={stack}>{p.avatar}</Avatar>
+          ))}
+        </span>
+        <div className="leading-snug">
+          <p className="m-0 text-sm font-semibold text-ink">
+            <Names className="not-italic">{names}</Names>
+            {actionEl && <> · {actionEl}</>}
+          </p>
+          <p className="m-0 mt-0.5 text-sm text-ink-soft">{subtitle}</p>
+        </div>
+      </div>
+    );
+  }
 
   if (eyebrow) {
     return (

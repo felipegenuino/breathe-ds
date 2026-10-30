@@ -10,7 +10,9 @@ type Props = {
   action: ReactNode;
   /** Side card with the speaker's video (VideoInviteCard props). Omit for the text card alone. */
   video?: Omit<VideoInviteCardProps, "className">;
-  /** Any other side media (e.g. a still photo), placed in the same frame as the video. */
+  /** Any other side media (e.g. a still photo), placed in the same frame as the video.
+   *  It must fill the frame (`absolute inset-0 h-full w-full object-cover`): the frame
+   *  takes the height of the text card, not the photo's. */
   media?: ReactNode;
   className?: string;
 };
