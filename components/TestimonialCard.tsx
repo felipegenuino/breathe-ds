@@ -1,16 +1,26 @@
 "use client";
 
-import { useState, type ElementType, type ReactNode } from "react";
+import { useLayoutEffect, useRef, useState, type ElementType, type ReactNode } from "react";
 import { Play } from "lucide-react";
 import { Byline } from "./Byline";
+import { SidePanel } from "./SidePanel";
 
 type Labels = {
   /** sr-only text of the play button: "Watch: {description}". */
   watch: (description: string) => string;
   /** sr-only after the outbound link. */
   newTab: string;
+  /** Button under a clamped quote that opens the whole testimonial. */
+  readMore: string;
+  /** Close button of the side panel. */
+  close: string;
 };
-const EN: Labels = { watch: (description) => `Watch: ${description}`, newTab: " (opens in a new tab)" };
+const EN: Labels = {
+  watch: (description) => `Watch: ${description}`,
+  newTab: " (opens in a new tab)",
+  readMore: "Read the full testimonial",
+  close: "Close",
+};
 
 export type TestimonialCaptions = {
   /** WebVTT file in the page's language. Drawn by the browser over the video:
@@ -55,6 +65,10 @@ type Props = {
   video?: TestimonialVideo;
   /** Small line under the name(s) ("Physiotherapist", "Tereza's mother"). */
   role?: ReactNode;
+  /** Long testimonials: the quote on the card stops after this many lines and
+   *  a "Read the full testimonial" button opens it whole in the SidePanel. The
+   *  button only shows when the text really overflows. */
+  clampLines?: number;
   /** Element rendered as the card root (default <div>); `li` inside a <ul>. */
   as?: ElementType;
   labels?: Partial<Labels>;
@@ -119,24 +133,65 @@ function TapVideo({ src, poster, description, withSound = true, captions, media,
  * check the source. The quote is a real <blockquote> with <cite>: it is someone
  * else's words and the screen reader announces it as such.
  */
-export function TestimonialCard({ quote, author, authorPhoto, authorAvatar, authors, link, video, role, as: Root = "div", labels, className = "" }: Props) {
+// whole class names, so Tailwind generates them
+const CLAMP: Record<number, string> = { 3: "line-clamp-3", 4: "line-clamp-4", 5: "line-clamp-5", 6: "line-clamp-6", 8: "line-clamp-8" };
+
+export function TestimonialCard({ quote, author, authorPhoto, authorAvatar, authors, link, video, role, clampLines, as: Root = "div", labels, className = "" }: Props) {
   const t = { ...EN, ...labels };
   const people = authors ?? [{ name: author ?? "", photo: authorPhoto, avatar: authorAvatar }];
+  const quoteRef = useRef<HTMLQuoteElement>(null);
+  const [overflows, setOverflows] = useState(false);
+  const [open, setOpen] = useState(false);
+  useLayoutEffect(() => {
+    const el = quoteRef.current;
+    if (!el || !clampLines) return;
+    const check = () => setOverflows(el.scrollHeight > el.clientHeight + 1);
+    check();
+    if (typeof ResizeObserver !== "function") return;
+    const ro = new ResizeObserver(check);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, [clampLines]);
+  const byline = (
+    <Byline
+      cite
+      people={people}
+      action={link ? { label: link.label, href: link.href, external: true } : undefined}
+      newTabLabel={t.newTab.trim()}
+      subtitle={role}
+    />
+  );
   return (
     <Root className={`${video ? "grid grid-cols-[minmax(0,2fr)_minmax(0,3fr)]" : "flex"} overflow-hidden rounded-[28px] bg-card ${className}`}>
       {video && <TapVideo {...video} label={t.watch(video.description)} />}
       <figure className={`flex flex-1 flex-col justify-between gap-5 ${video ? "p-5 md:p-7" : "p-6 md:p-8"}`}>
-        <blockquote className="font-heading text-[0.9375rem] font-medium leading-relaxed text-ink md:text-base">{quote}</blockquote>
-        <figcaption>
-          <Byline
-            cite
-            people={people}
-            action={link ? { label: link.label, href: link.href, external: true } : undefined}
-            newTabLabel={t.newTab.trim()}
-            subtitle={role}
-          />
-        </figcaption>
+        <div>
+          <blockquote
+            ref={quoteRef}
+            className={`font-heading text-[0.9375rem] font-medium leading-relaxed text-ink md:text-base ${clampLines ? (CLAMP[clampLines] ?? "line-clamp-5") : ""}`}
+          >
+            {quote}
+          </blockquote>
+          {overflows && (
+            <button
+              type="button"
+              onClick={() => setOpen(true)}
+              className="mt-3 inline-flex min-h-11 items-center gap-1 font-semibold text-ink underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink"
+            >
+              {t.readMore}
+            </button>
+          )}
+        </div>
+        <figcaption>{byline}</figcaption>
       </figure>
+      {clampLines && (
+        <SidePanel open={open} onClose={() => setOpen(false)} title={people.map((p) => p.name).join(", ")} labels={{ close: t.close }}>
+          <figure className="flex flex-col gap-6 px-6 pt-2 pb-10 md:px-8">
+            <blockquote className="font-heading text-lg leading-relaxed font-medium text-ink">{quote}</blockquote>
+            <figcaption>{byline}</figcaption>
+          </figure>
+        </SidePanel>
+      )}
     </Root>
   );
 }
