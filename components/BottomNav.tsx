@@ -1,6 +1,9 @@
 "use client";
 
-import { useEffect, useId, useRef, useState, type ComponentType, type ElementType, type ReactNode } from "react";
+import { version as REACT_VERSION, useEffect, useId, useRef, useState, type ComponentType, type ElementType, type ReactNode } from "react";
+
+// the popover trigger attribute: camelCase in React 19+, lowercase passthrough in 18
+const POPOVER_TARGET = parseInt(REACT_VERSION, 10) >= 19 ? "popoverTarget" : "popovertarget";
 
 /** Icon in the lucide pattern (the component, not the node): the bar decides the size. */
 export type IconType = ComponentType<{ size?: number; strokeWidth?: number; className?: string; "aria-hidden"?: boolean | "true" }>;
@@ -247,10 +250,10 @@ export function BottomNav({ pages, extras = [], linkComponent, hideFrom = "lg", 
             </li>
           ))}
           <li className="min-w-0 flex-1">
-            {/* popovertarget in lowercase: React 18 doesn't know the attribute and passes it through as is. */}
+            {/* React 19 knows `popoverTarget`; React 18 only passes the lowercase attribute through as is. */}
             <button
               type="button"
-              {...(embedded ? { "aria-expanded": open, "aria-controls": panelId, onClick: () => setOpen((o) => !o) } : { popovertarget: panelId })}
+              {...(embedded ? { "aria-expanded": open, "aria-controls": panelId, onClick: () => setOpen((o) => !o) } : { [POPOVER_TARGET]: panelId })}
               className={tab(embedded ? open || moreActive : moreActive)}
             >
               <MenuIcon />
