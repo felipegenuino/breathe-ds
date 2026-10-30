@@ -3,7 +3,10 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { BackgroundVideo } from "./BackgroundVideo";
 
-type Panel = { kicker?: ReactNode; title: ReactNode; lead?: ReactNode };
+/** The glass panel: kicker, title, lead and, when the page has more than one
+ *  call to action, the buttons inside the panel (the bottom-right slot fits
+ *  one button beside the panel; two would run into the title). */
+type Panel = { kicker?: ReactNode; title: ReactNode; lead?: ReactNode; actions?: ReactNode };
 
 /** Local background clip (loop mode): muted, looping. */
 type LoopPreview = {
@@ -266,7 +269,7 @@ export function PageVideoHero({
             {/* panel / caption — in flow (justify-end), m-6 */}
             <div className="relative z-10 p-6 md:m-6 md:p-0">
               {panel ? (
-                <div className="inline-flex max-w-full items-center rounded-[24px] bg-ink/75 px-6 py-4 backdrop-blur-md md:max-w-[calc(100%-16rem)] lg:px-7 lg:py-5">
+                <div className={`inline-flex max-w-full items-center rounded-[24px] bg-ink/75 px-6 py-4 backdrop-blur-md lg:px-7 lg:py-5 ${panel.actions && actions === undefined ? "" : "md:max-w-[calc(100%-16rem)]"}`}>
                   <div>
                     {panel.kicker && (
                       <p className="mb-3 font-heading text-[0.82rem] font-bold tracking-[0.1em] text-surface/80 uppercase">{panel.kicker}</p>
@@ -275,6 +278,7 @@ export function PageVideoHero({
                     {panel.lead && (
                       <p className="mt-4 max-w-[46ch] text-base leading-[1.55] text-pretty text-surface/85 md:text-lg">{panel.lead}</p>
                     )}
+                    {panel.actions && <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">{panel.actions}</div>}
                   </div>
                 </div>
               ) : caption ? (
