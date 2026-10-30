@@ -1,6 +1,6 @@
 import type { ReactNode, ButtonHTMLAttributes, AnchorHTMLAttributes } from "react";
 
-type Variant = "solid" | "accent" | "outline" | "ghost" | "link";
+type Variant = "solid" | "accent" | "outline" | "ghost" | "link" | "outline-inverse";
 type Size = "sm" | "md" | "lg";
 
 const pillBase =
@@ -28,6 +28,9 @@ const variants: Record<Exclude<Variant, "link">, string> = {
   accent: "bg-action text-on-action hover:brightness-[0.92]",
   outline: "border border-line text-ink hover:bg-ink/[0.05]",
   ghost: "text-ink hover:bg-ink/[0.06]",
+  // secondary on a dark panel (hero panel, StoryPanel, surface-panel): light outline,
+  // surface text (cream on petrol 9.41:1 on ttcab)
+  "outline-inverse": "border border-surface/45 text-surface hover:bg-surface/10",
 };
 
 const sizes: Record<Size, string> = {
