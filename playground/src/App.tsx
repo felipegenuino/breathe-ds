@@ -1339,7 +1339,7 @@ export function App() {
                   ...(selected.where ? [{ tile: "pin" as const, title: selected.where.title, subtitle: selected.where.subtitle, href: selected.where.href, external: true }] : []),
                 ]}
               />
-              <Byline className="mt-5" eyebrow="Quem ministra" people={selected.instructors} />
+              <Byline className="mt-5" eyebrow="Quem ministra" people={selected.instructors} joiners={{ sep: ", ", last: " e " }} />
               <RegistrationBox
                 className="mt-6"
                 title="Inscrição"
