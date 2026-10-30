@@ -50,6 +50,9 @@ import { CreetaSymbol, CreetaWordmark, CREETA_LOCKUP } from "../../components/ma
 import { used, IconWind, IconActivity, IconBaby, IconSearch, IconHome, IconBook, IconInfo, IconMessage, IconMapPin, IconGraduationCap, IconVideo, IconUsers, IconArrowUpRight, IconPhone, IconMail, IconInstagram } from "../../components/icons";
 import * as Lucide from "lucide-react";
 
+// demo media; follows Vite base so the build also works under /breathe-ds/ on GitHub Pages
+const DEMO = `${import.meta.env.BASE_URL}demo/`;
+
 /* ───── palettes (the DS is neutral; color comes from each app) ───── */
 const PALETTES: Record<string, Record<string, string>> = {
   Neutral: {
@@ -239,8 +242,8 @@ function SegGroup<T extends string>({ label, value, set, options }: { label: str
 
 // Loop = local clip (landscape). Player = the video itself playing muted, looping, then with sound on tap:
 // a YouTube id (16:9 iframe, covers the card, no crop) or an mp4 of the site (generated podcast-style clip).
-const PREVIEW_LOOP = { src: "/demo/clip.mp4", poster: "/demo/clip-poster.jpg" };
-const PLAYER_FILE = { src: "/demo/podcast.mp4", poster: "/demo/podcast-poster.jpg" };
+const PREVIEW_LOOP = { src: `${DEMO}clip.mp4`, poster: `${DEMO}clip-poster.jpg` };
+const PLAYER_FILE = { src: `${DEMO}podcast.mp4`, poster: `${DEMO}podcast-poster.jpg` };
 const PLAYER_YOUTUBE_ID = "DdOoWDQutmk";
 const PLAYER_CAPTION = "Speaker name, role, explains the method in the studio.";
 
@@ -422,7 +425,7 @@ const COURSES: DemoCourse[] = [
     instructors: [T.mariangela],
     course: "TTCAB 2026 · Tratamento do Torcicolo Congênito e outras Assimetrias Corporais do Bebê",
     city: "Fortaleza · CE",
-    cover: "/demo/assessment.jpg",
+    cover: `${DEMO}assessment.jpg`,
     start: { month: "Nov", day: "3" },
     when: { title: "3 a 9 de novembro de 2026 · 08h30–17h30", subtitle: "+ 10 de novembro · 08h30–13h00" },
     where: { title: "Instituto Olá, auditório Luz", subtitle: "Rua Felipe Nery, 1000, Guararapes, Fortaleza · CE", href: "https://www.google.com/maps/search/?api=1&query=Rua+Felipe+Nery+1000+Fortaleza" },
@@ -442,7 +445,7 @@ const COURSES: DemoCourse[] = [
     instructors: [T.mariangela],
     course: "Curso Básico de RTA 2026 · Reequilíbrio Toracoabdominal",
     city: "Florianópolis · SC",
-    cover: "/demo/clip-poster.jpg",
+    cover: `${DEMO}clip-poster.jpg`,
     coverPosition: "50% 40%",
     start: { month: "Dez", day: "2" },
     when: { title: "2 a 8 de dezembro de 2026 · 08h30–17h30", subtitle: "+ 9 de dezembro · 08h30–13h30" },
@@ -463,7 +466,7 @@ const COURSES: DemoCourse[] = [
     instructors: [T.mariangela, T.gabriela, T.anacarolina, T.aline, T.bianca],
     course: "Curso Básico de RTA 2026 · Reequilíbrio Toracoabdominal",
     city: "Rio de Janeiro · RJ",
-    cover: "/demo/podcast-poster.jpg",
+    cover: `${DEMO}podcast-poster.jpg`,
     start: { month: "Set", day: "21" },
     when: { title: "21 a 27 de setembro de 2026 · 08h30–17h30", subtitle: "+ 28 de setembro · 08h30–13h30" },
     where: { title: "Centro de Estudos Physioscience", subtitle: "Av. N. Senhora de Copacabana, 928, sala 1202, Copacabana, Rio de Janeiro · RJ" },
@@ -482,7 +485,7 @@ const COURSES: DemoCourse[] = [
     instructors: [T.mariangela, T.luciana, T.mariana],
     course: "Curso Avançado de RTA em Pediatria Ambulatorial 2027",
     city: "Florianópolis · SC",
-    cover: "/demo/invite-loop-poster.jpg",
+    cover: `${DEMO}invite-loop-poster.jpg`,
     start: { month: "Ago", day: "18" },
     when: { title: "18 a 24 de agosto de 2027", subtitle: "08h30–12h30 e 14h00–18h00" },
     where: { title: "Centro de Reequilíbrio Toracoabdominal (Creeta)", subtitle: "Rua João Mathias Cordeiro, 33, Santa Mônica, Florianópolis · SC", href: "https://www.google.com/maps/search/?api=1&query=Rua+Jo%C3%A3o+Mathias+Cordeiro+33+Florian%C3%B3polis" },
@@ -902,8 +905,8 @@ export function App() {
                       size="medium"
                       name={n}
                       href="#people"
-                      photo={pc.photo ? { src: "/demo/person-poster.jpg" } : undefined}
-                      living={pc.photo && pc.living && i === 0 ? { src: "/demo/person.mp4", poster: "/demo/person-poster.jpg" } : undefined}
+                      photo={pc.photo ? { src: `${DEMO}person-poster.jpg` } : undefined}
+                      living={pc.photo && pc.living && i === 0 ? { src: `${DEMO}person.mp4`, poster: `${DEMO}person-poster.jpg` } : undefined}
                     />
                   </RailItem>
                 ))}
@@ -918,7 +921,7 @@ export function App() {
             <ul className="mb-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-3 md:gap-5">
               {[["Person name", "Role"], ["Another person", "Role and a longer specialty that wraps"], ["Third person", "Role"]].map(([n, r]) => (
                 <li key={n}>
-                  <ProfessionalCard size="micro" name={n} role={r} href="#people" photo={pc.photo ? { src: "/demo/person-avatar.jpg" } : undefined} />
+                  <ProfessionalCard size="micro" name={n} role={r} href="#people" photo={pc.photo ? { src: `${DEMO}person-avatar.jpg` } : undefined} />
                 </li>
               ))}
             </ul>
@@ -929,9 +932,9 @@ export function App() {
               name="Person name"
               role="Role"
               registration="Registration number"
-              photo={pc.photo ? { src: "/demo/person-poster.jpg" } : undefined}
-              living={pc.photo && pc.living ? { src: "/demo/person.mp4", poster: "/demo/person-poster.jpg" } : undefined}
-              presentation={pc.presentation ? { src: "/demo/person.mp4", poster: "/demo/person-poster.jpg", duration: 10, captions: pc.captions ? { src: "/demo/person.vtt", srcLang: "en", label: "English" } : undefined } : undefined}
+              photo={pc.photo ? { src: `${DEMO}person-poster.jpg` } : undefined}
+              living={pc.photo && pc.living ? { src: `${DEMO}person.mp4`, poster: `${DEMO}person-poster.jpg` } : undefined}
+              presentation={pc.presentation ? { src: `${DEMO}person.mp4`, poster: `${DEMO}person-poster.jpg`, duration: 10, captions: pc.captions ? { src: `${DEMO}person.vtt`, srcLang: "en", label: "English" } : undefined } : undefined}
               bio="A paragraph of bio: where the person trained, what they work with, and the approach they bring to the care."
               rows={[
                 ...(pc.collapseText ? [{ kind: "collapse" as const, label: "Collapse with text", srLabel: " of Person name", content: "A paragraph of bio: where the person trained, what they work with, and the approach they bring to the care." }] : []),
@@ -944,7 +947,7 @@ export function App() {
           <div className="grid gap-8 lg:grid-cols-2">
             <div className="rounded-2xl border border-line bg-white p-6">
               <p className="mb-3 text-xs font-semibold text-ink-soft">Byline · group (eyebrow + names as links)</p>
-              <Byline eyebrow="Eyebrow" people={[{ name: "Person name", href: "#people", photo: "/demo/person-avatar.jpg" }, { name: "Another person", href: "#people", photo: "/demo/person-avatar.jpg" }]} />
+              <Byline eyebrow="Eyebrow" people={[{ name: "Person name", href: "#people", photo: `${DEMO}person-avatar.jpg` }, { name: "Another person", href: "#people", photo: `${DEMO}person-avatar.jpg` }]} />
             </div>
             <div className="rounded-2xl border border-line bg-white p-6">
               <p className="mb-3 text-xs font-semibold text-ink-soft">Byline · inline (name + action link)</p>
@@ -952,7 +955,7 @@ export function App() {
             </div>
             <div className="rounded-2xl border border-line bg-surface p-6">
               <p className="mb-3 text-xs font-semibold text-ink-soft">PersonChip · link (arrow bubble)</p>
-              <PersonChip name="Person name" description="Role · Registration number" href="#people" photo="/demo/person-avatar.jpg" />
+              <PersonChip name="Person name" description="Role · Registration number" href="#people" photo={`${DEMO}person-avatar.jpg`} />
             </div>
             <div className="rounded-2xl border border-line bg-surface p-6">
               <p className="mb-3 text-xs font-semibold text-ink-soft">PersonChip · text only</p>
@@ -1101,8 +1104,8 @@ export function App() {
             text={mc.text ? <>Line of text<span className="block">Second line of text</span></> : undefined}
             linkLabel={mc.link ? "Link line" : undefined}
             arrowButton={mc.arrow}
-            src="/demo/clip-poster.jpg"
-            video={mc.media === "image" ? undefined : { src: "/demo/clip.mp4", poster: "/demo/clip-poster.jpg", when: mc.media === "hover" ? "hover" : "always" }}
+            src={`${DEMO}clip-poster.jpg`}
+            video={mc.media === "image" ? undefined : { src: `${DEMO}clip.mp4`, poster: `${DEMO}clip-poster.jpg`, when: mc.media === "hover" ? "hover" : "always" }}
             badge={mc.badge ? <MediaCardBadge Icon={IconMapPin}>Badge</MediaCardBadge> : undefined}
           />
         </div>
@@ -1122,9 +1125,9 @@ export function App() {
             title="Card title"
             speaker={vs.speaker ? "Speaker name" : undefined}
             lead={vs.lead ? "A short lead that appears on hover or focus." : undefined}
-            src="/demo/person-vertical.mp4"
-            poster="/demo/person-poster-vertical.jpg"
-            previewSrc={vs.preview ? "/demo/person-vertical.mp4" : undefined}
+            src={`${DEMO}person-vertical.mp4`}
+            poster={`${DEMO}person-poster-vertical.jpg`}
+            previewSrc={vs.preview ? `${DEMO}person-vertical.mp4` : undefined}
             layout={vs.layout}
             duration={10}
             watched={vs.watched}
@@ -1140,9 +1143,9 @@ export function App() {
         <div className="max-w-2xl">
           <TestimonialCard
             quote="A short testimonial quote, two or three sentences long, in the voice of the person who wrote it."
-            authors={tc.two ? [{ name: "Author name", photo: tc.photo ? "/demo/person-avatar.jpg" : undefined }, { name: "Second author", photo: tc.photo ? "/demo/person-avatar.jpg" : undefined }] : [{ name: "Author name", photo: tc.photo ? "/demo/person-avatar.jpg" : undefined }]}
+            authors={tc.two ? [{ name: "Author name", photo: tc.photo ? `${DEMO}person-avatar.jpg` : undefined }, { name: "Second author", photo: tc.photo ? `${DEMO}person-avatar.jpg` : undefined }] : [{ name: "Author name", photo: tc.photo ? `${DEMO}person-avatar.jpg` : undefined }]}
             link={tc.link ? { href: "https://github.com/felipegenuino/breathe-ds", label: "Outbound link" } : undefined}
-            video={{ src: "/demo/clip.mp4", poster: "/demo/clip-poster.jpg", description: "What the clip shows (1 min 39 s)" }}
+            video={{ src: `${DEMO}clip.mp4`, poster: `${DEMO}clip-poster.jpg`, description: "What the clip shows (1 min 39 s)" }}
           />
         </div>
       </Section>
@@ -1159,7 +1162,7 @@ export function App() {
           <MapCard
             address="Street name, 33"
             locality="Neighbourhood, City/ST"
-            preview={{ src: "/demo/map-preview.webp", width: 2200, height: 517 }}
+            preview={{ src: `${DEMO}map-preview.webp`, width: 2200, height: 517 }}
             embedSrc="https://www.google.com/maps?q=Florian%C3%B3polis&z=12&output=embed"
             directionsHref="https://www.google.com/maps/search/?api=1&query=Florian%C3%B3polis"
             caption="Caption on the close bar"
@@ -1194,7 +1197,7 @@ export function App() {
               title: "Careful assessment",
               summary: "Every treatment starts with an assessment.",
               text: "Every treatment starts with an assessment. The therapist looks at the breathing pattern, the posture and the quality of movement.",
-              visual: <img src="/demo/assessment.jpg" alt="" loading="lazy" decoding="async" className="absolute inset-0 h-full w-full object-cover object-[50%_30%]" />,
+              visual: <img src={`${DEMO}assessment.jpg`} alt="" loading="lazy" decoding="async" className="absolute inset-0 h-full w-full object-cover object-[50%_30%]" />,
             },
             {
               title: "A plan built for you",
@@ -1211,9 +1214,9 @@ export function App() {
                   id="care-photos"
                   className="absolute inset-0 rounded-2xl"
                   photos={[
-                    { src: "/demo/clip-poster.jpg", alt: "" },
-                    { src: "/demo/invite-loop-poster.jpg", alt: "" },
-                    { src: "/demo/podcast-poster.jpg", alt: "" },
+                    { src: `${DEMO}clip-poster.jpg`, alt: "" },
+                    { src: `${DEMO}invite-loop-poster.jpg`, alt: "" },
+                    { src: `${DEMO}podcast-poster.jpg`, alt: "" },
                   ]}
                 />
               ),
@@ -1233,7 +1236,7 @@ export function App() {
       <Section id="story" title="StoryPanel — a story in one dark panel">
         <p className="mb-6 max-w-[62ch] text-ink-body">The "origin" block of novo.creeta: one rounded panel on surface-panel that groups a whole story. Media at the top (a muted loop or a photo) with a film that fades into the panel, the logo at its base, a title, a lead, three pillars in columns with a hairline above each, and the outbound links. Good for "who we are" and "why us" blocks: everything inside one card.</p>
         <StoryPanel
-          media={<BackgroundVideo src="/demo/invite-loop.mp4" poster="/demo/invite-loop-poster.jpg" className="absolute inset-0" />}
+          media={<BackgroundVideo src={`${DEMO}invite-loop.mp4`} poster={`${DEMO}invite-loop-poster.jpg`} className="absolute inset-0" />}
           logo={<span className="flex items-center gap-2 text-surface"><BreatheMark size={36} animated={false} /><span className="font-heading text-2xl font-bold">Brand</span></span>}
           title="The clinic of those who created, teach and apply the method."
           lead="A supporting sentence about what sets the place apart."
@@ -1255,9 +1258,9 @@ export function App() {
         <p className="mb-3 text-xs font-semibold text-ink-soft">FeaturedPosts</p>
         <FeaturedPosts
           posts={[
-            { cover: { src: "/demo/cover-1.svg" }, title: "A longer featured title that explains the subject", href: "#blog", text: "Three or four sentences in the voice of the person who explains it in the video, cut only where the speech needs it to read well on the page.", speaker: { name: "Person name", photo: "/demo/person-avatar.jpg" }, video: { href: "#videos" } },
-            { cover: { src: "/demo/cover-2.svg" }, title: "Second subject, shorter", href: "#blog", text: "Two sentences in the voice of the person who explains it in the video.", speaker: { name: "Another person", photo: "/demo/person-avatar.jpg" }, video: { href: "#videos" } },
-            { cover: { src: "/demo/cover-3.svg" }, title: "Third subject", href: "#blog", text: "A paragraph in the voice of the person who explains it, a little longer than the other one so the two cards do not look identical.", speaker: { name: "Person name", photo: "/demo/person-avatar.jpg" }, video: { href: "#videos" } },
+            { cover: { src: `${DEMO}cover-1.svg` }, title: "A longer featured title that explains the subject", href: "#blog", text: "Three or four sentences in the voice of the person who explains it in the video, cut only where the speech needs it to read well on the page.", speaker: { name: "Person name", photo: `${DEMO}person-avatar.jpg` }, video: { href: "#videos" } },
+            { cover: { src: `${DEMO}cover-2.svg` }, title: "Second subject, shorter", href: "#blog", text: "Two sentences in the voice of the person who explains it in the video.", speaker: { name: "Another person", photo: `${DEMO}person-avatar.jpg` }, video: { href: "#videos" } },
+            { cover: { src: `${DEMO}cover-3.svg` }, title: "Third subject", href: "#blog", text: "A paragraph in the voice of the person who explains it, a little longer than the other one so the two cards do not look identical.", speaker: { name: "Person name", photo: `${DEMO}person-avatar.jpg` }, video: { href: "#videos" } },
           ]}
         />
 
@@ -1274,14 +1277,14 @@ export function App() {
         <PostArticle
           trail={<Breadcrumb items={[{ label: "Posts", href: "#blog" }, { label: "Parent page", href: "#blog" }]} />}
           title="Post title: a subject that asks for attention"
-          signature={<PersonChip name="Person name" description="Role · Registration number" href="#people" photo="/demo/person-avatar.jpg" />}
+          signature={<PersonChip name="Person name" description="Role · Registration number" href="#people" photo={`${DEMO}person-avatar.jpg`} />}
           date={{ iso: "2026-10-29", label: "29 October 2026" }}
           paragraphs={[
             "The first paragraph is the lead: larger, it answers at once what the title asks, in the voice of the person who explains it in the video.",
             "The following paragraphs keep the reading at body size. Two or three of them, each one a step of the explanation.",
           ]}
           notice="This text guides, but does not replace an assessment by a professional."
-          aside={<VideoStoryCard title="Card title" speaker="Speaker name" src="/demo/person-vertical.mp4" poster="/demo/person-poster-vertical.jpg" duration={10} />}
+          aside={<VideoStoryCard title="Card title" speaker="Speaker name" src={`${DEMO}person-vertical.mp4`} poster={`${DEMO}person-poster-vertical.jpg`} duration={10} />}
           transcript={{ title: "Video transcript", paragraphs: ["Hello, my name is the speaker and this is the first paragraph of what is said in the video, in full, so whoever prefers to read does not need to listen.", "The second paragraph of the speech, and the invitation at the end."] }}
         />
       </Section>
@@ -1398,11 +1401,11 @@ export function App() {
           <EventList
             groups={[
               { date: "6 Nov", weekday: "Friday", iso: "2026-11-06", events: [
-                { time: "09:00", timeAccent: "12:00 GMT-3", title: "Event title with a venue name", href: "#events", organizers: [{ name: "Organizer name", photo: "/demo/person-avatar.jpg" }], location: "City, Country", people: [{ name: "Person one", photo: "/demo/person-avatar.jpg" }, { name: "Person two", photo: "/demo/person-avatar.jpg" }, { name: "Person three", photo: "/demo/person-avatar.jpg" }], peopleMore: 34, cover: { src: "/demo/cover-1.svg" } },
-                { time: "3 to 9 Nov", timeAccent: "08:30–17:30", title: "Course name · City", href: "#events", organizers: [{ name: "Person name", photo: "/demo/person-avatar.jpg" }, { name: "Another person", photo: "/demo/person-avatar.jpg" }], location: "Venue name, City · ST", people: [{ name: "Person one", photo: "/demo/person-avatar.jpg" }, { name: "Person two", photo: "/demo/person-avatar.jpg" }], peopleMore: 26, cover: { src: "/demo/cover-2.svg" }, badge: "Sold out" },
+                { time: "09:00", timeAccent: "12:00 GMT-3", title: "Event title with a venue name", href: "#events", organizers: [{ name: "Organizer name", photo: `${DEMO}person-avatar.jpg` }], location: "City, Country", people: [{ name: "Person one", photo: `${DEMO}person-avatar.jpg` }, { name: "Person two", photo: `${DEMO}person-avatar.jpg` }, { name: "Person three", photo: `${DEMO}person-avatar.jpg` }], peopleMore: 34, cover: { src: `${DEMO}cover-1.svg` } },
+                { time: "3 to 9 Nov", timeAccent: "08:30–17:30", title: "Course name · City", href: "#events", organizers: [{ name: "Person name", photo: `${DEMO}person-avatar.jpg` }, { name: "Another person", photo: `${DEMO}person-avatar.jpg` }], location: "Venue name, City · ST", people: [{ name: "Person one", photo: `${DEMO}person-avatar.jpg` }, { name: "Person two", photo: `${DEMO}person-avatar.jpg` }], peopleMore: 26, cover: { src: `${DEMO}cover-2.svg` }, badge: "Sold out" },
               ] },
               { date: "7 Nov", weekday: "Saturday", iso: "2026-11-07", events: [
-                { time: "10:00", timeAccent: "16:00 GMT-3", title: "Another event title", href: "#events", organizers: [{ name: "Organizer name" }], location: "Online", cover: { src: "/demo/cover-3.svg" } },
+                { time: "10:00", timeAccent: "16:00 GMT-3", title: "Another event title", href: "#events", organizers: [{ name: "Organizer name" }], location: "Online", cover: { src: `${DEMO}cover-3.svg` } },
               ] },
             ]}
           />
@@ -1411,11 +1414,11 @@ export function App() {
         <p className="mt-10 mb-3 text-xs font-semibold text-ink-soft">Event page · EventFacts + RegistrationBox</p>
         <div className="grid gap-3 md:grid-cols-[minmax(0,4fr)_minmax(0,7fr)] md:gap-5">
           <div className="relative aspect-square overflow-hidden rounded-[28px] bg-ink/[0.06]">
-            <img src="/demo/cover-1.svg" alt="" className="absolute inset-0 h-full w-full object-cover" />
+            <img src={`${DEMO}cover-1.svg`} alt="" className="absolute inset-0 h-full w-full object-cover" />
           </div>
           <div className="rounded-[28px] bg-card p-6 md:p-8">
             <h3 className="font-heading text-[2rem] font-medium leading-[1.08] tracking-[-0.02em] text-ink md:text-4xl">Event title with a venue name</h3>
-            <Byline className="mt-4" people={[{ name: "Organizer name", photo: "/demo/person-avatar.jpg" }]} />
+            <Byline className="mt-4" people={[{ name: "Organizer name", photo: `${DEMO}person-avatar.jpg` }]} />
             <EventFacts
               className="mt-6"
               facts={[
@@ -1445,7 +1448,7 @@ export function App() {
           title="Card title"
           lead="A short lead that sums up the invitation in one sentence."
           action={<Button variant="accent" href="#cta">{IcChat} Call to action</Button>}
-          video={{ title: "Overlay title", description: "Overlay description", loop: { src: "/demo/invite-loop.mp4", poster: "/demo/invite-loop-poster.jpg" }, video: { src: "/demo/invite.mp4", poster: "/demo/invite-poster.jpg" } }}
+          video={{ title: "Overlay title", description: "Overlay description", loop: { src: `${DEMO}invite-loop.mp4`, poster: `${DEMO}invite-loop-poster.jpg` }, video: { src: `${DEMO}invite.mp4`, poster: `${DEMO}invite-poster.jpg` } }}
         />
       </Section>
 
