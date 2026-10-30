@@ -247,6 +247,7 @@ export function PageVideoHero({
                   posterLarge={(video as VideoLoop).preview.posterLarge}
                   trimEdges={(video as VideoLoop).preview.trimEdges}
                   objectPosition={(video as VideoLoop).preview.objectPosition}
+                  labels={previewLabels}
                   className="absolute inset-0"
                 />
               )}
