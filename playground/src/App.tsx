@@ -1,5 +1,6 @@
 import { useEffect, useState, type ReactNode } from "react";
 import { Accordion } from "../../components/Accordion";
+import { Highlight, PullQuote } from "../../components/PullQuote";
 import { CollapseRow, LinkRow, RowList } from "../../components/Rows";
 import { Rail, RailItem } from "../../components/Rail";
 import { Button } from "../../components/Button";
@@ -353,6 +354,7 @@ const PAGE_NAV = [
   { id: "header", label: "Header", Icon: IconHome },
   { id: "mobile", label: "Mobile", Icon: IconMapPin },
   { id: "anchornav", label: "AnchorNav", Icon: IconMapPin },
+  { id: "pullquote", label: "PullQuote", Icon: IconMessage },
   { id: "cards", label: "Cards", Icon: IconBook },
   { id: "videos", label: "Videos", Icon: IconVideo },
   { id: "map", label: "Map", Icon: IconMapPin },
@@ -372,7 +374,7 @@ const FOOTER_GROUPS = (
     ["Foundations", ["symbol", "tokens", "type", "lockup", "icons"]],
     ["Navigation", ["header", "mobile", "anchornav", "breadcrumb", "footer"]],
     ["Content", ["buttons", "action", "accordion", "list", "rows", "timeline", "pills"]],
-    ["Cards & media", ["people", "cards", "videos", "map", "hero", "care", "story", "blog", "course", "events", "cta"]],
+    ["Cards & media", ["people", "pullquote", "cards", "videos", "map", "hero", "care", "story", "blog", "course", "events", "cta"]],
   ] as const
 ).map(([title, ids]) => ({
   title,
@@ -573,7 +575,7 @@ export function App() {
           { label: "Components", href: "#buttons", columns: 2, align: "end", groups: [
             { label: "Base", children: [{ label: "Lockup", href: "#lockup" }, { label: "Button", href: "#buttons" }, { label: "Action dose", href: "#action" }, { label: "Icons", href: "#icons" }] },
             { label: "Navigation", children: [{ label: "Header", href: "#header" }, { label: "BottomNav", href: "#mobile" }, { label: "AnchorNav", href: "#anchornav" }, { label: "Breadcrumb", href: "#breadcrumb" }] },
-            { label: "Content", children: [{ label: "Accordion", href: "#accordion" }, { label: "List", href: "#list" }, { label: "Timeline", href: "#timeline" }, { label: "PillList", href: "#pills" }, { label: "Cards", href: "#cards" }] },
+            { label: "Content", children: [{ label: "Accordion", href: "#accordion" }, { label: "List", href: "#list" }, { label: "Rows", href: "#rows" }, { label: "Timeline", href: "#timeline" }, { label: "PillList", href: "#pills" }, { label: "Cards", href: "#cards" }, { label: "PullQuote", href: "#pullquote" }] },
             { label: "People & media", children: [{ label: "People", href: "#people" }, { label: "Videos", href: "#videos" }, { label: "MapCard", href: "#map" }, { label: "PageVideoHero", href: "#hero" }] },
             { label: "Courses", children: [{ label: "CourseCard", href: "#course" }, { label: "Events", href: "#events" }] },
             { label: "Page sections", children: [{ label: "CareSteps", href: "#care" }, { label: "StoryPanel", href: "#story" }, { label: "Blog", href: "#blog" }, { label: "CtaCard", href: "#cta" }, { label: "Footer", href: "#footer" }] },
@@ -1055,6 +1057,16 @@ export function App() {
           </Container>
           <HeroDemo />
         </section>
+
+      <Section id="pullquote" title="PullQuote · Highlight">
+        <p className="mb-10 max-w-[60ch] text-ink-body">One line that matters, set large between sections: drawn quote mark in the action color, balanced lines and, on the key words, the hand-drawn <code>Highlight</code>. Without <code>cite</code> it is a brand statement; with it, a quote from someone.</p>
+        <PullQuote>Care that looks at the <Highlight>whole body</Highlight>, at every stage of development.</PullQuote>
+        <div className="mt-16 rounded-2xl border border-line bg-surface p-8">
+          <PullQuote size="md" align="start" cite={{ people: [{ name: "Person name", photo: `${DEMO}person-avatar.jpg` }], role: "Role · Registration number" }}>
+            A short testimonial line, the one sentence worth <Highlight>pulling out</Highlight> of the story.
+          </PullQuote>
+        </div>
+      </Section>
 
       <Section id="cards" title="Cards — FactStrip · InfoCard · MediaCard">
         <p className="mb-6 max-w-[62ch] text-ink-body">FactStrip: the three facts under the hero — icon bubble plus two lines of equal weight, a thin line between columns (between rows on phones). InfoCard: the white cards of the clinic page — a tinted icon bubble, a title, lines and outbound links. MediaCard: a photo or clip behind a title, a badge top-left and the arrow button top-right; the whole card is a link, the image zooms slowly on hover (mouse only), the clip plays muted.</p>

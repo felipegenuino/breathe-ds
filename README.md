@@ -192,6 +192,9 @@ from color, not from extra markup.
 
 ## Navigation
 
+- **PullQuote** + **Highlight**: one line set large between sections — drawn quote
+  mark in the action color, balanced lines, hand-drawn underline (`Highlight`) on the
+  key words. `cite` adds the person (Byline with role); without it, a brand statement.
 - **Header**: brand (the app passes the link to the home page) · items · item with dropdown
   (icons on sub-items; final link with a → arrow, or ↗ if `external`) · language · CTA.
   Site convention: "Home" is just the house (`icon` + `iconOnly`), with a label for

@@ -87,7 +87,8 @@
     "./components/EventList": "./components/EventList.tsx",
     "./components/EventFacts": "./components/EventFacts.tsx",
     "./components/RegistrationBox": "./components/RegistrationBox.tsx",
-    "./components/SidePanel": "./components/SidePanel.tsx"
+    "./components/SidePanel": "./components/SidePanel.tsx",
+    "./components/PullQuote": "./components/PullQuote.tsx"
   },
   "publishConfig": {
     "access": "public"
