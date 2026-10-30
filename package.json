@@ -1,6 +1,6 @@
 {
   "name": "@breathe-ds/ui",
-  "version": "0.5.4",
+  "version": "0.5.5",
   "description": "Breathe DS — the design system of the Cuidado Global family of sites (creeta, ttcab, metodorta). Themeable tokens + React components.",
   "license": "MIT",
   "type": "module",
