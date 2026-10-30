@@ -50,3 +50,11 @@ Antes (até 29/10/2026 à tarde) o Player usava o vídeo real da Mariangela no
 YouTube (`h3a7DHFd6L4`); saiu da demo pela mesma regra das outras mídias reais.
 No modo YouTube, o quadro parado de movimento reduzido vem da miniatura do
 próprio YouTube (`i.ytimg.com/vi/<id>/maxresdefault.jpg`), ou de um `poster`.
+
+## No GitHub Pages
+
+O playground publicado em https://felipegenuino.github.io/breathe-ds/ pega estas
+mídias do release `demo-media-1` (asset `breathe-demo-media.zip`), não do git.
+Para trocar: gerar o zip de novo (só arquivos gerados, nunca paciente real) e
+subir com `gh release upload demo-media-1 breathe-demo-media.zip --clobber`,
+depois rodar o workflow "Playground on GitHub Pages".

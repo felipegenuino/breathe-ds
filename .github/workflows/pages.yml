@@ -29,6 +29,11 @@ jobs:
           cache-dependency-path: playground/package-lock.json
       - run: npm ci
         working-directory: playground
+      # demo media is kept out of git on purpose (see .gitignore); it lives as an
+      # asset of the demo-media-1 release and is unpacked here before the build
+      - run: gh release download demo-media-1 -p breathe-demo-media.zip -D /tmp && unzip -o /tmp/breathe-demo-media.zip -d playground/public/demo
+        env:
+          GH_TOKEN: ${{ github.token }}
       - run: npx vite build
         working-directory: playground
         env:
