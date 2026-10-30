@@ -11,6 +11,9 @@ type Labels = {
 };
 const EN: Labels = { more: (n) => `+${n}`, by: "By" };
 
+// the hit area of the row: the title's link or button, stretched over it
+const STRETCH = "after:absolute after:inset-0 after:rounded-[24px] focus-visible:outline-none focus-visible:after:outline focus-visible:after:outline-2 focus-visible:after:-outline-offset-2 focus-visible:after:outline-ink";
+
 export type EventRowProps = {
   /** The time line ("09:00 · 12:00 GMT+0", or "3 to 9 Nov · 08:30–17:30"). */
   time: ReactNode;
@@ -18,7 +21,10 @@ export type EventRowProps = {
    *  time this way). Optional. */
   timeAccent?: ReactNode;
   title: ReactNode;
-  href: string;
+  /** The event's page. With `onSelect` instead, the row opens its details in place. */
+  href?: string;
+  /** Makes the title a button stretched over the row (a SidePanel opens, say). */
+  onSelect?: () => void;
   /** Who organizes or teaches: small portrait(s) and the name(s). */
   organizers?: Person[];
   location?: ReactNode;
@@ -41,7 +47,7 @@ export type EventRowProps = {
  * where, who is going, and the square cover on the right. Lives in an
  * EventList, under a date heading.
  */
-export function EventRow({ time, timeAccent, title, href, organizers, location, people, peopleMore, cover, badge, linkComponent, labels, className = "" }: EventRowProps) {
+export function EventRow({ time, timeAccent, title, href, onSelect, organizers, location, people, peopleMore, cover, badge, linkComponent, labels, className = "" }: EventRowProps) {
   const L: ElementType = linkComponent ?? "a";
   const t = { ...EN, ...labels };
   const shown = people?.slice(0, 4) ?? [];
@@ -58,9 +64,15 @@ export function EventRow({ time, timeAccent, title, href, organizers, location, 
           )}
         </p>
         <h3 className="mt-1.5 font-heading text-xl font-medium leading-snug text-ink md:text-[1.375rem]">
-          <L href={href} className="after:absolute after:inset-0 after:rounded-[24px] focus-visible:outline-none focus-visible:after:outline focus-visible:after:outline-2 focus-visible:after:-outline-offset-2 focus-visible:after:outline-ink">
-            {title}
-          </L>
+          {onSelect ? (
+            <button type="button" onClick={onSelect} className={`text-left ${STRETCH}`}>
+              {title}
+            </button>
+          ) : (
+            <L href={href} className={STRETCH}>
+              {title}
+            </L>
+          )}
           {badge && <span className="ml-2 inline-flex translate-y-[-2px] items-center rounded-pill bg-ink/[0.08] px-2.5 py-0.5 align-middle text-xs font-semibold text-ink">{badge}</span>}
         </h3>
         {organizers && organizers.length > 0 && (
