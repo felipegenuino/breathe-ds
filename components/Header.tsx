@@ -1,6 +1,6 @@
 "use client";
 
-import { useId, useState, type ReactNode, type ElementType } from "react";
+import { useId, useRef, useState, type ReactNode, type ElementType } from "react";
 
 export type NavChild = {
   label: ReactNode;
@@ -80,13 +80,15 @@ function Dropdown({ item, L, t }: { item: NavItem; L: ElementType; t: Labels }) 
   const [open, setOpen] = useState(false);
   const two = item.columns === 2;
   const gid = useId();
+  // a mouse that hovered already opened the menu: its click on the chevron must not close it
+  const hovering = useRef(false);
   const renderChild = (c: NavChild) => (
     <L
       href={c.href}
       onClick={() => setOpen(false)}
       // with a description the icon sits with the label's first line (creeta);
       // label only: centred on the bubble, and a two-line label stays tight
-      className={`flex ${c.description ? "items-start" : "items-center"} gap-3 rounded-xl px-2.5 ${two ? "py-1.5" : "py-2"} transition-colors hover:bg-ink/[0.05] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink`}
+      className={`flex ${c.description ? "items-start" : "items-center"} gap-3 rounded-xl px-2.5 ${item.groups ? "py-1" : two ? "py-1.5" : "py-2"} transition-colors hover:bg-ink/[0.05] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink`}
     >
       {c.icon && (
         <span className="flex h-9 w-9 flex-none items-center justify-center rounded-full bg-ink/[0.08] text-ink">
@@ -106,8 +108,14 @@ function Dropdown({ item, L, t }: { item: NavItem; L: ElementType; t: Labels }) 
   return (
     <div
       className="relative"
-      onMouseEnter={() => setOpen(true)}
-      onMouseLeave={() => setOpen(false)}
+      onMouseEnter={() => {
+        hovering.current = true;
+        setOpen(true);
+      }}
+      onMouseLeave={() => {
+        hovering.current = false;
+        setOpen(false);
+      }}
       onBlur={(e) => {
         if (!e.currentTarget.contains(e.relatedTarget as Node)) setOpen(false);
       }}
@@ -125,7 +133,7 @@ function Dropdown({ item, L, t }: { item: NavItem; L: ElementType; t: Labels }) 
           type="button"
           aria-expanded={open}
           aria-label={t.openSubmenu}
-          onClick={() => setOpen((o) => !o)}
+          onClick={() => setOpen((o) => (hovering.current ? true : !o))}
           className="flex min-h-11 items-center rounded-md px-0.5 text-ink/70 transition-colors hover:text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink"
         >
           <Chevron open={open} />
@@ -134,14 +142,14 @@ function Dropdown({ item, L, t }: { item: NavItem; L: ElementType; t: Labels }) 
 
       <div className={`absolute top-full ${item.align === "end" ? "right-0" : "left-0"} z-50 pt-2 ${open ? "" : "pointer-events-none"}`}>
         <ul
-          className={`${two ? (item.groups ? "w-[34rem] columns-2 gap-x-1" : "grid w-[34rem] grid-cols-2 gap-x-1") : "w-[19rem]"} list-none rounded-2xl border border-line bg-surface p-2 shadow-[0_18px_40px_-16px_rgba(20,71,83,0.4)] transition duration-150 ease-out motion-reduce:transition-none ${
+          className={`${two ? (item.groups ? "w-[34rem] columns-2 gap-x-4" : "grid w-[34rem] grid-cols-2 gap-x-1") : "w-[19rem]"} list-none rounded-2xl border border-line bg-surface p-2 shadow-[0_18px_40px_-16px_rgba(20,71,83,0.4)] transition duration-150 ease-out motion-reduce:transition-none ${
             open ? "visible scale-100 opacity-100" : "invisible -translate-y-1 scale-[0.98] opacity-0"
           }`}
         >
           {item.groups
             ? item.groups.map((g, gi) => (
-                <li key={gi} className="break-inside-avoid pb-2">
-                  <p id={`${gid}-${gi}`} className="px-2.5 pt-2 pb-1 font-heading text-[0.7rem] font-bold tracking-[0.12em] text-ink-soft uppercase">
+                <li key={gi} className="break-inside-avoid pb-5 last:pb-1">
+                  <p id={`${gid}-${gi}`} className="px-2.5 pt-2 pb-0.5 font-heading text-[0.7rem] font-bold tracking-[0.12em] text-ink-soft uppercase">
                     {g.label}
                   </p>
                   <ul aria-labelledby={`${gid}-${gi}`} className="list-none">
