@@ -346,7 +346,7 @@ from color, not from extra markup.
       **Data rule:** every professional MUST have a **CREFITO** attached (COFFITO requirement).
 - [x] **Pill / PillList** — the Atalho of novo.creeta (white 44px pill, arrow bubble: ↓ anchor, ↗ other page, optional meta); wrapping row + "See all"
 - [x] **AnchorNav** (floating capsule of anchors, scroll-spy + sliding indicator) — extracted from ttcab (10/29)
-- [x] **Footer** · **PageVideoHero** (loop, and player from a YouTube id or the site's own mp4) · **Header** (dropdown, house) · **BottomNav** · **Curtain** · **Lockup** (5 arrangements) · **BreatheMark**
+- [x] **Footer** · **PageVideoHero** (loop, and player from a YouTube id or the site's own mp4; `panel.actions` puts two or more calls to action inside the panel) · **Header** (dropdown, house) · **BottomNav** · **Curtain** · **Lockup** (5 arrangements) · **BreatheMark**
 - [x] **Site brand marks** (`components/marks/`): real symbol + wordmark for TTCAB and Creeta (10/29)
 - [ ] **ThreadRail** (side graphic device — a thread running down the left linking sections) — approved,
       **already exists in ttcab** → extract.
