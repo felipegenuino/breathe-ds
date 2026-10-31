@@ -196,6 +196,10 @@ from color, not from extra markup.
   portrait on the left (photo or `living`, the team pages' living portrait), then
   eyebrow, name, role, registration, bio and `actions`. `variant` `plain` (on the page
   color) or `card` (white card). Stacks on phones.
+- **Texture & rhythm (opt-in)**: `.cg-grain` adds a barely-there paper grain (noise in
+  the ink color) to any background — the body, a band. `bg-surface-alt` (token
+  `--cg-surface-alt`, falls back to `surface`) is a band one step deeper than the page,
+  for alternating sections; TTCAB `#f6eedd` (ink-soft 4.58:1), Creeta `#e4ecee`.
 - **PullQuote** + **Highlight**: one line set large between sections — drawn quote
   mark in the action color, balanced lines, hand-drawn underline (`Highlight`) on the
   key words. `cite` adds the person (Byline with role); without it, a brand statement.

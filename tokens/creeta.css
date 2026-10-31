@@ -19,6 +19,7 @@
   --cg-action-tint: #eae7ed;  /* 6% magenta over mist: highlighted card */
   --cg-action-line: #ab2781;    /* magenta itself: 5.62:1 on mist */
   --cg-on-action: #ffffff;      /* white on magenta */
+  --cg-surface-alt: #e4ecee;  /* section band: ink 8.53:1 · ink-soft 5.41:1 · action-text 6.79:1 */
   --cg-line: rgb(20 71 83 / 0.16);
   --cg-font-heading: var(--font-quicksand), system-ui, sans-serif;  /* Quicksand */
   --cg-font-body: var(--font-figtree), system-ui, sans-serif;       /* Figtree */
