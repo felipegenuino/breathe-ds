@@ -21,6 +21,10 @@ type Props = {
   /** The app's link component (e.g. next-intl Link). Default: <a>. */
   linkComponent?: ElementType;
   className?: string;
+  /** Tone of the active and hover pill. `surface` (default): the page color on the
+   *  white capsule, with a hairline. `accent`: the light action tint, the active
+   *  label in action-text (more emphasis). */
+  tone?: "surface" | "accent";
   /** Strings (English defaults); the app passes the ones for its locale. */
   labels?: Partial<Labels>;
 };
@@ -39,7 +43,8 @@ type Props = {
  * `scroll-mt-*` that, added to the theme's `scroll-padding-top` (96px), clears
  * the header plus the capsule (e.g. `scroll-mt-20` with an 80px header).
  */
-export function AnchorNav({ items, stickyTop = "top-20", linkComponent, className = "", labels }: Props) {
+export function AnchorNav({ items, stickyTop = "top-20", linkComponent, className = "", tone = "surface", labels }: Props) {
+  const accent = tone === "accent";
   const L: ElementType = linkComponent ?? "a";
   const t = { ...EN, ...labels };
   const [active, setActive] = useState(items[0]?.id ?? "");
@@ -121,12 +126,12 @@ export function AnchorNav({ items, stickyTop = "top-20", linkComponent, classNam
         <div className="flex justify-center">
           <ul
             ref={listRef}
-            className="relative flex max-w-full list-none gap-1 overflow-x-auto rounded-pill border border-line bg-surface/95 p-1.5 shadow-[0_10px_28px_-14px_rgba(0,0,0,0.35)] backdrop-blur [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+            className="relative flex max-w-full list-none gap-1 overflow-x-auto rounded-pill border border-line bg-card p-1.5 shadow-[0_10px_28px_-14px_rgba(0,0,0,0.35)] backdrop-blur [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
           >
             {/* Sliding indicator */}
             <span
               aria-hidden="true"
-              className="pointer-events-none absolute top-0 left-0 rounded-pill bg-ink/[0.12] shadow-[inset_0_0_0_1px_var(--color-line)] transition-[transform,width,height,opacity] duration-[320ms] ease-cg motion-reduce:transition-none"
+              className={`pointer-events-none absolute top-0 left-0 rounded-pill ${accent ? "bg-action-tint" : "bg-surface shadow-[inset_0_0_0_1px_var(--color-line)]"} transition-[transform,width,height,opacity] duration-[320ms] ease-cg motion-reduce:transition-none`}
               style={{ width: pill.w, height: pill.h, opacity: pill.ready ? 1 : 0, transform: `translate(${pill.x}px, ${pill.y}px)` }}
             />
             {items.map((n) => {
@@ -140,8 +145,8 @@ export function AnchorNav({ items, stickyTop = "top-20", linkComponent, classNam
                     href={`#${n.id}`}
                     aria-current={isActive ? "true" : undefined}
                     onClick={() => setActive(n.id)}
-                    className={`relative z-10 inline-block whitespace-nowrap rounded-pill border border-transparent px-3.5 py-2 font-heading text-[0.92rem] font-semibold text-ink transition-[background-color,border-color] duration-200 ease-cg focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ink motion-reduce:transition-none ${
-                      isActive ? "" : "hover:border-ink/15 hover:bg-ink/[0.06]"
+                    className={`relative z-10 inline-block whitespace-nowrap rounded-pill border border-transparent px-3.5 py-2 font-heading text-[0.92rem] font-semibold ${isActive && accent ? "text-action-text" : "text-ink"} transition-[background-color,border-color,color] duration-200 ease-cg focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ink motion-reduce:transition-none ${
+                      isActive ? "" : accent ? "hover:bg-action-tint/60" : "hover:bg-surface"
                     }`}
                   >
                     {n.label}

@@ -214,7 +214,9 @@ from color, not from extra markup.
   (ttcab). `labels` for another language. `embedded` for the demo frame.
 - **AnchorNav**: floating capsule of page anchors (scroll-spy + sliding
   indicator), extracted from ttcab's TreatmentAnchorNav. Target sections need
-  a `scroll-mt-*` compatible with the sticky header.
+  a `scroll-mt-*` compatible with the sticky header. White capsule (`card`);
+  `tone="surface"` (default: active pill in the page color with a hairline) or
+  `tone="accent"` (action tint, active label in action-text — more emphasis).
 - **LanguageSwitcher**: the SeletorDeIdioma of novo.creeta — `menu` (button with
   the code, opens the three languages; header) or `list` (plain links; the Footer
   uses it). Same page in the other language, each language written in itself,
