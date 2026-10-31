@@ -3,6 +3,9 @@ import { Accordion } from "../../components/Accordion";
 import { Highlight, PullQuote } from "../../components/PullQuote";
 import { ProfileSpotlight } from "../../components/ProfileSpotlight";
 import { CollapseRow, LinkRow, RowList } from "../../components/Rows";
+import { SearchField } from "../../components/SearchField";
+import { SelectField } from "../../components/SelectField";
+import { EmptyState } from "../../components/EmptyState";
 import { Rail, RailItem } from "../../components/Rail";
 import { Button } from "../../components/Button";
 import { Card } from "../../components/Card";
@@ -117,6 +120,58 @@ function SideNav({ pal, setPal }: { pal: string; setPal: (p: string) => void }) 
         ))}
       </ul>
     </nav>
+  );
+}
+
+/** Search page pieces (the ttcab directory, 2026-10-31): SearchField,
+ *  SelectField, ProfessionalCard size="listing" and EmptyState. */
+function SearchDemo() {
+  const [q, setQ] = useState("");
+  const [uf, setUf] = useState("");
+  const people = [
+    { name: "Ana Paula Souza", place: "Manaus, AM", uf: "AM", phone: "(92) 98801-2905", email: "ana.souza@example.com" },
+    { name: "Luciana Ribeiro", place: "Florianópolis, SC", uf: "SC", phone: "(48) 8417-2982", email: "luciana@example.com" },
+    { name: "Juliana Possenti", place: "Videira, SC", uf: "SC", phone: "(49) 98811-6169", email: "ju.possenti@example.com" },
+  ];
+  const norm = (s: string) => s.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+  const hits = people.filter((p) => (!uf || p.uf === uf) && norm(`${p.name} ${p.place}`).includes(norm(q.trim())));
+  return (
+    <div>
+      <p className="mb-6 max-w-[62ch] text-ink-body">One search box for name, city or state, native selects beside it, the listing card (initials, place, contacts as 48px rows) and an EmptyState that never dead-ends: what was searched, the nearest way out, tips, then a person to ask. Type “zzz” to see it.</p>
+      <div className="grid gap-4 md:grid-cols-[minmax(0,1.7fr)_minmax(0,1fr)] md:items-end">
+        <SearchField id="pg-search" label="Name, city or state" placeholder="E.g. Ana, Campinas or SC" value={q} onValueChange={setQ} />
+        <SelectField id="pg-uf" label="State" placeholder="All" value={uf} onValueChange={setUf} options={[{ value: "AM", label: "Amazonas", count: 1 }, { value: "SC", label: "Santa Catarina", count: 2 }]} />
+      </div>
+      {hits.length ? (
+        <ul className="mt-6 grid list-none gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {hits.map((p) => (
+            <li key={p.name}>
+              <ProfessionalCard
+                size="listing"
+                headingLevel="h3"
+                name={p.name}
+                role={p.place}
+                contacts={[
+                  { label: p.phone, href: "#search", icon: <Lucide.Phone size={18} aria-hidden="true" /> },
+                  { label: p.email, href: "#search", icon: <Lucide.Mail size={18} aria-hidden="true" />, breakAll: true },
+                ]}
+              />
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <EmptyState
+          className="mt-6"
+          headingLevel="h3"
+          title={`No one found for “${q.trim()}”`}
+          recovery={<Button variant="outline" size="sm" onClick={() => setUf("")}>See results in other states</Button>}
+          tips={["Check the spelling. Accents and capitals make no difference.", "Search by first name or surname only."]}
+          actions={<Button onClick={() => { setQ(""); setUf(""); }}>See all professionals</Button>}
+        >
+          The list shows people who completed the training and asked to be listed.
+        </EmptyState>
+      )}
+    </div>
   );
 }
 
@@ -948,6 +1003,10 @@ export function App() {
               <PersonChip name="Person name" description="Role · Registration number" />
             </div>
           </div>
+        </Section>
+
+        <Section id="search" title="Search — SearchField · SelectField · ProfessionalCard listing · EmptyState">
+          <SearchDemo />
         </Section>
 
         <Section id="breadcrumb" title="Breadcrumb">

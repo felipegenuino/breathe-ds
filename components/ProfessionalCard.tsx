@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, type ElementType, type ReactNode } from "react";
-import { initials } from "./Avatar";
+import { Avatar, initials } from "./Avatar";
 import { ProfessionalModal, type ProfessionalModalLabels, type ProfessionalPresentation } from "./ProfessionalModal";
 import { CollapseRow, LinkRow, RowList, type RowLink } from "./Rows";
 
@@ -55,6 +55,19 @@ export type ProfessionalCardRow =
       /** Replaces the arrow (an 18px glyph): the Instagram icon, for instance. */
       icon?: ReactNode;
     };
+
+/** One contact line of the `listing` card: a LinkRow with the lucide glyph on
+ *  the right (phone, mail, WhatsApp). The label is the visible number/address;
+ *  `srLabel` says who it reaches ("Ligar para Ana Souza"). */
+export type ProfessionalContact = {
+  label: ReactNode;
+  href: string;
+  icon?: ReactNode;
+  srLabel?: ReactNode;
+  external?: boolean;
+  /** Long unbroken text (an e-mail) may wrap anywhere, only when it does not fit. */
+  breakAll?: boolean;
+};
 
 export type ProfessionalCardLabels = ProfessionalModalLabels & {
   /** alt of the portrait. */
@@ -263,7 +276,12 @@ type Props = {
    *  (living portrait and "Meet" badge on hover). `micro`: the "who treats"
    *  row — 72px photo, name and role, also a link. The small sizes render the
    *  link as the root; wrap them in your <li> (RailItem). */
-  size?: "full" | "medium" | "micro";
+  size?: "full" | "medium" | "micro" | "listing";
+  /** `listing` only: the contact rows (phone, e-mail). */
+  contacts?: ProfessionalContact[];
+  /** `listing` only: the name as rendered, e.g. with the search match marked.
+   *  `name` stays the plain text (initials, alt). */
+  nameDisplay?: ReactNode;
   /** Where the small sizes lead: the full card on the team page ("/team/#slug"). */
   href?: string;
   /** Name shown on the medium card (the site uses the first two words). */
@@ -304,6 +322,8 @@ export function ProfessionalCard({
   rows,
   id,
   size = "full",
+  contacts,
+  nameDisplay,
   href = "#",
   shortName,
   headingLevel: Heading = "h2",
@@ -316,6 +336,41 @@ export function ProfessionalCard({
   const L: ElementType = linkComponent ?? "a";
   const alt = photo?.alt ?? t.portrait(name);
   const hasPortrait = Boolean(photo || media || living);
+
+  if (size === "listing") {
+    // the directory card (ttcab "Encontre um profissional"): many people, no
+    // photos. The family's solid white card, the initials in a tint bubble,
+    // name, place (in `role`) and the registration, then the contacts as
+    // 48px rows. The card itself is not a link: the rows are the actions.
+    return (
+      <As id={id} data-cg-professional-card="" className={`flex h-full flex-col rounded-[22px] bg-card px-5 pt-5 pb-1.5 ${className}`}>
+        <div className="flex items-start gap-4">
+          {photo ? <Avatar name={name} photo={photo.src} size={48} /> : <Avatar name={name} size={48} />}
+          <div className="min-w-0 pt-0.5">
+            <Heading className="font-heading text-lg leading-snug font-medium text-pretty text-ink">{nameDisplay ?? name}</Heading>
+            {role && <p className="mt-1 text-sm text-ink-soft">{role}</p>}
+            {registration && <p className="mt-1 text-xs text-ink/80">{registration}</p>}
+          </div>
+        </div>
+        {contacts && contacts.length > 0 && (
+          <div className="mt-auto pt-5">
+          <RowList>
+            {contacts.map((c, i) => (
+              <LinkRow
+                key={i}
+                label={<span className={c.breakAll ? "[overflow-wrap:anywhere]" : undefined}>{c.label}</span>}
+                srLabel={c.srLabel}
+                href={c.href}
+                icon={c.icon}
+                external={c.external}
+              />
+            ))}
+          </RowList>
+          </div>
+        )}
+      </As>
+    );
+  }
 
   if (size === "micro") {
     // the "who treats" row of a treatment page (creeta telas/tratamento.tsx):
