@@ -2,6 +2,7 @@
 
 import { useLayoutEffect, useRef, useState, type ElementType, type ReactNode } from "react";
 import { Play } from "lucide-react";
+import { Avatar } from "./Avatar";
 import { Byline } from "./Byline";
 import { SidePanel } from "./SidePanel";
 
@@ -241,8 +242,18 @@ export function TestimonialCard({ quote, author, authorPhoto, authorAvatar, auth
             {panel && (
               <header>
                 <p className="m-0 font-heading text-[0.82rem] font-bold tracking-[0.14em] text-ink-soft uppercase">{panel.eyebrow}</p>
-                <h2 className="mt-2 font-heading text-2xl leading-tight font-semibold text-ink">{names}</h2>
-                {role && <p className="mt-1 text-sm text-ink-soft">{role}</p>}
+                {/* the same portraits as on the card: the panel is the full version of it */}
+                <div className="mt-3 flex items-center gap-3">
+                  <span aria-hidden="true" className={`flex shrink-0 ${people.length > 1 ? "-space-x-2" : ""}`}>
+                    {people.map((p) => (
+                      <Avatar key={p.name} name={p.name} photo={p.photo} size={48} ring={people.length > 1}>{p.avatar}</Avatar>
+                    ))}
+                  </span>
+                  <div className="min-w-0">
+                    <h2 className="m-0 font-heading text-2xl leading-tight font-semibold text-ink">{names}</h2>
+                    {role && <p className="m-0 mt-0.5 text-sm text-ink-soft">{role}</p>}
+                  </div>
+                </div>
               </header>
             )}
             <figure className="m-0 flex flex-col gap-6">
