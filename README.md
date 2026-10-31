@@ -205,6 +205,10 @@ from color, not from extra markup.
   derives them from the logo's orange (warm neutrals, never grey).
   `.cg-dots` (dot grid, 16px) or `.cg-dots-edges` (only on the side gutters, fading
   out before the content column — the Cloudflare touch) layer dots over a background.
+- **Search page, Apple-style**: `PageHero variant="centered"` (no box, title and one search
+  centred) + **FilterBar** (thin sticky bar of compact filters — `SelectField density="sm"` —
+  with the count and "clear" on the right; it publishes its height as `--cg-filterbar-h`, so
+  `StickyGroupHeading stickyTop="top-[calc(80px+var(--cg-filterbar-h,0px))]"` sticks right below).
 - **PullQuote** + **Highlight**: one line set large between sections — drawn quote
   mark in the action color, balanced lines, hand-drawn underline (`Highlight`) on the
   key words. `cite` adds the person (Byline with role); without it, a brand statement.

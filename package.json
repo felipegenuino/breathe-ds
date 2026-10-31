@@ -96,7 +96,8 @@
     "./components/RegistrationBox": "./components/RegistrationBox.tsx",
     "./components/SidePanel": "./components/SidePanel.tsx",
     "./components/PullQuote": "./components/PullQuote.tsx",
-    "./components/ProfileSpotlight": "./components/ProfileSpotlight.tsx"
+    "./components/ProfileSpotlight": "./components/ProfileSpotlight.tsx",
+    "./components/FilterBar": "./components/FilterBar.tsx"
   },
   "publishConfig": {
     "access": "public"

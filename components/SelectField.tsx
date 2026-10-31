@@ -24,6 +24,9 @@ type Props = Omit<SelectHTMLAttributes<HTMLSelectElement>, "value" | "onChange" 
   /** Keep the label for screen readers only, when a group label above already says
    *  what the fields are (and the placeholder names the field: "Todos os estados"). */
   hideLabel?: boolean;
+  /** `md` (default): the 56px field. `sm`: a 40px pill for a filter bar (Apple-like).
+   *  (Not `size`: that is the native <select> attribute.) */
+  density?: "md" | "sm";
   className?: string;
 };
 
@@ -35,7 +38,7 @@ const text = (o: SelectOption) => (o.count === undefined ? o.label : `${o.label}
  * purpose: on phones it opens the system picker, which is faster and more
  * accessible than any custom listbox for a list of states or cities.
  */
-export function SelectField({ id, label, value, onValueChange, placeholder, options, groups, hideLabel = false, className = "", ...rest }: Props) {
+export function SelectField({ id, label, value, onValueChange, placeholder, options, groups, hideLabel = false, density = "md", className = "", ...rest }: Props) {
   return (
     <div className={className}>
       <label htmlFor={id} className={hideLabel ? "sr-only" : FIELD_LABEL}>
@@ -46,7 +49,7 @@ export function SelectField({ id, label, value, onValueChange, placeholder, opti
           id={id}
           value={value}
           onChange={(e) => onValueChange(e.target.value)}
-          className={`${FIELD} cursor-pointer appearance-none truncate pr-12 pl-5`}
+          className={`${FIELD} cursor-pointer appearance-none truncate ${density === "sm" ? "!min-h-10 py-2 pr-9 pl-4 text-sm font-medium" : "pr-12 pl-5"}`}
           {...rest}
         >
           <option value="">{placeholder}</option>
@@ -65,7 +68,7 @@ export function SelectField({ id, label, value, onValueChange, placeholder, opti
             </optgroup>
           ))}
         </select>
-        <ChevronDown aria-hidden="true" size={18} className="pointer-events-none absolute top-1/2 right-5 -translate-y-1/2 text-ink-soft" />
+        <ChevronDown aria-hidden="true" size={density === "sm" ? 16 : 18} className={`pointer-events-none absolute top-1/2 -translate-y-1/2 text-ink-soft ${density === "sm" ? "right-3.5" : "right-5"}`} />
       </div>
     </div>
   );

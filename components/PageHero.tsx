@@ -18,6 +18,10 @@ type Props = {
   /** `alt` (default): the section band colour (`surface-alt`), light, ink
    *  text at full contrast (8.85:1 on ttcab). `card`: white. */
   tone?: "alt" | "card";
+  /** `panel` (default): the rounded band with the tools inside. `centered`: the
+   *  Apple search page — no box, title and lead centred, one search below on the
+   *  page colour; refining filters live outside, after the results begin. */
+  variant?: "panel" | "centered";
   className?: string;
 };
 
@@ -31,7 +35,22 @@ type Props = {
  * and the panel groups title, explanation and controls (common region)
  * without the weight of a dark panel.
  */
-export function PageHero({ title, lead, note, breadcrumb, children, watermark, tone = "alt", className = "" }: Props) {
+export function PageHero({ title, lead, note, breadcrumb, children, watermark, tone = "alt", variant = "panel", className = "" }: Props) {
+  if (variant === "centered") {
+    return (
+      <section className={`px-4 pt-[clamp(40px,7vw,96px)] pb-[clamp(28px,4vw,48px)] text-center md:px-6 ${className}`}>
+        <div className="mx-auto w-full max-w-3xl">
+          {breadcrumb && <div className="mb-6 flex justify-center">{breadcrumb}</div>}
+          <Heading as="h1" size="display" className="text-balance">
+            {title}
+          </Heading>
+          {lead && <p className="mx-auto m-0 mt-4 max-w-xl text-lg leading-relaxed text-balance text-ink-body">{lead}</p>}
+          {note && <p className="mx-auto m-0 mt-3 max-w-xl text-sm leading-relaxed text-ink-soft">{note}</p>}
+          {children && <div className="mx-auto mt-[clamp(24px,4vw,40px)] max-w-2xl text-left">{children}</div>}
+        </div>
+      </section>
+    );
+  }
   return (
     <div className={`px-4 pt-2 md:px-6 md:pt-4 ${className}`}>
       <section className={`relative isolate mx-auto max-w-[1600px] overflow-hidden rounded-[28px] md:rounded-[32px] ${tone === "card" ? "bg-card" : "bg-surface-alt"}`}>
