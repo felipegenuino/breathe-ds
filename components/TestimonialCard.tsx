@@ -70,6 +70,8 @@ type Props = {
    *  real photo). `media` replaces the <img> (the site's image component; must
    *  fill the box). */
   photo?: { src: string; alt: string; position?: string; media?: ReactNode };
+  /** Joiners between two or more names (", " and " e " in Portuguese). */
+  joiners?: { sep: string; last: string };
   /** Small line under the name(s) ("Physiotherapist", "Tereza's mother"). */
   role?: ReactNode;
   /** Long testimonials: the quote on the card stops after this many lines and
@@ -159,7 +161,7 @@ function TapVideo({ src, youtubeId, poster: posterProp, description, withSound =
 // whole class names, so Tailwind generates them
 const CLAMP: Record<number, string> = { 3: "line-clamp-3", 4: "line-clamp-4", 5: "line-clamp-5", 6: "line-clamp-6", 8: "line-clamp-8" };
 
-export function TestimonialCard({ quote, author, authorPhoto, authorAvatar, authors, link, video, photo, role, clampLines, as: Root = "div", labels, className = "" }: Props) {
+export function TestimonialCard({ quote, author, authorPhoto, authorAvatar, authors, link, video, photo, role, joiners, clampLines, as: Root = "div", labels, className = "" }: Props) {
   const t = { ...EN, ...labels };
   const people = authors ?? [{ name: author ?? "", photo: authorPhoto, avatar: authorAvatar }];
   const quoteRef = useRef<HTMLQuoteElement>(null);
@@ -182,6 +184,7 @@ export function TestimonialCard({ quote, author, authorPhoto, authorAvatar, auth
       action={link ? { label: link.label, href: link.href, external: true } : undefined}
       newTabLabel={t.newTab.trim()}
       subtitle={role}
+      joiners={joiners}
       hideAvatars={Boolean(photo)}
     />
   );
