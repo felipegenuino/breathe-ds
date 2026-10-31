@@ -101,7 +101,13 @@ export function ContactRow({ name, nameDisplay, meta, actions, defaultOpen = fal
  *  the group, rows separated by a hairline that starts at the name (after the
  *  40px avatar + its padding: 70px, 74px from md), drawn as a ::before so the
  *  row itself never moves. */
-export function ContactList({ children, className = "" }: { children: ReactNode; className?: string }) {
+export function ContactList({ children, inset = true, className = "" }: { children: ReactNode; /** false: hairline from the edge (rows without an avatar, e.g. PublicationRow). */ inset?: boolean; className?: string }) {
+  if (!inset)
+    return (
+      <ul className={`m-0 list-none overflow-hidden rounded-[22px] bg-card p-0 [&>li+li]:border-t [&>li+li]:border-line ${className}`}>
+        {children}
+      </ul>
+    );
   return (
     <ul
       className={`m-0 list-none overflow-hidden rounded-[22px] bg-card p-0 [&>li+li]:before:absolute [&>li+li]:before:top-0 [&>li+li]:before:right-0 [&>li+li]:before:left-[4.375rem] [&>li+li]:before:h-px [&>li+li]:before:bg-line [&>li+li]:before:content-[''] md:[&>li+li]:before:left-[4.625rem] ${className}`}

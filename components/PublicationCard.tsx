@@ -213,3 +213,97 @@ export function PublicationCard({
     </article>
   );
 }
+
+type RowProps = {
+  title: string;
+  /** Title as rendered (e.g. with the search match marked). */
+  titleDisplay?: ReactNode;
+  lang?: string;
+  /** One quiet line under the title: "Ensaio clínico randomizado · Pastor-Pons e mais 6". */
+  meta?: ReactNode;
+  abstract?: string[];
+  abstractLang?: string;
+  /** The publication's page. */
+  href?: string;
+  pdf?: string;
+  defaultOpen?: boolean;
+  headingLevel?: "h2" | "h3";
+  linkComponent?: ElementType;
+  labels?: Partial<PublicationCardLabels>;
+  className?: string;
+};
+
+/**
+ * PublicationRow — a study in a long library, as a row of a ContactList
+ * (the same white inset-grouped list as the professionals directory): the
+ * list shows only the title and one quiet line (type · first author); tapping
+ * opens the abstract and two plain-text links, "read the article" and the PDF.
+ * The list of 16 big cards was a wall; this is a list of titles.
+ */
+export function PublicationRow({
+  title,
+  titleDisplay,
+  lang,
+  meta,
+  abstract,
+  abstractLang,
+  href,
+  pdf,
+  defaultOpen = false,
+  headingLevel: H = "h2",
+  linkComponent,
+  labels,
+  className = "",
+}: RowProps) {
+  const t = { ...EN, ...labels };
+  const L: ElementType = linkComponent ?? "a";
+  const [open, setOpen] = useState(defaultOpen);
+  const panel = useId();
+  const LINK =
+    "group/act inline-flex min-h-11 items-center gap-2 rounded-[2px] text-[0.9375rem] font-semibold text-ink underline decoration-transparent decoration-[1.5px] underline-offset-4 transition-[text-decoration-color] duration-150 hover:decoration-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink motion-reduce:transition-none";
+  return (
+    <li className={`relative list-none ${className}`}>
+      <H className="m-0 font-normal">
+        <button
+          type="button"
+          aria-expanded={open}
+          aria-controls={panel}
+          onClick={() => setOpen((v) => !v)}
+          className="group/row flex min-h-16 w-full items-center gap-4 px-5 py-3.5 text-left transition-colors duration-150 active:bg-tint/50 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ink motion-reduce:transition-none md:px-6"
+        >
+          <span className="min-w-0 flex-1">
+            <span lang={lang} className="line-clamp-3 block font-heading text-[1.0625rem] leading-snug font-medium text-pretty text-ink">
+              {titleDisplay ?? title}
+            </span>
+            {meta && <span className="mt-1 block text-sm text-ink-soft">{meta}</span>}
+          </span>
+          <ChevronDown
+            aria-hidden="true"
+            size={18}
+            className={`shrink-0 text-ink-soft transition-transform duration-200 motion-reduce:transition-none ${open ? "rotate-180" : "group-hover/row:translate-y-0.5"}`}
+          />
+        </button>
+      </H>
+      <div id={panel} hidden={!open} className={`${FADE_IN} px-5 pb-5 md:px-6`}>
+        {abstract && abstract.length > 0 && <AbstractText paragraphs={abstract} lang={abstractLang ?? lang} className="text-[0.9375rem]" />}
+        {(href || pdf) && (
+          <div className="mt-3 flex flex-wrap gap-x-6">
+            {href && (
+              <L href={href} className={LINK}>
+                {t.read}
+                <ArrowRight aria-hidden="true" size={16} className="text-ink-soft transition-transform duration-200 group-hover/act:translate-x-0.5 motion-reduce:transform-none" />
+              </L>
+            )}
+            {pdf && (
+              <a href={pdf} target="_blank" rel="noopener noreferrer" className={LINK}>
+                <FileText aria-hidden="true" size={16} className="text-ink-soft" />
+                {t.pdf}
+                <span className="sr-only">{` ${t.of} ${title} ${t.newTab}`}</span>
+              </a>
+            )}
+          </div>
+        )}
+      </div>
+    </li>
+  );
+}
