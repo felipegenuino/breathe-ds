@@ -200,6 +200,8 @@ from color, not from extra markup.
   the ink color) to any background — the body, a band. `bg-surface-alt` (token
   `--cg-surface-alt`, falls back to `surface`) is a band one step deeper than the page,
   for alternating sections; TTCAB `#f6eedd` (ink-soft 4.58:1), Creeta `#e4ecee`.
+  `.cg-dots` (dot grid, 16px) or `.cg-dots-edges` (only on the side gutters, fading
+  out before the content column — the Cloudflare touch) layer dots over a background.
 - **PullQuote** + **Highlight**: one line set large between sections — drawn quote
   mark in the action color, balanced lines, hand-drawn underline (`Highlight`) on the
   key words. `cite` adds the person (Byline with role); without it, a brand statement.
