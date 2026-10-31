@@ -33,7 +33,7 @@ export function EventFacts({ facts, linkComponent, newTabLabel = "(opens in a ne
       {facts.map((f, i) => (
         <li key={i} className="flex items-center gap-4">
           {f.tile === "pin" ? (
-            <span aria-hidden="true" className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-ink/[0.06] text-ink">
+            <span aria-hidden="true" className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-tint text-ink">
               <MapPin size={20} strokeWidth={2} />
             </span>
           ) : (

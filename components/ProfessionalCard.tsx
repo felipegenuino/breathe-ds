@@ -331,7 +331,7 @@ export function ProfessionalCard({
         ) : media ? (
           <span className="block h-[72px] w-[72px] shrink-0 overflow-hidden rounded-2xl">{media}</span>
         ) : (
-          <span aria-hidden="true" className="flex h-[72px] w-[72px] shrink-0 items-center justify-center rounded-2xl bg-ink/[0.12] font-heading text-xl font-medium text-ink">
+          <span aria-hidden="true" className="flex h-[72px] w-[72px] shrink-0 items-center justify-center rounded-2xl bg-tint font-heading text-xl font-medium text-ink">
             {initials(name)}
           </span>
         )}
@@ -359,7 +359,7 @@ export function ProfessionalCard({
           {hasPortrait ? (
             <Portrait name={name} photo={photo ? { ...photo, sizes: photo.sizes ?? "(min-width: 768px) 16vw, 42vw" } : undefined} media={media} living={living} alt={alt} decorative className={ZOOM_MEDIUM} />
           ) : (
-            <span aria-hidden="true" className="flex aspect-[3/4] w-full items-center justify-center bg-ink/[0.12] font-heading text-3xl font-medium text-ink">
+            <span aria-hidden="true" className="flex aspect-[3/4] w-full items-center justify-center bg-tint font-heading text-3xl font-medium text-ink">
               {initials(name)}
             </span>
           )}
@@ -401,7 +401,7 @@ export function ProfessionalCard({
         <div
           data-testid="initials"
           aria-hidden="true"
-          className="flex aspect-[3/4] w-full items-center justify-center rounded-[20px] bg-ink/[0.12]"
+          className="flex aspect-[3/4] w-full items-center justify-center rounded-[20px] bg-tint"
         >
           <span className="font-heading text-4xl font-bold text-ink">{initials(name)}</span>
         </div>

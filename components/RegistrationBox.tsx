@@ -66,7 +66,7 @@ export function RegistrationBox({ title, intro, options, value, onChange, action
                   </span>
                   <span className="flex min-w-0 flex-1 flex-wrap items-center gap-2 font-semibold text-ink">
                     {o.label}
-                    {o.remaining && <span className="rounded-pill bg-ink/[0.08] px-2 py-0.5 text-xs font-semibold text-ink-soft">{o.remaining}</span>}
+                    {o.remaining && <span className="rounded-pill bg-tint px-2 py-0.5 text-xs font-semibold text-ink-soft">{o.remaining}</span>}
                   </span>
                   <span className="shrink-0 font-semibold text-ink">{o.price}</span>
                 </label>

@@ -50,7 +50,7 @@ type Props = {
   className?: string;
 };
 
-const PILL = "inline-flex items-center rounded-pill bg-ink/[0.08] px-2.5 py-0.5 text-xs font-semibold text-ink";
+const PILL = "inline-flex items-center rounded-pill bg-tint px-2.5 py-0.5 text-xs font-semibold text-ink";
 
 /**
  * Course card of the Cuidado Global family — the class card (ttcab's
@@ -68,7 +68,7 @@ export function CourseCard({ cover, course, title, start, when, where, workload,
   if (workload)
     facts.push({
       tile: (
-        <span aria-hidden="true" className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-ink/[0.06] text-ink">
+        <span aria-hidden="true" className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-tint text-ink">
           <Clock size={20} strokeWidth={2} />
         </span>
       ),
@@ -77,7 +77,7 @@ export function CourseCard({ cover, course, title, start, when, where, workload,
   const pill = soldOut ? t.soldOut : seats;
 
   const foot = soldOut ? (
-    <span className="inline-flex min-h-11 items-center rounded-pill bg-ink/[0.08] px-5 font-heading font-semibold text-ink">{t.soldOut}</span>
+    <span className="inline-flex min-h-11 items-center rounded-pill bg-tint px-5 font-heading font-semibold text-ink">{t.soldOut}</span>
   ) : (
     action
   );

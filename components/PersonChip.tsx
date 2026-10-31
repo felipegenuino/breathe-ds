@@ -40,7 +40,7 @@ export function PersonChip({ name, description, photo, avatar, href, linkCompone
       className={`${box} pr-1.5 transition-transform duration-150 ease-out active:scale-[0.98] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink motion-reduce:transition-none motion-reduce:active:scale-100 ${className}`}
     >
       {inner}
-      <span aria-hidden="true" className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-ink/[0.12] text-ink">
+      <span aria-hidden="true" className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-tint text-ink">
         <svg viewBox="0 0 24 24" width={15} height={15} className="cg-arrow-go" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M7 17 17 7M9 7h8v8" /></svg>
       </span>
     </L>

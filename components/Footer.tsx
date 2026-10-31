@@ -77,7 +77,7 @@ const link =
 const strongLink =
   "inline-flex min-h-11 items-center gap-1.5 font-semibold text-ink underline underline-offset-4 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink";
 const chip =
-  "inline-flex min-h-11 items-center gap-2 rounded-full bg-ink/[0.08] px-4 text-sm font-medium text-ink transition-colors duration-200 hover:bg-ink hover:text-surface motion-reduce:transition-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink";
+  "inline-flex min-h-11 items-center gap-2 rounded-full bg-tint px-4 text-sm font-medium text-ink transition-colors duration-200 hover:bg-ink hover:text-surface motion-reduce:transition-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink";
 
 /**
  * Footer of the Cuidado Global family — the site-footer of novo.creeta, by

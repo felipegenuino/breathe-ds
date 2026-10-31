@@ -30,7 +30,7 @@ export function Avatar({ name, photo, children, size = 40, ring = false, classNa
   if (children) return <span aria-hidden="true" className={base} style={style}>{children}</span>;
   if (photo) return <img src={photo} alt="" loading="lazy" decoding="async" className={`${base} object-cover`} style={style} />;
   return (
-    <span aria-hidden="true" className={`${base} bg-ink/[0.12] font-heading font-bold text-ink`} style={style}>
+    <span aria-hidden="true" className={`${base} bg-tint font-heading font-bold text-ink`} style={style}>
       {initials(name)}
     </span>
   );

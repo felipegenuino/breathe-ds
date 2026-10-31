@@ -22,10 +22,10 @@ export function Card({ children, href, interactive, variant = "outline", classNa
   const look =
     variant === "solid"
       ? "rounded-[28px] bg-card p-5 md:p-8"
-      : "rounded-2xl border border-line bg-surface p-[clamp(20px,3vw,32px)] shadow-[0_2px_12px_rgba(20,71,83,0.06)]";
+      : "rounded-2xl border border-line bg-surface p-[clamp(20px,3vw,32px)] shadow-[0_2px_12px_color-mix(in_srgb,var(--color-shadow)_6%,transparent)]";
   const cls = `block ${look} ${
     interactive || href
-      ? "transition duration-200 hover:-translate-y-0.5 hover:shadow-[0_14px_34px_rgba(20,71,83,0.12)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink motion-reduce:transition-none motion-reduce:hover:translate-y-0"
+      ? "transition duration-200 hover:-translate-y-0.5 hover:shadow-[0_14px_34px_color-mix(in_srgb,var(--color-shadow)_12%,transparent)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink motion-reduce:transition-none motion-reduce:hover:translate-y-0"
       : ""
   } ${className}`;
   if (href) {

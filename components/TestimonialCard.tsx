@@ -213,7 +213,7 @@ export function TestimonialCard({ quote, author, authorPhoto, authorAvatar, auth
       {cardVideo ? (
         <TapVideo {...cardVideo} label={t.watch(cardVideo.description)} />
       ) : cardPhoto ? (
-        <div className="relative aspect-[4/3] overflow-hidden bg-ink/[0.06] sm:aspect-auto sm:min-h-[16rem]">
+        <div className="relative aspect-[4/3] overflow-hidden bg-tint sm:aspect-auto sm:min-h-[16rem]">
           {cardPhoto.media ?? (
             // eslint-disable-next-line @next/next/no-img-element
             <img src={cardPhoto.src} alt={cardPhoto.alt} loading="lazy" decoding="async" className="absolute inset-0 h-full w-full object-cover" style={{ objectPosition: cardPhoto.position }} />
@@ -260,7 +260,7 @@ export function TestimonialCard({ quote, author, authorPhoto, authorAvatar, auth
                 <TapVideo {...video} label={t.watch(video.description)} frameClass="relative aspect-video overflow-hidden bg-ink" />
               </div>
             ) : panel && photo ? (
-              <div className="overflow-hidden rounded-2xl bg-ink/[0.06]">
+              <div className="overflow-hidden rounded-2xl bg-tint">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={photo.src} alt={photo.alt} className="aspect-[4/5] max-h-[55vh] w-full object-cover" style={{ objectPosition: photo.position }} />
               </div>

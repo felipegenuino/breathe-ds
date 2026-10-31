@@ -29,6 +29,8 @@
   --color-action-line: var(--cg-action-line, var(--cg-action));   /* border of a highlighted card (3:1 on surface) */
   --color-line: var(--cg-line);                    /* hairlines/borders */
   --color-surface-alt: var(--cg-surface-alt, var(--cg-surface)); /* alternate section band (rhythm), a step deeper than surface */
+  --color-tint: var(--cg-tint, color-mix(in srgb, var(--cg-ink) 8%, transparent)); /* neutral fill: icon bubbles, pills, image placeholders */
+  --color-shadow: var(--cg-shadow, rgb(20 71 83));  /* hue of soft shadows (used at low alpha via color-mix) */
 
   /* ── Typography (roles; actual family comes from --cg-font-*) ── */
   --font-heading: var(--cg-font-heading, system-ui, sans-serif);

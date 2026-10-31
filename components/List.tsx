@@ -43,7 +43,7 @@ const ArrowUpRight = () => (
 export function List({ items, marker = "check", linkComponent, newTabLabel = "(opens in a new tab)", className = "" }: Props) {
   const L: ElementType = linkComponent ?? "a";
   const bubble = (
-    <span aria-hidden="true" className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-ink/[0.12] text-ink">
+    <span aria-hidden="true" className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-tint text-ink">
       <Check />
     </span>
   );

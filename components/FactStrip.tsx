@@ -36,7 +36,7 @@ export function FactStrip({ facts, label, className = "" }: Props) {
     >
       {facts.map(({ Icon, title, text, separator = ", " }, i) => (
         <li key={i} className="flex items-center gap-4 py-5 md:px-8 md:py-0 lg:px-10">
-          <span aria-hidden="true" className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-ink/[0.12] text-ink">
+          <span aria-hidden="true" className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-tint text-ink">
             <Icon size={22} strokeWidth={1.75} />
           </span>
           <p className="m-0 leading-snug">

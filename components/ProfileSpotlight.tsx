@@ -48,7 +48,7 @@ export function ProfileSpotlight({ name, eyebrow, role, registration, bio, photo
       data-cg-professional-card
       className={`grid items-center gap-8 md:grid-cols-[minmax(220px,360px)_1fr] md:gap-[clamp(32px,6vw,88px)] ${card ? "rounded-[28px] bg-card p-5 md:p-8" : ""} ${id ? "scroll-mt-24" : ""} ${className}`}
     >
-      <div className="overflow-hidden rounded-2xl bg-ink/[0.06]">
+      <div className="overflow-hidden rounded-2xl bg-tint">
         {living ? (
           <LivingPortrait src={living.src} poster={living.poster} photo={photo} media={media} alt={photo.alt ?? name} decorative className="aspect-[4/5]" />
         ) : (
@@ -77,7 +77,7 @@ export function ProfileSpotlight({ name, eyebrow, role, registration, bio, photo
                   href={href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex h-11 w-11 items-center justify-center rounded-full bg-ink/[0.07] text-ink transition-colors duration-200 hover:bg-ink hover:text-surface focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink motion-reduce:transition-none"
+                  className="flex h-11 w-11 items-center justify-center rounded-full bg-tint text-ink transition-colors duration-200 hover:bg-ink hover:text-surface focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink motion-reduce:transition-none"
                 >
                   <Icon size={19} strokeWidth={1.75} aria-hidden="true" />
                   <span className="sr-only">

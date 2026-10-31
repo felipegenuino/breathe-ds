@@ -200,6 +200,9 @@ from color, not from extra markup.
   the ink color) to any background — the body, a band. `bg-surface-alt` (token
   `--cg-surface-alt`, falls back to `surface`) is a band one step deeper than the page,
   for alternating sections; TTCAB `#f6eedd` (ink-soft 4.58:1), Creeta `#e4ecee`.
+  Neutral fills and shadows are tokens too: `bg-tint` (`--cg-tint`, icon bubbles, pills,
+  placeholders; default ink at 8%) and `--cg-shadow` (the hue of soft shadows). TTCAB
+  derives them from the logo's orange (warm neutrals, never grey).
   `.cg-dots` (dot grid, 16px) or `.cg-dots-edges` (only on the side gutters, fading
   out before the content column — the Cloudflare touch) layer dots over a background.
 - **PullQuote** + **Highlight**: one line set large between sections — drawn quote

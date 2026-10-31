@@ -27,7 +27,7 @@ const variants: Record<Exclude<Variant, "link">, string> = {
   // the 4.5:1 of normal text. Keep the accent for ONE large button per block.
   accent: "bg-action text-on-action hover:brightness-[0.92]",
   outline: "border border-line text-ink hover:bg-ink/[0.05]",
-  ghost: "text-ink hover:bg-ink/[0.06]",
+  ghost: "text-ink hover:bg-tint",
   // secondary on a dark panel (hero panel, StoryPanel, surface-panel): light outline,
   // surface text (cream on petrol 9.41:1 on ttcab)
   "outline-inverse": "border border-surface/45 text-surface hover:bg-surface/10",

@@ -126,7 +126,7 @@ export function AnchorNav({ items, stickyTop = "top-20", linkComponent, classNam
         <div className="flex justify-center">
           <ul
             ref={listRef}
-            className="relative flex max-w-full list-none gap-1 overflow-x-auto rounded-pill border border-line bg-card p-1.5 shadow-[0_10px_28px_-14px_rgba(0,0,0,0.35)] backdrop-blur [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+            className="relative flex max-w-full list-none gap-1 overflow-x-auto rounded-pill border border-line bg-card p-1.5 shadow-[0_10px_28px_-14px_color-mix(in_srgb,var(--color-shadow)_35%,transparent)] backdrop-blur [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
           >
             {/* Sliding indicator */}
             <span

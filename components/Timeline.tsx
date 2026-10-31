@@ -43,7 +43,7 @@ export function Timeline({ steps, headingLevel = "h3", linkComponent, newTabLabe
           <li key={i} className={`relative grid grid-cols-[2.75rem_minmax(0,1fr)] gap-x-4 ${last ? "" : "pb-7"}`}>
             {/* the line linking this drawing to the next */}
             {!last && <span aria-hidden="true" className="absolute bottom-1 left-[1.375rem] top-12 w-px -translate-x-1/2 bg-ink/15" />}
-            <span aria-hidden="true" className="flex h-11 w-11 items-center justify-center rounded-full bg-ink/[0.12] text-ink">
+            <span aria-hidden="true" className="flex h-11 w-11 items-center justify-center rounded-full bg-tint text-ink">
               <Icon size={20} strokeWidth={1.75} />
             </span>
             <div>

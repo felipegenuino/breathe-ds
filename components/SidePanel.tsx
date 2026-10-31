@@ -86,7 +86,7 @@ export function SidePanel({ open, onClose, title, actions, children, labels, cla
         <button
           type="button"
           onClick={onClose}
-          className="flex h-11 w-11 items-center justify-center rounded-full text-ink transition-colors duration-150 hover:bg-ink/[0.06] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink motion-reduce:transition-none"
+          className="flex h-11 w-11 items-center justify-center rounded-full text-ink transition-colors duration-150 hover:bg-tint focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink motion-reduce:transition-none"
         >
           <X aria-hidden="true" size={20} strokeWidth={2} />
           <span className="sr-only">{t.close}</span>

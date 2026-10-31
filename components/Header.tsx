@@ -91,7 +91,7 @@ function Dropdown({ item, L, t }: { item: NavItem; L: ElementType; t: Labels }) 
       className={`flex ${c.description ? "items-start" : "items-center"} gap-3 rounded-xl px-2.5 ${item.groups ? "py-1" : two ? "py-1.5" : "py-2"} transition-colors hover:bg-ink/[0.05] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink`}
     >
       {c.icon && (
-        <span className="flex h-9 w-9 flex-none items-center justify-center rounded-full bg-ink/[0.08] text-ink">
+        <span className="flex h-9 w-9 flex-none items-center justify-center rounded-full bg-tint text-ink">
           {c.icon}
         </span>
       )}
@@ -142,7 +142,7 @@ function Dropdown({ item, L, t }: { item: NavItem; L: ElementType; t: Labels }) 
 
       <div className={`absolute top-full ${item.align === "end" ? "right-0" : "left-0"} z-50 pt-2 ${open ? "" : "pointer-events-none"}`}>
         <ul
-          className={`${two ? (item.groups ? "w-[34rem] columns-2 gap-x-4" : "grid w-[34rem] grid-cols-2 gap-x-1") : "w-[19rem]"} list-none rounded-2xl border border-line bg-surface p-2 shadow-[0_18px_40px_-16px_rgba(20,71,83,0.4)] transition duration-150 ease-out motion-reduce:transition-none ${
+          className={`${two ? (item.groups ? "w-[34rem] columns-2 gap-x-4" : "grid w-[34rem] grid-cols-2 gap-x-1") : "w-[19rem]"} list-none rounded-2xl border border-line bg-surface p-2 shadow-[0_18px_40px_-16px_color-mix(in_srgb,var(--color-shadow)_40%,transparent)] transition duration-150 ease-out motion-reduce:transition-none ${
             open ? "visible scale-100 opacity-100" : "invisible -translate-y-1 scale-[0.98] opacity-0"
           }`}
         >

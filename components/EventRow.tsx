@@ -73,7 +73,7 @@ export function EventRow({ time, timeAccent, title, href, onSelect, organizers, 
               {title}
             </L>
           )}
-          {badge && <span className="ml-2 inline-flex translate-y-[-2px] items-center rounded-pill bg-ink/[0.08] px-2.5 py-0.5 align-middle text-xs font-semibold text-ink">{badge}</span>}
+          {badge && <span className="ml-2 inline-flex translate-y-[-2px] items-center rounded-pill bg-tint px-2.5 py-0.5 align-middle text-xs font-semibold text-ink">{badge}</span>}
         </h3>
         {organizers && organizers.length > 0 && (
           <p className="mt-2 flex items-center gap-2 text-sm text-ink-body">
@@ -98,13 +98,13 @@ export function EventRow({ time, timeAccent, title, href, onSelect, organizers, 
                 <Avatar key={p.name} name={p.name} photo={p.photo} size={28} ring>{p.avatar}</Avatar>
               ))}
             </span>
-            {peopleMore ? <span className="rounded-pill bg-ink/[0.08] px-2 py-0.5 text-xs font-semibold text-ink">{t.more(peopleMore)}</span> : null}
+            {peopleMore ? <span className="rounded-pill bg-tint px-2 py-0.5 text-xs font-semibold text-ink">{t.more(peopleMore)}</span> : null}
             <span className="sr-only">{shown.map((p) => p.name).join(", ")}</span>
           </p>
         )}
       </div>
       {cover && (
-        <div className="relative h-24 w-24 shrink-0 overflow-hidden rounded-2xl bg-ink/[0.06] md:h-36 md:w-36">
+        <div className="relative h-24 w-24 shrink-0 overflow-hidden rounded-2xl bg-tint md:h-36 md:w-36">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src={cover.src} alt={cover.alt ?? ""} loading="lazy" decoding="async" className="absolute inset-0 h-full w-full object-cover" />
         </div>

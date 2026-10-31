@@ -76,7 +76,7 @@ export function InfoCard({
 
   return (
     <Tag className={`rounded-2xl bg-card p-6 md:p-8 ${className}`}>
-      <span aria-hidden="true" className="flex h-11 w-11 items-center justify-center rounded-full bg-ink/[0.12] text-ink">
+      <span aria-hidden="true" className="flex h-11 w-11 items-center justify-center rounded-full bg-tint text-ink">
         <Icon size={20} strokeWidth={1.75} />
       </span>
       <Heading className="mt-4 font-heading text-xl font-medium text-ink">{title}</Heading>

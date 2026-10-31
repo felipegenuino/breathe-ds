@@ -26,7 +26,11 @@
   --cg-action-tint: #faebdd;   /* 6% action over cream: highlighted card (ink 8.75:1) */
   --cg-action-line: #e8541e;   /* the action color itself: 3.38:1 on cream */
   --cg-surface-alt: #f6eedd;  /* section band: ink 8.85:1 · ink-soft 4.58:1 · action-text 4.69:1 */
-  --cg-line: rgb(20 71 83 / 0.16);
+  /* Warm neutrals (30/10/2026): lines, fills and shadows come from the logo's
+     orange family (hue ~36°), never grey — the cream and the brown stay one family. */
+  --cg-line: rgb(150 108 62 / 0.22);   /* warm hairline */
+  --cg-tint: #f7ecd8;   /* icon bubbles, pills, placeholders: ink 8.73:1 · ink-soft 4.51:1 */
+  --cg-shadow: rgb(107 74 55);   /* mocha: soft shadows, used at low alpha */
   --cg-font-heading: var(--font-quicksand), system-ui, sans-serif;  /* Quicksand */
   --cg-font-body: var(--font-figtree), system-ui, sans-serif;      /* Figtree */
 }

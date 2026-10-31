@@ -29,7 +29,7 @@ export function Pill({ href, children, meta, linkComponent, className = "" }: Pr
       <span
         aria-hidden="true"
         data-arrow={onPage ? "down" : "other-page"}
-        className="ml-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-ink/[0.12] transition-colors duration-200 group-hover:bg-surface/15 motion-reduce:transition-none"
+        className="ml-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-tint transition-colors duration-200 group-hover:bg-surface/15 motion-reduce:transition-none"
       >
         {onPage ? (
           <svg viewBox="0 0 24 24" width={16} height={16} className="cg-arrow-down" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 5v14M19 12l-7 7-7-7" /></svg>

@@ -105,7 +105,7 @@ const row = (active?: boolean) =>
   `flex min-h-14 items-center gap-3 rounded-[18px] px-3 font-medium transition-colors duration-150 active:bg-surface focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ink motion-reduce:transition-none ${
     active ? "bg-surface text-ink" : "text-ink"
   }`;
-const bubble = "flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-ink/[0.12] text-ink";
+const bubble = "flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-tint text-ink";
 
 /**
  * Main navigation on mobile: floating bar within thumb reach, app-like. It is
