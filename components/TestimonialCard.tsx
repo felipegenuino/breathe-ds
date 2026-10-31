@@ -71,6 +71,12 @@ type Props = {
    *  real photo). `media` replaces the <img> (the site's image component; must
    *  fill the box). */
   photo?: { src: string; alt: string; position?: string; media?: ReactNode };
+  /** The card shows only this excerpt, large, as a pull quote (the person's own
+   *  words, never rewritten); the whole `quote` goes to the panel. */
+  excerpt?: ReactNode;
+  /** Quote marks around the excerpt. false for a context line that is not the
+   *  person's speech (e.g. the description of a video). Default: true. */
+  excerptMarks?: boolean;
   /** Every card opens the whole testimonial in the SidePanel (the button always
    *  shows): a header saying what it is (`eyebrow`, e.g. "Testimonial") with the
    *  names, the video or the photo, then the full quote. */
@@ -166,7 +172,7 @@ function TapVideo({ src, youtubeId, poster: posterProp, description, withSound =
 // whole class names, so Tailwind generates them
 const CLAMP: Record<number, string> = { 3: "line-clamp-3", 4: "line-clamp-4", 5: "line-clamp-5", 6: "line-clamp-6", 8: "line-clamp-8" };
 
-export function TestimonialCard({ quote, author, authorPhoto, authorAvatar, authors, link, video, photo, role, joiners, panel, clampLines, as: Root = "div", labels, className = "" }: Props) {
+export function TestimonialCard({ quote, author, authorPhoto, authorAvatar, authors, link, video, photo, role, joiners, panel, excerpt, excerptMarks = true, clampLines, as: Root = "div", labels, className = "" }: Props) {
   const t = { ...EN, ...labels };
   const people = authors ?? [{ name: author ?? "", photo: authorPhoto, avatar: authorAvatar }];
   const quoteRef = useRef<HTMLQuoteElement>(null);
@@ -208,12 +214,23 @@ export function TestimonialCard({ quote, author, authorPhoto, authorAvatar, auth
       ) : null}
       <figure className={`flex flex-1 flex-col justify-between gap-5 ${video || photo ? "p-5 md:p-7" : "p-6 md:p-8"}`}>
         <div>
-          <blockquote
-            ref={quoteRef}
-            className={`font-heading text-[0.9375rem] font-medium leading-relaxed text-ink md:text-base ${clampLines ? (CLAMP[clampLines] ?? "line-clamp-5") : ""}`}
-          >
-            {quote}
-          </blockquote>
+          {excerpt ? (
+            // pull quote: the mark hangs in the margin so the text column stays straight
+            <blockquote className="m-0 font-heading text-[1.3rem] leading-snug font-medium text-balance text-ink md:text-[1.55rem]">
+              {excerptMarks ? (
+                <p className="m-0 -indent-[0.45em]">“{excerpt}”</p>
+              ) : (
+                <p className="m-0">{excerpt}</p>
+              )}
+            </blockquote>
+          ) : (
+            <blockquote
+              ref={quoteRef}
+              className={`font-heading text-[0.9375rem] font-medium leading-relaxed text-ink md:text-base ${clampLines ? (CLAMP[clampLines] ?? "line-clamp-5") : ""}`}
+            >
+              {quote}
+            </blockquote>
+          )}
           {(overflows || panel) && (
             <button
               type="button"
