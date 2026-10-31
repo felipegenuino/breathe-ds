@@ -20,6 +20,10 @@
   --cg-action-line: #ab2781;    /* magenta itself: 5.62:1 on mist */
   --cg-on-action: #ffffff;      /* white on magenta */
   --cg-surface-alt: #e4ecee;  /* section band: ink 8.53:1 · ink-soft 5.41:1 · action-text 6.79:1 */
+  /* Callout: split complement of the mist (190° → 40°, the one farther from the magenta) */
+  --cg-callout: #eddec1;         /* sand · vs page 1.19:1 · ink 7.69:1 · ink-body 6.81:1 */
+  --cg-callout-deep: #e8cd98;    /* tonal button + icon bubble · ink 6.62:1 */
+  --cg-callout-deeper: #e5be72;  /* tonal button hover · ink 5.81:1 */
   --cg-line: rgb(20 71 83 / 0.16);
   --cg-font-heading: var(--font-quicksand), system-ui, sans-serif;  /* Quicksand */
   --cg-font-body: var(--font-figtree), system-ui, sans-serif;       /* Figtree */

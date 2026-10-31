@@ -209,10 +209,16 @@ from color, not from extra markup.
   centred) + **FilterBar** (thin sticky bar of compact filters — `SelectField density="sm"` —
   with the count and "clear" on the right; it publishes its height as `--cg-filterbar-h`, so
   `StickyGroupHeading stickyTop="top-[calc(80px+var(--cg-filterbar-h,0px))]"` sticks right below).
-- **Callout**: a secondary invitation under a page's main control (location invite under
-  the professionals search, a tip under the articles search). `tone="accent"`: action-tint
-  wash + closed action-line border (the highlighted panel at a small scale); actions are an
-  outline button and/or a text link, never the accent button.
+- **Callout** (a.k.a. info well): a secondary invitation under a page's main control
+  (location invite under the professionals search, a tip under the articles search), at
+  most one action. Never for errors or warnings. Default `tone="wash"`: no border, the
+  brand's `--cg-callout`, with `<Button variant="tonal">` and a tonal icon bubble
+  (`--cg-callout-deep`, hover `--cg-callout-deeper`). **Colour rule:** the wash is the
+  page's **split complement** (page hue ± 150°, picking the one farther from the action
+  hue), one luminance step off the page (1.19:1), so text keeps AA/AAA. TTCAB: cream 40° →
+  petrol mist `#d2e6e9`; Creeta: mist 190° → sand `#eddec1`; Neutral (no hue): gray
+  `#e1e1e4`. The kicker goes in ink-body (action-text drops under 4.5:1 on the wash).
+  `tone="accent"` (action-tint + action border) and `"neutral"` (white) remain.
 - **PullQuote** + **Highlight**: one line set large between sections — drawn quote
   mark in the action color, balanced lines, hand-drawn underline (`Highlight`) on the
   key words. `cite` adds the person (Byline with role); without it, a brand statement.

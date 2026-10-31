@@ -14,6 +14,7 @@ import { FilterPill } from "../../components/FilterPill";
 import { PublicationCard } from "../../components/PublicationCard";
 import { Rail, RailItem } from "../../components/Rail";
 import { Button } from "../../components/Button";
+import { Callout } from "../../components/Callout";
 import { Card } from "../../components/Card";
 import { Container } from "../../components/Container";
 import { SectionKicker } from "../../components/SectionKicker";
@@ -70,16 +71,19 @@ const PALETTES: Record<string, Record<string, string>> = {
     "--color-surface": "#f4f4f5", "--color-card": "#ffffff", "--color-surface-panel": "#18181b", "--color-ink": "#18181b",
     "--color-ink-soft": "#65656e", "--color-ink-body": "#3f3f46", "--color-action": "#18181b",
     "--color-action-text": "#52525b", "--color-on-action": "#ffffff", "--color-line": "rgb(0 0 0 / 0.12)", "--color-action-tint": "#e9e9ea", "--color-action-line": "#18181b",
+    "--color-callout": "#e1e1e4", "--color-callout-deep": "#d4d4d8", "--color-callout-deeper": "#c4c4c9",
   },
   TTCAB: {
     "--color-surface": "#fbf5e9", "--color-card": "#ffffff", "--color-surface-panel": "#144753", "--color-ink": "#144753",
     "--color-ink-soft": "#54707a", "--color-ink-body": "#1e4f5b", "--color-action": "#e8541e",
     "--color-action-text": "#bd3f0c", "--color-on-action": "#ffffff", "--color-line": "rgb(20 71 83 / 0.16)", "--color-action-tint": "#faebdd", "--color-action-line": "#e8541e",
+    "--color-callout": "#d2e6e9", "--color-callout-deep": "#afd8de", "--color-callout-deeper": "#8ecdd6",
   },
   Creeta: {
     "--color-surface": "#eef3f4", "--color-card": "#ffffff", "--color-surface-panel": "#144753", "--color-ink": "#144753",
     "--color-ink-soft": "#266675", "--color-ink-body": "#1e4f5b", "--color-action": "#ab2781",
     "--color-action-text": "#8f1f6c", "--color-on-action": "#ffffff", "--color-line": "rgb(20 71 83 / 0.16)", "--color-action-tint": "#eae7ed", "--color-action-line": "#ab2781",
+    "--color-callout": "#eddec1", "--color-callout-deep": "#e8cd98", "--color-callout-deeper": "#e5be72",
   },
 };
 
@@ -149,6 +153,14 @@ function SearchDemo() {
         <SearchField id="pg-search" label="Name, city or state" placeholder="E.g. Ana, Campinas or SC" value={q} onValueChange={setQ} />
         <SelectField id="pg-uf" label="State" placeholder="All" value={uf} onValueChange={setUf} options={[{ value: "AM", label: "Amazonas", count: 1 }, { value: "SC", label: "Santa Catarina", count: 2 }]} />
       </div>
+      <Callout
+        className="mt-4"
+        Icon={Lucide.LocateFixed}
+        kicker="Location"
+        title="Want to see who works near you first?"
+        body="We only use your location to pick the nearest state. It stays on your device."
+        actions={<><Button variant="tonal" type="button"><Lucide.LocateFixed aria-hidden="true" size={18} />Use my location</Button><Button variant="link" type="button" className="min-h-11 text-sm text-ink">Not now</Button></>}
+      />
       <FilterChips
         label="Filter by topic"
         className="mt-6"
