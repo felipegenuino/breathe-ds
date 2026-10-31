@@ -228,13 +228,6 @@ export function TestimonialCard({ quote, author, authorPhoto, authorAvatar, auth
       {(clampLines || panel) && (
         <SidePanel open={open} onClose={() => setOpen(false)} title={names} labels={{ close: t.close }}>
           <article className="flex flex-col gap-6 px-6 pt-2 pb-10 md:px-8">
-            {panel && (
-              <header>
-                <p className="m-0 font-heading text-[0.82rem] font-bold tracking-[0.14em] text-ink-soft uppercase">{panel.eyebrow}</p>
-                <h2 className="mt-2 font-heading text-2xl leading-tight font-semibold text-ink">{names}</h2>
-                {role && <p className="mt-1 text-sm text-ink-soft">{role}</p>}
-              </header>
-            )}
             {panel && video ? (
               <div className="overflow-hidden rounded-2xl">
                 <TapVideo {...video} label={t.watch(video.description)} frameClass="relative aspect-video overflow-hidden bg-ink" />
@@ -245,6 +238,13 @@ export function TestimonialCard({ quote, author, authorPhoto, authorAvatar, auth
                 <img src={photo.src} alt={photo.alt} className="aspect-[4/5] max-h-[55vh] w-full object-cover" style={{ objectPosition: photo.position }} />
               </div>
             ) : null}
+            {panel && (
+              <header>
+                <p className="m-0 font-heading text-[0.82rem] font-bold tracking-[0.14em] text-ink-soft uppercase">{panel.eyebrow}</p>
+                <h2 className="mt-2 font-heading text-2xl leading-tight font-semibold text-ink">{names}</h2>
+                {role && <p className="mt-1 text-sm text-ink-soft">{role}</p>}
+              </header>
+            )}
             <figure className="m-0 flex flex-col gap-6">
               <blockquote className="font-heading text-lg leading-relaxed font-medium text-ink">{quote}</blockquote>
               {!panel && <figcaption>{byline}</figcaption>}
