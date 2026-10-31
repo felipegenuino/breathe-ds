@@ -67,6 +67,7 @@
     "./components/StickyGroupHeading": "./components/StickyGroupHeading.tsx",
     "./components/PublicationCard": "./components/PublicationCard.tsx",
     "./components/PageHero": "./components/PageHero.tsx",
+    "./components/ContactRow": "./components/ContactRow.tsx",
     "./components/Rail": "./components/Rail.tsx",
     "./components/Avatar": "./components/Avatar.tsx",
     "./components/Byline": "./components/Byline.tsx",

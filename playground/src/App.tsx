@@ -9,6 +9,7 @@ import { EmptyState } from "../../components/EmptyState";
 import { FilterChips } from "../../components/FilterChips";
 import { StickyGroupHeading } from "../../components/StickyGroupHeading";
 import { PageHero } from "../../components/PageHero";
+import { ContactList, ContactRow } from "../../components/ContactRow";
 import { PublicationCard } from "../../components/PublicationCard";
 import { Rail, RailItem } from "../../components/Rail";
 import { Button } from "../../components/Button";
@@ -1022,6 +1023,18 @@ export function App() {
 
         <Section id="search" title="Search — SearchField · SelectField · FilterChips · StickyGroupHeading · ProfessionalCard listing · EmptyState">
           <SearchDemo />
+        </Section>
+
+        <Section id="contacts" title="Contacts — ContactList · ContactRow">
+          <p className="mb-6 max-w-[62ch] text-ink-body">A directory as the iPhone's Contacts: the list shows only what you scan by (initials, name, city); tapping a row reveals the ways to reach the person. The hairline starts at the name, drawn as a ::before so rows never move.</p>
+          <div className="max-w-2xl">
+            <StickyGroupHeading meta="3 professionals" stickyTop="top-0">Santa Catarina</StickyGroupHeading>
+            <ContactList className="mt-3">
+              <ContactRow name="Luciana Ribeiro" meta="Florianópolis" actions={[{ label: "Call", value: "(48) 8417-2982", href: "#contacts", icon: <Lucide.Phone size={16} aria-hidden="true" /> }, { label: "Email", value: "luciana@example.com", href: "#contacts", icon: <Lucide.Mail size={16} aria-hidden="true" />, breakAll: true }]} defaultOpen />
+              <ContactRow name="Juliana Possenti" meta="Videira" actions={[{ label: "Call", value: "(49) 98811-6169", href: "#contacts", icon: <Lucide.Phone size={16} aria-hidden="true" /> }]} />
+              <ContactRow name="Maria Celene de Andrade Pires Pitanga" meta="Joinville" actions={[{ label: "Email", value: "maria@example.com", href: "#contacts", icon: <Lucide.Mail size={16} aria-hidden="true" /> }]} />
+            </ContactList>
+          </div>
         </Section>
 
         <Section id="library" title="Library — PageHero · PublicationCard">
