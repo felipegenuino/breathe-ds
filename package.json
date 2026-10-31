@@ -100,7 +100,8 @@
     "./components/PullQuote": "./components/PullQuote.tsx",
     "./components/ProfileSpotlight": "./components/ProfileSpotlight.tsx",
     "./components/FilterBar": "./components/FilterBar.tsx",
-    "./components/Callout": "./components/Callout.tsx"
+    "./components/Callout": "./components/Callout.tsx",
+    "./components/KenBurnsImage": "./components/KenBurnsImage.tsx"
   },
   "publishConfig": {
     "access": "public"

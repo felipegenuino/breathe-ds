@@ -2,6 +2,7 @@ import type { ElementType, ReactNode } from "react";
 import { Clock } from "lucide-react";
 import { Byline, type Person } from "./Byline";
 import { EventFacts, DateBadge, type EventFact } from "./EventFacts";
+import { KenBurnsImage } from "./KenBurnsImage";
 
 type Labels = {
   /** Prefix before the instructors' names ("With"). */
@@ -16,8 +17,9 @@ type Props = {
    *  focused near the top for the portrait photos the school uses.
    *  `treatment: "duotone"` for an untreated photo (straight from a phone): it is
    *  shown in the brand's two colours (ink shadows, page-colour lights).
-   *  On hover/focus the photo zooms in slowly (Ken Burns, 6% over 1.4s, gentle in and out) and eases
-   *  back the same way; off with prefers-reduced-motion. */
+   *  While the card is hovered/focused the photo does the family's slow Ken Burns
+   *  boomerang (KenBurnsImage: in and out, 9s each way, eases back on leave);
+   *  off with reduced motion. */
   cover?: { src: string; alt?: string; position?: string; treatment?: "duotone" };
   /** The course ("Basic RTA course 2026"): the heading of the card. */
   course?: ReactNode;
@@ -91,7 +93,7 @@ export function CourseCard({ cover, course, title, start, when, where, workload,
       {cover && (
         <div className={`relative aspect-[4/3] overflow-hidden ${cover.treatment === "duotone" ? "cg-duotone" : ""}`}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={cover.src} alt={cover.alt ?? ""} loading="lazy" decoding="async" className="absolute inset-0 h-full w-full object-cover transition-transform duration-[1400ms] ease-[cubic-bezier(0.45,0,0.25,1)] group-focus-within:scale-[1.06] group-hover:scale-[1.06] motion-reduce:transition-none motion-reduce:group-focus-within:scale-100 motion-reduce:group-hover:scale-100" style={{ objectPosition: cover.position ?? "50% 25%", transformOrigin: cover.position ?? "50% 25%" }} />
+          <KenBurnsImage src={cover.src} alt={cover.alt ?? ""} loading="lazy" decoding="async" className="absolute inset-0 h-full w-full object-cover" style={{ objectPosition: cover.position ?? "50% 25%" }} />
         </div>
       )}
       <div className="flex flex-1 flex-col p-6 md:p-7">

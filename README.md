@@ -222,6 +222,11 @@ from color, not from extra markup.
 - **Duotone** (`.cg-duotone` on the element wrapping an `<img>`; `CourseCard cover.treatment="duotone"`):
   for untreated photos straight from a phone — ink in the shadows, page colour in the lights,
   pure CSS (file and alt untouched). Tune per brand with `--cg-duotone-dark` / `--cg-duotone-light`.
+- **KenBurnsImage** (family motion, used on covers): the slow documentary zoom as a
+  boomerang — while the card (closest `.group`) is hovered or focused, the photo zooms in
+  10% and back out, 9s each way, endlessly; on leave it eases back to rest from wherever
+  it was (1.6s, Web Animations API, no snap). Drop-in for the cover `<img>`; `zoom`,
+  `duration`, `returnDuration` to tune. Off with `prefers-reduced-motion`. CourseCard uses it.
 - **PullQuote** + **Highlight**: one line set large between sections — drawn quote
   mark in the action color, balanced lines, hand-drawn underline (`Highlight`) on the
   key words. `cite` adds the person (Byline with role); without it, a brand statement.
