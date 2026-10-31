@@ -10,6 +10,7 @@ import { FilterChips } from "../../components/FilterChips";
 import { StickyGroupHeading } from "../../components/StickyGroupHeading";
 import { PageHero } from "../../components/PageHero";
 import { ContactList, ContactRow } from "../../components/ContactRow";
+import { FilterPill } from "../../components/FilterPill";
 import { PublicationCard } from "../../components/PublicationCard";
 import { Rail, RailItem } from "../../components/Rail";
 import { Button } from "../../components/Button";
@@ -1025,8 +1026,13 @@ export function App() {
           <SearchDemo />
         </Section>
 
-        <Section id="contacts" title="Contacts — ContactList · ContactRow">
+        <Section id="contacts" title="Contacts — FilterPill · ContactList · ContactRow">
           <p className="mb-6 max-w-[62ch] text-ink-body">A directory as the iPhone's Contacts: the list shows only what you scan by (initials, name, city); tapping a row reveals the ways to reach the person. The hairline starts at the name, drawn as a ::before so rows never move.</p>
+          <div className="mb-5 flex flex-wrap items-center gap-3 text-sm text-ink-soft">
+            <span>14 of 140</span>
+            <FilterPill onRemove={() => {}} removeLabel="Remove filter Santa Catarina">Santa Catarina</FilterPill>
+            <FilterPill onRemove={() => {}} removeLabel="Remove filter Florianópolis">Florianópolis</FilterPill>
+          </div>
           <div className="max-w-2xl">
             <StickyGroupHeading meta="3 professionals" stickyTop="top-0">Santa Catarina</StickyGroupHeading>
             <ContactList className="mt-3">
