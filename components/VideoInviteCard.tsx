@@ -13,6 +13,8 @@ export type InviteLoop = {
   /** Still frame: shown before the clip loads, without JS, and with reduced motion. */
   poster: string;
   posterLarge?: string;
+  /** object-position of the loop (e.g. "center 20%" keeps the face when the frame crops it). */
+  position?: string;
 };
 
 /** Text track drawn by the browser over the full video (.vtt). */
@@ -57,8 +59,17 @@ export type VideoInviteCardProps = {
   description?: ReactNode;
   /** Idle phase: muted looping clip. */
   loop: InviteLoop;
-  /** Tap phase: the full video with sound, browser controls and captions. */
-  video: InviteVideo;
+  /** Tap phase: the full video with sound, browser controls and captions.
+   *  Omit it when there is no fitting speech yet: the card stays a silent,
+   *  looping portrait (with its pause button) and shows no play circle. */
+  video?: InviteVideo;
+  /** `plain` (default): ink text straight over the video, for footage with a light
+   *  wall behind the title. `pill`: the title on a white pill, legible over any
+   *  frame (e.g. when the face reaches the top of the crop). */
+  captionStyle?: "plain" | "pill";
+  /** Where the title sits on the idle loop: `top` (default) or `bottom` — when the
+   *  face fills the top of the frame. The play circle stays bottom-right. */
+  captionAt?: "top" | "bottom";
   /** Called when the person taps play (e.g. to pause other media on the page). */
   onPlay?: () => void;
   /** Called when the full video ends and the card goes back to the loop. */
@@ -88,7 +99,7 @@ function PlayGlyph({ size = 22 }: { size?: number }) {
  * (`rounded-2xl` in the DS scale); the consumer sets aspect/min-height via
  * `className`.
  */
-export function VideoInviteCard({ title, description, loop, video, onPlay, onEnded, labels, className = "" }: VideoInviteCardProps) {
+export function VideoInviteCard({ title, description, loop, video, captionStyle = "plain", captionAt = "top", onPlay, onEnded, labels, className = "" }: VideoInviteCardProps) {
   const [inviting, setInviting] = useState(false);
   const t = { ...EN, ...labels };
 
@@ -97,7 +108,7 @@ export function VideoInviteCard({ title, description, loop, video, onPlay, onEnd
      median on the loop, 5.86:1 on the invitation). The light text-shadow
      holds it on the darker frames. */
   const caption = (
-    <p className="inline-block text-sm font-medium leading-snug text-ink [text-shadow:0_1px_2px_rgba(255,255,255,0.5)]">
+    <p className={`inline-block text-sm font-medium leading-snug text-ink ${captionStyle === "pill" ? "rounded-2xl bg-card/90 px-3 py-2 backdrop-blur-sm" : "[text-shadow:0_1px_2px_rgba(255,255,255,0.5)]"}`}>
       <span className="block">{title}</span>
       {description && <span className="block font-normal">{description}</span>}
     </p>
@@ -105,7 +116,7 @@ export function VideoInviteCard({ title, description, loop, video, onPlay, onEnd
 
   const frame = `relative overflow-hidden rounded-2xl bg-ink ${className}`;
 
-  if (inviting) {
+  if (inviting && video) {
     return (
       <div className={frame}>
         <video
@@ -145,13 +156,15 @@ export function VideoInviteCard({ title, description, loop, video, onPlay, onEnd
         from={loop.from}
         poster={loop.poster}
         posterLarge={loop.posterLarge}
+        objectPosition={loop.position}
         labels={{ pause: t.pause, play: t.play }}
         className="absolute inset-0"
       />
       {/* right-16: the loop's pause button sits in the top-right corner. */}
-      <div className="pointer-events-none absolute top-4 left-4 right-16">{caption}</div>
+      <div className={`pointer-events-none absolute left-4 ${captionAt === "bottom" ? "bottom-4 right-24" : "top-4 right-16"}`}>{caption}</div>
       {/* Only the circle is a button, so the loop's pause button (top corner)
           stays reachable. Bottom-right, outside the face. */}
+      {video && (
       <button
         type="button"
         onClick={() => {
@@ -163,6 +176,7 @@ export function VideoInviteCard({ title, description, loop, video, onPlay, onEnd
         <PlayGlyph size={22} />
         <span className="sr-only">{t.listen}</span>
       </button>
+      )}
     </div>
   );
 }
