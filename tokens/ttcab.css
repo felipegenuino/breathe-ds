@@ -29,6 +29,7 @@
   /* Warm neutrals (30/10/2026): lines, fills and shadows come from the logo's
      orange family (hue ~36°), never grey — the cream and the brown stay one family. */
   --cg-line: rgb(150 108 62 / 0.22);   /* warm hairline */
+  --cg-callout: #dfe9e9;  /* petrol mist on cream (Callout): ink 8.25:1 · ink-body 7.30:1 · vs page 1.14:1 */
   --cg-tint: #f7ecd8;   /* icon bubbles, pills, placeholders: ink 8.73:1 · ink-soft 4.51:1 */
   --cg-shadow: rgb(107 74 55);   /* mocha: soft shadows, used at low alpha */
   --cg-font-heading: var(--font-quicksand), system-ui, sans-serif;  /* Quicksand */

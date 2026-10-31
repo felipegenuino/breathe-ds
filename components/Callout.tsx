@@ -14,10 +14,11 @@ type Props = {
    *  "outline") and, if needed, a text link ("Agora não"). Never the accent button:
    *  the callout sits under the page's main control and must not compete with it. */
   actions?: ReactNode;
-  /** `accent` (default): the action-colour wash with a closed hairline border in
-   *  the action colour (the family's highlighted panel, at a small scale).
+  /** `wash` (default): the brand's callout wash (TTCAB: petrol mist #dfe9e9 on
+   *  cream), no border — a cool step against the warm page.
+   *  `accent`: the action-colour wash with a hairline border in the action colour.
    *  `neutral`: white, no border. */
-  tone?: "accent" | "neutral";
+  tone?: "wash" | "accent" | "neutral";
   /** Accessible name of the region (defaults to nothing: pass the title as text). */
   label?: string;
   className?: string;
@@ -27,24 +28,26 @@ type Props = {
  * Callout — a secondary invitation under a page's main control (e.g. "Quer ver
  * primeiro quem atende perto de você?" under the professionals search, a tip
  * under the articles search). The main control keeps the emphasis (white,
- * shadow); the callout is a quiet, bordered wash in the action colour.
- * TTCAB measures: ink on the tint 8.75:1, ink-soft 4.53:1, border 3.15:1.
+ * shadow); the callout is a quiet wash a step off the page, without a border.
+ * TTCAB (wash #dfe9e9): ink 8.25:1, ink-body 7.30:1; the kicker goes in ink-body
+ * because action-text would drop to 4.37:1 there.
  */
-export function Callout({ title, kicker, body, Icon, actions, tone = "accent", label, className = "" }: Props) {
+export function Callout({ title, kicker, body, Icon, actions, tone = "wash", label, className = "" }: Props) {
   const accent = tone === "accent";
+  const box = { wash: "bg-callout", accent: "border border-action-line bg-action-tint", neutral: "bg-card" }[tone];
   return (
     <div
       role={label ? "region" : undefined}
       aria-label={label}
-      className={`flex flex-col gap-4 rounded-[24px] p-5 sm:flex-row sm:items-center sm:gap-5 md:px-7 md:py-6 ${accent ? "border border-action-line bg-action-tint" : "bg-card"} ${className}`}
+      className={`flex flex-col gap-4 rounded-[24px] p-5 sm:flex-row sm:items-center sm:gap-5 md:px-7 md:py-6 ${box} ${className}`}
     >
       {Icon && (
-        <span aria-hidden="true" className={`hidden h-12 w-12 shrink-0 items-center justify-center rounded-full sm:flex ${accent ? "bg-card text-action-text" : "bg-tint text-ink"}`}>
+        <span aria-hidden="true" className={`hidden h-12 w-12 shrink-0 items-center justify-center rounded-full sm:flex ${accent ? "bg-card text-action-text" : tone === "wash" ? "bg-card text-ink" : "bg-tint text-ink"}`}>
           <Icon size={22} strokeWidth={1.8} />
         </span>
       )}
       <div className="min-w-0 flex-1">
-        {kicker && <p className="m-0 mb-1 text-xs font-bold tracking-[0.12em] text-action-text uppercase">{kicker}</p>}
+        {kicker && <p className={`m-0 mb-1 text-xs font-bold tracking-[0.12em] uppercase ${accent ? "text-action-text" : "text-ink-body"}`}>{kicker}</p>}
         <p className="m-0 font-heading text-lg leading-snug font-semibold text-ink md:text-xl">{title}</p>
         {body && <p className="m-0 mt-1 text-sm leading-relaxed text-ink-body">{body}</p>}
       </div>
