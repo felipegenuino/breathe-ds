@@ -43,8 +43,10 @@ type Props = {
  *
  * Put rows in a `ContactList` (the white inset-grouped panel with hairlines).
  * The row is a button with `aria-expanded`; the actions are real links
- * (tel:, mailto:) as 44px pills with the value written out, so the number can
- * also be read and copied.
+ * (wa.me, tel:, mailto:) written as plain text — icon + the value, 44px tall,
+ * underlined on hover — so the number can also be read and copied. No hover
+ * fill on the row (only a light press tint): open, row and actions share one
+ * white surface.
  */
 export function ContactRow({ name, nameDisplay, meta, actions, defaultOpen = false, headingLevel: H = "h3", className = "" }: Props) {
   const [open, setOpen] = useState(defaultOpen);
@@ -57,7 +59,7 @@ export function ContactRow({ name, nameDisplay, meta, actions, defaultOpen = fal
           aria-expanded={open}
           aria-controls={panel}
           onClick={() => setOpen((v) => !v)}
-          className="group/row flex min-h-16 w-full items-center gap-3.5 px-4 py-2.5 text-left transition-colors duration-150 hover:bg-tint/60 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ink motion-reduce:transition-none md:px-5"
+          className="group/row flex min-h-16 w-full items-center gap-3.5 px-4 py-2.5 text-left transition-colors duration-150 active:bg-tint/50 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ink motion-reduce:transition-none md:px-5"
         >
           <Avatar name={name} size={40} />
           <span className="min-w-0 flex-1">
@@ -72,23 +74,24 @@ export function ContactRow({ name, nameDisplay, meta, actions, defaultOpen = fal
         </button>
       </H>
       <div id={panel} hidden={!open} className={`${FADE_IN} pr-4 pb-4 pl-[4.375rem] md:pr-5 md:pl-[4.625rem]`}>
-        <div className="flex flex-wrap gap-2">
+        {/* minimalista: ícone + valor, texto em ink sublinhado no hover; o nome da
+            ação ("WhatsApp", "E-mail") fica para o leitor de tela */}
+        <ul className="m-0 flex list-none flex-col gap-0.5 p-0 sm:flex-row sm:flex-wrap sm:gap-x-6">
           {actions.map((a, i) => (
-            <a
-              key={i}
-              href={a.href}
-              {...(a.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-              className="inline-flex min-h-11 max-w-full items-center gap-2.5 rounded-full bg-tint px-4 py-2 text-sm text-ink transition-colors duration-150 hover:bg-ink hover:text-surface focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink motion-reduce:transition-none"
-            >
-              {a.icon && <span className="flex shrink-0">{a.icon}</span>}
-              <span className="min-w-0">
-                <span className="font-semibold">{a.label}</span>
+            <li key={i}>
+              <a
+                href={a.href}
+                {...(a.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                className="group/act inline-flex min-h-11 max-w-full items-center gap-2 rounded-[2px] text-[0.9375rem] text-ink underline decoration-transparent decoration-[1.5px] underline-offset-4 transition-[text-decoration-color] duration-150 hover:decoration-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink motion-reduce:transition-none"
+              >
+                {a.icon && <span className="flex shrink-0 text-ink-soft group-hover/act:text-ink">{a.icon}</span>}
+                <span className="sr-only">{a.label}</span>
+                <span className={a.breakAll ? "[overflow-wrap:anywhere]" : undefined}>{a.value}</span>
                 {a.srLabel && <span className="sr-only">{a.srLabel}</span>}
-                <span className={`ml-2 opacity-80 ${a.breakAll ? "[overflow-wrap:anywhere]" : ""}`}>{a.value}</span>
-              </span>
-            </a>
+              </a>
+            </li>
           ))}
-        </div>
+        </ul>
       </div>
     </li>
   );
