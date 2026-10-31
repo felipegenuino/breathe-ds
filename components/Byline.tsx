@@ -9,6 +9,8 @@ type Props = {
    *  and the names go on their own line; without it, one inline line:
    *  avatar · name · action. */
   eyebrow?: ReactNode;
+  /** Hide the portraits (the card already shows a big photo of the person). */
+  hideAvatars?: boolean;
   /** Small line under the name(s), aligned with them ("Physiotherapist").
    *  Ignored when there is an `eyebrow`. */
   subtitle?: ReactNode;
@@ -38,7 +40,7 @@ const nameLink =
  * - inline (under a topic card): portrait, name and "Watch the video ↗".
  * Portraits are decorative: the names carry the information.
  */
-export function Byline({ people, eyebrow, subtitle, action, joiners = { sep: ", ", last: " and " }, cite = false, newTabLabel = "(opens in a new tab)", linkComponent, className = "" }: Props) {
+export function Byline({ people, eyebrow, subtitle, hideAvatars = false, action, joiners = { sep: ", ", last: " and " }, cite = false, newTabLabel = "(opens in a new tab)", linkComponent, className = "" }: Props) {
   const L: ElementType = linkComponent ?? "a";
   // portraits stack with a ring (as on the site); initials would lose their letters, so they sit side by side
   const stack = people.length > 1 && people.every((p) => p.photo || p.avatar);
@@ -71,7 +73,7 @@ export function Byline({ people, eyebrow, subtitle, action, joiners = { sep: ", 
   if (subtitle && !eyebrow) {
     return (
       <div className={`flex items-center gap-3 ${className}`}>
-        <span className={row}>
+        <span className={hideAvatars ? "hidden" : row}>
           {people.map((p) => (
             <Avatar key={p.name} name={p.name} photo={p.photo} size={people.length === 1 ? 40 : 36} ring={stack}>{p.avatar}</Avatar>
           ))}

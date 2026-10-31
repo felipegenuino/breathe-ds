@@ -33,10 +33,13 @@ export type TestimonialCaptions = {
 };
 
 export type TestimonialVideo = {
-  /** The clip. Downloaded only on tap. */
-  src: string;
-  /** Still frame shown until the person taps. */
-  poster: string;
+  /** The clip (the site's own mp4). Downloaded only on tap. */
+  src?: string;
+  /** Or a YouTube id: the player (youtube-nocookie) loads only on tap. */
+  youtubeId?: string;
+  /** Still frame shown until the person taps. With `youtubeId` and no poster,
+   *  YouTube's own thumbnail. */
+  poster?: string;
   /** What the video shows, for screen readers ("Tereza's mother tells… (1 min 39 s)"). */
   description: string;
   /** Plays with audio (testimonials have speech). Default: true. The play is
@@ -63,6 +66,10 @@ type Props = {
   /** The family's video, on the left. Omit it for a text testimonial (quote +
    *  portrait), as on ttcab: the card becomes a single column. */
   video?: TestimonialVideo;
+  /** A still portrait on the left, in the video's place (text testimonials with a
+   *  real photo). `media` replaces the <img> (the site's image component; must
+   *  fill the box). */
+  photo?: { src: string; alt: string; position?: string; media?: ReactNode };
   /** Small line under the name(s) ("Physiotherapist", "Tereza's mother"). */
   role?: ReactNode;
   /** Long testimonials: the quote on the card stops after this many lines and
@@ -79,9 +86,25 @@ type Props = {
  *  play button (creeta's `VideoAoToque`). Before the tap it is just the poster:
  *  the browser's controls (0:00, volume) over the image clashed. No aspect
  *  ratio: the height comes from the grid row (the text beside it). */
-function TapVideo({ src, poster, description, withSound = true, captions, media, label }: TestimonialVideo & { label: string }) {
+function TapVideo({ src, youtubeId, poster: posterProp, description, withSound = true, captions, media, label }: TestimonialVideo & { label: string }) {
   const [playing, setPlaying] = useState(false);
-  const frame = "relative min-h-[16rem] overflow-hidden bg-ink";
+  // stacked on phones: 16:9 (videos are landscape); side by side: the row's height
+  const frame = "relative aspect-video overflow-hidden bg-ink sm:aspect-auto sm:min-h-[16rem]";
+  const poster = posterProp ?? (youtubeId ? `https://i.ytimg.com/vi/${youtubeId}/hqdefault.jpg` : "");
+
+  if (playing && youtubeId) {
+    return (
+      <div className={frame}>
+        <iframe
+          src={`https://www.youtube-nocookie.com/embed/${youtubeId}?autoplay=1&rel=0&modestbranding=1&playsinline=1`}
+          title={description}
+          allow="autoplay; encrypted-media; fullscreen; picture-in-picture"
+          allowFullScreen
+          className="absolute inset-0 h-full w-full border-0"
+        />
+      </div>
+    );
+  }
 
   if (playing) {
     return (
@@ -136,7 +159,7 @@ function TapVideo({ src, poster, description, withSound = true, captions, media,
 // whole class names, so Tailwind generates them
 const CLAMP: Record<number, string> = { 3: "line-clamp-3", 4: "line-clamp-4", 5: "line-clamp-5", 6: "line-clamp-6", 8: "line-clamp-8" };
 
-export function TestimonialCard({ quote, author, authorPhoto, authorAvatar, authors, link, video, role, clampLines, as: Root = "div", labels, className = "" }: Props) {
+export function TestimonialCard({ quote, author, authorPhoto, authorAvatar, authors, link, video, photo, role, clampLines, as: Root = "div", labels, className = "" }: Props) {
   const t = { ...EN, ...labels };
   const people = authors ?? [{ name: author ?? "", photo: authorPhoto, avatar: authorAvatar }];
   const quoteRef = useRef<HTMLQuoteElement>(null);
@@ -159,12 +182,22 @@ export function TestimonialCard({ quote, author, authorPhoto, authorAvatar, auth
       action={link ? { label: link.label, href: link.href, external: true } : undefined}
       newTabLabel={t.newTab.trim()}
       subtitle={role}
+      hideAvatars={Boolean(photo)}
     />
   );
   return (
-    <Root className={`${video ? "grid grid-cols-[minmax(0,2fr)_minmax(0,3fr)]" : "flex"} overflow-hidden rounded-[28px] bg-card ${className}`}>
-      {video && <TapVideo {...video} label={t.watch(video.description)} />}
-      <figure className={`flex flex-1 flex-col justify-between gap-5 ${video ? "p-5 md:p-7" : "p-6 md:p-8"}`}>
+    <Root className={`${video || photo ? "grid grid-cols-1 sm:grid-cols-[minmax(0,2fr)_minmax(0,3fr)]" : "flex"} overflow-hidden rounded-[28px] bg-card ${className}`}>
+      {video ? (
+        <TapVideo {...video} label={t.watch(video.description)} />
+      ) : photo ? (
+        <div className="relative aspect-[4/3] overflow-hidden bg-ink/[0.06] sm:aspect-auto sm:min-h-[16rem]">
+          {photo.media ?? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img src={photo.src} alt={photo.alt} loading="lazy" decoding="async" className="absolute inset-0 h-full w-full object-cover" style={{ objectPosition: photo.position }} />
+          )}
+        </div>
+      ) : null}
+      <figure className={`flex flex-1 flex-col justify-between gap-5 ${video || photo ? "p-5 md:p-7" : "p-6 md:p-8"}`}>
         <div>
           <blockquote
             ref={quoteRef}
@@ -176,7 +209,7 @@ export function TestimonialCard({ quote, author, authorPhoto, authorAvatar, auth
             <button
               type="button"
               onClick={() => setOpen(true)}
-              className="mt-3 inline-flex min-h-11 items-center gap-1 font-semibold text-ink underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink"
+              className="mt-3 inline-flex min-h-11 items-center gap-1 text-left font-semibold text-ink underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink"
             >
               {t.readMore}
             </button>
