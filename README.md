@@ -219,6 +219,9 @@ from color, not from extra markup.
   petrol mist `#d2e6e9`; Creeta: mist 190° → sand `#eddec1`; Neutral (no hue): gray
   `#e1e1e4`. The kicker goes in ink-body (action-text drops under 4.5:1 on the wash).
   `tone="accent"` (action-tint + action border) and `"neutral"` (white) remain.
+- **Duotone** (`.cg-duotone` on the element wrapping an `<img>`; `CourseCard cover.treatment="duotone"`):
+  for untreated photos straight from a phone — ink in the shadows, page colour in the lights,
+  pure CSS (file and alt untouched). Tune per brand with `--cg-duotone-dark` / `--cg-duotone-light`.
 - **PullQuote** + **Highlight**: one line set large between sections — drawn quote
   mark in the action color, balanced lines, hand-drawn underline (`Highlight`) on the
   key words. `cite` adds the person (Byline with role); without it, a brand statement.

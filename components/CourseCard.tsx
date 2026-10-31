@@ -13,8 +13,10 @@ const EN: Labels = { with: "With", soldOut: "Sold out" };
 
 type Props = {
   /** Cover photo at the top (the school's pages always have one), 4:3,
-   *  focused near the top for the portrait photos the school uses. */
-  cover?: { src: string; alt?: string; position?: string };
+   *  focused near the top for the portrait photos the school uses.
+   *  `treatment: "duotone"` for an untreated photo (straight from a phone): it is
+   *  shown in the brand's two colours (ink shadows, page-colour lights). */
+  cover?: { src: string; alt?: string; position?: string; treatment?: "duotone" };
   /** The course ("Basic RTA course 2026"): the heading of the card. */
   course?: ReactNode;
   /** The class ("City · ST"): the line under the heading, with the seats pill.
@@ -85,7 +87,7 @@ export function CourseCard({ cover, course, title, start, when, where, workload,
   return (
     <article className={`relative flex flex-col overflow-hidden rounded-[28px] bg-card ${onSelect ? "transition-transform duration-200 ease-out active:scale-[0.99] motion-reduce:transition-none motion-reduce:active:scale-100 [&_a]:relative [&_a]:z-10 [&_button]:relative [&_button]:z-10" : ""} ${className}`}>
       {cover && (
-        <div className="relative aspect-[4/3] overflow-hidden">
+        <div className={`relative aspect-[4/3] overflow-hidden ${cover.treatment === "duotone" ? "cg-duotone" : ""}`}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src={cover.src} alt={cover.alt ?? ""} loading="lazy" decoding="async" className="absolute inset-0 h-full w-full object-cover" style={{ objectPosition: cover.position ?? "50% 25%" }} />
         </div>

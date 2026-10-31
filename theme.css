@@ -297,3 +297,26 @@
   -webkit-mask-image: linear-gradient(to right, #000 0, #000 7%, transparent 17%, transparent 83%, #000 93%, #000 100%);
   mask-image: linear-gradient(to right, #000 0, #000 7%, transparent 17%, transparent 83%, #000 93%, #000 100%);
 }
+
+/* Duotone: for photos that were not treated (straight from a phone camera) — the
+   picture turns to two brand colours, ink in the shadows and the page colour in
+   the lights, so a busy, off-palette photo sits in the family. Put it on the
+   element that wraps the <img> (it needs `relative` + `overflow-hidden`, which
+   covers already have). Brands can tune it: --cg-duotone-dark / --cg-duotone-light.
+   Pure CSS: the file is untouched, the alt text stays. */
+.cg-duotone {
+  isolation: isolate;
+  background: var(--cg-duotone-light, var(--color-surface));
+}
+.cg-duotone img {
+  filter: grayscale(1) contrast(1.08) brightness(1.04);
+  mix-blend-mode: multiply;
+}
+.cg-duotone::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: var(--cg-duotone-dark, var(--color-ink));
+  mix-blend-mode: lighten;
+}
