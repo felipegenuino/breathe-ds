@@ -62,6 +62,20 @@
       scroll-behavior: auto;
     }
   }
+  /* No orphans or widows anywhere in the family (Felipe, 31/10/2026).
+     Headings balance their lines; running text avoids a lone word on the last
+     line (text-wrap: pretty, Chrome/Edge 117+, Safari 26+; elsewhere it falls
+     back to normal wrapping). In multi-column layouts (the testimonials
+     masonry) a paragraph never leaves a single line at the foot or the head
+     of a column. A component's own text-balance/text-pretty still wins. */
+  h1, h2, h3, h4, h5, h6, legend, caption {
+    text-wrap: balance;
+  }
+  p, li, dd, dt, blockquote, figcaption, summary, label, td, th {
+    text-wrap: pretty;
+    orphans: 2;
+    widows: 2;
+  }
   /* Tailwind v4's reset leaves buttons with the default cursor; in the family
      everything that can be tapped shows the hand: buttons, links, the summary
      of a collapse, labels of controls, selects. Disabled ones keep the arrow. */

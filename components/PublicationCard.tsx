@@ -1,7 +1,7 @@
 "use client";
 
 import { useId, useState, type ElementType, type ReactNode } from "react";
-import { ChevronDown, FileText } from "lucide-react";
+import { ArrowRight, ChevronDown, FileText } from "lucide-react";
 import { FADE_IN } from "./Rows";
 
 export type PublicationCardLabels = {
@@ -12,6 +12,8 @@ export type PublicationCardLabels = {
   of: string;
   pdf: string;
   newTab: string;
+  /** Footer link of the compact card ("Ler o artigo"). */
+  read: string;
 };
 
 const EN: PublicationCardLabels = {
@@ -19,6 +21,7 @@ const EN: PublicationCardLabels = {
   of: "of",
   pdf: "PDF",
   newTab: "(opens in a new tab)",
+  read: "Read the article",
 };
 
 type Props = {
@@ -41,6 +44,11 @@ type Props = {
   /** Language of the abstract if it differs from the title's. */
   abstractLang?: string;
   headingLevel?: "h2" | "h3";
+  /** `full` (default): the library row, abstract opening in place.
+   *  `compact`: the "related articles" tile — same height as its neighbours,
+   *  tag and topics on two fixed lines, and a footer pinned to the bottom with
+   *  "read the article" on the left and the PDF on the right. */
+  variant?: "full" | "compact";
   /** Link component of the app (e.g. next-intl Link). Default: <a>. */
   linkComponent?: ElementType;
   labels?: Partial<PublicationCardLabels>;
@@ -95,6 +103,7 @@ export function PublicationCard({
   abstract,
   abstractLang,
   headingLevel: H = "h2",
+  variant = "full",
   linkComponent,
   labels,
   className = "",
@@ -105,6 +114,50 @@ export function PublicationCard({
   const regionId = useId();
   const hasAbstract = Boolean(abstract && abstract.length);
 
+  if (variant === "compact") {
+    return (
+      <article className={`flex h-full flex-col rounded-[22px] bg-card ${className}`}>
+        <div className="flex flex-1 flex-col px-6 pt-6 pb-5">
+          {kind && (
+            <p className="m-0">
+              <span className="inline-block rounded-full bg-tint px-2.5 py-1 text-xs font-semibold text-ink">{kind}</span>
+            </p>
+          )}
+          {topics && topics.length > 0 && <p className="m-0 mt-2 text-sm text-ink-soft">{topics.join(" · ")}</p>}
+          <H lang={lang} className="mt-3 font-heading text-[1.15rem] leading-snug font-medium text-balance text-ink">
+            {href ? (
+              <L href={href} className="rounded-[2px] underline decoration-transparent decoration-[1.5px] underline-offset-4 transition-[text-decoration-color] duration-150 hover:decoration-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink motion-reduce:transition-none">
+                {title}
+              </L>
+            ) : (
+              title
+            )}
+          </H>
+          {byline && <p className="m-0 mt-2 text-sm text-ink-soft">{byline}</p>}
+        </div>
+        {(href || pdf) && (
+          <footer className="flex min-h-14 items-center justify-between gap-4 rounded-b-[22px] border-t border-line bg-surface-alt/60 px-6">
+            {href ? (
+              <L href={href} tabIndex={-1} aria-hidden="true" className="group/read inline-flex min-h-11 items-center gap-1.5 text-sm font-semibold text-ink">
+                {t.read}
+                <ArrowRight aria-hidden="true" size={16} className="transition-transform duration-200 group-hover/read:translate-x-0.5 motion-reduce:transform-none" />
+              </L>
+            ) : (
+              <span />
+            )}
+            {pdf && (
+              <a href={pdf} target="_blank" rel="noopener noreferrer" className={`${ACTION} underline decoration-ink/35 decoration-[1.5px] underline-offset-4 transition-[text-decoration-color] duration-150 hover:decoration-ink motion-reduce:transition-none`}>
+                <FileText aria-hidden="true" size={16} className="text-ink-soft" />
+                {t.pdf}
+                <span className="sr-only">{` ${t.of} ${title} ${t.newTab}`}</span>
+              </a>
+            )}
+          </footer>
+        )}
+      </article>
+    );
+  }
+
   return (
     <article className={`rounded-[22px] bg-card p-[clamp(20px,3vw,28px)] ${className}`}>
       {(kind || (topics && topics.length > 0)) && (
@@ -113,7 +166,7 @@ export function PublicationCard({
           {topics && topics.length > 0 && <span>{topics.join(" · ")}</span>}
         </p>
       )}
-      <H lang={lang} className="mt-3 max-w-[64ch] font-heading text-[1.2rem] leading-snug font-medium text-pretty text-ink md:text-[1.3rem]">
+      <H lang={lang} className="mt-3 max-w-[64ch] font-heading text-[1.2rem] leading-snug font-medium text-balance text-ink md:text-[1.3rem]">
         {href ? (
           <L
             href={href}
