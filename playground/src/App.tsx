@@ -439,6 +439,7 @@ const PAGE_NAV = [
   { id: "header", label: "Header", Icon: IconHome },
   { id: "mobile", label: "Mobile", Icon: IconMapPin },
   { id: "anchornav", label: "AnchorNav", Icon: IconMapPin },
+  { id: "callout", label: "Callout", Icon: IconInfo },
   { id: "pullquote", label: "PullQuote", Icon: IconMessage },
   { id: "profile", label: "ProfileSpotlight", Icon: IconUsers },
   { id: "cards", label: "Cards", Icon: IconBook },
@@ -459,7 +460,7 @@ const FOOTER_GROUPS = (
   [
     ["Foundations", ["symbol", "tokens", "type", "lockup", "icons"]],
     ["Navigation", ["header", "mobile", "anchornav", "breadcrumb", "footer"]],
-    ["Content", ["buttons", "action", "accordion", "list", "rows", "timeline", "pills"]],
+    ["Content", ["buttons", "action", "callout", "accordion", "list", "rows", "timeline", "pills"]],
     ["Cards & media", ["people", "profile", "pullquote", "cards", "videos", "map", "hero", "care", "story", "blog", "course", "events", "cta"]],
   ] as const
 ).map(([title, ids]) => ({
@@ -1215,6 +1216,30 @@ export function App() {
         </div>
       </Section>
 
+      <Section id="callout" title="Callout — the info well">
+        <p className="mb-6 max-w-[62ch] text-ink-body">A secondary invitation under a page's main control, at most one action, never for errors. The wash is the page's split complement (TTCAB cream → petrol mist, Creeta mist → sand, Neutral → gray), one step off the page (1.19:1), no border; the button is <code>variant="tonal"</code>. Switch the palette at the top to compare.</p>
+        <div className="flex flex-col gap-4">
+          <Callout
+            Icon={Lucide.LocateFixed}
+            kicker="Location"
+            title="Want to see who works near you first?"
+            body="We only use your location to pick the nearest state. It stays on your device."
+            actions={<><Button variant="tonal" type="button"><Lucide.LocateFixed aria-hidden="true" size={18} />Use my location</Button><Button variant="link" type="button" className="min-h-11 text-sm text-ink">Not now</Button></>}
+          />
+          <Callout
+            Icon={Lucide.Languages}
+            kicker="Tip"
+            title="The titles are in English"
+            body="For an author, the surname is enough. Try:"
+            actions={["torticollis", "plagiocephaly", "hip"].map((t) => (
+              <Button key={t} variant="link" type="button" className="min-h-11 text-ink"><Lucide.Search aria-hidden="true" size={16} />{t}</Button>
+            ))}
+          />
+          <p className="m-0 mt-4 text-sm font-semibold text-ink">Other tones</p>
+          <Callout tone="accent" Icon={Lucide.Info} kicker="tone=&quot;accent&quot;" title="Action-tint wash with a hairline action border" body="The highlighted panel at a small scale." />
+          <Callout tone="neutral" Icon={Lucide.Info} kicker="tone=&quot;neutral&quot;" title="White, no border" body="For a callout on a band (surface-alt)." className="shadow-[0_1px_2px_rgb(0_0_0/0.04)]" />
+        </div>
+      </Section>
       <Section id="pullquote" title="PullQuote · Highlight">
         <p className="mb-10 max-w-[60ch] text-ink-body">One line that matters, set large between sections: drawn quote mark in the action color, balanced lines and, on the key words, the hand-drawn <code>Highlight</code>. Without <code>cite</code> it is a brand statement; with it, a quote from someone.</p>
         <PullQuote>Care that looks at the <Highlight>whole body</Highlight>, at every stage of development.</PullQuote>
