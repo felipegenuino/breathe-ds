@@ -70,6 +70,10 @@ type Props = {
    *  real photo). `media` replaces the <img> (the site's image component; must
    *  fill the box). */
   photo?: { src: string; alt: string; position?: string; media?: ReactNode };
+  /** Every card opens the whole testimonial in the SidePanel (the button always
+   *  shows): a header saying what it is (`eyebrow`, e.g. "Testimonial") with the
+   *  names, the video or the photo, then the full quote. */
+  panel?: { eyebrow: ReactNode };
   /** Joiners between two or more names (", " and " e " in Portuguese). */
   joiners?: { sep: string; last: string };
   /** Small line under the name(s) ("Physiotherapist", "Tereza's mother"). */
@@ -88,10 +92,10 @@ type Props = {
  *  play button (creeta's `VideoAoToque`). Before the tap it is just the poster:
  *  the browser's controls (0:00, volume) over the image clashed. No aspect
  *  ratio: the height comes from the grid row (the text beside it). */
-function TapVideo({ src, youtubeId, poster: posterProp, description, withSound = true, captions, media, label }: TestimonialVideo & { label: string }) {
+function TapVideo({ src, youtubeId, poster: posterProp, description, withSound = true, captions, media, label, frameClass }: TestimonialVideo & { label: string; frameClass?: string }) {
   const [playing, setPlaying] = useState(false);
   // stacked on phones: 16:9 (videos are landscape); side by side: the row's height
-  const frame = "relative aspect-video overflow-hidden bg-ink sm:aspect-auto sm:min-h-[16rem]";
+  const frame = frameClass ?? "relative aspect-video overflow-hidden bg-ink sm:aspect-auto sm:min-h-[16rem]";
   const poster = posterProp ?? (youtubeId ? `https://i.ytimg.com/vi/${youtubeId}/hqdefault.jpg` : "");
 
   if (playing && youtubeId) {
@@ -161,7 +165,7 @@ function TapVideo({ src, youtubeId, poster: posterProp, description, withSound =
 // whole class names, so Tailwind generates them
 const CLAMP: Record<number, string> = { 3: "line-clamp-3", 4: "line-clamp-4", 5: "line-clamp-5", 6: "line-clamp-6", 8: "line-clamp-8" };
 
-export function TestimonialCard({ quote, author, authorPhoto, authorAvatar, authors, link, video, photo, role, joiners, clampLines, as: Root = "div", labels, className = "" }: Props) {
+export function TestimonialCard({ quote, author, authorPhoto, authorAvatar, authors, link, video, photo, role, joiners, panel, clampLines, as: Root = "div", labels, className = "" }: Props) {
   const t = { ...EN, ...labels };
   const people = authors ?? [{ name: author ?? "", photo: authorPhoto, avatar: authorAvatar }];
   const quoteRef = useRef<HTMLQuoteElement>(null);
@@ -177,6 +181,8 @@ export function TestimonialCard({ quote, author, authorPhoto, authorAvatar, auth
     ro.observe(el);
     return () => ro.disconnect();
   }, [clampLines]);
+  const sep = joiners ?? { sep: ", ", last: " and " };
+  const names = people.map((p) => p.name).reduce((acc, n, i, all) => (i === 0 ? n : acc + (i === all.length - 1 ? sep.last : sep.sep) + n), "");
   const byline = (
     <Byline
       cite
@@ -185,7 +191,6 @@ export function TestimonialCard({ quote, author, authorPhoto, authorAvatar, auth
       newTabLabel={t.newTab.trim()}
       subtitle={role}
       joiners={joiners}
-      hideAvatars={Boolean(photo)}
     />
   );
   return (
@@ -208,7 +213,7 @@ export function TestimonialCard({ quote, author, authorPhoto, authorAvatar, auth
           >
             {quote}
           </blockquote>
-          {overflows && (
+          {(overflows || panel) && (
             <button
               type="button"
               onClick={() => setOpen(true)}
@@ -220,12 +225,31 @@ export function TestimonialCard({ quote, author, authorPhoto, authorAvatar, auth
         </div>
         <figcaption>{byline}</figcaption>
       </figure>
-      {clampLines && (
-        <SidePanel open={open} onClose={() => setOpen(false)} title={people.map((p) => p.name).join(", ")} labels={{ close: t.close }}>
-          <figure className="flex flex-col gap-6 px-6 pt-2 pb-10 md:px-8">
-            <blockquote className="font-heading text-lg leading-relaxed font-medium text-ink">{quote}</blockquote>
-            <figcaption>{byline}</figcaption>
-          </figure>
+      {(clampLines || panel) && (
+        <SidePanel open={open} onClose={() => setOpen(false)} title={names} labels={{ close: t.close }}>
+          <article className="flex flex-col gap-6 px-6 pt-2 pb-10 md:px-8">
+            {panel && (
+              <header>
+                <p className="m-0 font-heading text-[0.82rem] font-bold tracking-[0.14em] text-ink-soft uppercase">{panel.eyebrow}</p>
+                <h2 className="mt-2 font-heading text-2xl leading-tight font-semibold text-ink">{names}</h2>
+                {role && <p className="mt-1 text-sm text-ink-soft">{role}</p>}
+              </header>
+            )}
+            {panel && video ? (
+              <div className="overflow-hidden rounded-2xl">
+                <TapVideo {...video} label={t.watch(video.description)} frameClass="relative aspect-video overflow-hidden bg-ink" />
+              </div>
+            ) : panel && photo ? (
+              <div className="overflow-hidden rounded-2xl bg-ink/[0.06]">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={photo.src} alt={photo.alt} className="aspect-[4/5] max-h-[55vh] w-full object-cover" style={{ objectPosition: photo.position }} />
+              </div>
+            ) : null}
+            <figure className="m-0 flex flex-col gap-6">
+              <blockquote className="font-heading text-lg leading-relaxed font-medium text-ink">{quote}</blockquote>
+              {!panel && <figcaption>{byline}</figcaption>}
+            </figure>
+          </article>
         </SidePanel>
       )}
     </Root>
