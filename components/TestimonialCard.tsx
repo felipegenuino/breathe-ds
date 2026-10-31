@@ -215,13 +215,14 @@ export function TestimonialCard({ quote, author, authorPhoto, authorAvatar, auth
       <figure className={`flex flex-1 flex-col justify-between gap-5 ${video || photo ? "p-5 md:p-7" : "p-6 md:p-8"}`}>
         <div>
           {excerpt ? (
-            // pull quote: the mark hangs in the margin so the text column stays straight
-            <blockquote className="m-0 font-heading text-[1.3rem] leading-snug font-medium text-balance text-ink md:text-[1.55rem]">
-              {excerptMarks ? (
-                <p className="m-0 -indent-[0.45em]">“{excerpt}”</p>
-              ) : (
-                <p className="m-0">{excerpt}</p>
+            <blockquote className="m-0">
+              {/* the family's drawn mark (same as PullQuote) above the line; the line itself stays clean */}
+              {excerptMarks && (
+                <svg aria-hidden="true" viewBox="0 0 48 36" className="mb-4 block h-6 w-8 fill-action-line">
+                  <path d="M0 36V22C0 10.5 6 2.6 18.2 0l2.3 5.2C14.6 7.4 11.4 11 11 16h8.6v20H0Zm27.4 0V22c0-11.5 6-19.4 18.2-22l2.3 5.2C42 7.4 38.8 11 38.4 16H47v20H27.4Z" />
+                </svg>
               )}
+              <p className="m-0 font-heading text-[1.3rem] leading-snug font-semibold text-balance text-ink md:text-[1.5rem]">{excerpt}</p>
             </blockquote>
           ) : (
             <blockquote
