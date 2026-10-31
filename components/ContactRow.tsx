@@ -16,6 +16,8 @@ export type ContactAction = {
   srLabel?: ReactNode;
   /** Long unbroken value (an e-mail) may wrap, only when it does not fit. */
   breakAll?: boolean;
+  /** Opens in a new tab (WhatsApp). Say so in `srLabel`. */
+  external?: boolean;
 };
 
 type Props = {
@@ -75,6 +77,7 @@ export function ContactRow({ name, nameDisplay, meta, actions, defaultOpen = fal
             <a
               key={i}
               href={a.href}
+              {...(a.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
               className="inline-flex min-h-11 max-w-full items-center gap-2.5 rounded-full bg-tint px-4 py-2 text-sm text-ink transition-colors duration-150 hover:bg-ink hover:text-surface focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink motion-reduce:transition-none"
             >
               {a.icon && <span className="flex shrink-0">{a.icon}</span>}
