@@ -6,6 +6,10 @@ import { CollapseRow, LinkRow, RowList } from "../../components/Rows";
 import { SearchField } from "../../components/SearchField";
 import { SelectField } from "../../components/SelectField";
 import { EmptyState } from "../../components/EmptyState";
+import { FilterChips } from "../../components/FilterChips";
+import { StickyGroupHeading } from "../../components/StickyGroupHeading";
+import { PageHero } from "../../components/PageHero";
+import { PublicationCard } from "../../components/PublicationCard";
 import { Rail, RailItem } from "../../components/Rail";
 import { Button } from "../../components/Button";
 import { Card } from "../../components/Card";
@@ -128,6 +132,7 @@ function SideNav({ pal, setPal }: { pal: string; setPal: (p: string) => void }) 
 function SearchDemo() {
   const [q, setQ] = useState("");
   const [uf, setUf] = useState("");
+  const [topic, setTopic] = useState("");
   const people = [
     { name: "Ana Paula Souza", place: "Manaus, AM", uf: "AM", phone: "(92) 98801-2905", email: "ana.souza@example.com" },
     { name: "Luciana Ribeiro", place: "Florianópolis, SC", uf: "SC", phone: "(48) 8417-2982", email: "luciana@example.com" },
@@ -142,8 +147,17 @@ function SearchDemo() {
         <SearchField id="pg-search" label="Name, city or state" placeholder="E.g. Ana, Campinas or SC" value={q} onValueChange={setQ} />
         <SelectField id="pg-uf" label="State" placeholder="All" value={uf} onValueChange={setUf} options={[{ value: "AM", label: "Amazonas", count: 1 }, { value: "SC", label: "Santa Catarina", count: 2 }]} />
       </div>
+      <FilterChips
+        label="Filter by topic"
+        className="mt-6"
+        value={topic}
+        onValueChange={setTopic}
+        chips={[{ value: "", label: "All", count: 16 }, { value: "t", label: "Treatment", count: 8 }, { value: "d", label: "Diagnosis", count: 4 }, { value: "h", label: "Hip", count: 2 }]}
+      />
       {hits.length ? (
-        <ul className="mt-6 grid list-none gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <section aria-labelledby="pg-group" className="mt-6">
+        <StickyGroupHeading id="pg-group" meta={`${hits.length} professionals`} stickyTop="top-0">Results</StickyGroupHeading>
+        <ul className="mt-4 grid list-none gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {hits.map((p) => (
             <li key={p.name}>
               <ProfessionalCard
@@ -159,6 +173,7 @@ function SearchDemo() {
             </li>
           ))}
         </ul>
+        </section>
       ) : (
         <EmptyState
           className="mt-6"
@@ -1005,8 +1020,29 @@ export function App() {
           </div>
         </Section>
 
-        <Section id="search" title="Search — SearchField · SelectField · ProfessionalCard listing · EmptyState">
+        <Section id="search" title="Search — SearchField · SelectField · FilterChips · StickyGroupHeading · ProfessionalCard listing · EmptyState">
           <SearchDemo />
+        </Section>
+
+        <Section id="library" title="Library — PageHero · PublicationCard">
+          <p className="mb-6 max-w-[62ch] text-ink-body">PageHero: the light opening panel of an inner page (surface-alt band, up to 1600px), with the page's controls inside so title and tools read as one region. PublicationCard: one study, grouped by proximity — tag and topics over the title, authors under it, abstract and PDF together in one row; structured abstracts get their labels in bold.</p>
+          <div className="-mx-4 md:-mx-6">
+            <PageHero title="Artigos" lead="Estudos e revisões, para quem quer ir à fonte." note="Os artigos estão no idioma original, quase todos em inglês.">
+              <FilterChips label="Topics" value="" onValueChange={() => {}} chips={[{ value: "", label: "Todos", count: 16 }, { value: "t", label: "Tratamento", count: 8 }]} />
+            </PageHero>
+          </div>
+          <div className="mt-6 grid gap-3">
+            <PublicationCard
+              title="Effectiveness of pediatric integrative manual therapy in cervical movement limitation in infants with positional plagiocephaly: a randomized controlled trial"
+              lang="en"
+              kind="Randomized controlled trial"
+              topics={["Treatment", "Plagiocephaly and face"]}
+              byline="Iñaki Pastor-Pons and 6 other authors"
+              href="#library"
+              pdf="#library"
+              abstract={["Background: Positional plagiocephaly (PP) is a cranial deformation frequent amongst children.", "Methods: Thirty-four children with PP were randomly distributed into two groups.", "Conclusion: The PIMT program was more effective in increasing AROM."]}
+            />
+          </div>
         </Section>
 
         <Section id="breadcrumb" title="Breadcrumb">
