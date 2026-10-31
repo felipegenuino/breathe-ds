@@ -209,6 +209,10 @@ from color, not from extra markup.
   centred) + **FilterBar** (thin sticky bar of compact filters — `SelectField density="sm"` —
   with the count and "clear" on the right; it publishes its height as `--cg-filterbar-h`, so
   `StickyGroupHeading stickyTop="top-[calc(80px+var(--cg-filterbar-h,0px))]"` sticks right below).
+- **Callout**: a secondary invitation under a page's main control (location invite under
+  the professionals search, a tip under the articles search). `tone="accent"`: action-tint
+  wash + closed action-line border (the highlighted panel at a small scale); actions are an
+  outline button and/or a text link, never the accent button.
 - **PullQuote** + **Highlight**: one line set large between sections — drawn quote
   mark in the action color, balanced lines, hand-drawn underline (`Highlight`) on the
   key words. `cite` adds the person (Byline with role); without it, a brand statement.
