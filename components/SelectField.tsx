@@ -21,6 +21,9 @@ type Props = Omit<SelectHTMLAttributes<HTMLSelectElement>, "value" | "onChange" 
   /** Flat options, or groups (`<optgroup>`): pass one or the other. */
   options?: SelectOption[];
   groups?: SelectGroup[];
+  /** Keep the label for screen readers only, when a group label above already says
+   *  what the fields are (and the placeholder names the field: "Todos os estados"). */
+  hideLabel?: boolean;
   className?: string;
 };
 
@@ -32,10 +35,10 @@ const text = (o: SelectOption) => (o.count === undefined ? o.label : `${o.label}
  * purpose: on phones it opens the system picker, which is faster and more
  * accessible than any custom listbox for a list of states or cities.
  */
-export function SelectField({ id, label, value, onValueChange, placeholder, options, groups, className = "", ...rest }: Props) {
+export function SelectField({ id, label, value, onValueChange, placeholder, options, groups, hideLabel = false, className = "", ...rest }: Props) {
   return (
     <div className={className}>
-      <label htmlFor={id} className={FIELD_LABEL}>
+      <label htmlFor={id} className={hideLabel ? "sr-only" : FIELD_LABEL}>
         {label}
       </label>
       <div className="relative">
