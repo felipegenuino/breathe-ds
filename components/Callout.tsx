@@ -10,12 +10,12 @@ type Props = {
   body?: ReactNode;
   /** Small icon in a bubble on the left (lucide). */
   Icon?: IconType;
-  /** The actions on the right: one button (variant="solid", the petrol one, or
-   *  "outline") and, if needed, a text link ("Agora não"). Never the accent button:
+  /** The actions on the right: one button (variant="tonal" on the wash; "solid"
+   *  or "outline" on the other tones) and, if needed, a text link ("Agora não"). Never the accent button:
    *  the callout sits under the page's main control and must not compete with it. */
   actions?: ReactNode;
-  /** `wash` (default): the brand's callout wash (TTCAB: #f2e0ba, three steps down the
-   *  cream scale), no border.
+  /** `wash` (default): the brand's callout wash (TTCAB: #d2e6e9, the split complement of
+   *  the cream), no border. Pair it with <Button variant="tonal">.
    *  `accent`: the action-colour wash with a hairline border in the action colour.
    *  `neutral`: white, no border. */
   tone?: "wash" | "accent" | "neutral";
@@ -29,8 +29,8 @@ type Props = {
  * primeiro quem atende perto de você?" under the professionals search, a tip
  * under the articles search). The main control keeps the emphasis (white,
  * shadow); the callout is a quiet wash a step off the page, without a border.
- * TTCAB (wash #f2e0ba): ink 7.85:1, ink-body 6.95:1; the kicker goes in ink-body
- * because action-text would drop to 4.16:1 there.
+ * TTCAB (wash #d2e6e9): ink 7.90:1, ink-body 6.98:1; the kicker goes in ink-body
+ * because action-text would drop to 4.18:1 there.
  */
 export function Callout({ title, kicker, body, Icon, actions, tone = "wash", label, className = "" }: Props) {
   const accent = tone === "accent";
@@ -42,7 +42,7 @@ export function Callout({ title, kicker, body, Icon, actions, tone = "wash", lab
       className={`flex flex-col gap-4 rounded-[24px] p-5 sm:flex-row sm:items-center sm:gap-5 md:px-7 md:py-6 ${box} ${className}`}
     >
       {Icon && (
-        <span aria-hidden="true" className={`hidden h-12 w-12 shrink-0 items-center justify-center rounded-full sm:flex ${accent ? "bg-card text-action-text" : tone === "wash" ? "bg-card text-ink" : "bg-tint text-ink"}`}>
+        <span aria-hidden="true" className={`hidden h-12 w-12 shrink-0 items-center justify-center rounded-full sm:flex ${accent ? "bg-card text-action-text" : tone === "wash" ? "bg-callout-deep text-ink" : "bg-tint text-ink"}`}>
           <Icon size={22} strokeWidth={1.8} />
         </span>
       )}

@@ -30,6 +30,8 @@
   --color-line: var(--cg-line);                    /* hairlines/borders */
   --color-surface-alt: var(--cg-surface-alt, var(--cg-surface)); /* alternate section band (rhythm), a step deeper than surface */
   --color-callout: var(--cg-callout, var(--cg-surface-alt, var(--cg-surface))); /* secondary invitation under a main control: a cool wash, no border */
+  --color-callout-deep: var(--cg-callout-deep, var(--cg-tint, var(--cg-surface))); /* tonal controls on the callout (button, icon bubble) */
+  --color-callout-deeper: var(--cg-callout-deeper, var(--cg-callout-deep, var(--cg-surface))); /* their hover */
   --color-tint: var(--cg-tint, color-mix(in srgb, var(--cg-ink) 8%, transparent)); /* neutral fill: icon bubbles, pills, image placeholders */
   --color-shadow: var(--cg-shadow, rgb(20 71 83));  /* hue of soft shadows (used at low alpha via color-mix) */
 

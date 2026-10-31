@@ -1,6 +1,6 @@
 import type { ReactNode, ButtonHTMLAttributes, AnchorHTMLAttributes } from "react";
 
-type Variant = "solid" | "accent" | "outline" | "ghost" | "link" | "outline-inverse";
+type Variant = "solid" | "accent" | "outline" | "ghost" | "link" | "outline-inverse" | "tonal";
 type Size = "sm" | "md" | "lg";
 
 const pillBase =
@@ -27,6 +27,9 @@ const variants: Record<Exclude<Variant, "link">, string> = {
   // the 4.5:1 of normal text. Keep the accent for ONE large button per block.
   accent: "bg-action text-on-action hover:brightness-[0.92]",
   outline: "border border-line text-ink hover:bg-ink/[0.05]",
+  // tonal: on a Callout, a step deeper than its wash with ink text — the action
+  // without competing with the page's main control
+  tonal: "bg-callout-deep text-ink hover:bg-callout-deeper",
   ghost: "text-ink hover:bg-tint",
   // secondary on a dark panel (hero panel, StoryPanel, surface-panel): light outline,
   // surface text (cream on petrol 9.41:1 on ttcab)
