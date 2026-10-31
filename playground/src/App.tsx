@@ -1021,7 +1021,7 @@ export function App() {
             </div>
             {/* All pages in order of importance: the bar shows as many as fit
                 (64px per tab) and the rest goes to "More" — on phones 4 + More,
-                on tablets all of them. The external link always lives in More. */}
+                on tablets too (at most 5 tabs, as iOS/Android). The external link always lives in More. */}
             <BottomNav
               embedded
               pages={[

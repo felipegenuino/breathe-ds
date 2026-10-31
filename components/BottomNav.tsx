@@ -74,8 +74,12 @@ export const TAB_MIN_WIDTH = 64;
 /** How many pages show directly on the bar, for a given usable width. The last
  *  tab is always "More" (that's where the pages that didn't fit and the extra
  *  exits live), so one page fewer than the number of tabs fits. */
+/** At most 5 tabs (4 pages + More), as the iOS and Android tab bars: on a wider
+ *  bar each tab gets room for its label instead of more tabs squeezing in. */
+export const MAX_TABS = 5;
+
 export function howManyFit(width: number, total: number): number {
-  const tabs = Math.floor(width / TAB_MIN_WIDTH);
+  const tabs = Math.min(MAX_TABS, Math.floor(width / TAB_MIN_WIDTH));
   return Math.max(2, Math.min(total, tabs - 1));
 }
 
