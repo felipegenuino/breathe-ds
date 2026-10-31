@@ -34,7 +34,10 @@ export function SidePanel({ open, onClose, title, actions, children, labels, cla
   const box = useRef<HTMLDialogElement>(null);
   const headingId = useId();
 
-  // open/close follow the prop; the way out waits for the slide to finish
+  // open/close follow the prop; the way out waits for the slide to finish.
+  // Closed, the dialog is display:none (hidden open:flex): a plain `flex` would
+  // keep it rendered off-screen, its shadow bleeding into the right edge and its
+  // content reachable.
   useEffect(() => {
     const d = box.current;
     if (!d) return;
@@ -76,7 +79,7 @@ export function SidePanel({ open, onClose, title, actions, children, labels, cla
     <dialog
       ref={box}
       aria-labelledby={headingId}
-      className={`fixed inset-y-0 right-0 left-auto m-0 flex h-dvh max-h-none w-[min(100vw,32rem)] max-w-none translate-x-full flex-col overflow-hidden bg-card p-0 text-ink shadow-2xl [transition:translate_280ms_var(--ease-cg)] data-open:translate-x-0 motion-reduce:transition-none backdrop:bg-ink/50 backdrop:backdrop-blur-sm backdrop:opacity-0 backdrop:[transition:opacity_240ms_ease-out] [&[data-open]::backdrop]:opacity-100 ${className}`}
+      className={`fixed inset-y-0 right-0 left-auto m-0 hidden open:flex h-dvh max-h-none w-[min(100vw,32rem)] max-w-none translate-x-full flex-col overflow-hidden bg-card p-0 text-ink shadow-2xl [transition:translate_280ms_var(--ease-cg)] data-open:translate-x-0 motion-reduce:transition-none backdrop:bg-ink/50 backdrop:backdrop-blur-sm backdrop:opacity-0 backdrop:[transition:opacity_240ms_ease-out] [&[data-open]::backdrop]:opacity-100 ${className}`}
     >
       <h2 id={headingId} className="sr-only">{title}</h2>
       <div className="flex shrink-0 items-center justify-between gap-3 border-b border-ink/10 px-4 py-3">
