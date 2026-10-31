@@ -14,8 +14,8 @@ type Props = {
    *  "outline") and, if needed, a text link ("Agora não"). Never the accent button:
    *  the callout sits under the page's main control and must not compete with it. */
   actions?: ReactNode;
-  /** `wash` (default): the brand's callout wash (TTCAB: petrol mist #dfe9e9 on
-   *  cream), no border — a cool step against the warm page.
+  /** `wash` (default): the brand's callout wash (TTCAB: #f2e0ba, three steps down the
+   *  cream scale), no border.
    *  `accent`: the action-colour wash with a hairline border in the action colour.
    *  `neutral`: white, no border. */
   tone?: "wash" | "accent" | "neutral";
@@ -29,8 +29,8 @@ type Props = {
  * primeiro quem atende perto de você?" under the professionals search, a tip
  * under the articles search). The main control keeps the emphasis (white,
  * shadow); the callout is a quiet wash a step off the page, without a border.
- * TTCAB (wash #dfe9e9): ink 8.25:1, ink-body 7.30:1; the kicker goes in ink-body
- * because action-text would drop to 4.37:1 there.
+ * TTCAB (wash #f2e0ba): ink 7.85:1, ink-body 6.95:1; the kicker goes in ink-body
+ * because action-text would drop to 4.16:1 there.
  */
 export function Callout({ title, kicker, body, Icon, actions, tone = "wash", label, className = "" }: Props) {
   const accent = tone === "accent";
