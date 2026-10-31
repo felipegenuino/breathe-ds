@@ -1,6 +1,7 @@
 import { useEffect, useState, type ReactNode } from "react";
 import { Accordion } from "../../components/Accordion";
 import { Highlight, PullQuote } from "../../components/PullQuote";
+import { ProfileSpotlight } from "../../components/ProfileSpotlight";
 import { CollapseRow, LinkRow, RowList } from "../../components/Rows";
 import { Rail, RailItem } from "../../components/Rail";
 import { Button } from "../../components/Button";
@@ -355,6 +356,7 @@ const PAGE_NAV = [
   { id: "mobile", label: "Mobile", Icon: IconMapPin },
   { id: "anchornav", label: "AnchorNav", Icon: IconMapPin },
   { id: "pullquote", label: "PullQuote", Icon: IconMessage },
+  { id: "profile", label: "ProfileSpotlight", Icon: IconUsers },
   { id: "cards", label: "Cards", Icon: IconBook },
   { id: "videos", label: "Videos", Icon: IconVideo },
   { id: "map", label: "Map", Icon: IconMapPin },
@@ -374,7 +376,7 @@ const FOOTER_GROUPS = (
     ["Foundations", ["symbol", "tokens", "type", "lockup", "icons"]],
     ["Navigation", ["header", "mobile", "anchornav", "breadcrumb", "footer"]],
     ["Content", ["buttons", "action", "accordion", "list", "rows", "timeline", "pills"]],
-    ["Cards & media", ["people", "pullquote", "cards", "videos", "map", "hero", "care", "story", "blog", "course", "events", "cta"]],
+    ["Cards & media", ["people", "profile", "pullquote", "cards", "videos", "map", "hero", "care", "story", "blog", "course", "events", "cta"]],
   ] as const
 ).map(([title, ids]) => ({
   title,
@@ -576,7 +578,7 @@ export function App() {
             { label: "Base", children: [{ label: "Lockup", href: "#lockup" }, { label: "Button", href: "#buttons" }, { label: "Action dose", href: "#action" }, { label: "Icons", href: "#icons" }] },
             { label: "Navigation", children: [{ label: "Header", href: "#header" }, { label: "BottomNav", href: "#mobile" }, { label: "AnchorNav", href: "#anchornav" }, { label: "Breadcrumb", href: "#breadcrumb" }] },
             { label: "Content", children: [{ label: "Accordion", href: "#accordion" }, { label: "List", href: "#list" }, { label: "Rows", href: "#rows" }, { label: "Timeline", href: "#timeline" }, { label: "PillList", href: "#pills" }, { label: "Cards", href: "#cards" }, { label: "PullQuote", href: "#pullquote" }] },
-            { label: "People & media", children: [{ label: "People", href: "#people" }, { label: "Videos", href: "#videos" }, { label: "MapCard", href: "#map" }, { label: "PageVideoHero", href: "#hero" }] },
+            { label: "People & media", children: [{ label: "People", href: "#people" }, { label: "ProfileSpotlight", href: "#profile" }, { label: "Videos", href: "#videos" }, { label: "MapCard", href: "#map" }, { label: "PageVideoHero", href: "#hero" }] },
             { label: "Courses", children: [{ label: "CourseCard", href: "#course" }, { label: "Events", href: "#events" }] },
             { label: "Page sections", children: [{ label: "CareSteps", href: "#care" }, { label: "StoryPanel", href: "#story" }, { label: "Blog", href: "#blog" }, { label: "CtaCard", href: "#cta" }, { label: "Footer", href: "#footer" }] },
           ] },
@@ -1057,6 +1059,35 @@ export function App() {
           </Container>
           <HeroDemo />
         </section>
+
+      <Section id="profile" title="ProfileSpotlight">
+        <p className="mb-10 max-w-[60ch] text-ink-body">One person in focus — the founder, a course coordinator, a guest. Portrait (photo or the living portrait) beside eyebrow, name, role, registration, bio and actions. <code>plain</code> on the page color; <code>card</code> on a white card. Stacks on phones.</p>
+        <ProfileSpotlight
+          eyebrow="Founder"
+          name="Person name"
+          role="What this person does, in one or two lines that read well under the name."
+          registration="Registration number"
+          bio="A short bio paragraph: where the person trained, what they teach and treat, and why they matter here. Real content only, never invented."
+          photo={{ src: `${DEMO}person-poster.jpg`, alt: "Person name" }}
+        />
+        <div className="mt-12">
+          <ProfileSpotlight
+            variant="card"
+            headingLevel="h3"
+            eyebrow="Course coordinator"
+            name="Person name"
+            role="Role · Institution"
+            bio="The card variant sits on white, for a profile among other content."
+            photo={{ src: `${DEMO}person-poster.jpg`, alt: "Person name" }}
+            actions={<Button variant="outline" size="sm" href="#profile">Watch the presentation</Button>}
+            social={[
+              { label: "Instagram", href: "https://instagram.com/", Icon: IconInstagram },
+              { label: "E-mail", href: "mailto:person@example.com", Icon: IconMail },
+              { label: "Lattes", href: "https://lattes.cnpq.br/", Icon: IconGraduationCap },
+            ]}
+          />
+        </div>
+      </Section>
 
       <Section id="pullquote" title="PullQuote · Highlight">
         <p className="mb-10 max-w-[60ch] text-ink-body">One line that matters, set large between sections: drawn quote mark in the action color, balanced lines and, on the key words, the hand-drawn <code>Highlight</code>. Without <code>cite</code> it is a brand statement; with it, a quote from someone.</p>

@@ -192,6 +192,10 @@ from color, not from extra markup.
 
 ## Navigation
 
+- **ProfileSpotlight**: one person in focus (founder, course coordinator, guest) —
+  portrait on the left (photo or `living`, the team pages' living portrait), then
+  eyebrow, name, role, registration, bio and `actions`. `variant` `plain` (on the page
+  color) or `card` (white card). Stacks on phones.
 - **PullQuote** + **Highlight**: one line set large between sections — drawn quote
   mark in the action color, balanced lines, hand-drawn underline (`Highlight`) on the
   key words. `cite` adds the person (Byline with role); without it, a brand statement.
