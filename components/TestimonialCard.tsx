@@ -71,6 +71,9 @@ type Props = {
    *  real photo). `media` replaces the <img> (the site's image component; must
    *  fill the box). */
   photo?: { src: string; alt: string; position?: string; media?: ReactNode };
+  /** Where the photo shows: on the card and in the panel (default), or only in
+   *  the panel — the card stays a clean quote with the avatar. */
+  photoPlacement?: "card" | "panel";
   /** The card shows only this excerpt, large, as a pull quote (the person's own
    *  words, never rewritten); the whole `quote` goes to the panel. */
   excerpt?: ReactNode;
@@ -172,9 +175,10 @@ function TapVideo({ src, youtubeId, poster: posterProp, description, withSound =
 // whole class names, so Tailwind generates them
 const CLAMP: Record<number, string> = { 3: "line-clamp-3", 4: "line-clamp-4", 5: "line-clamp-5", 6: "line-clamp-6", 8: "line-clamp-8" };
 
-export function TestimonialCard({ quote, author, authorPhoto, authorAvatar, authors, link, video, photo, role, joiners, panel, excerpt, excerptMarks = true, clampLines, as: Root = "div", labels, className = "" }: Props) {
+export function TestimonialCard({ quote, author, authorPhoto, authorAvatar, authors, link, video, photo, photoPlacement = "card", role, joiners, panel, excerpt, excerptMarks = true, clampLines, as: Root = "div", labels, className = "" }: Props) {
   const t = { ...EN, ...labels };
   const people = authors ?? [{ name: author ?? "", photo: authorPhoto, avatar: authorAvatar }];
+  const cardPhoto = photoPlacement === "card" ? photo : undefined;
   const quoteRef = useRef<HTMLQuoteElement>(null);
   const [overflows, setOverflows] = useState(false);
   const [open, setOpen] = useState(false);
@@ -201,10 +205,10 @@ export function TestimonialCard({ quote, author, authorPhoto, authorAvatar, auth
     />
   );
   return (
-    <Root className={`${video || photo ? "grid grid-cols-1 sm:grid-cols-[minmax(0,2fr)_minmax(0,3fr)]" : "flex"} overflow-hidden rounded-[28px] bg-card ${className}`}>
+    <Root className={`${video || cardPhoto ? "grid grid-cols-1 sm:grid-cols-[minmax(0,2fr)_minmax(0,3fr)]" : "flex"} overflow-hidden rounded-[28px] bg-card ${className}`}>
       {video ? (
         <TapVideo {...video} label={t.watch(video.description)} />
-      ) : photo ? (
+      ) : cardPhoto && photo ? (
         <div className="relative aspect-[4/3] overflow-hidden bg-ink/[0.06] sm:aspect-auto sm:min-h-[16rem]">
           {photo.media ?? (
             // eslint-disable-next-line @next/next/no-img-element
@@ -212,7 +216,7 @@ export function TestimonialCard({ quote, author, authorPhoto, authorAvatar, auth
           )}
         </div>
       ) : null}
-      <figure className={`flex flex-1 flex-col justify-between gap-5 ${video || photo ? "p-5 md:p-7" : "p-6 md:p-8"}`}>
+      <figure className={`flex flex-1 flex-col justify-between gap-5 ${video || cardPhoto ? "p-5 md:p-7" : "p-6 md:p-8"}`}>
         <div>
           {excerpt ? (
             <blockquote className="m-0">
