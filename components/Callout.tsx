@@ -29,6 +29,8 @@ type Props = {
  * primeiro quem atende perto de você?" under the professionals search, a tip
  * under the articles search). The main control keeps the emphasis (white,
  * shadow); the callout is a quiet wash a step off the page, without a border.
+ * Optical padding: the right side gets 8px more than the left (36 vs 28) — the round
+ * icon bubble reads as more inset than the straight edge of a button or underlined link.
  * TTCAB (wash #d2e6e9): ink 7.90:1, ink-body 6.98:1; the kicker goes in ink-body
  * because action-text would drop to 4.18:1 there.
  */
@@ -39,7 +41,7 @@ export function Callout({ title, kicker, body, Icon, actions, tone = "wash", lab
     <div
       role={label ? "region" : undefined}
       aria-label={label}
-      className={`flex flex-col gap-4 rounded-[24px] p-5 sm:flex-row sm:items-center sm:gap-5 md:px-7 md:py-6 ${box} ${className}`}
+      className={`flex flex-col gap-4 rounded-[24px] p-5 sm:flex-row sm:items-center sm:gap-5 sm:pr-6 md:py-6 md:pr-9 md:pl-7 ${box} ${className}`}
     >
       {Icon && (
         <span aria-hidden="true" className={`hidden h-12 w-12 shrink-0 items-center justify-center rounded-full sm:flex ${accent ? "bg-card text-action-text" : tone === "wash" ? "bg-callout-deep text-ink" : "bg-tint text-ink"}`}>
