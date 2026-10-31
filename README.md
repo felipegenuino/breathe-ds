@@ -206,7 +206,9 @@ from color, not from extra markup.
   floating bottom bar. It is the code of novo.creeta's BarraNavegacao (= ttcab's
   BottomNav), made neutral through tokens: it receives ALL pages in order of importance
   (`pages`, with the lucide `Icon`) and shows as many as fit (64px per tab,
-  ResizeObserver); the rest and the external exits (`extras`, with the domain spelled out
+  ResizeObserver), **at most 5 tabs counting "More"** (4 pages + More, as the iOS and
+  Android tab bars; family rule of 2026-10-30: more than that cuts the labels and
+  shrinks the tap targets); the rest and the external exits (`extras`, with the domain spelled out
   and a ↗ arrow) go to the "More" panel, a native popover (Esc, tap outside, no
   JS). Gradient veil behind the bar. `hideFrom` = `md` (creeta) or `lg`
   (ttcab). `labels` for another language. `embedded` for the demo frame.
