@@ -1325,6 +1325,16 @@ export function App() {
             video={{ src: `${DEMO}clip.mp4`, poster: `${DEMO}clip-poster.jpg`, description: "What the clip shows (1 min 39 s)" }}
           />
         </div>
+        {/* excerpt + panel (as on ttcab): the whole card opens the panel — stretched link */}
+        <div className="mt-6 max-w-2xl">
+          <TestimonialCard
+            excerpt="A short excerpt, the person's own words."
+            quote="A short excerpt, the person's own words. Then the rest of the testimonial, which only shows in the side panel."
+            authors={[{ name: "Author name", photo: tc.photo ? `${DEMO}person-avatar.jpg` : undefined }]}
+            role="Physiotherapist"
+            panel={{ eyebrow: "Testimonial" }}
+          />
+        </div>
       </Section>
 
       <Section id="map" title="MapCard">

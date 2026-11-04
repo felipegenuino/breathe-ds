@@ -208,10 +208,13 @@ export function TestimonialCard({ quote, author, authorPhoto, authorAvatar, auth
       joiners={joiners}
     />
   );
+  // the whole card opens the panel (stretched link: the button's ::after covers the card);
+  // the video and the source link sit above it (relative z-[1]) and keep their own click
+  const opens = overflows || !!panel;
   return (
-    <Root className={`${cardVideo || cardPhoto ? "grid grid-cols-1 sm:grid-cols-[minmax(0,2fr)_minmax(0,3fr)]" : "flex"} overflow-hidden rounded-[28px] bg-card ${className}`}>
+    <Root className={`${opens ? "group/card relative" : ""} ${cardVideo || cardPhoto ? "grid grid-cols-1 sm:grid-cols-[minmax(0,2fr)_minmax(0,3fr)]" : "flex"} overflow-hidden rounded-[28px] bg-card ${className}`}>
       {cardVideo ? (
-        <TapVideo {...cardVideo} label={t.watch(cardVideo.description)} />
+        <TapVideo {...cardVideo} label={t.watch(cardVideo.description)} frameClass="relative z-[1] aspect-video overflow-hidden bg-ink sm:aspect-auto sm:min-h-[16rem]" />
       ) : cardPhoto ? (
         <div className="relative aspect-[4/3] overflow-hidden bg-tint sm:aspect-auto sm:min-h-[16rem]">
           {cardPhoto.media ?? (
@@ -240,17 +243,17 @@ export function TestimonialCard({ quote, author, authorPhoto, authorAvatar, auth
               {quote}
             </blockquote>
           )}
-          {(overflows || panel) && (
+          {opens && (
             <button
               type="button"
               onClick={() => setOpen(true)}
-              className="mt-3 inline-flex min-h-11 items-center gap-1 text-left font-semibold text-ink underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink"
+              className="mt-3 inline-flex min-h-11 items-center gap-1 text-left font-semibold text-ink underline decoration-ink/40 underline-offset-4 transition-[text-decoration-color] duration-150 after:absolute after:inset-0 after:rounded-[28px] after:content-[''] group-hover/card:decoration-ink focus-visible:outline-none focus-visible:after:outline-2 focus-visible:after:outline-offset-2 focus-visible:after:outline-ink motion-reduce:transition-none"
             >
               {video && !cardVideo ? t.watchFull : t.readMore}
             </button>
           )}
         </div>
-        <figcaption>{byline}</figcaption>
+        <figcaption className={link ? "relative z-[1]" : undefined}>{byline}</figcaption>
       </figure>
       {(clampLines || panel) && (
         <SidePanel open={open} onClose={() => setOpen(false)} title={names} labels={{ close: t.close }}>
