@@ -65,8 +65,9 @@ export type VideoInviteCardProps = {
   video?: InviteVideo;
   /** `plain` (default): ink text straight over the video, for footage with a light
    *  wall behind the title. `pill`: the title on a white pill, legible over any
-   *  frame (e.g. when the face reaches the top of the crop). */
-  captionStyle?: "plain" | "pill";
+   *  frame (e.g. when the face reaches the top of the crop). `blur`: no fill, only
+   *  the frosted blur of the video behind, white text with a soft shadow. */
+  captionStyle?: "plain" | "pill" | "blur";
   /** Where the title sits on the idle loop: `top` (default) or `bottom` — when the
    *  face fills the top of the frame. The play circle stays bottom-right. */
   captionAt?: "top" | "bottom";
@@ -99,6 +100,14 @@ function PlayGlyph({ size = 22 }: { size?: number }) {
  * (`rounded-2xl` in the DS scale); the consumer sets aspect/min-height via
  * `className`.
  */
+const CAPTION = {
+  plain: "text-ink [text-shadow:0_1px_2px_rgba(255,255,255,0.5)]",
+  pill: "text-ink rounded-2xl bg-card/90 px-3 py-2 backdrop-blur-sm",
+  // a 20% ink veil under the blur: white measured 5.1–5.5:1 over ttcab's loop
+  // (4.2–4.7:1 with blur alone); the shadow holds it on the lightest frames
+  blur: "text-white rounded-2xl bg-ink/20 px-3 py-2 backdrop-blur-md [text-shadow:0_1px_3px_rgba(0,0,0,0.55)]",
+} as const;
+
 export function VideoInviteCard({ title, description, loop, video, captionStyle = "plain", captionAt = "top", onPlay, onEnded, labels, className = "" }: VideoInviteCardProps) {
   const [inviting, setInviting] = useState(false);
   const t = { ...EN, ...labels };
@@ -108,7 +117,7 @@ export function VideoInviteCard({ title, description, loop, video, captionStyle 
      median on the loop, 5.86:1 on the invitation). The light text-shadow
      holds it on the darker frames. */
   const caption = (
-    <p className={`inline-block text-sm font-medium leading-snug text-ink ${captionStyle === "pill" ? "rounded-2xl bg-card/90 px-3 py-2 backdrop-blur-sm" : "[text-shadow:0_1px_2px_rgba(255,255,255,0.5)]"}`}>
+    <p className={`inline-block text-sm font-medium leading-snug ${CAPTION[captionStyle]}`}>
       <span className="block">{title}</span>
       {description && <span className="block font-normal">{description}</span>}
     </p>
