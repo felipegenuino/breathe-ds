@@ -105,7 +105,7 @@ const CAPTION = {
   pill: "text-ink rounded-2xl bg-card/90 px-3 py-2 backdrop-blur-sm",
   // a 20% ink veil under the blur: white measured 5.1–5.5:1 over ttcab's loop
   // (4.2–4.7:1 with blur alone); the shadow holds it on the lightest frames
-  blur: "text-white rounded-2xl bg-ink/20 px-3 py-2 backdrop-blur-md [text-shadow:0_1px_3px_rgba(0,0,0,0.55)]",
+  blur: "text-white rounded-lg bg-ink/20 px-3 py-2 backdrop-blur-md [text-shadow:0_1px_3px_rgba(0,0,0,0.55)]",
 } as const;
 
 export function VideoInviteCard({ title, description, loop, video, captionStyle = "plain", captionAt = "top", onPlay, onEnded, labels, className = "" }: VideoInviteCardProps) {
