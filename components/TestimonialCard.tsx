@@ -7,8 +7,9 @@ import { Byline } from "./Byline";
 import { SidePanel } from "./SidePanel";
 
 type Labels = {
-  /** sr-only text of the play button: "Watch: {description}". */
-  watch: (description: string) => string;
+  /** sr-only text of the play button: "Watch: {description}". A function, or a
+   *  string with `{description}` (a string can cross from a server component). */
+  watch: ((description: string) => string) | string;
   /** sr-only after the outbound link. */
   newTab: string;
   /** Button under a clamped quote that opens the whole testimonial. */
@@ -180,6 +181,7 @@ const CLAMP: Record<number, string> = { 3: "line-clamp-3", 4: "line-clamp-4", 5:
 
 export function TestimonialCard({ quote, author, authorPhoto, authorAvatar, authors, link, video, photo, mediaPlacement = "card", role, joiners, panel, excerpt, excerptMarks = true, clampLines, as: Root = "div", labels, className = "" }: Props) {
   const t = { ...EN, ...labels };
+  const watch = (d: string) => (typeof t.watch === "function" ? t.watch(d) : t.watch.replace("{description}", d));
   const people = authors ?? [{ name: author ?? "", photo: authorPhoto, avatar: authorAvatar }];
   const cardPhoto = mediaPlacement === "card" ? photo : undefined;
   const cardVideo = mediaPlacement === "card" ? video : undefined;
@@ -214,7 +216,7 @@ export function TestimonialCard({ quote, author, authorPhoto, authorAvatar, auth
   return (
     <Root className={`${opens ? "group/card relative" : ""} ${cardVideo || cardPhoto ? "grid grid-cols-1 sm:grid-cols-[minmax(0,2fr)_minmax(0,3fr)]" : "flex"} overflow-hidden rounded-[28px] bg-card ${className}`}>
       {cardVideo ? (
-        <TapVideo {...cardVideo} label={t.watch(cardVideo.description)} frameClass="relative z-[1] aspect-video overflow-hidden bg-ink sm:aspect-auto sm:min-h-[16rem]" />
+        <TapVideo {...cardVideo} label={watch(cardVideo.description)} frameClass="relative z-[1] aspect-video overflow-hidden bg-ink sm:aspect-auto sm:min-h-[16rem]" />
       ) : cardPhoto ? (
         <div className="relative aspect-[4/3] overflow-hidden bg-tint sm:aspect-auto sm:min-h-[16rem]">
           {cardPhoto.media ?? (
@@ -260,7 +262,7 @@ export function TestimonialCard({ quote, author, authorPhoto, authorAvatar, auth
           <article className="flex flex-col gap-6 px-6 pt-2 pb-10 md:px-8">
             {panel && video ? (
               <div className="overflow-hidden rounded-2xl">
-                <TapVideo {...video} label={t.watch(video.description)} frameClass="relative aspect-video overflow-hidden bg-ink" />
+                <TapVideo {...video} label={watch(video.description)} frameClass="relative aspect-video overflow-hidden bg-ink" />
               </div>
             ) : panel && photo ? (
               <div className="overflow-hidden rounded-2xl bg-tint">
