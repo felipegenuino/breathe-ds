@@ -1,6 +1,6 @@
 {
   "name": "@breathe-ds/ui",
-  "version": "0.6.7",
+  "version": "0.6.8",
   "description": "Breathe DS — the design system of the Cuidado Global family of sites (creeta, ttcab, metodorta). Themeable tokens + React components.",
   "license": "MIT",
   "type": "module",
@@ -50,6 +50,7 @@
     "./components/BottomNav": "./components/BottomNav.tsx",
     "./components/BreatheMark": "./components/BreatheMark.tsx",
     "./components/Curtain": "./components/Curtain.tsx",
+    "./components/curtainHeadScript": "./components/curtainHeadScript.ts",
     "./components/Lockup": "./components/Lockup.tsx",
     "./tokens/neutral.css": {
       "style": "./tokens/neutral.css",

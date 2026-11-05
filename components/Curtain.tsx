@@ -98,16 +98,11 @@ export function Curtain({ name, tagline, logo, wordmarkRatio, symbolSide = "left
 }
 
 /**
- * Script for the <head> (before paint): marks the curtain as seen in this
- * session, so it does not repeat on navigation or reload. Without it, the
- * curtain shows on every load.
- *   // Next (app/layout):
- *   <script dangerouslySetInnerHTML={{ __html: curtainHeadScript("cg-curtain") }} />
+ * Script for the <head>: moved to `components/curtainHeadScript.ts` (2026-11-05)
+ * so a server layout can call it (this file is "use client"). Kept here for old
+ * imports from client code.
  */
-export function curtainHeadScript(storageKey = "cg-curtain") {
-  const k = JSON.stringify(storageKey);
-  return `try{var d=document.documentElement;if(sessionStorage.getItem(${k})){d.setAttribute('data-cg-curtain','seen')}else{sessionStorage.setItem(${k},'1')}}catch(e){}`;
-}
+export { curtainHeadScript } from "./curtainHeadScript";
 
 const CURTAIN_CSS = `
 .cg-curtain{

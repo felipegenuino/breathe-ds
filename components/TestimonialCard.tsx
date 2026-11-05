@@ -79,7 +79,11 @@ type Props = {
    *  or only in the panel — the card stays a clean quote with the avatar. */
   mediaPlacement?: "card" | "panel";
   /** The card shows only this excerpt, large, as a pull quote (the person's own
-   *  words, never rewritten); the whole `quote` goes to the panel. */
+   *  words, never rewritten); the whole `quote` goes to the panel.
+   *  RULE (2026-11-05, Felipe): with `panel`, the card is ONLY a quote — never
+   *  the long text clamped. Pass the excerpt the client chose; without one, the
+   *  card takes the first sentence of a string `quote` (cut at a word, with "…",
+   *  when it runs long). The whole testimonial always opens in the panel. */
   excerpt?: ReactNode;
   /** Quote marks around the excerpt. false for a context line that is not the
    *  person's speech (e.g. the description of a video). Default: true. */
@@ -179,8 +183,21 @@ function TapVideo({ src, youtubeId, poster: posterProp, description, withSound =
 // whole class names, so Tailwind generates them
 const CLAMP: Record<number, string> = { 3: "line-clamp-3", 4: "line-clamp-4", 5: "line-clamp-5", 6: "line-clamp-6", 8: "line-clamp-8" };
 
+/** First sentence of a testimonial, for the card when no excerpt was chosen.
+ *  Long sentences are cut at a word (≤ 140 characters) with "…". */
+export function firstSentence(text: string, max = 140): string {
+  const clean = text.replace(/\s+/g, " ").trim();
+  const m = /^(.+?[.!?])(\s|$)/.exec(clean);
+  const s = m ? m[1] : clean;
+  if (s.length <= max) return s;
+  const cut = s.slice(0, max);
+  return `${cut.slice(0, cut.lastIndexOf(" ")).replace(/[,;:\s]+$/, "")}…`;
+}
+
 export function TestimonialCard({ quote, author, authorPhoto, authorAvatar, authors, link, video, photo, mediaPlacement = "card", role, joiners, panel, excerpt, excerptMarks = true, clampLines, as: Root = "div", labels, className = "" }: Props) {
   const t = { ...EN, ...labels };
+  // with a panel the card is only a quote: the given excerpt, or the first sentence
+  const shownExcerpt = excerpt ?? (panel && typeof quote === "string" ? firstSentence(quote) : undefined);
   const watch = (d: string) => (typeof t.watch === "function" ? t.watch(d) : t.watch.replace("{description}", d));
   const people = authors ?? [{ name: author ?? "", photo: authorPhoto, avatar: authorAvatar }];
   const cardPhoto = mediaPlacement === "card" ? photo : undefined;
@@ -227,7 +244,7 @@ export function TestimonialCard({ quote, author, authorPhoto, authorAvatar, auth
       ) : null}
       <figure className={`flex flex-1 flex-col justify-between gap-5 ${cardVideo || cardPhoto ? "p-5 md:p-7" : "p-6 md:p-8"}`}>
         <div>
-          {excerpt ? (
+          {shownExcerpt ? (
             <blockquote className="m-0">
               {/* the family's drawn mark (same as PullQuote) above the line; the line itself stays clean */}
               {excerptMarks && (
@@ -235,7 +252,7 @@ export function TestimonialCard({ quote, author, authorPhoto, authorAvatar, auth
                   <path d="M0 36V22C0 10.5 6 2.6 18.2 0l2.3 5.2C14.6 7.4 11.4 11 11 16h8.6v20H0Zm27.4 0V22c0-11.5 6-19.4 18.2-22l2.3 5.2C42 7.4 38.8 11 38.4 16H47v20H27.4Z" />
                 </svg>
               )}
-              <p className="m-0 font-heading text-[1.3rem] leading-snug font-semibold text-balance text-ink md:text-[1.5rem]">{excerpt}</p>
+              <p className="m-0 font-heading text-[1.3rem] leading-snug font-semibold text-balance text-ink md:text-[1.5rem]">{shownExcerpt}</p>
             </blockquote>
           ) : (
             <blockquote

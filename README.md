@@ -162,6 +162,8 @@ files (`public/brand`) in the repositories, split into two components so the
 
 ```tsx
 <Curtain logo={<TtcabSymbol />} name={<TtcabWordmark />} wordmarkRatio={TTCAB_LOCKUP.wordmarkPerSymbol} tagline="…" />
+// once per session: the head script, from its own module (callable in a server layout, 0.6.8)
+// import { curtainHeadScript } from "@breathe-ds/ui/components/curtainHeadScript";
 <Lockup variant="horizontal" size="md" logo={<CreetaSymbol />} wordmark={<CreetaWordmark />} wordmarkRatio={CREETA_LOCKUP.wordmarkPerSymbol} name="creeta" />
 ```
 
@@ -306,6 +308,12 @@ from color, not from extra markup.
   the page-level pause contract (`CARD_VIDEOS_PAUSE_EVENT` / `CARD_VIDEOS_PAUSED_ATTR`).
 - **TestimonialCard**: clip with a play button on the left, quote + author +
   outbound link on the right ("Famílias contam").
+  **Rule (0.6.8): in a grid of testimonials with `panel`, the card is ONLY a quote**
+  — a short excerpt in the person's own words, large, with the drawn quote mark;
+  the whole testimonial (and its video or photo) opens in the panel on click. Pass
+  the `excerpt` the client chose (`excerptMarks={false}` for a context line that is
+  not the person's speech); without one, the card takes the first sentence.
+  Never show the long text clamped on the card.
 - **MapCard**: the Mapa of novo.creeta — a still preview fading into the card,
   the address, "View the map" and the outbound "Directions" link; Google is only
   called after the tap (no consent banner, lighter page). Open, the map fills
