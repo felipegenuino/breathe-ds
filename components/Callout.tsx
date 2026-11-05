@@ -1,6 +1,6 @@
 import type { ComponentType, ReactNode } from "react";
 
-type IconType = ComponentType<{ size?: number; strokeWidth?: number; "aria-hidden"?: boolean | "true" }>;
+type IconType = ComponentType<{ size?: number | string; strokeWidth?: number | string; "aria-hidden"?: boolean | "true" | "false" }>;
 
 type Props = {
   title: ReactNode;

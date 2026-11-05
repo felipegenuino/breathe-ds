@@ -6,7 +6,7 @@ import { version as REACT_VERSION, useEffect, useId, useRef, useState, type Comp
 const POPOVER_TARGET = parseInt(REACT_VERSION, 10) >= 19 ? "popoverTarget" : "popovertarget";
 
 /** Icon in the lucide pattern (the component, not the node): the bar decides the size. */
-export type IconType = ComponentType<{ size?: number; strokeWidth?: number; className?: string; "aria-hidden"?: boolean | "true" }>;
+export type IconType = ComponentType<{ size?: number | string; strokeWidth?: number | string; className?: string; "aria-hidden"?: boolean | "true" | "false" }>;
 
 /** One page of the site, in order of importance. The first ones stay on the bar;
  *  those that don't fit go into "More". */

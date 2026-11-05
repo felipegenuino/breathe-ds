@@ -312,7 +312,8 @@ function PillToggle({ label, on, set }: { label: string; on: boolean; set: (v: b
   );
 }
 
-function SegGroup<T extends string>({ label, value, set, options }: { label: string; value: T; set: (v: T) => void; options: [T, string][] }) {
+// T comes only from `value` (NoInfer): otherwise the inline options widen it to string
+function SegGroup<T extends string>({ label, value, set, options }: { label: string; value: T; set: (v: NoInfer<T>) => void; options: readonly (readonly [NoInfer<T>, string])[] }) {
   return (
     <div className="flex items-center gap-2">
       <span className="text-xs font-semibold text-ink-soft">{label}</span>

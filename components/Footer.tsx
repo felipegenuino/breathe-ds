@@ -3,7 +3,7 @@ import { LanguageSwitcher, type Language } from "./LanguageSwitcher";
 import { List } from "./List";
 
 /** lucide-style icon component (the footer sets the size). */
-type IconType = ComponentType<{ size?: number; strokeWidth?: number; className?: string; "aria-hidden"?: boolean | "true" }>;
+type IconType = ComponentType<{ size?: number | string; strokeWidth?: number | string; className?: string; "aria-hidden"?: boolean | "true" | "false" }>;
 
 export type FooterLink = { href: string; label: ReactNode };
 /** A titled column of links, for footers with many pages ("Foundations", "Cards…"). */

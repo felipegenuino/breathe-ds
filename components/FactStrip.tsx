@@ -1,6 +1,6 @@
 import type { ComponentType, ReactNode } from "react";
 
-type IconType = ComponentType<{ size?: number; strokeWidth?: number; className?: string; "aria-hidden"?: boolean | "true" }>;
+type IconType = ComponentType<{ size?: number | string; strokeWidth?: number | string; className?: string; "aria-hidden"?: boolean | "true" | "false" }>;
 
 export type Fact = {
   Icon: IconType;

@@ -21,7 +21,7 @@ type Props = {
   actions?: ReactNode;
   /** Social profiles at the foot (Instagram, LinkedIn, Lattes…): round icon
    *  links, each with its name for screen readers, opening in a new tab. */
-  social?: { label: string; href: string; Icon: ComponentType<{ size?: number; strokeWidth?: number; "aria-hidden"?: boolean | "true" }> }[];
+  social?: { label: string; href: string; Icon: ComponentType<{ size?: number | string; strokeWidth?: number | string; "aria-hidden"?: boolean | "true" | "false" }> }[];
   /** sr-only after each social link. */
   newTabLabel?: string;
   /** `card`: on a white card. `plain` (default): straight on the page color. */

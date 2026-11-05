@@ -39,7 +39,7 @@ export type ProfessionalModalLabels = {
 
 /** Lucide's icon type is wider than MediaCardBadge's `IconType` under strict
  *  TS (propTypes allow a string `size`); this thin wrapper fits the slot. */
-const PlayIcon = (p: { size?: number; strokeWidth?: number; className?: string; "aria-hidden"?: boolean | "true" }) => <Play {...p} />;
+const PlayIcon = (p: { size?: number | string; strokeWidth?: number | string; className?: string; "aria-hidden"?: boolean | "true" | "false" }) => <Play {...p} />;
 
 const EN: ProfessionalModalLabels = {
   presentation: "Presentation",
