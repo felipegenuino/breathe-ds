@@ -340,6 +340,10 @@ const CSS = `
 .cg-more-panel{
   position:fixed; inset:auto .75rem calc(5.75rem + env(safe-area-inset-bottom)) .75rem;
   width:auto; margin:0; border:0; border-radius:26px; padding:.5rem;
+  /* long list (many pages): the panel stops below the top of the screen and
+     scrolls inside, instead of running off the top with the first items lost */
+  max-height:calc(100dvh - 5.75rem - env(safe-area-inset-bottom) - .75rem);
+  overflow-y:auto; overscroll-behavior:contain; scrollbar-width:thin;
   background:var(--color-card); color:var(--color-ink);
   box-shadow:0 20px 48px -16px rgb(0 0 0 / .35), 0 1px 2px rgb(0 0 0 / .1);
   opacity:0; transform:translateY(8px) scale(.97); transform-origin:88% 100%;
@@ -348,7 +352,7 @@ const CSS = `
 .cg-more-panel:popover-open, .cg-more-panel--embedded{ opacity:1; transform:none; }
 @starting-style{ .cg-more-panel:popover-open, .cg-more-panel--embedded{ opacity:0; transform:translateY(8px) scale(.97); } }
 .cg-more-panel::backdrop{ background:transparent; }
-.cg-more-panel--embedded{ position:absolute; z-index:50; }
+.cg-more-panel--embedded{ position:absolute; z-index:50; max-height:calc(100% - 6.5rem); }
 @media (prefers-reduced-motion:reduce){
   .cg-more-panel{ transform:none; transition:opacity 120ms ease; }
   @starting-style{ .cg-more-panel:popover-open, .cg-more-panel--embedded{ transform:none; } }
