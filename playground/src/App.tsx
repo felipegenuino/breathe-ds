@@ -68,19 +68,19 @@ const DEMO = `${import.meta.env.BASE_URL}demo/`;
 /* ───── palettes (the DS is neutral; color comes from each app) ───── */
 const PALETTES: Record<string, Record<string, string>> = {
   Neutral: {
-    "--color-surface": "#f4f4f5", "--color-card": "#ffffff", "--color-surface-panel": "#18181b", "--color-ink": "#18181b",
+    "--color-surface": "#f4f4f5", "--color-surface-alt": "#eaeaec", "--color-card": "#ffffff", "--color-surface-panel": "#18181b", "--color-ink": "#18181b",
     "--color-ink-soft": "#65656e", "--color-ink-body": "#3f3f46", "--color-action": "#18181b",
     "--color-action-text": "#52525b", "--color-on-action": "#ffffff", "--color-line": "rgb(0 0 0 / 0.12)", "--color-action-tint": "#e9e9ea", "--color-action-line": "#18181b",
     "--color-callout": "#e1e1e4", "--color-callout-deep": "#d4d4d8", "--color-callout-deeper": "#c4c4c9",
   },
   TTCAB: {
-    "--color-surface": "#fbf5e9", "--color-card": "#ffffff", "--color-surface-panel": "#144753", "--color-ink": "#144753",
+    "--color-surface": "#fbf5e9", "--color-surface-alt": "#f6eedd", "--color-card": "#ffffff", "--color-surface-panel": "#144753", "--color-ink": "#144753",
     "--color-ink-soft": "#54707a", "--color-ink-body": "#1e4f5b", "--color-action": "#e8541e",
     "--color-action-text": "#bd3f0c", "--color-on-action": "#ffffff", "--color-line": "rgb(20 71 83 / 0.16)", "--color-action-tint": "#faebdd", "--color-action-line": "#e8541e",
     "--color-callout": "#d2e6e9", "--color-callout-deep": "#afd8de", "--color-callout-deeper": "#8ecdd6",
   },
   Creeta: {
-    "--color-surface": "#eef3f4", "--color-card": "#ffffff", "--color-surface-panel": "#144753", "--color-ink": "#144753",
+    "--color-surface": "#eef3f4", "--color-surface-alt": "#e4ecee", "--color-card": "#ffffff", "--color-surface-panel": "#144753", "--color-ink": "#144753",
     "--color-ink-soft": "#266675", "--color-ink-body": "#1e4f5b", "--color-action": "#ab2781",
     "--color-action-text": "#8f1f6c", "--color-on-action": "#ffffff", "--color-line": "rgb(20 71 83 / 0.16)", "--color-action-tint": "#eae7ed", "--color-action-line": "#ab2781",
     "--color-callout": "#eddec1", "--color-callout-deep": "#e8cd98", "--color-callout-deeper": "#e5be72",
@@ -206,7 +206,7 @@ function SearchDemo() {
 
 function Section({ id, title, children }: { id: string; title: string; children: ReactNode }) {
   return (
-    <section id={id} className="scroll-mt-24 border-b border-line py-[clamp(40px,6vw,72px)]">
+    <section id={id} className="cg-dots-edges cg-grain scroll-mt-24 py-[clamp(40px,6vw,72px)]">
       <Container>
         <SectionKicker>{title}</SectionKicker>
         {children}
@@ -669,8 +669,8 @@ export function App() {
           ] },
         ]}
       />
-      <main className="min-w-0">
-        <div className="border-b border-line py-[clamp(48px,7vw,96px)]">
+      <main className="pg-zebra min-w-0">
+        <div className="py-[clamp(48px,7vw,96px)]">
           <Container>
             <div className="mb-4 text-ink"><BreatheMark size={44} /></div>
             <p className="mb-3 font-heading text-[0.82rem] font-bold tracking-[0.14em] text-ink-soft uppercase">Breathe · @breathe-ds/ui</p>
@@ -1180,7 +1180,7 @@ export function App() {
           </div>
         </Section>
 
-        <section id="hero" className="scroll-mt-24 border-b border-line py-[clamp(40px,6vw,72px)]">
+        <section id="hero" className="cg-dots-edges cg-grain scroll-mt-24 py-[clamp(40px,6vw,72px)]">
           <Container>
             <SectionKicker>PageVideoHero <span className="font-heading text-base font-semibold text-ink-soft">— real width (full-bleed)</span></SectionKicker>
           </Container>

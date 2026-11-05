@@ -7,3 +7,9 @@
 
 :root { --font-quicksand: "Quicksand"; --font-figtree: "Figtree"; }
 body { margin: 0; background: var(--color-surface); color: var(--color-ink); font-family: var(--font-body); -webkit-font-smoothing: antialiased; }
+
+/* Zebra like ttcab (04/11/2026): header + hero on the plain surface, then the
+   sections alternate band (surface-alt + paper grain) and plain, with the dot
+   grid on the side gutters of every section. The bands replace the old lines. */
+.pg-zebra > section:nth-of-type(odd) { background-color: var(--color-surface-alt); }
+.pg-zebra > section:nth-of-type(even) { background-image: none; }
