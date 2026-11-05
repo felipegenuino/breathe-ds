@@ -422,38 +422,39 @@ const DEMO_LANGUAGES = [
   { lang: "es", label: "Español", href: "#header" },
 ];
 
+// one icon per page, each saying what the page is (no repeated book/balloon)
 const PAGE_NAV = [
-  { id: "symbol", label: "Symbol", Icon: IconWind },
-  { id: "tokens", label: "Tokens", Icon: IconActivity },
-  { id: "type", label: "Typography", Icon: IconBook },
-  { id: "lockup", label: "Lockup", Icon: IconHome },
-  { id: "buttons", label: "Button", Icon: IconActivity },
-  { id: "action", label: "Action dose", Icon: IconActivity },
-  { id: "icons", label: "Icons", Icon: IconSearch },
-  { id: "accordion", label: "Accordion", Icon: IconBook },
-  { id: "list", label: "List", Icon: IconBook },
-  { id: "rows", label: "Rows", Icon: IconBook },
-  { id: "timeline", label: "Timeline", Icon: IconActivity },
-  { id: "people", label: "People", Icon: IconUsers },
-  { id: "breadcrumb", label: "Breadcrumb", Icon: IconMapPin },
-  { id: "pills", label: "PillList", Icon: IconSearch },
-  { id: "header", label: "Header", Icon: IconHome },
-  { id: "mobile", label: "Mobile", Icon: IconMapPin },
-  { id: "anchornav", label: "AnchorNav", Icon: IconMapPin },
-  { id: "callout", label: "Callout", Icon: IconInfo },
-  { id: "pullquote", label: "PullQuote", Icon: IconMessage },
-  { id: "profile", label: "ProfileSpotlight", Icon: IconUsers },
-  { id: "cards", label: "Cards", Icon: IconBook },
-  { id: "videos", label: "Videos", Icon: IconVideo },
-  { id: "map", label: "Map", Icon: IconMapPin },
-  { id: "hero", label: "Hero", Icon: IconVideo },
-  { id: "care", label: "CareSteps", Icon: IconActivity },
-  { id: "story", label: "StoryPanel", Icon: IconBook },
-  { id: "blog", label: "Blog", Icon: IconBook },
-  { id: "course", label: "CourseCard", Icon: IconGraduationCap },
-  { id: "events", label: "Events", Icon: IconGraduationCap },
-  { id: "cta", label: "CtaCard", Icon: IconMessage },
-  { id: "footer", label: "Footer", Icon: IconMessage },
+  { id: "symbol", label: "Symbol", Icon: Lucide.Wind },
+  { id: "tokens", label: "Tokens", Icon: Lucide.Palette },
+  { id: "type", label: "Typography", Icon: Lucide.Type },
+  { id: "lockup", label: "Lockup", Icon: Lucide.Stamp },
+  { id: "buttons", label: "Button", Icon: Lucide.MousePointerClick },
+  { id: "action", label: "Action dose", Icon: Lucide.Flame },
+  { id: "icons", label: "Icons", Icon: Lucide.Shapes },
+  { id: "accordion", label: "Accordion", Icon: Lucide.ListCollapse },
+  { id: "list", label: "List", Icon: Lucide.List },
+  { id: "rows", label: "Rows", Icon: Lucide.Rows3 },
+  { id: "timeline", label: "Timeline", Icon: Lucide.Milestone },
+  { id: "people", label: "People", Icon: Lucide.Users },
+  { id: "breadcrumb", label: "Breadcrumb", Icon: Lucide.Footprints },
+  { id: "pills", label: "PillList", Icon: Lucide.Tags },
+  { id: "header", label: "Header", Icon: Lucide.PanelTop },
+  { id: "mobile", label: "Mobile", Icon: Lucide.Smartphone },
+  { id: "anchornav", label: "AnchorNav", Icon: Lucide.Anchor },
+  { id: "callout", label: "Callout", Icon: Lucide.Info },
+  { id: "pullquote", label: "PullQuote", Icon: Lucide.Quote },
+  { id: "profile", label: "ProfileSpotlight", Icon: Lucide.Contact },
+  { id: "cards", label: "Cards", Icon: Lucide.LayoutGrid },
+  { id: "videos", label: "Videos", Icon: Lucide.Video },
+  { id: "map", label: "Map", Icon: Lucide.Map },
+  { id: "hero", label: "Hero", Icon: Lucide.Clapperboard },
+  { id: "care", label: "CareSteps", Icon: Lucide.HeartPulse },
+  { id: "story", label: "StoryPanel", Icon: Lucide.BookOpen },
+  { id: "blog", label: "Blog", Icon: Lucide.Newspaper },
+  { id: "course", label: "CourseCard", Icon: Lucide.GraduationCap },
+  { id: "events", label: "Events", Icon: Lucide.CalendarDays },
+  { id: "cta", label: "CtaCard", Icon: Lucide.Megaphone },
+  { id: "footer", label: "Footer", Icon: Lucide.PanelBottom },
 ] as const;
 
 // the footer with many pages: titled columns instead of one long list
@@ -1709,8 +1710,13 @@ export function App() {
       </div>
 
       <BottomNav
-        pages={PAGE_NAV.map(({ id, label, Icon }) => ({ href: `#${id}`, label, Icon, active: id === activeSection }))}
-        extras={[{ label: "Code on GitHub", href: "https://github.com/felipegenuino/breathe-ds", Icon: IconGraduationCap, external: true }]}
+        // same groups as the footer columns, so both menus read alike; the bar keeps
+        // its first pages and "More" lists the rest under the group titles
+        pages={FOOTER_GROUPS.flatMap((g) => g.links.map((l) => {
+          const { id, label, Icon } = PAGE_NAV.find((p) => `#${p.id}` === l.href)!;
+          return { href: l.href, label, Icon, active: id === activeSection, group: g.title };
+        }))}
+        extras={[{ label: "Code on GitHub", href: "https://github.com/felipegenuino/breathe-ds", Icon: Lucide.Code, external: true }]}
       />
     </div>
   );

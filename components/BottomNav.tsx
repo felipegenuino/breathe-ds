@@ -16,6 +16,9 @@ export type BottomPage = {
   Icon: IconType;
   /** Is this the current page? (the app decides: route/locale are its own) */
   active?: boolean;
+  /** Section title in the "More" panel. Pages with the same group are listed
+   *  together under it, in order of first appearance. Without it: one plain list. */
+  group?: string;
 };
 
 /** Extra exit in the "More" panel (e.g. courses on another site): address written
@@ -110,6 +113,9 @@ const tab = (active: boolean, collapsed = false) =>
 
 // label under the icon: in the slim bar it folds away (still read by screen readers)
 const LABEL = "w-full truncate text-center transition-all duration-200 motion-reduce:transition-none";
+
+const GROUP_TITLE =
+  "sticky -top-2 z-10 -mx-2 bg-card px-5 pt-3 pb-1.5 font-heading text-[0.7rem] font-semibold tracking-[0.12em] text-ink-soft uppercase";
 
 const row = (active?: boolean) =>
   `flex min-h-14 items-center gap-3 rounded-[18px] px-3 font-medium transition-colors duration-150 active:bg-surface focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ink motion-reduce:transition-none ${
@@ -225,6 +231,13 @@ export function BottomNav({ pages, extras = [], linkComponent, hideFrom = "lg", 
 
   const onBar = pages.slice(0, visible);
   const inMore = pages.slice(visible);
+  // "More" pages by group (order of first appearance); ungrouped ones form a group without title
+  const groups: { title?: string; items: BottomPage[] }[] = [];
+  for (const p of inMore) {
+    const g = groups.find((x) => x.title === p.group);
+    if (g) g.items.push(p);
+    else groups.push({ title: p.group, items: [p] });
+  }
   const moreActive = inMore.some((p) => p.active) || extras.some((x) => x.active);
   const pos = embedded ? "absolute" : "fixed";
   // full class names (Tailwind only generates what it finds written in the code)
@@ -233,18 +246,25 @@ export function BottomNav({ pages, extras = [], linkComponent, hideFrom = "lg", 
   const panelInner = (
     <nav aria-label={t.morePages}>
       {/* One item per row: in two columns the panel got confusing. */}
-      {inMore.length > 0 && (
-        <ul className="grid list-none gap-1">
-          {inMore.map(({ href, label, Icon, active }, i) => (
-            <li key={`${i}-${href}`}>
-              <L href={href} aria-current={active ? "page" : undefined} onClick={close} className={row(active)}>
-                <span className={bubble}><Icon aria-hidden="true" size={19} strokeWidth={1.75} /></span>
-                {label}
-              </L>
-            </li>
-          ))}
-        </ul>
-      )}
+      {groups.map(({ title, items }, gi) => {
+        const headId = `${panelId}-g${gi}`;
+        return (
+          <div key={gi} className={gi > 0 ? "mt-1 border-t border-ink/10 pt-1" : undefined}>
+            {/* title sticks to the top of the panel while its list scrolls by */}
+            {title && <p id={headId} className={GROUP_TITLE}>{title}</p>}
+            <ul className="grid list-none gap-1" aria-labelledby={title ? headId : undefined}>
+              {items.map(({ href, label, Icon, active }, i) => (
+                <li key={`${i}-${href}`}>
+                  <L href={href} aria-current={active ? "page" : undefined} onClick={close} className={row(active)}>
+                    <span className={bubble}><Icon aria-hidden="true" size={19} strokeWidth={1.75} /></span>
+                    {label}
+                  </L>
+                </li>
+              ))}
+            </ul>
+          </div>
+        );
+      })}
       {extras.length > 0 && (
         <ul className={`grid list-none gap-1${inMore.length > 0 ? " mt-1 border-t border-ink/10 pt-1" : ""}`}>
           {extras.map(({ href, label, Icon, description, external, active }, i) => {

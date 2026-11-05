@@ -246,7 +246,7 @@ from color, not from extra markup.
   shrinks the tap targets); the rest and the external exits (`extras`, with the domain spelled out
   and a ↗ arrow) go to the "More" panel, a native popover (Esc, tap outside, no
   JS). Gradient veil behind the bar. `hideFrom` = `md` (creeta) or `lg`
-  (ttcab). `labels` for another language. `embedded` for the demo frame. `collapseOnScroll` (reading mode): scrolling down shrinks it to a slim icon strip; scrolling up, a tap or keyboard focus brings it back; full at the top and the end (`scrollContainer` when the window is not what scrolls).
+  (ttcab). `labels` for another language. `embedded` for the demo frame. `collapseOnScroll` (reading mode): scrolling down shrinks it to a slim icon strip; scrolling up, a tap or keyboard focus brings it back; full at the top and the end (`scrollContainer` when the window is not what scrolls). `group` on a page lists it under a section title in "More" (sticky while the list scrolls).
 - **AnchorNav**: floating capsule of page anchors (scroll-spy + sliding
   indicator), extracted from ttcab's TreatmentAnchorNav. Target sections need
   a `scroll-mt-*` compatible with the sticky header. White capsule (`card`);
