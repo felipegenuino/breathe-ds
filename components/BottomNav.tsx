@@ -183,7 +183,20 @@ export function BottomNav({ pages, extras = [], linkComponent, hideFrom = "lg", 
       cancelAnimationFrame(raf);
     };
   }, [collapseOnScroll, scrollContainer]);
-  const slim = collapsed && !open;
+  // native popover (site mode): the panel's real state, so the bar stays full while it's open
+  const [popOpen, setPopOpen] = useState(false);
+  useEffect(() => {
+    const el = panel.current;
+    if (!el) return;
+    const onToggle = (e: Event) => {
+      const isOpen = (e as Event & { newState?: string }).newState === "open";
+      setPopOpen(isOpen);
+      if (isOpen) setCollapsed(false);
+    };
+    el.addEventListener("toggle", onToggle);
+    return () => el.removeEventListener("toggle", onToggle);
+  }, []);
+  const slim = collapsed && !open && !popOpen;
 
   useEffect(() => {
     const ul = list.current;
@@ -309,7 +322,13 @@ export function BottomNav({ pages, extras = [], linkComponent, hideFrom = "lg", 
         className={`${pos} inset-x-3 ${slim ? "bottom-1.5" : "bottom-3"} z-50 pb-[env(safe-area-inset-bottom)] transition-[bottom] duration-200 ease-[cubic-bezier(.23,1,.32,1)] motion-reduce:transition-none [view-transition-name:barra]${hide}`}
         // slim: a tap anywhere on the bar only brings it back (doesn't navigate);
         // keyboard focus brings it back too (a mouse/touch focus doesn't, or the tap would navigate)
-        onClickCapture={slim ? (e) => { e.preventDefault(); e.stopPropagation(); setCollapsed(false); } : undefined}
+        // …except "More": the hamburger is a clear intent, it expands AND opens the panel in one tap
+        onClickCapture={slim ? (e) => {
+          setCollapsed(false);
+          if ((e.target as Element).closest?.("[data-more]")) return;
+          e.preventDefault();
+          e.stopPropagation();
+        } : undefined}
         onFocus={(e) => { if ((e.target as Element).matches?.(":focus-visible")) setCollapsed(false); }}
       >
         <ul
@@ -328,6 +347,7 @@ export function BottomNav({ pages, extras = [], linkComponent, hideFrom = "lg", 
             {/* React 19 knows `popoverTarget`; React 18 only passes the lowercase attribute through as is. */}
             <button
               type="button"
+              data-more=""
               {...(embedded ? { "aria-expanded": open, "aria-controls": panelId, onClick: () => setOpen((o) => !o) } : { [POPOVER_TARGET]: panelId })}
               className={tab(embedded ? open || moreActive : moreActive, slim)}
             >
