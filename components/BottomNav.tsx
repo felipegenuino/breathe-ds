@@ -1,6 +1,6 @@
 "use client";
 
-import { version as REACT_VERSION, useEffect, useId, useRef, useState, type ComponentType, type ElementType, type ReactNode } from "react";
+import { version as REACT_VERSION, useEffect, useId, useRef, useState, type ComponentType, type ElementType, type ReactNode, type RefObject } from "react";
 
 // the popover trigger attribute: camelCase in React 19+, lowercase passthrough in 18
 const POPOVER_TARGET = parseInt(REACT_VERSION, 10) >= 19 ? "popoverTarget" : "popovertarget";
@@ -66,6 +66,12 @@ type Props = {
   /** Embedded in a `relative` container (demo, phone frame): bar, veil and
    *  panel are `absolute` inside it and show at any width. */
   embedded?: boolean;
+  /** Reading mode: scrolling down shrinks the bar to a slim icon strip at the
+   *  bottom; scrolling up, tapping it or reaching it by keyboard brings it back.
+   *  Always full at the top and at the end of the page. Off by default. */
+  collapseOnScroll?: boolean;
+  /** Element that scrolls, when it isn't the window (e.g. the demo frame). */
+  scrollContainer?: RefObject<HTMLElement | null>;
 };
 
 /** Minimum width of a tab, in px: below this the label doesn't fit. */
@@ -93,13 +99,17 @@ const ArrowUpRight = () => (
 // Tab: icon+label column. The active one gets a SHAPE (light pill), not just color —
 // readable for people who can't tell colors apart. Shrinks on touch, like an app button.
 // The view-transition name makes the highlight slide between tabs on page change.
-const tab = (active: boolean) =>
+const tab = (active: boolean, collapsed = false) =>
   [
-    "flex h-14 w-full flex-col items-center justify-center gap-1 rounded-[20px] px-1 text-[10.5px] font-medium leading-none tracking-tight",
-    "transition duration-150 active:scale-[0.96] motion-reduce:transition-none motion-reduce:active:scale-100",
+    "flex w-full flex-col items-center justify-center rounded-[20px] px-1 text-[10.5px] font-medium leading-none tracking-tight",
+    collapsed ? "h-9 gap-0" : "h-14 gap-1",
+    "transition-all duration-200 ease-[cubic-bezier(.23,1,.32,1)] active:scale-[0.96] motion-reduce:transition-none motion-reduce:active:scale-100",
     "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-surface",
     active ? "bg-surface text-ink [view-transition-name:aba-ativa]" : "text-surface/85 hover:bg-white/10",
   ].join(" ");
+
+// label under the icon: in the slim bar it folds away (still read by screen readers)
+const LABEL = "w-full truncate text-center transition-all duration-200 motion-reduce:transition-none";
 
 const row = (active?: boolean) =>
   `flex min-h-14 items-center gap-3 rounded-[18px] px-3 font-medium transition-colors duration-150 active:bg-surface focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ink motion-reduce:transition-none ${
@@ -121,7 +131,7 @@ const bubble = "flex h-10 w-10 shrink-0 items-center justify-center rounded-full
  *   (demo), it becomes an absolute panel inside the frame, with the same entrance.
  * - Hidden from `hideFrom` up (md on creeta, lg on ttcab), where the header takes over.
  */
-export function BottomNav({ pages, extras = [], linkComponent, hideFrom = "lg", labels, embedded = false }: Props) {
+export function BottomNav({ pages, extras = [], linkComponent, hideFrom = "lg", labels, embedded = false, collapseOnScroll = false, scrollContainer }: Props) {
   const L: ElementType = linkComponent ?? "a";
   const t = { ...EN, ...labels };
   const list = useRef<HTMLUListElement>(null);
@@ -131,6 +141,43 @@ export function BottomNav({ pages, extras = [], linkComponent, hideFrom = "lg", 
   // before measuring: the typical phone case (5 tabs = 4 pages + More)
   const [visible, setVisible] = useState(() => howManyFit(5 * TAB_MIN_WIDTH, pages.length));
   const [open, setOpen] = useState(false); // embedded mode only
+  const [collapsed, setCollapsed] = useState(false);
+
+  // Reading mode: direction of the scroll, with a small dead zone so a shaky
+  // thumb doesn't make the bar blink. Down 24px → slim; up 12px → full.
+  useEffect(() => {
+    if (!collapseOnScroll) return setCollapsed(false);
+    const el = scrollContainer?.current ?? null;
+    const y = () => (el ? el.scrollTop : window.scrollY);
+    const atEnd = () =>
+      el ? el.scrollTop + el.clientHeight >= el.scrollHeight - 8 : window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 8;
+    let last = y();
+    let run = 0;
+    let raf = 0;
+    const onScroll = () => {
+      if (raf) return;
+      raf = requestAnimationFrame(() => {
+        raf = 0;
+        const now = y();
+        const d = now - last;
+        last = now;
+        if (now < 80 || atEnd()) {
+          run = 0;
+          return setCollapsed(false);
+        }
+        run = Math.sign(d) === Math.sign(run) ? run + d : d;
+        if (run > 24) setCollapsed(true);
+        else if (run < -12) setCollapsed(false);
+      });
+    };
+    const target: HTMLElement | Window = el ?? window;
+    target.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      target.removeEventListener("scroll", onScroll);
+      cancelAnimationFrame(raf);
+    };
+  }, [collapseOnScroll, scrollContainer]);
+  const slim = collapsed && !open;
 
   useEffect(() => {
     const ul = list.current;
@@ -235,21 +282,25 @@ export function BottomNav({ pages, extras = [], linkComponent, hideFrom = "lg", 
           reaching it, instead of showing up clipped by the edges. */}
       <div
         aria-hidden="true"
-        className={`pointer-events-none ${pos} inset-x-0 bottom-0 z-40 h-28 bg-gradient-to-t from-surface from-35% via-surface/85 via-65% to-transparent [view-transition-name:veu]${hide}`}
+        className={`pointer-events-none ${pos} inset-x-0 bottom-0 z-40 ${slim ? "h-14" : "h-28"} transition-[height] duration-200 ease-[cubic-bezier(.23,1,.32,1)] motion-reduce:transition-none bg-gradient-to-t from-surface from-35% via-surface/85 via-65% to-transparent [view-transition-name:veu]${hide}`}
       />
       <nav
         aria-label={t.nav}
-        className={`${pos} inset-x-3 bottom-3 z-50 pb-[env(safe-area-inset-bottom)] [view-transition-name:barra]${hide}`}
+        className={`${pos} inset-x-3 ${slim ? "bottom-1.5" : "bottom-3"} z-50 pb-[env(safe-area-inset-bottom)] transition-[bottom] duration-200 ease-[cubic-bezier(.23,1,.32,1)] motion-reduce:transition-none [view-transition-name:barra]${hide}`}
+        // slim: a tap anywhere on the bar only brings it back (doesn't navigate);
+        // keyboard focus brings it back too (a mouse/touch focus doesn't, or the tap would navigate)
+        onClickCapture={slim ? (e) => { e.preventDefault(); e.stopPropagation(); setCollapsed(false); } : undefined}
+        onFocus={(e) => { if ((e.target as Element).matches?.(":focus-visible")) setCollapsed(false); }}
       >
         <ul
           ref={list}
-          className="flex list-none items-stretch justify-between gap-0.5 rounded-[26px] bg-ink/95 p-1.5 shadow-[0_12px_32px_-12px_rgba(0,0,0,0.5)] backdrop-blur-md"
+          className={`flex list-none items-stretch justify-between gap-0.5 rounded-[26px] bg-ink/95 ${slim ? "p-1" : "p-1.5"} transition-[padding] duration-200 motion-reduce:transition-none shadow-[0_12px_32px_-12px_rgba(0,0,0,0.5)] backdrop-blur-md`}
         >
           {onBar.map(({ href, label, Icon, active }, i) => (
             <li key={`${i}-${href}`} className="min-w-0 flex-1">
-              <L href={href} aria-current={active ? "page" : undefined} className={tab(!!active)}>
+              <L href={href} aria-current={active ? "page" : undefined} className={tab(!!active, slim)}>
                 <Icon aria-hidden="true" size={20} strokeWidth={1.75} />
-                <span className="w-full truncate text-center">{label}</span>
+                <span className={`${LABEL} ${slim ? "max-h-0 opacity-0" : "max-h-4 opacity-100"}`}>{label}</span>
               </L>
             </li>
           ))}
@@ -258,10 +309,10 @@ export function BottomNav({ pages, extras = [], linkComponent, hideFrom = "lg", 
             <button
               type="button"
               {...(embedded ? { "aria-expanded": open, "aria-controls": panelId, onClick: () => setOpen((o) => !o) } : { [POPOVER_TARGET]: panelId })}
-              className={tab(embedded ? open || moreActive : moreActive)}
+              className={tab(embedded ? open || moreActive : moreActive, slim)}
             >
               <MenuIcon />
-              <span className="w-full truncate text-center">{t.more}</span>
+              <span className={`${LABEL} ${slim ? "max-h-0 opacity-0" : "max-h-4 opacity-100"}`}>{t.more}</span>
               <span className="sr-only"> {t.morePagesSr}{moreActive ? ` ${t.currentHere}` : ""}</span>
             </button>
           </li>

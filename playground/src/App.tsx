@@ -1,4 +1,4 @@
-import { useEffect, useState, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { Accordion } from "../../components/Accordion";
 import { Highlight, PullQuote } from "../../components/PullQuote";
 import { ProfileSpotlight } from "../../components/ProfileSpotlight";
@@ -623,6 +623,8 @@ export function App() {
   const [curtainKey, setCurtainKey] = useState(0);
   // Mobile demo frame: phone (390) is the minimum; tablet (768) still shows the BottomNav (hidden only at lg+).
   const [mobW, setMobW] = useState<"phone" | "tablet">("phone");
+  const [navCollapse, setNavCollapse] = useState(true);
+  const mobScroll = useRef<HTMLDivElement>(null);
   const [listMarker, setListMarker] = useState<"check" | "arrow">("check");
   const [mapW, setMapW] = useState<"full" | "half">("half");
   const [vs, setVs] = useState({ speaker: true, lead: true, preview: false, watched: false, layout: "stacked" as "stacked" | "side" });
@@ -1132,6 +1134,7 @@ export function App() {
                   className={`rounded-pill px-3 py-1.5 text-xs font-semibold transition-colors ${mobW === m ? "bg-ink text-surface" : "text-ink-soft hover:text-ink"}`}>{label}</button>
               ))}
             </div>
+            <div className="mt-3"><PillToggle label="collapseOnScroll (scroll inside the frame)" on={navCollapse} set={setNavCollapse} /></div>
           </div>
           <div
             // isolate: the demo bar's z-50 stays inside the frame, under the page header
@@ -1142,17 +1145,26 @@ export function App() {
               <Lockup variant="horizontal" size="sm" name={brand.name} logo={brand.logo} wordmark={brand.wordmark} wordmarkRatio={brand.wordmarkRatio} symbolSide={brand.symbolSide} />
               <LanguageSwitcher languages={DEMO_LANGUAGES} />
             </div>
-            <div className="space-y-3 px-5 pt-6" aria-hidden="true">
-              <div className="h-40 rounded-2xl bg-ink/[0.07]" />
-              <div className="h-4 w-4/5 rounded-full bg-ink/[0.09]" />
-              <div className="h-4 w-3/5 rounded-full bg-ink/[0.09]" />
-              <div className="h-4 w-2/3 rounded-full bg-ink/[0.09]" />
+            {/* the frame scrolls, so the bar's reading mode can be tried here */}
+            <div ref={mobScroll} className="absolute inset-x-0 top-16 bottom-0 overflow-y-auto overscroll-contain">
+              <div className="space-y-3 px-5 pt-6 pb-32" aria-hidden="true">
+                {Array.from({ length: 6 }, (_, i) => (
+                  <div key={i} className="space-y-3 pb-6">
+                    <div className="h-40 rounded-2xl bg-ink/[0.07]" />
+                    <div className="h-4 w-4/5 rounded-full bg-ink/[0.09]" />
+                    <div className="h-4 w-3/5 rounded-full bg-ink/[0.09]" />
+                    <div className="h-4 w-2/3 rounded-full bg-ink/[0.09]" />
+                  </div>
+                ))}
+              </div>
             </div>
             {/* All pages in order of importance: the bar shows as many as fit
                 (64px per tab) and the rest goes to "More" — on phones 4 + More,
                 on tablets too (at most 5 tabs, as iOS/Android). The external link always lives in More. */}
             <BottomNav
               embedded
+              collapseOnScroll={navCollapse}
+              scrollContainer={mobScroll}
               pages={[
                 { label: "Home", href: "#mobile", Icon: IconHome, active: true },
                 { label: "Services", href: "#mobile", Icon: IconWind },
