@@ -3,6 +3,7 @@ import { Accordion } from "../../components/Accordion";
 import { Highlight, PullQuote } from "../../components/PullQuote";
 import { ProfileSpotlight } from "../../components/ProfileSpotlight";
 import { FounderSpotlight } from "../../components/FounderSpotlight";
+import { TestimonialsSection } from "../../components/TestimonialsSection";
 import { CollapseRow, LinkRow, RowList } from "../../components/Rows";
 import { SearchField } from "../../components/SearchField";
 import { SelectField } from "../../components/SelectField";
@@ -1355,6 +1356,17 @@ export function App() {
             authors={[{ name: "Author name", photo: tc.photo ? `${DEMO}person-avatar.jpg` : undefined }]}
             role="Physiotherapist"
             panel={{ eyebrow: "Testimonial" }}
+          />
+        </div>
+        {/* the standard block (ttcab): heading + masonry + video first + panel */}
+        <div className="mt-16">
+          <TestimonialsSection
+            locale="en"
+            items={[
+              { id: 1, quote: "A short testimonial quote. Then the rest, which only shows in the side panel.", author: "Author name", role: "Physiotherapist" },
+              { id: 2, excerpt: "What the video is about.", excerptMarks: false, quote: "What the video is about.", authors: [{ name: "Author name" }, { name: "Second author" }], role: "Parents", video: { src: `${DEMO}clip.mp4`, poster: `${DEMO}clip-poster.jpg`, description: "What the clip shows" } },
+              { id: 3, quote: "A longer testimonial, a few sentences, to show the masonry columns taking cards of different heights side by side without gaps.", author: "Author name", role: "Student" },
+            ]}
           />
         </div>
       </Section>

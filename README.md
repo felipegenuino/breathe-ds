@@ -202,6 +202,11 @@ from color, not from extra markup.
   block: `ProfileSpotlight` card + living portrait on hover, filled with the text validated
   on ttcab (pt/en/es), her Instagram and the courses link. `<FounderSpotlight locale="pt" />`.
   Media live in each site's `public/` (`/images/mariangela.png`, `/equipe/vivas/mariangela.mp4|.webp`).
+  Her bio lives HERE (source of truth); `[[rta:…]]`/`[[ttcab:…]]` link each method's site;
+  pass `site="rta"|"ttcab"` so a site does not link to itself. `founderBio(locale)` = plain text.
+- **TestimonialsSection**: the testimonials block, as on ttcab (the standard): "Depoimentos /
+  Histórias de sucesso" (pt/en/es), masonry in two columns, video first, pull-quote cards that
+  open the side panel. Sites pass only `items`.
 - **Texture & rhythm (opt-in)**: `.cg-grain` adds a barely-there paper grain (noise in
   the ink color) to any background — the body, a band. `bg-surface-alt` (token
   `--cg-surface-alt`, falls back to `surface`) is a band one step deeper than the page,
