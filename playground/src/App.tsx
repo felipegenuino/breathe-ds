@@ -1069,6 +1069,19 @@ export function App() {
               <FilterChips label="Topics" value="" onValueChange={() => {}} chips={[{ value: "", label: "Todos", count: 16 }, { value: "t", label: "Tratamento", count: 8 }]} />
             </PageHero>
           </div>
+          <p className="mt-10 mb-6 max-w-[62ch] text-ink-body">
+            <code>photos</code> (0.6.12): the photo wall from metodorta&apos;s professionals page. Real portraits (4:5) in three columns drifting up on the right half, fading into the band; on phones a strip of faces at the top. Decorative and still with reduced motion. Use it where the page is about people (a directory).
+          </p>
+          <div className="-mx-4 md:-mx-6">
+            <PageHero
+              tone="callout"
+              title="Encontre um profissional"
+              lead="3.728 fisioterapeutas certificados, em 27 estados e mais 8 países."
+              photos={["person-poster.jpg", "mariangela.png", "person-avatar.jpg", "invite-poster.jpg", "person-poster-vertical.jpg", "podcast-poster.jpg", "clip-poster-vertical.jpg", "assessment.jpg", "invite-loop-poster.jpg"].map((f) => DEMO + f)}
+            >
+              <SearchField id="demo-busca-hero" label="Nome, cidade ou estado" placeholder="Ex.: Ana, Campinas ou SC" value="" onValueChange={() => {}} />
+            </PageHero>
+          </div>
           <div className="mt-6 grid gap-3">
             <PublicationCard
               title="Effectiveness of pediatric integrative manual therapy in cervical movement limitation in infants with positional plagiocephaly: a randomized controlled trial"

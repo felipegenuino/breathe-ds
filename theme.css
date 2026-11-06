@@ -321,3 +321,8 @@
   mix-blend-mode: lighten;
 }
 
+
+/* PageHero photo wall (0.6.12): columns drift up, the phone strip drifts sideways.
+   Half the track, because the content is doubled: the loop has no jump. */
+@keyframes cg-wall-up { to { transform: translateY(-50%); } }
+@keyframes cg-wall-side { to { transform: translateX(-50%); } }

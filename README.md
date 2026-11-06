@@ -224,6 +224,11 @@ from color, not from extra markup.
   centred) + **FilterBar** (thin sticky bar of compact filters — `SelectField density="sm"` —
   with the count and "clear" on the right; it publishes its height as `--cg-filterbar-h`, so
   `StickyGroupHeading stickyTop="top-[calc(80px+var(--cg-filterbar-h,0px))]"` sticks right below).
+- **Directory hero with people** (0.6.12): `PageHero photos={[…]}` — the photo wall from
+  metodorta's professionals page: real portraits (4:5) in three columns drifting up on the right
+  half, fading into the band; a strip of faces on phones. Decorative, still with reduced motion,
+  needs ≥ 6 photos, replaces the watermark. `tone="callout"` gives the panel the Callout's
+  colour ("info well"), as on metodorta.
 - **Callout** (a.k.a. info well): a secondary invitation under a page's main control
   (location invite under the professionals search, a tip under the articles search), at
   most one action. Never for errors or warnings. Default `tone="wash"`: no border, the
