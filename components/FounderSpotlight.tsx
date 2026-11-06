@@ -127,7 +127,7 @@ export function FounderSpotlight({
       name={FOUNDER.name}
       role={t.role}
       registration={FOUNDER.registration}
-      bio={<BioLinks text={t.bio} site={site} />}
+      bio={<p><BioLinks text={t.bio} site={site} /></p>}
       photo={{ src: photo, alt: FOUNDER.name }}
       living={living || undefined}
       media={media}
