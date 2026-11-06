@@ -2,6 +2,7 @@ import { useEffect, useRef, useState, type ReactNode } from "react";
 import { Accordion } from "../../components/Accordion";
 import { Highlight, PullQuote } from "../../components/PullQuote";
 import { ProfileSpotlight } from "../../components/ProfileSpotlight";
+import { FounderSpotlight } from "../../components/FounderSpotlight";
 import { CollapseRow, LinkRow, RowList } from "../../components/Rows";
 import { SearchField } from "../../components/SearchField";
 import { SelectField } from "../../components/SelectField";
@@ -1228,6 +1229,13 @@ export function App() {
             ]}
           />
         </div>
+        <h3 className="mt-16 mb-3 font-heading text-xl font-semibold text-ink">FounderSpotlight</h3>
+        <p className="mb-6 max-w-[60ch] text-ink-body">The family founder, ready to drop in: the card above filled with the text validated on ttcab (pt/en/es), her Instagram and the courses link. Hover the block to play the living portrait. Every site of the family uses this one, so she reads the same everywhere.</p>
+        <FounderSpotlight
+          headingLevel="h3"
+          photo={`${DEMO}mariangela.png`}
+          living={{ src: `${DEMO}mariangela-living.mp4`, poster: `${DEMO}mariangela-living.webp` }}
+        />
       </Section>
 
       <Section id="callout" title="Callout — the info well">
