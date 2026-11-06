@@ -207,6 +207,10 @@ from color, not from extra markup.
 - **TestimonialsSection**: the testimonials block, as on ttcab (the standard): "Depoimentos /
   Histórias de sucesso" (pt/en/es), masonry in two columns, video first, pull-quote cards that
   open the side panel. Sites pass only `items`.
+- **EvidenceSection**: the evidence block, as on ttcab (the standard): "Evidência /
+  Referências científicas" (pt/en/es), heading sticky on the left, article rows on the right,
+  authors joined by " · " and cleaned (`authorNames`, `authorLine`). Sites pass `items`,
+  `allHref` and the `lead` (what the collection is about).
 - **Texture & rhythm (opt-in)**: `.cg-grain` adds a barely-there paper grain (noise in
   the ink color) to any background — the body, a band. `bg-surface-alt` (token
   `--cg-surface-alt`, falls back to `surface`) is a band one step deeper than the page,
