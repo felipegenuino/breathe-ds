@@ -64,6 +64,7 @@ import { CreetaSymbol, CreetaWordmark, CREETA_LOCKUP } from "../../components/ma
 import { RtaSymbol, RtaWordmark, RTA_LOCKUP } from "../../components/marks/rta";
 import { used, IconWind, IconActivity, IconBaby, IconSearch, IconHome, IconBook, IconInfo, IconMessage, IconMapPin, IconGraduationCap, IconVideo, IconUsers, IconArrowUpRight, IconPhone, IconMail, IconInstagram } from "../../components/icons";
 import * as Lucide from "lucide-react";
+import { BrandGuidelines } from "./BrandGuidelines";
 
 // demo media; follows Vite base so the build also works under /breathe-ds/ on GitHub Pages
 const DEMO = `${import.meta.env.BASE_URL}demo/`;
@@ -445,6 +446,7 @@ const PAGE_NAV = [
   { id: "tokens", label: "Tokens", Icon: Lucide.Palette },
   { id: "type", label: "Typography", Icon: Lucide.Type },
   { id: "lockup", label: "Lockup", Icon: Lucide.Stamp },
+  { id: "brand", label: "Brand guidelines", Icon: Lucide.BookMarked },
   { id: "buttons", label: "Button", Icon: Lucide.MousePointerClick },
   { id: "action", label: "Action dose", Icon: Lucide.Flame },
   { id: "icons", label: "Icons", Icon: Lucide.Shapes },
@@ -477,7 +479,7 @@ const PAGE_NAV = [
 // the footer with many pages: titled columns instead of one long list
 const FOOTER_GROUPS = (
   [
-    ["Foundations", ["symbol", "tokens", "type", "lockup", "icons"]],
+    ["Foundations", ["symbol", "tokens", "type", "lockup", "brand", "icons"]],
     ["Navigation", ["header", "mobile", "anchornav", "breadcrumb", "footer"]],
     ["Content", ["buttons", "action", "callout", "accordion", "list", "rows", "timeline", "pills"]],
     ["Cards & media", ["people", "profile", "pullquote", "cards", "videos", "map", "hero", "care", "story", "blog", "course", "events", "cta"]],
@@ -680,6 +682,7 @@ export function App() {
           { label: "Symbol", href: "#symbol" },
           { label: "Tokens", href: "#tokens" },
           { label: "Typography", href: "#type" },
+          { label: "Brand", href: "#brand" },
           { label: "Components", href: "#buttons", columns: 2, align: "end", groups: [
             { label: "Base", children: [{ label: "Lockup", href: "#lockup" }, { label: "Button", href: "#buttons" }, { label: "Action dose", href: "#action" }, { label: "Icons", href: "#icons" }] },
             { label: "Navigation", children: [{ label: "Header", href: "#header" }, { label: "BottomNav", href: "#mobile" }, { label: "AnchorNav", href: "#anchornav" }, { label: "Breadcrumb", href: "#breadcrumb" }] },
@@ -740,6 +743,10 @@ export function App() {
               </div>
             ))}
           </div>
+        </Section>
+
+        <Section id="brand" title="Brand guidelines">
+          <BrandGuidelines pal={pal} />
         </Section>
 
         <Section id="tokens" title="Tokens">

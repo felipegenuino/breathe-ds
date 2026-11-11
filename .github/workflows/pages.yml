@@ -5,7 +5,7 @@ name: Playground on GitHub Pages
 on:
   push:
     branches: [main]
-    paths: ["playground/**", "components/**", "tokens/**", "theme.css", ".github/workflows/pages.yml"]
+    paths: ["playground/**", "components/**", "tokens/**", "brand/**", "theme.css", ".github/workflows/pages.yml"]
   workflow_dispatch:
 
 permissions:

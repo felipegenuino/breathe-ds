@@ -9,6 +9,20 @@ their own palette on top of the same contract.
 > **v0.1** — tokens + components (see `components/`) + the sites' brand marks.
 > See everything rendered in the playground (below).
 
+## Brand guidelines (`brand/`)
+
+The family's brand manuals (Cuidado Global, Creeta, TTCAB, Método RTA, RTA Mundi)
+live here as the single place to look them up: colors with role, hex, RGB, CMYK and
+Pantone exactly as printed, gradients, typography, clear space, minimum sizes,
+endorsement (chancela) and partner-brand rules, variations and graphic elements,
+each value with the manual page it came from. Read the guide in
+[`brand/README.md`](brand/README.md) (with a "Manual × digital" comparison per
+brand and measured contrast), or import the data:
+`import { BRANDS, creeta } from "@breathe-ds/ui/brand"`. What a manual does not
+specify is marked `pending`. `npm run validate:brand` checks every hex against the
+printed RGB and that every value has a source. The playground shows it in
+"Brand guidelines".
+
 ## Idea
 
 The family's sites **do not share a palette** (ttcab is teal/cream,
@@ -453,6 +467,7 @@ from color, not from extra markup.
 - [x] **AnchorNav** (floating capsule of anchors, scroll-spy + sliding indicator) — extracted from ttcab (10/29)
 - [x] **Footer** · **PageVideoHero** (loop, and player from a YouTube id or the site's own mp4; `panel.actions` puts two or more calls to action inside the panel) · **Header** (dropdown, house) · **BottomNav** · **Curtain** · **Lockup** (5 arrangements) · **BreatheMark**
 - [x] **Site brand marks** (`components/marks/`): real symbol + wordmark for TTCAB and Creeta (10/29)
+- [x] **Brand guidelines** (0.6.14): `brand/` — the five brand manuals as typed data + guide (`brand/README.md`), validator in `scripts/validate-brand.mjs`, "Brand guidelines" section in the playground (11/11)
 - [x] **Método RTA** (0.6.13): `tokens/rta.css` (values from metodorta-next) + `RtaSymbol` / `RtaWordmark` / `RTA_LOCKUP` from the official horizontal logo (11/11)
 - [ ] **ThreadRail** (side graphic device — a thread running down the left linking sections) — approved,
       **already exists in ttcab** → extract.
