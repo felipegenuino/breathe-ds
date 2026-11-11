@@ -153,10 +153,11 @@ WCAG formula:
 | action `#a7318d` / on-action `#ffffff` | 6.06:1 | AA, normal text |
 | action-line `#a7318d` / surface | 5.62:1 | 3:1 UI component |
 | surface-panel `#154654` / surface text | 9.56:1 | AAA |
-| callout-deep `#cfe2e6` / ink | 7.70:1 | AAA |
+| callout `#eee2c6` / ink | 8.02:1 | AAA |
+| callout-deep `#e8d19c` / ink | 6.89:1 | AA |
 
-`ink-soft` is not for the callout's tonal controls (4.27:1 on `callout-deep`,
-3.75:1 on `callout-deeper`): use `ink` there. The logo blue `#159DB0` is 3.00:1 on
+`ink-soft` is not for the callout's tonal controls (3.81:1 on `callout-deep`,
+3.37:1 on `callout-deeper`; 4.44:1 on the `callout` itself): use `ink` or `ink-body` there. The logo blue `#159DB0` is 3.00:1 on
 the page and 2.83:1 on `surface-alt`: symbol only, never text, so it is not a token.
 
 ## Family typography

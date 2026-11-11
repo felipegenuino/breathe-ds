@@ -19,12 +19,12 @@
    - action #a7318d / on-action #ffffff ....... 6.06:1 (AA, normal text)
    - action-line #a7318d / surface ............ 5.62:1 (3:1 UI)
    - surface-panel #154654 / surface (text) ... 9.56:1 (AAA)
-   - callout #e3eef0 / ink #154654 ............ 8.72:1 (AAA) · vs page 1.10:1
-   - callout-deep #cfe2e6 / ink #154654 ....... 7.70:1 (AAA)
-   - callout-deeper #bcd6dc / ink #154654 ..... 6.77:1 (AAA)
+   - callout #eee2c6 / ink #154654 ............ 8.02:1 (AAA) · vs page 1.19:1
+   - callout-deep #e8d19c / ink #154654 ....... 6.89:1 (AA)
+   - callout-deeper #e5c374 / ink #154654 ..... 6.08:1 (AA)
    Unlike TTCAB, white on the action color passes AA for normal text, so it
    is not an exception. ink-soft is NOT for the callout's tonal controls
-   (4.27:1 on callout-deep, 3.75:1 on callout-deeper): ink goes there.
+   (3.81:1 on callout-deep, 3.37:1 on callout-deeper): ink goes there.
    The logo blue #159DB0 is 3.00:1 on the page (2.83:1 on surface-alt):
    symbol only, never text, so it is not a token here (see components/marks/rta).
 */
@@ -43,11 +43,12 @@
   --cg-action-line: #a7318d;    /* magenta itself: 5.62:1 on mist */
   --cg-line: rgb(21 70 84 / 0.14);   /* petrol hairline */
   --cg-tint: #e3eef0;           /* icon bubbles, pills, placeholders: ink 8.72:1 · ink-soft 4.83:1 */
-  /* Callout: as on metodorta-next — the tint itself, not a split complement
-     of the page (vs page 1.10:1, the other palettes use 1.19:1). */
-  --cg-callout: #e3eef0;         /* ink 8.72:1 · ink-body 7.41:1 */
-  --cg-callout-deep: #cfe2e6;    /* tonal button + icon bubble · ink 7.70:1 */
-  --cg-callout-deeper: #bcd6dc;  /* tonal button hover · ink 6.77:1 */
+  /* Callout: split complement of the mist (192° → 42°, the one farther from the
+     magenta at 313°), one luminance step off the page — same rule as Creeta/TTCAB.
+     Until 0.6.13 it was the tint itself (#e3eef0, 1.10:1 vs page). */
+  --cg-callout: #eee2c6;         /* sand · vs page 1.19:1 · ink 8.02:1 · ink-body 6.81:1 */
+  --cg-callout-deep: #e8d19c;    /* tonal button + icon bubble · ink 6.89:1 */
+  --cg-callout-deeper: #e5c374;  /* tonal button hover · ink 6.08:1 */
   --cg-shadow: rgb(21 70 84);    /* petrol: soft shadows, used at low alpha */
   --cg-font-heading: var(--font-quicksand), system-ui, sans-serif;  /* Quicksand */
   --cg-font-body: var(--font-figtree), system-ui, sans-serif;       /* Figtree */

@@ -93,7 +93,7 @@ const PALETTES: Record<string, Record<string, string>> = {
     "--color-surface": "#f3f7f8", "--color-surface-alt": "#e9f1f3", "--color-card": "#ffffff", "--color-surface-panel": "#154654", "--color-ink": "#154654",
     "--color-ink-soft": "#4e6b73", "--color-ink-body": "#1f515e", "--color-action": "#a7318d",
     "--color-action-text": "#962a7e", "--color-on-action": "#ffffff", "--color-line": "rgb(21 70 84 / 0.14)", "--color-action-tint": "#f8edf5", "--color-action-line": "#a7318d",
-    "--color-callout": "#e3eef0", "--color-callout-deep": "#cfe2e6", "--color-callout-deeper": "#bcd6dc",
+    "--color-callout": "#eee2c6", "--color-callout-deep": "#e8d19c", "--color-callout-deeper": "#e5c374",
   },
 };
 
