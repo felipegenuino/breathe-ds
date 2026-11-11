@@ -95,6 +95,13 @@ export const rtaMundi: Brand = {
       source: p(7),
     },
   ],
+  downloads: {
+    manual: { file: "brand/manuals/rta-mundi-manual.pdf", bytes: 2833605 },
+    svgs: [],
+    pending: [
+      "Logo: the Drive has only JPG (Marca RTA MUNDI/JPG); no .ai/.svg. The manual PDF draws the line mesh as embedded images and \"RTA MUNDI 2025\" as live Montserrat text: not cut, not recomposed.",
+    ],
+  },
   pending: [
     "Reduction limits (no page in the manual).",
     "Monochrome version (no page in the manual).",

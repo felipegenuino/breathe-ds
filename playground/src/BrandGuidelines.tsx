@@ -1,5 +1,5 @@
 import { useEffect, useState, type ReactNode } from "react";
-import { BRANDS, BRAND_BY_ID, FAMILY_PETROL, contrast, formatRatio, wcagLevel, isPending, type Brand, type BrandColor } from "../../brand";
+import { BRANDS, BRAND_BY_ID, FAMILY_PETROL, contrast, formatRatio, wcagLevel, isPending, type Brand, type BrandColor, type BrandSvg } from "../../brand";
 import { Lockup } from "../../components/Lockup";
 import { TtcabSymbol, TtcabWordmark, TTCAB_LOCKUP } from "../../components/marks/ttcab";
 import { CreetaSymbol, CreetaWordmark, CREETA_LOCKUP } from "../../components/marks/creeta";
@@ -38,6 +38,45 @@ function Page({ n }: { n: number }) {
 
 function Pend({ reason }: { reason: string }) {
   return <p className="m-0 text-sm text-ink-body"><span className="mr-2 rounded-pill bg-ink/[0.07] px-2 py-0.5 text-xs font-bold text-ink">pending</span>{reason}</p>;
+}
+
+/* Downloads live in playground/public/brand/ (not in the npm package); the
+   paths in the data are relative, so they follow the Vite base (/breathe-ds/ online). */
+const asset = (file: string) => `${import.meta.env.BASE_URL}${file}`;
+const fileSize = (bytes: number) => (bytes < 1_000_000 ? `${Math.round(bytes / 1000)} KB` : `${(bytes / 1_000_000).toFixed(1)} MB`);
+const TONE_LABEL: Record<BrandSvg["tone"], string> = { color: "logo colors", white: "all white", reverse: "reverse", "on-color": "on color" };
+
+function Downloads({ b }: { b: Brand }) {
+  const d = b.downloads;
+  return (
+    <div>
+      <p className={LABEL}>Downloads</p>
+      <a href={asset(d.manual.file)} download className="inline-flex rounded-pill bg-ink px-4 py-2 text-sm font-semibold text-surface">
+        Brand manual (PDF, {fileSize(d.manual.bytes)})
+      </a>
+      {d.svgs.length > 0 && (
+        <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {d.svgs.map((s) => (
+            <div key={s.file} className="flex flex-col overflow-hidden rounded-2xl border border-line bg-card">
+              <div className="flex h-28 items-center justify-center border-b border-line p-4" style={{ background: s.background }}>
+                <img src={asset(s.file)} alt={`${b.name}: ${s.name}`} loading="lazy" className="h-full w-full object-contain" />
+              </div>
+              <div className="flex flex-1 flex-col gap-1 p-4 text-xs text-ink-body">
+                <p className="m-0 font-heading text-sm font-bold text-ink">{s.name}</p>
+                <p className="m-0 text-ink-soft">{TONE_LABEL[s.tone]} · for <span className="font-mono">{s.background}</span> · {s.origin === "ds" ? "drawn by the DS" : "official board"}</p>
+                <a href={asset(s.file)} download className="mt-auto pt-2 font-semibold text-ink underline underline-offset-2">Download SVG <span className="font-mono font-normal text-ink-soft">{s.file.split("/").pop()}</span></a>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+      {d.pending && d.pending.length > 0 && (
+        <div className="mt-4 space-y-2">
+          {d.pending.map((x) => <Pend key={x} reason={x} />)}
+        </div>
+      )}
+    </div>
+  );
 }
 
 function ColorCard({ c }: { c: BrandColor }) {
@@ -91,6 +130,8 @@ export function BrandGuidelines({ pal }: { pal: string }) {
         )}
       </div>
 
+      <Downloads b={b} />
+
       <div>
         <p className={LABEL}>Colors</p>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -125,7 +166,7 @@ export function BrandGuidelines({ pal }: { pal: string }) {
               </div>
             ))}
             {b.typography.restrictions.map((r) => <p key={r} className="m-0 text-sm text-ink-body" lang="pt-BR"><b className="text-ink">Restriction:</b> {r}</p>)}
-            <p className="m-0 text-sm text-ink-body">The DS uses <b className="text-ink">Quicksand</b> (headings) + <b className="text-ink">Figtree</b> (text) for the whole family: open-source fonts only.</p>
+            <p className="m-0 text-sm text-ink-body">The manuals' commercial fonts (Gotham, Mouser) are a print reference only. Family work uses free Google Fonts: in the DS, <b className="text-ink">Quicksand</b> (headings) + <b className="text-ink">Figtree</b> (text). Owner decision, 2026-11-11.</p>
           </div>
         )}
       </div>
@@ -196,7 +237,7 @@ export function BrandGuidelines({ pal }: { pal: string }) {
               </div>
             ))}
           </div>
-        ) : <Pend reason={`No vector of the ${b.name} mark in the DS yet (needs the official vector; not redrawn).`} />}
+        ) : <Pend reason={b.downloads.svgs.length ? `No component draws the ${b.name} mark yet; the official SVGs are in Downloads above.` : `No vector of the ${b.name} mark in the DS yet (needs the official vector; not redrawn).`} />}
       </div>
 
       {b.pending.length > 0 && (

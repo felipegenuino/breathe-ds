@@ -149,6 +149,22 @@ export const creeta: Brand = {
     { name: "Symbol only", backgrounds: ["magenta #AB2781", "petrol #144753", "dark teal #086A79"], ds: "CreetaSymbol", source: p(13) },
     { name: "Wordmark only “creeta”", backgrounds: ["light cyan #62C2D0", "dark teal #086A79", "magenta #AB2781"], ds: "CreetaWordmark", source: p(13) },
   ],
+  downloads: {
+    manual: { file: "brand/manuals/creeta-manual.pdf", bytes: 5844479 },
+    svgs: [
+      { file: "brand/svg/creeta/creeta-symbol-color.svg", name: "Symbol, logo colors", layout: "symbol", tone: "color", background: "#FFFFFF", origin: "ds" },
+      { file: "brand/svg/creeta/creeta-wordmark-color.svg", name: "Wordmark, logo colors", layout: "wordmark", tone: "color", background: "#FFFFFF", origin: "ds" },
+      { file: "brand/svg/creeta/creeta-horizontal-color.svg", name: "Horizontal, logo colors", layout: "horizontal", tone: "color", background: "#FFFFFF", origin: "ds" },
+      { file: "brand/svg/creeta/creeta-vertical-color.svg", name: "Vertical, logo colors", layout: "vertical", tone: "color", background: "#FFFFFF", origin: "ds" },
+      { file: "brand/svg/creeta/creeta-symbol-white.svg", name: "Symbol, white", layout: "symbol", tone: "white", background: "#144753", origin: "ds" },
+      { file: "brand/svg/creeta/creeta-wordmark-white.svg", name: "Wordmark, white", layout: "wordmark", tone: "white", background: "#144753", origin: "ds" },
+      { file: "brand/svg/creeta/creeta-horizontal-white.svg", name: "Horizontal, white", layout: "horizontal", tone: "white", background: "#144753", origin: "ds" },
+      { file: "brand/svg/creeta/creeta-vertical-white.svg", name: "Vertical, white", layout: "vertical", tone: "white", background: "#144753", origin: "ds" },
+    ],
+    pending: [
+      "Official files with the descriptor \"Centro de Reequilíbrio Toracoabdominal\": no vector in the Drive (folder CREETA_Marca has no .ai).",
+    ],
+  },
   pending: [
     "No graphic elements page in the manual.",
     "The DS has no lockup with the descriptor line drawn from the manual (Lockup takes the tagline as live text).",

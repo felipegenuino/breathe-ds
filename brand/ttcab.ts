@@ -136,6 +136,25 @@ export const ttcab: Brand = {
     { name: "Symbol only", backgrounds: ["orange #F6A22A (white symbol)", "petrol #144753 (orange symbol)"], ds: "TtcabSymbol", source: p(12) },
     { name: "Lettering only “TTCAB”", backgrounds: ["white"], ds: "TtcabWordmark", source: p(12) },
   ],
+  downloads: {
+    manual: { file: "brand/manuals/ttcab-manual.pdf", bytes: 2930271 },
+    svgs: [
+      { file: "brand/svg/ttcab/ttcab-symbol-color.svg", name: "Symbol, logo colors", layout: "symbol", tone: "color", background: "#FFFFFF", origin: "ds" },
+      { file: "brand/svg/ttcab/ttcab-wordmark-color.svg", name: "Wordmark, logo colors", layout: "wordmark", tone: "color", background: "#FFFFFF", origin: "ds" },
+      { file: "brand/svg/ttcab/ttcab-horizontal-color.svg", name: "Horizontal, logo colors", layout: "horizontal", tone: "color", background: "#FFFFFF", origin: "ds" },
+      { file: "brand/svg/ttcab/ttcab-vertical-color.svg", name: "Vertical, logo colors", layout: "vertical", tone: "color", background: "#FFFFFF", origin: "ds" },
+      { file: "brand/svg/ttcab/ttcab-symbol-white.svg", name: "Symbol, white", layout: "symbol", tone: "white", background: "#144753", origin: "ds" },
+      { file: "brand/svg/ttcab/ttcab-wordmark-white.svg", name: "Wordmark, white", layout: "wordmark", tone: "white", background: "#144753", origin: "ds" },
+      { file: "brand/svg/ttcab/ttcab-horizontal-white.svg", name: "Horizontal, white", layout: "horizontal", tone: "white", background: "#144753", origin: "ds" },
+      { file: "brand/svg/ttcab/ttcab-vertical-white.svg", name: "Vertical, white", layout: "vertical", tone: "white", background: "#144753", origin: "ds" },
+      { file: "brand/svg/ttcab/ttcab-horizontal-descriptor-reverse.svg", name: "Horizontal with descriptor, reverse", layout: "horizontal", tone: "reverse", background: "#144753", origin: "official", from: "TTCAB_Marca.ai (Drive, TTCAB_Marca/Marca)" },
+      { file: "brand/svg/ttcab/ttcab-vertical-descriptor-reverse.svg", name: "Vertical with descriptor, reverse", layout: "vertical", tone: "reverse", background: "#144753", origin: "official", from: "TTCAB_Marca.ai (Drive, TTCAB_Marca/Marca)" },
+      { file: "brand/svg/ttcab/ttcab-vertical-descriptor-white.svg", name: "Vertical with descriptor, white on orange", layout: "vertical", tone: "white", background: "#F6A22A", origin: "official", from: "TTCAB_Marca.ai (Drive, TTCAB_Marca/Marca)" },
+    ],
+    pending: [
+      "With descriptor in logo colors for white backgrounds: the official board draws the descriptor versions only on petrol and orange.",
+    ],
+  },
   pending: [
     "No construction page in the manual.",
     "The DS has no lockup with the descriptor line drawn from the manual (Lockup takes the tagline as live text).",

@@ -85,6 +85,22 @@ export const rta: Brand = {
     { name: "Symbol only", backgrounds: ["magenta #AB2781 (white)", "blue #009AB1 (white)", "petrol #144753 (blue)"], ds: "RtaSymbol", source: p(1) },
     { name: "Name only “RTA”", backgrounds: ["blue #009AB1 (magenta)", "petrol #144753 (magenta)", "magenta #AB2781 (white)"], ds: "RtaWordmark", source: p(1) },
   ],
+  downloads: {
+    manual: { file: "brand/manuals/rta-manual.pdf", bytes: 54953 },
+    svgs: [
+      { file: "brand/svg/rta/rta-symbol-color.svg", name: "Symbol, logo colors", layout: "symbol", tone: "color", background: "#FFFFFF", origin: "ds" },
+      { file: "brand/svg/rta/rta-wordmark-color.svg", name: "Wordmark, logo colors", layout: "wordmark", tone: "color", background: "#FFFFFF", origin: "ds" },
+      { file: "brand/svg/rta/rta-horizontal-color.svg", name: "Horizontal, logo colors", layout: "horizontal", tone: "color", background: "#FFFFFF", origin: "ds" },
+      { file: "brand/svg/rta/rta-vertical-color.svg", name: "Vertical, logo colors", layout: "vertical", tone: "color", background: "#FFFFFF", origin: "ds" },
+      { file: "brand/svg/rta/rta-symbol-white.svg", name: "Symbol, white", layout: "symbol", tone: "white", background: "#144753", origin: "ds" },
+      { file: "brand/svg/rta/rta-wordmark-white.svg", name: "Wordmark, white", layout: "wordmark", tone: "white", background: "#144753", origin: "ds" },
+      { file: "brand/svg/rta/rta-horizontal-white.svg", name: "Horizontal, white", layout: "horizontal", tone: "white", background: "#144753", origin: "ds" },
+      { file: "brand/svg/rta/rta-vertical-white.svg", name: "Vertical, white", layout: "vertical", tone: "white", background: "#144753", origin: "ds" },
+      { file: "brand/svg/rta/rta-vertical-signature-color.svg", name: "Vertical with signature, manual colors (print)", layout: "vertical", tone: "color", background: "#FFFFFF", origin: "official", from: "RTA_manual de marca.pdf (Drive, RTA_Manual de Marca/Marca)" },
+      { file: "brand/svg/rta/rta-horizontal-signature-color.svg", name: "Horizontal with signature, manual colors (print)", layout: "horizontal", tone: "color", background: "#FFFFFF", origin: "official", from: "RTA_manual de marca.pdf (Drive, RTA_Manual de Marca/Marca)" },
+    ],
+    pending: [],
+  },
   pending: [
     "Concept text.",
     "Color roles, CMYK and Pantone (only the vector fills are known).",

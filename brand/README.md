@@ -22,8 +22,16 @@ PDF). Printed lines (CMYK, RGB, hex, Pantone) are kept **exactly as printed**,
 typos included; evident errors of the manual carry a `manualInconsistency`
 note and are never corrected. What a manual does not specify is
 `{ status: "pending" }`: nothing is filled in by analogy with another brand.
-The manuals, the `.ai` file, mockups, photos and font files are **not** in this
-repo (public), and Gotham and Mouser are commercial fonts.
+The **reduced** manual PDFs and the logo SVGs are published by the playground
+(see [Downloads](#downloads)); the full-size manuals, the `.ai` files, mockups,
+photos and font files are **not** in this repo (public), and Gotham and Mouser
+are commercial fonts.
+
+**Typography decision (owner, 2026-11-11).** The commercial fonts the manuals
+specify (Gotham, Mouser) are kept here only as the reference of the printed
+manual. Work for the family uses free Google Fonts, which in the DS are
+**Quicksand** (headings) + **Figtree** (text). There is no font-by-font
+equivalence table: only what the DS already uses.
 
 `node scripts/validate-brand.mjs` checks the data: every hex against its
 printed RGB, and a source on every color, gradient and rule
@@ -32,6 +40,38 @@ printed RGB, and a source on every color, gradient and rule
 Contrast (WCAG 2.x, truncated to two decimals): *AAA* ≥ 7, *AA* ≥ 4.5 (normal
 text), *AA large/UI* ≥ 3 (large text, icons, borders), *fail* < 3. The dark
 reference is the family **petrol `#144753`**, the color every written palette shares.
+
+## Downloads
+
+The playground's "Brand guidelines" section offers, per brand, the manual PDF
+and the logo SVGs. The files live in `playground/public/brand/` — **outside the
+npm package** (`files` in package.json does not include `playground/`) — and the
+list is data: `downloads` in each `brand/*.ts` (paths relative to the
+playground's public folder, so they follow the Vite base, `/breathe-ds/` online).
+`node scripts/validate-brand.mjs` checks that every listed file exists, that the
+manual size matches `bytes`, and that every SVG is vector only (no raster, no
+live text or font) and uses only manual or DS-mark colors.
+
+| Folder | What | Where it came from |
+|---|---|---|
+| `manuals/<brand>-manual.pdf` | reduced manual (same pages, 12.5 MB for the five) | the official manuals, downsampled |
+| `svg/creeta/`, `svg/ttcab/`, `svg/rta/` `*-{symbol,wordmark,horizontal,vertical}-{color,white}.svg` | the marks the DS draws, in logo colors and all white | **generated**: `node scripts/export-brand-svg.mjs` reads the paths from `components/marks/*.tsx` and the proportions from `*_LOCKUP` (layout of `Lockup` at size `md`); nothing redrawn |
+| `svg/cuidado-global/*` | vertical, horizontal and symbol, as drawn on the board's tiles | cut once from `Cuidado Global_Marca.ai` (Drive folder `Cuidado Global_Marca/Marca`; text in curves) |
+| `svg/ttcab/ttcab-*-descriptor-*.svg` | with the descriptor "Tratamento do Torcicolo Congênito e outras Assimetrias no Bebê" | cut once from `TTCAB_Marca.ai` (Drive `TTCAB_Marca/Marca`; text in curves) |
+| `svg/rta/rta-*-signature-color.svg` | with the signature "Método Reequilíbrio Toracoabdominal", **manual colors** (`#009AB1`, `#AB2781`, `#9B9B9A`: print) | cut once from `RTA_manual de marca.pdf` (Drive `RTA_Manual de Marca/Marca`); `RTA_Marca.ai` has no PDF-compatible content |
+
+The "official" cuts keep the board's paths and fills untouched: one tile per
+file, viewBox tight to the drawing, tile background, clip and metadata removed
+(`pdftocairo -svg`, then a one-off script kept outside the repo). The DS files
+of Creeta and RTA use the **site** colors of `components/marks` (see "Manual ×
+digital" per brand); the Creeta wordmark is `#266675` and the TTCAB wordmark
+`#144753`, as in the site files they were copied from.
+
+**Pending:** RTA Mundi has no vector logo (the Drive has only JPG; the manual
+draws the line mesh as embedded images and the name as live Montserrat text,
+which is not recomposed). Creeta has no official vector with the descriptor.
+The Cuidado Global board has no horizontal in logo colors for white, and no
+monochrome. Each brand's `downloads.pending` lists these.
 
 ---
 
@@ -101,7 +141,7 @@ petrol, light cyan and dark gray. Monochrome: vertical and horizontal in dark gr
 | grays `#3C3C3C`, `#DADADA` | — | no token |
 | Mouser (headings) | Quicksand (`--cg-font-heading`) | differs |
 | Gotham (text), Arial (internet) | Figtree (`--cg-font-body`) | differs (DS decision 2026-10-28: open-source fonts only) |
-| wordmark, symbol | — | **not in the DS** (pending: needs the official vector) |
+| wordmark, symbol | — | no component draws it; official SVGs cut from `Cuidado Global_Marca.ai` in [Downloads](#downloads) |
 
 ---
 

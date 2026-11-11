@@ -11,7 +11,8 @@
  */
 
 export type Source = {
-  /** Manual file name (the PDFs are not in this repo). */
+  /** Manual file name. The reduced PDFs are published by the playground
+   *  (playground/public/brand/manuals/, see `downloads`); not in the npm package. */
   file: string;
   /** 1-based page of the PDF. */
   page: number;
@@ -127,6 +128,35 @@ export type GuidelineText = {
   source: Source;
 };
 
+/** One downloadable logo file. */
+export type BrandSvg = {
+  /** Path relative to the playground's public folder (and to its base URL),
+   *  e.g. "brand/svg/creeta/creeta-symbol-color.svg". Not in the npm package. */
+  file: string;
+  /** Label for the download (English). */
+  name: string;
+  layout: "symbol" | "wordmark" | "horizontal" | "vertical";
+  /** "color" = logo colors; "white" = all white; "reverse" = white with a
+   *  colored accent, as drawn on the dark tile of the official board;
+   *  "on-color" = the colors the board uses on a colored tile. */
+  tone: "color" | "white" | "reverse" | "on-color";
+  /** Background the file is meant for, as #RRGGBB (the board's tile, or the
+   *  family petrol for white versions). Also the preview background. */
+  background: string;
+  /** "ds": generated from components/marks by scripts/export-brand-svg.mjs.
+   *  "official": cut from the official vector board (file named in `from`). */
+  origin: "ds" | "official";
+  from?: string;
+};
+
+export type BrandDownloads = {
+  /** Reduced manual PDF, relative to the playground's public folder. */
+  manual: { file: string; bytes: number };
+  svgs: BrandSvg[];
+  /** Logo files that do not exist as vector yet. */
+  pending?: string[];
+};
+
 export type Brand = {
   id: "cuidado-global" | "creeta" | "ttcab" | "rta" | "rta-mundi";
   name: string;
@@ -154,6 +184,8 @@ export type Brand = {
   lockupRules: GuidelineText[] | Pending;
   graphicElements: GuidelineText[] | Pending;
   variations: Variation[];
+  /** Files offered for download in the playground (manual PDF + logo SVGs). */
+  downloads: BrandDownloads;
   /** Anything else this brand lacks in the manual, listed for the guide. */
   pending: string[];
 };

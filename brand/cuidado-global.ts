@@ -111,8 +111,25 @@ export const cuidadoGlobal: Brand = {
     { name: "Horizontal (one line)", backgrounds: ["petrol #144753", "light cyan #62C2D0", "dark gray #3C3C3C"], source: p(14) },
     { name: "Symbol only (the “o” ring with the arc under it)", backgrounds: ["light cyan #62C2D0", "dark gray #3C3C3C", "petrol #144753", "white"], source: p(14) },
   ],
+  downloads: {
+    manual: { file: "brand/manuals/cuidado-global-manual.pdf", bytes: 1457846 },
+    svgs: [
+      { file: "brand/svg/cuidado-global/cuidado-global-vertical-color.svg", name: "Vertical, logo colors", layout: "vertical", tone: "color", background: "#FFFFFF", origin: "official", from: "Cuidado Global_Marca.ai (Drive, Cuidado Global_Marca/Marca)" },
+      { file: "brand/svg/cuidado-global/cuidado-global-vertical-reverse.svg", name: "Vertical, reverse", layout: "vertical", tone: "reverse", background: "#144753", origin: "official", from: "Cuidado Global_Marca.ai (Drive, Cuidado Global_Marca/Marca)" },
+      { file: "brand/svg/cuidado-global/cuidado-global-vertical-on-cyan.svg", name: "Vertical, on light cyan", layout: "vertical", tone: "on-color", background: "#62C2D0", origin: "official", from: "Cuidado Global_Marca.ai (Drive, Cuidado Global_Marca/Marca)" },
+      { file: "brand/svg/cuidado-global/cuidado-global-horizontal-reverse.svg", name: "Horizontal, reverse", layout: "horizontal", tone: "reverse", background: "#144753", origin: "official", from: "Cuidado Global_Marca.ai (Drive, Cuidado Global_Marca/Marca)" },
+      { file: "brand/svg/cuidado-global/cuidado-global-horizontal-on-cyan.svg", name: "Horizontal, on light cyan", layout: "horizontal", tone: "on-color", background: "#62C2D0", origin: "official", from: "Cuidado Global_Marca.ai (Drive, Cuidado Global_Marca/Marca)" },
+      { file: "brand/svg/cuidado-global/cuidado-global-symbol-color.svg", name: "Symbol, logo colors", layout: "symbol", tone: "color", background: "#FFFFFF", origin: "official", from: "Cuidado Global_Marca.ai (Drive, Cuidado Global_Marca/Marca)" },
+      { file: "brand/svg/cuidado-global/cuidado-global-symbol-reverse.svg", name: "Symbol, reverse", layout: "symbol", tone: "reverse", background: "#144753", origin: "official", from: "Cuidado Global_Marca.ai (Drive, Cuidado Global_Marca/Marca)" },
+      { file: "brand/svg/cuidado-global/cuidado-global-symbol-on-cyan.svg", name: "Symbol, on light cyan", layout: "symbol", tone: "on-color", background: "#62C2D0", origin: "official", from: "Cuidado Global_Marca.ai (Drive, Cuidado Global_Marca/Marca)" },
+    ],
+    pending: [
+      "Horizontal in logo colors for white backgrounds: the official board draws the horizontal only on dark gray, petrol and light cyan (not cut, not composed).",
+      "Monochrome versions (dark gray / white, manual p. 9): not on the vector board.",
+    ],
+  },
   pending: [
-    "No vector of the Cuidado Global wordmark or symbol in the DS (needs the official .ai/.svg; not redrawn).",
+    "No DS component draws the Cuidado Global wordmark or symbol (the official SVGs, cut from Cuidado Global_Marca.ai, are in downloads).",
     "No DS palette (tokens) for Cuidado Global.",
     "No graphic elements page in the manual.",
   ],

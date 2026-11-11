@@ -6,7 +6,9 @@
  *
  * Checks: every hex equals the RGB printed in the manual (or read from the
  * vector, for RTA); the printed hex normalizes to the same hex; every color,
- * gradient and rule has a source { file, page }; gradient stops are hex.
+ * gradient and rule has a source { file, page }; gradient stops are hex;
+ * every download exists in playground/public (manual size = `bytes`), and every
+ * SVG has a viewBox, no raster image, no live text or font, no foreign fill.
  */
 import { cuidadoGlobal } from "../brand/cuidado-global.ts";
 import { creeta } from "../brand/creeta.ts";
@@ -14,12 +16,25 @@ import { ttcab } from "../brand/ttcab.ts";
 import { rta } from "../brand/rta.ts";
 import { rtaMundi } from "../brand/rta-mundi.ts";
 import { contrast, formatRatio, wcagLevel, rgbToHex } from "../brand/contrast.ts";
+import { existsSync, readFileSync, statSync } from "node:fs";
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
+
+/** Downloads live in the playground's public folder (not in the npm package). */
+const PUBLIC = join(dirname(fileURLToPath(import.meta.url)), "../playground/public");
 
 const BRANDS = [cuidadoGlobal, creeta, ttcab, rta, rtaMundi];
 const PETROL = "#144753";
 const errors = [];
 const mismatches = [];
 let colors = 0;
+let downloads = 0;
+/* Colors the DS marks use (components/marks), which differ from the manuals:
+   documented in brand/README.md, "Manual × digital". */
+const DS_FILLS = {
+  creeta: { midWave: "#3B9BAF", arc: "#266675", lightWave: "#63CACD", dot: "#A2158A" },
+  rta: { blue: "#159DB0", magenta: "#A7318D" },
+};
 
 const isPending = (v) => v && typeof v === "object" && v.status === "pending";
 const hasSource = (o) => o && o.source && typeof o.source.file === "string" && Number.isInteger(o.source.page) && o.source.page > 0;
@@ -59,10 +74,31 @@ for (const b of BRANDS) {
   if (!isPending(b.reduction)) for (const s of b.reduction.sizes) if (!hasSource(s)) errors.push(`${b.id}: size ${s.mm}mm without source`);
   for (const key of ["lockupRules", "graphicElements"]) if (!isPending(b[key])) for (const r of b[key]) if (!hasSource(r)) errors.push(`${b.id}: ${key} "${r.title}" without source`);
   for (const v of b.variations) if (!hasSource(v)) errors.push(`${b.id}: variation "${v.name}" without source`);
+
+  const dl = b.downloads;
+  if (!dl) { errors.push(`${b.id}: no downloads`); continue; }
+  const man = join(PUBLIC, dl.manual.file);
+  if (!existsSync(man)) errors.push(`${b.id}: manual ${dl.manual.file} missing`);
+  else if (statSync(man).size !== dl.manual.bytes) errors.push(`${b.id}: manual ${dl.manual.file} is ${statSync(man).size} bytes, data says ${dl.manual.bytes}`);
+  if (dl.manual.file.split("/").pop() !== b.manual.file) errors.push(`${b.id}: download ${dl.manual.file} ≠ manual.file ${b.manual.file}`);
+  for (const f of dl.svgs) {
+    downloads++;
+    const path = join(PUBLIC, f.file);
+    if (!/^#[0-9A-F]{6}$/.test(f.background)) errors.push(`${f.file}: background not #RRGGBB (${f.background})`);
+    if (f.origin === "official" && !f.from) errors.push(`${f.file}: official file without \`from\``);
+    if (!existsSync(path)) { errors.push(`${f.file}: missing`); continue; }
+    const svg = readFileSync(path, "utf8");
+    if (!/<svg[^>]*viewBox="/.test(svg)) errors.push(`${f.file}: no viewBox`);
+    if (/<image|<text|@font-face|font-family/.test(svg)) errors.push(`${f.file}: raster image or live text/font`);
+    const fills = new Set([...svg.matchAll(/fill="([^"]+)"/g)].map((m) => m[1].toUpperCase()));
+    const allowed = new Set([...b.colors.map((c) => c.hex), "#FFFFFF", ...Object.values(DS_FILLS[b.id] ?? {})]);
+    for (const x of fills) if (!allowed.has(x)) errors.push(`${f.file}: fill ${x} is neither a manual color nor a DS mark color`);
+  }
 }
 
 console.log(`brand: ${BRANDS.length} brands, ${colors} colors checked`);
 console.log(mismatches.length ? `hex ≠ RGB:\n  ${mismatches.join("\n  ")}` : "hex ≠ RGB: none (every hex matches its RGB)");
+console.log(`downloads: ${BRANDS.length} manuals, ${downloads} SVG files checked in playground/public`);
 console.log(errors.length ? `errors:\n  ${errors.join("\n  ")}` : "errors: none (every color, gradient and rule has a source)");
 
 if (process.argv.includes("--contrast")) {
