@@ -61,6 +61,7 @@ import { Curtain } from "../../components/Curtain";
 import { Lockup, type LockupVariant } from "../../components/Lockup";
 import { TtcabSymbol, TtcabWordmark, TTCAB_LOCKUP } from "../../components/marks/ttcab";
 import { CreetaSymbol, CreetaWordmark, CREETA_LOCKUP } from "../../components/marks/creeta";
+import { RtaSymbol, RtaWordmark, RTA_LOCKUP } from "../../components/marks/rta";
 import { used, IconWind, IconActivity, IconBaby, IconSearch, IconHome, IconBook, IconInfo, IconMessage, IconMapPin, IconGraduationCap, IconVideo, IconUsers, IconArrowUpRight, IconPhone, IconMail, IconInstagram } from "../../components/icons";
 import * as Lucide from "lucide-react";
 
@@ -86,6 +87,12 @@ const PALETTES: Record<string, Record<string, string>> = {
     "--color-ink-soft": "#266675", "--color-ink-body": "#1e4f5b", "--color-action": "#ab2781",
     "--color-action-text": "#8f1f6c", "--color-on-action": "#ffffff", "--color-line": "rgb(20 71 83 / 0.16)", "--color-action-tint": "#eae7ed", "--color-action-line": "#ab2781",
     "--color-callout": "#eddec1", "--color-callout-deep": "#e8cd98", "--color-callout-deeper": "#e5be72",
+  },
+  RTA: {
+    "--color-surface": "#f3f7f8", "--color-surface-alt": "#e9f1f3", "--color-card": "#ffffff", "--color-surface-panel": "#154654", "--color-ink": "#154654",
+    "--color-ink-soft": "#4e6b73", "--color-ink-body": "#1f515e", "--color-action": "#a7318d",
+    "--color-action-text": "#962a7e", "--color-on-action": "#ffffff", "--color-line": "rgb(21 70 84 / 0.14)", "--color-action-tint": "#f8edf5", "--color-action-line": "#a7318d",
+    "--color-callout": "#e3eef0", "--color-callout-deep": "#cfe2e6", "--color-callout-deeper": "#bcd6dc",
   },
 };
 
@@ -411,6 +418,14 @@ const BRAND_BY_PALETTE: Record<string, { name: string; tagline: string; logo?: R
     wordmark: <CreetaWordmark />,
     wordmarkRatio: CREETA_LOCKUP.wordmarkPerSymbol,
     symbolSide: CREETA_LOCKUP.symbolSide,
+  },
+  RTA: {
+    name: "Método RTA",
+    tagline: "Reequilíbrio Toracoabdominal",
+    logo: <RtaSymbol size={60} />,
+    wordmark: <RtaWordmark />,
+    wordmarkRatio: RTA_LOCKUP.wordmarkPerSymbol,
+    symbolSide: RTA_LOCKUP.symbolSide,
   },
 };
 

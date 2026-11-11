@@ -1,0 +1,54 @@
+/*
+  Método RTA palette (metodorta.com.br and its linktree) — petrol + mist + magenta.
+  Values from metodorta-next's globals.css (2026-11-05), the same hex the
+  linktree uses (2026-11-04). Brand colors from the logo of the metodo-rta-2026
+  theme: magenta #A7318D, blue #159DB0, petrol #154654.
+  Measured contrasts (WCAG formula, recomputed by script 2026-11-11):
+   - surface #f3f7f8 / ink #154654 ............ 9.56:1 (AAA)
+   - surface #f3f7f8 / ink-soft #4e6b73 ....... 5.30:1 (AA)
+   - surface #f3f7f8 / ink-body #1f515e ....... 8.12:1 (AAA)
+   - surface #f3f7f8 / action-text #962a7e .... 6.65:1 (AA)
+   - card #ffffff / ink-soft #4e6b73 .......... 5.71:1 (AA)
+   - surface-alt #e9f1f3 / ink #154654 ........ 9.01:1 (AAA)
+   - surface-alt #e9f1f3 / ink-soft #4e6b73 ... 4.99:1 (AA)
+   - surface-alt #e9f1f3 / action-text #962a7e  6.26:1 (AA)
+   - action-tint #f8edf5 / ink #154654 ........ 9.05:1 (AAA)
+   - action-tint #f8edf5 / action-text #962a7e  6.29:1 (AA)
+   - tint #e3eef0 / ink #154654 ............... 8.72:1 (AAA)
+   - tint #e3eef0 / ink-soft #4e6b73 .......... 4.83:1 (AA)
+   - action #a7318d / on-action #ffffff ....... 6.06:1 (AA, normal text)
+   - action-line #a7318d / surface ............ 5.62:1 (3:1 UI)
+   - surface-panel #154654 / surface (text) ... 9.56:1 (AAA)
+   - callout #e3eef0 / ink #154654 ............ 8.72:1 (AAA) · vs page 1.10:1
+   - callout-deep #cfe2e6 / ink #154654 ....... 7.70:1 (AAA)
+   - callout-deeper #bcd6dc / ink #154654 ..... 6.77:1 (AAA)
+   Unlike TTCAB, white on the action color passes AA for normal text, so it
+   is not an exception. ink-soft is NOT for the callout's tonal controls
+   (4.27:1 on callout-deep, 3.75:1 on callout-deeper): ink goes there.
+   The logo blue #159DB0 is 3.00:1 on the page (2.83:1 on surface-alt):
+   symbol only, never text, so it is not a token here (see components/marks/rta).
+*/
+:root {
+  --cg-surface: #f3f7f8;        /* mist */
+  --cg-surface-alt: #e9f1f3;    /* section band: ink 9.01:1 · ink-soft 4.99:1 · action-text 6.26:1 */
+  --cg-surface-panel: #154654;  /* petrol */
+  --cg-card: #ffffff;           /* cards, pills and menus over the page */
+  --cg-ink: #154654;            /* petrol (logo) */
+  --cg-ink-soft: #4e6b73;
+  --cg-ink-body: #1f515e;
+  --cg-action: #a7318d;         /* magenta (logo): white on it 6.06:1 */
+  --cg-on-action: #ffffff;
+  --cg-action-text: #962a7e;    /* darker magenta for text: 6.65:1 on mist */
+  --cg-action-tint: #f8edf5;    /* highlighted card: ink 9.05:1 */
+  --cg-action-line: #a7318d;    /* magenta itself: 5.62:1 on mist */
+  --cg-line: rgb(21 70 84 / 0.14);   /* petrol hairline */
+  --cg-tint: #e3eef0;           /* icon bubbles, pills, placeholders: ink 8.72:1 · ink-soft 4.83:1 */
+  /* Callout: as on metodorta-next — the tint itself, not a split complement
+     of the page (vs page 1.10:1, the other palettes use 1.19:1). */
+  --cg-callout: #e3eef0;         /* ink 8.72:1 · ink-body 7.41:1 */
+  --cg-callout-deep: #cfe2e6;    /* tonal button + icon bubble · ink 7.70:1 */
+  --cg-callout-deeper: #bcd6dc;  /* tonal button hover · ink 6.77:1 */
+  --cg-shadow: rgb(21 70 84);    /* petrol: soft shadows, used at low alpha */
+  --cg-font-heading: var(--font-quicksand), system-ui, sans-serif;  /* Quicksand */
+  --cg-font-body: var(--font-figtree), system-ui, sans-serif;       /* Figtree */
+}

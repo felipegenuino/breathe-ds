@@ -1,6 +1,6 @@
 {
   "name": "@breathe-ds/ui",
-  "version": "0.6.12",
+  "version": "0.6.13",
   "description": "Breathe DS — the design system of the Cuidado Global family of sites (creeta, ttcab, metodorta). Themeable tokens + React components.",
   "license": "MIT",
   "type": "module",
@@ -56,6 +56,10 @@
       "style": "./tokens/neutral.css",
       "default": "./tokens/neutral.css"
     },
+    "./tokens/rta.css": {
+      "style": "./tokens/rta.css",
+      "default": "./tokens/rta.css"
+    },
     "./components/icons": "./components/icons.tsx",
     "./components/AnchorNav": "./components/AnchorNav.tsx",
     "./components/LanguageSwitcher": "./components/LanguageSwitcher.tsx",
@@ -81,6 +85,7 @@
     "./components/Timeline": "./components/Timeline.tsx",
     "./components/marks/ttcab": "./components/marks/ttcab.tsx",
     "./components/marks/creeta": "./components/marks/creeta.tsx",
+    "./components/marks/rta": "./components/marks/rta.tsx",
     "./components/CareSteps": "./components/CareSteps.tsx",
     "./components/ChatPreview": "./components/ChatPreview.tsx",
     "./components/PlanTimeline": "./components/PlanTimeline.tsx",

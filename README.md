@@ -62,7 +62,7 @@ hidden behind the sticky Header or the BottomNav (WCAG 2.4.11).
 ```css
 @import "tailwindcss";
 @import "@breathe-ds/ui/theme.css";        /* the roles */
-@import "@breathe-ds/ui/tokens/ttcab.css"; /* this brand's hex (or creeta.css, neutral.css) */
+@import "@breathe-ds/ui/tokens/ttcab.css"; /* this brand's hex (or creeta.css, rta.css, neutral.css) */
 /* Tailwind only generates the classes it finds written: scan the components */
 @source "../../node_modules/@breathe-ds/ui/components";
 ```
@@ -113,6 +113,38 @@ Values from the standard WCAG formula (the same ones `preview/` computes live):
 
 `action` `#e8541e` is a vivid red-orange with white text, the Cloudflare/Airbnb route: 3.67:1 passes the 3:1 of UI components, not the 4.5:1 of normal text. A conscious exception, limited to the accent Button (one per block, same type scale as the other buttons so they never look mismatched); small controls (chips, tabs, segments) use `ink` or `action-tint` + `action-text` instead. The UI orange does not match the logo's `#f6a22a` on purpose. As text, use `action-text`.
 
+## Palettes
+
+| Palette | File | Import | Page / ink / action |
+|---|---|---|---|
+| Neutral (default) | `tokens/neutral.css` | `@breathe-ds/ui/tokens/neutral.css` | `#f4f4f5` / `#18181b` / `#18181b` |
+| TTCAB | `tokens/ttcab.css` | `@breathe-ds/ui/tokens/ttcab.css` | `#fbf5e9` / `#144753` / `#e8541e` |
+| Creeta | `tokens/creeta.css` | `@breathe-ds/ui/tokens/creeta.css` | `#eef3f4` / `#144753` / `#ab2781` |
+| Método RTA | `tokens/rta.css` | `@breathe-ds/ui/tokens/rta.css` | `#f3f7f8` / `#154654` / `#a7318d` |
+
+## Measured contrast — Método RTA (`tokens/rta.css`)
+
+Values from metodorta-next (the same hex the linktree uses), recomputed with the
+WCAG formula:
+
+| Pair | Contrast | Level |
+|---|---|---|
+| surface `#f3f7f8` / ink `#154654` | 9.56:1 | AAA |
+| surface `#f3f7f8` / ink-soft `#4e6b73` | 5.30:1 | AA |
+| surface `#f3f7f8` / ink-body `#1f515e` | 8.12:1 | AAA |
+| surface `#f3f7f8` / action-text `#962a7e` | 6.65:1 | AA |
+| surface-alt `#e9f1f3` / ink-soft `#4e6b73` | 4.99:1 | AA |
+| card `#ffffff` / ink-soft `#4e6b73` | 5.71:1 | AA |
+| tint `#e3eef0` / ink-soft `#4e6b73` | 4.83:1 | AA |
+| action `#a7318d` / on-action `#ffffff` | 6.06:1 | AA, normal text |
+| action-line `#a7318d` / surface | 5.62:1 | 3:1 UI component |
+| surface-panel `#154654` / surface text | 9.56:1 | AAA |
+| callout-deep `#cfe2e6` / ink | 7.70:1 | AAA |
+
+`ink-soft` is not for the callout's tonal controls (4.27:1 on `callout-deep`,
+3.75:1 on `callout-deeper`): use `ink` there. The logo blue `#159DB0` is 3.00:1 on
+the page and 2.83:1 on `surface-alt`: symbol only, never text, so it is not a token.
+
 ## Family typography
 
 Decision (2026-10-28): **open-source fonts only** — no licensed ones (Gotham is out).
@@ -159,6 +191,7 @@ files (`public/brand`) in the repositories, split into two components so the
 |---|---|---|---|
 | TTCAB | `TtcabSymbol` (mother + baby, orange `#F6A22A`) | `TtcabWordmark` (uppercase, `currentColor`) | `@breathe-ds/ui/components/marks/ttcab` |
 | Creeta | `CreetaSymbol` (three waves + dot, brand colors) | `CreetaWordmark` (lowercase, `currentColor`) | `@breathe-ds/ui/components/marks/creeta` |
+| Método RTA | `RtaSymbol` (blue `#159DB0`) | `RtaWordmark` ("RTA", magenta `#A7318D` by default, as in the logo) | `@breathe-ds/ui/components/marks/rta` |
 
 ```tsx
 <Curtain logo={<TtcabSymbol />} name={<TtcabWordmark />} wordmarkRatio={TTCAB_LOCKUP.wordmarkPerSymbol} tagline="…" />
@@ -169,7 +202,8 @@ files (`public/brand`) in the repositories, split into two components so the
 
 **The proportion comes from the brand manual, not from the eye.** Each brand file exports
 `*_LOCKUP.wordmarkPerSymbol` (wordmark height ÷ symbol height in the
-horizontal logo: TTCAB 0.557 · creeta 0.469) and `symbolSide` (in TTCAB the
+horizontal logo: TTCAB 0.557 · creeta 0.469 · RTA 0.601, measured from the exact
+path bounds of `rta-horizontal.svg`: 209.25 / 347.95) and `symbolSide` (in TTCAB the
 symbol sits to the **right** of the name; in creeta and the others, to the left). The `Lockup` and the `Curtain`
 pass this to the svg through the `--cg-wordmark` variable; the injected symbol takes the
 height of the size (`size`). Measured on the sites (2026-10-29): in both headers the
@@ -419,6 +453,7 @@ from color, not from extra markup.
 - [x] **AnchorNav** (floating capsule of anchors, scroll-spy + sliding indicator) — extracted from ttcab (10/29)
 - [x] **Footer** · **PageVideoHero** (loop, and player from a YouTube id or the site's own mp4; `panel.actions` puts two or more calls to action inside the panel) · **Header** (dropdown, house) · **BottomNav** · **Curtain** · **Lockup** (5 arrangements) · **BreatheMark**
 - [x] **Site brand marks** (`components/marks/`): real symbol + wordmark for TTCAB and Creeta (10/29)
+- [x] **Método RTA** (0.6.13): `tokens/rta.css` (values from metodorta-next) + `RtaSymbol` / `RtaWordmark` / `RTA_LOCKUP` from the official horizontal logo (11/11)
 - [ ] **ThreadRail** (side graphic device — a thread running down the left linking sections) — approved,
       **already exists in ttcab** → extract.
 - [ ] **OrganicFrame** (organic, blob-like image crop) — recorded as an **OPTION**
