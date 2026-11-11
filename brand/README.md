@@ -318,6 +318,8 @@ manual, p. 13.)
 
 The DS values came from the logo of the metodo-rta-2026 site theme (`metodorta-next`), not from the vector board.
 
+**Decision (owner, 2026-11-11):** digital keeps the site values (`#A7318D`, `#159DB0`, `#154654`); the manual values (`#AB2781`, `#009AB1`, `#144753`) are for print.
+
 ---
 
 ## RTA Mundi 2025
