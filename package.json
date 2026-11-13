@@ -34,6 +34,7 @@
     "./components/Accordion": "./components/Accordion.tsx",
     "./components/PageVideoHero": "./components/PageVideoHero.tsx",
     "./components/BackgroundVideo": "./components/BackgroundVideo.tsx",
+    "./components/ScreenTransition": "./components/ScreenTransition.tsx",
     "./components/Footer": "./components/Footer.tsx",
     "./components/Button": "./components/Button.tsx",
     "./components/Container": "./components/Container.tsx",

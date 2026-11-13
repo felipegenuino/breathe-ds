@@ -189,8 +189,9 @@ function Dropdown({ item, L, t }: { item: NavItem; L: ElementType; t: Labels }) 
 export function Header({ logo, items, linkComponent, cta, localeSwitcher, labels }: Props) {
   const L: ElementType = linkComponent ?? "a";
   const t = { ...EN, ...labels };
+  // own view-transition-name: the header stays still while the screen changes (ScreenTransition)
   return (
-    <header className="sticky top-0 z-50 bg-surface/90 backdrop-blur">
+    <header className="sticky top-0 z-50 bg-surface/90 backdrop-blur [view-transition-name:cabecalho]">
       <div className="mx-auto flex h-20 w-full max-w-[1600px] items-center justify-between gap-3 px-4 md:px-6">
         <div className="shrink-0">{logo}</div>
 
