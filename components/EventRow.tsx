@@ -104,7 +104,9 @@ export function EventRow({ time, timeAccent, title, href, onSelect, organizers, 
         )}
       </div>
       {cover && (
-        <div className="relative h-24 w-24 shrink-0 overflow-hidden rounded-2xl bg-tint md:h-36 md:w-36">
+        // pointer-events-none: the cover sits above the title's stretched hit area (it is
+        // positioned and comes later); without this, a click on the photo did nothing
+        <div className="pointer-events-none relative h-24 w-24 shrink-0 overflow-hidden rounded-2xl bg-tint md:h-36 md:w-36">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src={cover.src} alt={cover.alt ?? ""} loading="lazy" decoding="async" className="absolute inset-0 h-full w-full object-cover" />
         </div>
