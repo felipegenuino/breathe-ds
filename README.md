@@ -303,6 +303,10 @@ from color, not from extra markup.
   (icons on sub-items; final link with a → arrow, or ↗ if `external`) · language · CTA.
   Site convention: "Home" is just the house (`icon` + `iconOnly`), with a label for
   screen readers.
+  Family pattern for the methods (default since 16/11/2026): each method is a row with
+  its brand symbol in the bubble (`RtaSymbol`/`TtcabSymbol`, `color="currentColor"`), the
+  name and one line underneath. When the row leaves to the method's own site, `external`
+  on the sub-item: the domain as `description`, ↗ at the end, new tab, `labels.newTab`.
   Long dropdowns: `columns: 2` (compact rows, max 2 columns) and `align: "end"` to keep
   the wider menu inside the viewport; `groups` (in place of `children`) adds labelled
   groups, e.g. `[{ label: "Navigation", children: [...] }]`.

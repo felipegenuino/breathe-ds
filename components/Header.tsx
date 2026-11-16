@@ -7,6 +7,10 @@ export type NavChild = {
   href: string;
   icon?: ReactNode;
   description?: ReactNode;
+  /** The link leaves to another site (e.g. the methods' own sites): opens in a new
+   *  tab, with ↗ at the end of the row and `labels.newTab` for screen readers.
+   *  The family pattern for it: the brand symbol as `icon`, the domain as `description`. */
+  external?: boolean;
 };
 export type NavItem = {
   label: ReactNode;
@@ -33,11 +37,14 @@ type Labels = {
   nav: string;
   /** aria-label of the chevron button that toggles a dropdown */
   openSubmenu: string;
+  /** read after the label of an `external` sub-item */
+  newTab: string;
 };
 
 const EN: Labels = {
   nav: "Main",
   openSubmenu: "Open submenu",
+  newTab: "(opens in a new tab)",
 };
 
 type Props = {
@@ -82,29 +89,41 @@ function Dropdown({ item, L, t }: { item: NavItem; L: ElementType; t: Labels }) 
   const gid = useId();
   // a mouse that hovered already opened the menu: its click on the chevron must not close it
   const hovering = useRef(false);
-  const renderChild = (c: NavChild) => (
-    <L
-      href={c.href}
-      onClick={() => setOpen(false)}
-      // with a description the icon sits with the label's first line (creeta);
-      // label only: centred on the bubble, and a two-line label stays tight
-      className={`flex ${c.description ? "items-start" : "items-center"} gap-3 rounded-xl px-2.5 ${item.groups ? "py-1" : two ? "py-1.5" : "py-2"} transition-colors hover:bg-ink/[0.05] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink`}
-    >
-      {c.icon && (
-        <span className="flex h-9 w-9 flex-none items-center justify-center rounded-full bg-tint text-ink">
-          {c.icon}
-        </span>
-      )}
-      <span>
-        <span className={`block font-heading ${two ? "text-[0.9rem]" : "text-[0.95rem]"} leading-snug font-semibold text-ink`}>
-          {c.label}
-        </span>
-        {c.description && (
-          <span className="mt-0.5 block text-sm text-ink-soft">{c.description}</span>
+  const renderChild = (c: NavChild) => {
+    // another site: a plain <a> (the app's Link is for its own routes), in a new tab
+    const Tag: ElementType = c.external ? "a" : L;
+    return (
+      <Tag
+        href={c.href}
+        {...(c.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+        onClick={() => setOpen(false)}
+        // with a description the icon sits with the label's first line (creeta);
+        // label only, or an external row (the description is one short line, the
+        // domain): centred on the bubble, and a two-line label stays tight
+        className={`flex ${c.description && !c.external ? "items-start" : "items-center"} gap-3 rounded-xl px-2.5 ${item.groups ? "py-1" : two ? "py-1.5" : "py-2"} transition-colors hover:bg-ink/[0.05] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink`}
+      >
+        {c.icon && (
+          <span aria-hidden="true" className="flex h-9 w-9 flex-none items-center justify-center rounded-full bg-tint text-ink">
+            {c.icon}
+          </span>
         )}
-      </span>
-    </L>
-  );
+        <span className="min-w-0 flex-1">
+          <span className={`block font-heading ${two ? "text-[0.9rem]" : "text-[0.95rem]"} leading-snug font-semibold text-ink`}>
+            {c.label}
+          </span>
+          {c.description && (
+            <span className="mt-0.5 block text-sm text-ink-soft">{c.description}</span>
+          )}
+          {c.external && <span className="sr-only"> {t.newTab}</span>}
+        </span>
+        {c.external && (
+          <svg aria-hidden="true" viewBox="0 0 24 24" className="h-4 w-4 flex-none text-ink-soft" fill="none" stroke="currentColor" strokeWidth="2.25" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M7 17 17 7M9 7h8v8" />
+          </svg>
+        )}
+      </Tag>
+    );
+  };
   return (
     <div
       className="relative"

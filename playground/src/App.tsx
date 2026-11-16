@@ -1153,13 +1153,18 @@ export function App() {
                   { label: "Dropdown item", href: "#header", icon: IcUsers },
                   { label: "Dropdown item", href: "#header", icon: IcSearch },
                 ], seeAll: { label: "See-all link", href: "#header" } },
-                { label: "Link", href: "#header" },
+                // family pattern for links to the methods' own sites: brand symbol in the
+                // bubble (one color, the ink), the domain underneath, ↗ and a new tab
+                { label: "Methods", children: [
+                  { label: "Método RTA", description: "metodorta.com.br", href: "https://metodorta.com.br", external: true, icon: <RtaSymbol size={17} color="currentColor" /> },
+                  { label: "Método TTCAB", description: "torcicoloseassimetrias.com.br", href: "https://torcicoloseassimetrias.com.br", external: true, icon: <TtcabSymbol size={22} color="currentColor" /> },
+                ] },
                 { label: "Link", href: "#header" },
                 { label: "Link", href: "#header" },
                 { label: "Link", href: "#header" },
               ]}
             />
-            <div className="p-6 text-sm text-ink-soft">Hover "Dropdown" for the dropdown. "Home" is just the house icon; the label stays for screen readers. Brand at the sites' header size (44px symbol), with the animated entrance (symbol, then the name) — "Replay the curtain" repeats it.</div>
+            <div className="p-6 text-sm text-ink-soft">Hover "Dropdown" for the dropdown; "Methods" is the family pattern for links to other sites (brand symbol, domain, ↗, new tab). "Home" is just the house icon; the label stays for screen readers. Brand at the sites' header size (44px symbol), with the animated entrance (symbol, then the name) — "Replay the curtain" repeats it.</div>
           </div>
         </Section>
 
