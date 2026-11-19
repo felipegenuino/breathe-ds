@@ -17,6 +17,7 @@ import { PublicationCard } from "../../components/PublicationCard";
 import { Rail, RailItem } from "../../components/Rail";
 import { Button } from "../../components/Button";
 import { Callout } from "../../components/Callout";
+import { AnnouncementBar } from "../../components/AnnouncementBar";
 import { Card } from "../../components/Card";
 import { Container } from "../../components/Container";
 import { SectionKicker } from "../../components/SectionKicker";
@@ -1137,6 +1138,10 @@ export function App() {
           {/* no overflow-hidden: the dropdown needs to escape the demo box.
               Generic structure: brand (link to home) · home icon · item with dropdown · items · locale · CTA. */}
           <div className="relative z-10 rounded-2xl border border-line [&>header]:rounded-t-2xl">
+            {/* the announcement sits above the Header and scrolls away; "Close" is remembered per id */}
+            <AnnouncementBar id="playground-demo" tag="Sale" action={{ label: "See the offers", href: "#header" }} className="rounded-t-2xl">
+              Up to <strong>40% off</strong> until the 20th.
+            </AnnouncementBar>
             <Header
               logo={
                 <a href="#header" aria-label="Home page" className="inline-flex rounded-xl transition-opacity hover:opacity-70 focus-visible:outline-2 focus-visible:outline-offset-[3px] focus-visible:outline-ink">
@@ -1159,12 +1164,19 @@ export function App() {
                   { label: "Método RTA", description: "metodorta.com.br", href: "https://metodorta.com.br", external: true, icon: <RtaSymbol size={17} color="currentColor" /> },
                   { label: "Método TTCAB", description: "torcicoloseassimetrias.com.br", href: "https://torcicoloseassimetrias.com.br", external: true, icon: <TtcabSymbol size={22} color="currentColor" /> },
                 ] },
-                { label: "Link", href: "#header" },
+                // few items where the photo helps to choose (courses, treatments): a wide panel of photo cards
+                { label: "Cards", href: "#header", layout: "cards", children: [
+                  { label: "Card with a photo", eyebrow: "Group one", href: "#header", image: `${DEMO}assessment.jpg` },
+                  { label: "Card with a longer label on two lines", eyebrow: "Group one", href: "#header", image: `${DEMO}clip-poster.jpg`, badge: "30% off" },
+                  { label: "Card with a photo", eyebrow: "Group two", href: "#header", image: `${DEMO}podcast-poster.jpg` },
+                  { label: "Card without a photo", eyebrow: "Group two", href: "#header" },
+                  { label: "Card with a photo", href: "#header", image: `${DEMO}assessment.jpg`, imagePosition: "50% 20%" },
+                ], seeAll: { label: "See-all card", href: "#header" } },
                 { label: "Link", href: "#header" },
                 { label: "Link", href: "#header" },
               ]}
             />
-            <div className="p-6 text-sm text-ink-soft">Hover "Dropdown" for the dropdown; "Methods" is the family pattern for links to other sites (brand symbol, domain, ↗, new tab). "Home" is just the house icon; the label stays for screen readers. Brand at the sites' header size (44px symbol), with the animated entrance (symbol, then the name) — "Replay the curtain" repeats it.</div>
+            <div className="p-6 text-sm text-ink-soft">On top, the AnnouncementBar (one temporary message, with a tag, a link and a close button; <code>from</code>/<code>until</code> hide it outside the dates; closed here? clear the site data to see it again). Hover "Dropdown" for the dropdown; "Cards" is <code>layout: "cards"</code>, a wide panel of photo cards for the few things a site sells or teaches; "Methods" is the family pattern for links to other sites (brand symbol, domain, ↗, new tab). "Home" is just the house icon; the label stays for screen readers. Brand at the sites' header size (44px symbol), with the animated entrance (symbol, then the name) — "Replay the curtain" repeats it.</div>
           </div>
         </Section>
 

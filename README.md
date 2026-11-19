@@ -310,6 +310,16 @@ from color, not from extra markup.
   Long dropdowns: `columns: 2` (compact rows, max 2 columns) and `align: "end"` to keep
   the wider menu inside the viewport; `groups` (in place of `children`) adds labelled
   groups, e.g. `[{ label: "Navigation", children: [...] }]`.
+  `layout: "cards"` (0.6.19): instead of a list, a wide panel under the whole header with
+  one photo card per sub-item (`image`, `imagePosition`, `eyebrow`, `badge`), four per row,
+  and `seeAll` as the last card. For the few things a site sells or teaches (courses,
+  treatments), where the photo helps to choose; everything else stays a list. The photos
+  only load the first time the menu opens: pass small files (~640px wide).
+- **AnnouncementBar** (0.6.19): one line above the Header for what is temporary (a sale
+  with a deadline, enrolment opening). `tag` + one sentence + one `action` link + close
+  button (remembered per `id`). `from`/`until` hide it outside the dates, checked in the
+  browser before the first paint, so a static site never shows an expired offer. Not
+  sticky; one announcement at a time. Tones `ink` (default) and `action`.
 - **BottomNav**: on phone/tablet, navigation leaves the header and becomes the
   floating bottom bar. It is the code of novo.creeta's BarraNavegacao (= ttcab's
   BottomNav), made neutral through tokens: it receives ALL pages in order of importance
