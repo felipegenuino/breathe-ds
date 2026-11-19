@@ -320,6 +320,8 @@ from color, not from extra markup.
   button (remembered per `id`). `from`/`until` hide it outside the dates, checked in the
   browser before the first paint, so a static site never shows an expired offer. Not
   sticky; one announcement at a time. Tones `ink` (default) and `action`.
+  For a sale: `emphasis="strong"` (taller, bold, the action as a button) and `countdown`
+  (days, hours, minutes and seconds to `until`; no seconds under reduced motion).
 - **BottomNav**: on phone/tablet, navigation leaves the header and becomes the
   floating bottom bar. It is the code of novo.creeta's BarraNavegacao (= ttcab's
   BottomNav), made neutral through tokens: it receives ALL pages in order of importance

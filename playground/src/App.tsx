@@ -435,6 +435,8 @@ const BRAND_BY_PALETTE: Record<string, { name: string; tagline: string; logo?: R
    actual BottomNav at the bottom of the window. The visible section is marked
    by scroll-spy; the bar shows as many as fit and the rest goes to "More". */
 /* Demo languages: they don't translate the playground, the three links point back here. */
+// the demo sale always ends in three and a half days: the countdown keeps running
+const DEMO_SALE_END = new Date(Date.now() + 3.5 * 86400_000).toISOString();
 const DEMO_LANGUAGES = [
   { lang: "pt-BR", label: "Português", href: "#header", current: true },
   { lang: "en", label: "English", href: "#header" },
@@ -1139,8 +1141,11 @@ export function App() {
               Generic structure: brand (link to home) · home icon · item with dropdown · items · locale · CTA. */}
           <div className="relative z-10 rounded-2xl border border-line [&>header]:rounded-t-2xl">
             {/* the announcement sits above the Header and scrolls away; "Close" is remembered per id */}
-            <AnnouncementBar id="playground-demo" tag="Sale" action={{ label: "See the offers", href: "#header" }} className="rounded-t-2xl">
-              Up to <strong>40% off</strong> until the 20th.
+            <AnnouncementBar id="playground-demo-strong" emphasis="strong" countdown until={DEMO_SALE_END} tag="Sale" action={{ label: "See the offers", href: "#header" }} className="rounded-t-2xl">
+              Up to 40% off, this week only.
+            </AnnouncementBar>
+            <AnnouncementBar id="playground-demo" tag="Notice" action={{ label: "See the dates", href: "#header" }} dismissible={false}>
+              The quiet version: <strong>enrolment opens</strong> on Monday.
             </AnnouncementBar>
             <Header
               logo={
@@ -1176,7 +1181,7 @@ export function App() {
                 { label: "Link", href: "#header" },
               ]}
             />
-            <div className="p-6 text-sm text-ink-soft">On top, the AnnouncementBar (one temporary message, with a tag, a link and a close button; <code>from</code>/<code>until</code> hide it outside the dates; closed here? clear the site data to see it again). Hover "Dropdown" for the dropdown; "Cards" is <code>layout: "cards"</code>, a wide panel of photo cards for the few things a site sells or teaches; "Methods" is the family pattern for links to other sites (brand symbol, domain, ↗, new tab). "Home" is just the house icon; the label stays for screen readers. Brand at the sites' header size (44px symbol), with the animated entrance (symbol, then the name) — "Replay the curtain" repeats it.</div>
+            <div className="p-6 text-sm text-ink-soft">On top, the AnnouncementBar twice (a real page shows one): the sale version (<code>emphasis="strong"</code> + <code>countdown</code>: taller, bold, the clock running, a button) and the quiet line for notices. <code>from</code>/<code>until</code> hide it outside the dates; closed here? clear the site data to see it again. Hover "Dropdown" for the dropdown; "Cards" is <code>layout: "cards"</code>, a wide panel of photo cards for the few things a site sells or teaches; "Methods" is the family pattern for links to other sites (brand symbol, domain, ↗, new tab). "Home" is just the house icon; the label stays for screen readers. Brand at the sites' header size (44px symbol), with the animated entrance (symbol, then the name) — "Replay the curtain" repeats it.</div>
           </div>
         </Section>
 
