@@ -5,7 +5,15 @@ import { List } from "./List";
 /** lucide-style icon component (the footer sets the size). */
 type IconType = ComponentType<{ size?: number | string; strokeWidth?: number | string; className?: string; "aria-hidden"?: boolean | "true" | "false" }>;
 
-export type FooterLink = { href: string; label: ReactNode };
+export type FooterLink = {
+  href: string;
+  label: ReactNode;
+  /** Optional icon before the label (lucide-style). */
+  Icon?: IconType;
+  /** Stands apart from the list: a pill (tint), for the one link people come
+   *  looking for ("Schedule"). Use once per footer, at the end of its group. */
+  highlight?: boolean;
+};
 /** A titled column of links, for footers with many pages ("Foundations", "Cards…"). */
 export type FooterLinkGroup = {
   title: ReactNode;
@@ -105,10 +113,32 @@ const rowCols: Record<number, string> = {
 // never reads as glued to the next link (the 44px row is still the minimum)
 const link =
   "flex min-h-11 items-center py-2 leading-snug [text-wrap:pretty] break-inside-avoid text-ink/80 underline decoration-transparent underline-offset-4 transition-[color,text-decoration-color] duration-150 hover:text-ink hover:decoration-ink motion-reduce:transition-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink";
+const pill =
+  "mt-3 inline-flex min-h-11 items-center gap-2 rounded-full bg-tint px-4 font-semibold text-ink transition-colors duration-200 hover:bg-ink hover:text-surface motion-reduce:transition-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink";
 const strongLink =
   "inline-flex min-h-11 items-center gap-1.5 font-semibold text-ink underline underline-offset-4 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink";
 const chip =
   "inline-flex min-h-11 items-center gap-2 rounded-full bg-tint px-4 text-sm font-medium text-ink transition-colors duration-200 hover:bg-ink hover:text-surface motion-reduce:transition-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink";
+
+/** One page link: plain row, or the highlighted pill; the icon is decoration. */
+function PageLink({ L, p }: { L: ElementType; p: FooterLink }) {
+  if (p.highlight) {
+    return (
+      <div className="break-inside-avoid">
+        <L href={p.href} className={pill}>
+          {p.Icon && <p.Icon aria-hidden="true" size={18} strokeWidth={2} />}
+          {p.label}
+        </L>
+      </div>
+    );
+  }
+  return (
+    <L href={p.href} className={p.Icon ? `${link} gap-2` : link}>
+      {p.Icon && <p.Icon aria-hidden="true" size={17} strokeWidth={2} className="shrink-0" />}
+      {p.label}
+    </L>
+  );
+}
 
 /**
  * Footer of the Cuidado Global family — the site-footer of novo.creeta, by
@@ -194,12 +224,10 @@ export function Footer({
                   {groups.map((g, gi) => (
                     <div key={gi} className={g.wide ? "col-span-2" : undefined}>
                       {/* on their own row the groups are the headings of the footer: same weight as "Where we are" */}
-                      <h3 className={stacked ? title : groupTitle}>{g.title}</h3>
+                      <h3 className={stacked ? `${title} !font-semibold` : groupTitle}>{g.title}</h3>
                       <div className={g.wide ? "mt-2 gap-x-8 sm:columns-2" : "mt-2"}>
                         {g.links.map((p, i) => (
-                          <L key={`${i}-${p.href}`} href={p.href} className={link}>
-                            {p.label}
-                          </L>
+                          <PageLink key={`${i}-${p.href}`} L={L} p={p} />
                         ))}
                       </div>
                       {g.sub?.map((sg, si) => (
@@ -207,9 +235,7 @@ export function Footer({
                           <h4 className={groupTitle}>{sg.title}</h4>
                           <div className="mt-2">
                             {sg.links.map((p, i) => (
-                              <L key={`${i}-${p.href}`} href={p.href} className={link}>
-                                {p.label}
-                              </L>
+                              <PageLink key={`${i}-${p.href}`} L={L} p={p} />
                             ))}
                           </div>
                         </div>
@@ -220,9 +246,7 @@ export function Footer({
               ) : (
                 <div className="mt-3 grid gap-x-6 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2">
                   {(pages.links ?? []).map((p, i) => (
-                    <L key={`${i}-${p.href}`} href={p.href} className={link}>
-                      {p.label}
-                    </L>
+                    <PageLink key={`${i}-${p.href}`} L={L} p={p} />
                   ))}
                 </div>
               )}
@@ -230,7 +254,7 @@ export function Footer({
           )}
 
           <div className={stacked ? "md:col-start-2 md:row-start-1 md:max-w-[22rem]" : undefined}>
-            <h2 className={title}>{where.title}</h2>
+            <h2 className={stacked ? `${title} !font-semibold` : title}>{where.title}</h2>
             <address className="mt-3 not-italic leading-relaxed text-ink/80">
               {where.address.map((line, i) => (
                 <span key={i}>
