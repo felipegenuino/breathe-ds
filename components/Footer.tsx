@@ -10,6 +10,8 @@ export type FooterLink = {
   label: ReactNode;
   /** Optional icon before the label (lucide-style). */
   Icon?: IconType;
+  /** The link leaves to another site: new tab, ↗ after the label, `labels.newTab` for screen readers. */
+  external?: boolean;
   /** Stands apart from the list: a pill (tint), for the one link people come
    *  looking for ("Schedule"). Use once per footer, at the end of its group. */
   highlight?: boolean;
@@ -65,6 +67,9 @@ type Props = {
     /** With `groups`: the pages take a row of their own, full width, under the brand
      *  and the address, one column per group. For a site with a long catalogue. */
     fullWidth?: boolean;
+    /** `arrow`: a corner arrow (↳) before each link of the groups, the same mark as the
+     *  List's `marker="arrow"`: gives the column a direction and some air. */
+    marker?: "arrow";
   };
   /** "Where we are": address lines, opening hours, and the directions links
    *  ("Directions ↗ · Waze ↗", external). */
@@ -120,23 +125,37 @@ const strongLink =
 const chip =
   "inline-flex min-h-11 items-center gap-2 rounded-full bg-tint px-4 text-sm font-medium text-ink transition-colors duration-200 hover:bg-ink hover:text-surface motion-reduce:transition-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink";
 
-/** One page link: plain row, or the highlighted pill; the icon is decoration. */
-function PageLink({ L, p }: { L: ElementType; p: FooterLink }) {
+/** One page link: plain row, or the highlighted pill; the icon is decoration. An
+ *  `external` link is a plain <a> in a new tab, with the outbound arrow. */
+function PageLink({ L, p, newTab, marker }: { L: ElementType; p: FooterLink; newTab: string; marker?: "arrow" }) {
+  const Tag: ElementType = p.external ? "a" : L;
+  const out = p.external ? { target: "_blank", rel: "noopener noreferrer" } : {};
+  const tail = p.external && (
+    <>
+      <svg aria-hidden="true" viewBox="0 0 24 24" width={14} height={14} className="shrink-0 opacity-70" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M7 17 17 7M9 7h8v8" /></svg>
+      <span className="sr-only"> {newTab}</span>
+    </>
+  );
   if (p.highlight) {
     return (
       <div className="break-inside-avoid">
-        <L href={p.href} className={pill}>
+        <Tag href={p.href} {...out} className={pill}>
           {p.Icon && <p.Icon aria-hidden="true" size={18} strokeWidth={2} />}
           {p.label}
-        </L>
+          {tail}
+        </Tag>
       </div>
     );
   }
   return (
-    <L href={p.href} className={p.Icon ? `${link} gap-2` : link}>
+    <Tag href={p.href} {...out} className={p.Icon || p.external || marker ? `${link} gap-2.5` : link}>
+      {marker && !p.Icon && (
+        <svg aria-hidden="true" viewBox="0 0 24 24" width={16} height={16} className="shrink-0 -translate-y-px text-ink/45" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round"><path d="M15 10l5 5-5 5" /><path d="M4 4v7a4 4 0 0 0 4 4h12" /></svg>
+      )}
       {p.Icon && <p.Icon aria-hidden="true" size={17} strokeWidth={2} className="shrink-0" />}
       {p.label}
-    </L>
+      {tail}
+    </Tag>
   );
 }
 
@@ -227,7 +246,7 @@ export function Footer({
                       <h3 className={stacked ? `${title} !font-semibold` : groupTitle}>{g.title}</h3>
                       <div className={g.wide ? "mt-2 gap-x-8 sm:columns-2" : "mt-2"}>
                         {g.links.map((p, i) => (
-                          <PageLink key={`${i}-${p.href}`} L={L} p={p} />
+                          <PageLink key={`${i}-${p.href}`} L={L} p={p} newTab={t.newTab} marker={pages?.marker} />
                         ))}
                       </div>
                       {g.sub?.map((sg, si) => (
@@ -235,7 +254,7 @@ export function Footer({
                           <h4 className={groupTitle}>{sg.title}</h4>
                           <div className="mt-2">
                             {sg.links.map((p, i) => (
-                              <PageLink key={`${i}-${p.href}`} L={L} p={p} />
+                              <PageLink key={`${i}-${p.href}`} L={L} p={p} newTab={t.newTab} marker={pages?.marker} />
                             ))}
                           </div>
                         </div>
@@ -246,7 +265,7 @@ export function Footer({
               ) : (
                 <div className="mt-3 grid gap-x-6 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2">
                   {(pages.links ?? []).map((p, i) => (
-                    <PageLink key={`${i}-${p.href}`} L={L} p={p} />
+                    <PageLink key={`${i}-${p.href}`} L={L} p={p} newTab={t.newTab} />
                   ))}
                 </div>
               )}

@@ -27,6 +27,9 @@ export type NavItem = {
   label: ReactNode;
   href?: string;
   active?: boolean;
+  /** A top-level link (no dropdown) that leaves to another site (e.g. the schedule on its
+   *  own domain): opens in a new tab, with ↗ after the label and `labels.newTab` for screen readers. */
+  external?: boolean;
   /** Icon before the label (e.g. a house on "Home"). */
   icon?: ReactNode;
   /** Only the icon shows; the label is left for screen readers (site convention: "Home" is the house). */
@@ -312,6 +315,13 @@ export function Header({ logo, items, linkComponent, cta, localeSwitcher, labels
           {items.map((item, i) =>
             item.children?.length || item.groups?.length ? (
               <Dropdown key={i} item={item} L={L} t={t} />
+            ) : item.external ? (
+              <a key={i} href={item.href} target="_blank" rel="noopener noreferrer" className={linkCls(false)}>
+                {item.icon && <span aria-hidden="true" className="flex">{item.icon}</span>}
+                {item.iconOnly ? <span className="sr-only">{item.label}</span> : item.label}
+                <svg aria-hidden="true" viewBox="0 0 24 24" width={14} height={14} className="text-ink-soft" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M7 17 17 7M9 7h8v8" /></svg>
+                <span className="sr-only"> {t.newTab}</span>
+              </a>
             ) : (
               <L key={i} href={item.href} aria-current={item.active ? "page" : undefined} className={linkCls(item.active)}>
                 {item.icon && <span aria-hidden="true" className="flex">{item.icon}</span>}
