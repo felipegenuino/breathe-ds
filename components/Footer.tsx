@@ -7,7 +7,14 @@ type IconType = ComponentType<{ size?: number | string; strokeWidth?: number | s
 
 export type FooterLink = { href: string; label: ReactNode };
 /** A titled column of links, for footers with many pages ("Foundations", "Cards…"). */
-export type FooterLinkGroup = { title: ReactNode; links: FooterLink[] };
+export type FooterLinkGroup = {
+  title: ReactNode;
+  links: FooterLink[];
+  /** A group with many links (a course catalogue): it takes two columns and its
+   *  links flow in two, so it ends at the height of the other groups instead of
+   *  running down the page. */
+  wide?: boolean;
+};
 export type FooterContact = { href: string; label: ReactNode; Icon: IconType; external?: boolean };
 export type FooterLanguage = Language;
 
@@ -34,7 +41,8 @@ type Props = {
    *  a footer with no internal links drops the column (two-column grid).
    *  Many links (a dozen or more): pass `groups` instead of `links` — each
    *  group is a column with a small heading, up to four side by side, so the
-   *  list gets wider instead of taller (the 44px rows stay). */
+   *  list gets wider instead of taller (the 44px rows stay). A group that is
+   *  much longer than the others takes `wide: true` (two columns of links). */
   pages?: { title: ReactNode; links?: FooterLink[]; groups?: FooterLinkGroup[] };
   /** "Where we are": address lines, opening hours, and the directions links
    *  ("Directions ↗ · Waze ↗", external). */
@@ -72,8 +80,10 @@ const groupCols: Record<number, string> = {
   3: "grid-cols-2 lg:grid-cols-3",
   4: "grid-cols-2 lg:grid-cols-4",
 };
+// py + leading-snug: a label that wraps to two lines keeps air above and below, so it
+// never reads as glued to the next link (the 44px row is still the minimum)
 const link =
-  "flex min-h-11 items-center text-ink/80 underline decoration-transparent underline-offset-4 transition-[color,text-decoration-color] duration-150 hover:text-ink hover:decoration-ink motion-reduce:transition-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink";
+  "flex min-h-11 items-center py-2 leading-snug [text-wrap:pretty] break-inside-avoid text-ink/80 underline decoration-transparent underline-offset-4 transition-[color,text-decoration-color] duration-150 hover:text-ink hover:decoration-ink motion-reduce:transition-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink";
 const strongLink =
   "inline-flex min-h-11 items-center gap-1.5 font-semibold text-ink underline underline-offset-4 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink";
 const chip =
@@ -115,7 +125,12 @@ export function Footer({
   const noticeId = notice?.id ?? "footer-notice";
   const groups = pages?.groups?.length ? pages.groups : undefined;
   // grouped pages need the room: the pages column grows and the brand column shrinks
-  const columns = !pages
+  // a `wide` group means a long catalogue: the pages leave the middle column and take a
+  // row of their own, full width, under the brand and the address (so the labels get
+  // room and stop wrapping); "Pages" is then said only to screen readers, the group
+  // headings do the job
+  const stacked = !!groups?.some((g) => g.wide);
+  const columns = !pages || stacked
     ? "md:grid-cols-[minmax(0,1fr)_auto]"
     : groups
       ? "md:grid-cols-[minmax(0,3.5fr)_minmax(0,6.5fr)_minmax(0,3fr)]"
@@ -135,14 +150,14 @@ export function Footer({
           </div>
 
           {pages && (
-            <nav aria-label={t.pagesNav}>
-              <h2 className={title}>{pages.title}</h2>
+            <nav aria-label={t.pagesNav} className={stacked ? "md:col-span-2 md:row-start-2 md:border-t md:border-ink/10 md:pt-10" : undefined}>
+              <h2 className={stacked ? "sr-only" : title}>{pages.title}</h2>
               {groups ? (
-                <div className={`mt-5 grid gap-x-6 gap-y-8 ${groupCols[Math.min(groups.length, 4)]}`}>
+                <div className={`${stacked ? "" : "mt-5 "}grid gap-x-8 gap-y-8 ${groupCols[Math.min(groups.reduce((n, g) => n + (g.wide ? 2 : 1), 0), 4)]}`}>
                   {groups.map((g, gi) => (
-                    <div key={gi}>
+                    <div key={gi} className={g.wide ? "col-span-2" : undefined}>
                       <h3 className={groupTitle}>{g.title}</h3>
-                      <div className="mt-2">
+                      <div className={g.wide ? "mt-2 gap-x-8 sm:columns-2" : "mt-2"}>
                         {g.links.map((p, i) => (
                           <L key={`${i}-${p.href}`} href={p.href} className={link}>
                             {p.label}
@@ -164,7 +179,7 @@ export function Footer({
             </nav>
           )}
 
-          <div>
+          <div className={stacked ? "md:col-start-2 md:row-start-1 md:max-w-[22rem]" : undefined}>
             <h2 className={title}>{where.title}</h2>
             <address className="mt-3 not-italic leading-relaxed text-ink/80">
               {where.address.map((line, i) => (
