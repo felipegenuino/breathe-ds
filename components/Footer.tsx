@@ -14,6 +14,9 @@ export type FooterLinkGroup = {
    *  links flow in two, so it ends at the height of the other groups instead of
    *  running down the page. */
   wide?: boolean;
+  /** Titled sub-lists under the group's own links, in the same column
+   *  ("Methods" → the methods, then "Certified professionals" → one link per method). */
+  sub?: { title: ReactNode; links: FooterLink[] }[];
 };
 export type FooterContact = { href: string; label: ReactNode; Icon: IconType; external?: boolean };
 export type FooterLanguage = Language;
@@ -37,13 +40,24 @@ type Props = {
   brandName?: string;
   /** The brand sentence, shown in quotes under the logo. */
   quote?: ReactNode;
+  /** How logo and sentence sit together. `stacked` (default): sentence under the
+   *  logo. `split`: logo, a thin divider, sentence beside it — the same arrangement
+   *  as the Curtain's `layout="split"`; below lg it stacks. */
+  brandLayout?: "stacked" | "split";
   /** "Pages": title on the first line, links in two columns below. Optional:
    *  a footer with no internal links drops the column (two-column grid).
    *  Many links (a dozen or more): pass `groups` instead of `links` — each
    *  group is a column with a small heading, up to four side by side, so the
    *  list gets wider instead of taller (the 44px rows stay). A group that is
    *  much longer than the others takes `wide: true` (two columns of links). */
-  pages?: { title: ReactNode; links?: FooterLink[]; groups?: FooterLinkGroup[] };
+  pages?: {
+    title: ReactNode;
+    links?: FooterLink[];
+    groups?: FooterLinkGroup[];
+    /** With `groups`: the pages take a row of their own, full width, under the brand
+     *  and the address, one column per group. For a site with a long catalogue. */
+    fullWidth?: boolean;
+  };
   /** "Where we are": address lines, opening hours, and the directions links
    *  ("Directions ↗ · Waze ↗", external). */
   where: { title: ReactNode; address: ReactNode[]; hours?: ReactNode; directions?: FooterLink[] };
@@ -80,6 +94,13 @@ const groupCols: Record<number, string> = {
   3: "grid-cols-2 lg:grid-cols-3",
   4: "grid-cols-2 lg:grid-cols-4",
 };
+// on their own row (long catalogue): one column on a phone, so a long label has the whole width
+const rowCols: Record<number, string> = {
+  1: "grid-cols-1",
+  2: "grid-cols-1 sm:grid-cols-2",
+  3: "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3",
+  4: "grid-cols-1 sm:grid-cols-2 lg:grid-cols-4",
+};
 // py + leading-snug: a label that wraps to two lines keeps air above and below, so it
 // never reads as glued to the next link (the 44px row is still the minimum)
 const link =
@@ -103,6 +124,7 @@ export function Footer({
   logo,
   brandName,
   quote,
+  brandLayout = "stacked",
   pages,
   where,
   notice,
@@ -129,7 +151,7 @@ export function Footer({
   // row of their own, full width, under the brand and the address (so the labels get
   // room and stop wrapping); "Pages" is then said only to screen readers, the group
   // headings do the job
-  const stacked = !!groups?.some((g) => g.wide);
+  const stacked = !!groups && (!!pages?.fullWidth || groups.some((g) => g.wide));
   const columns = !pages || stacked
     ? "md:grid-cols-[minmax(0,1fr)_auto]"
     : groups
@@ -141,22 +163,38 @@ export function Footer({
       <div className="mx-auto max-w-[1600px] px-4 md:px-6">
         {/* without the pages column, "where" keeps to the right edge (auto width) */}
         <div className={`grid gap-x-10 gap-y-10 ${columns}`}>
-          <div>
-            {logo}
-            {brandName && <p className="sr-only">{brandName}</p>}
-            {quote && (
-              <p className="mt-6 max-w-[18rem] font-heading text-xl leading-snug text-ink-body">“{quote}”</p>
-            )}
-          </div>
+          {brandLayout === "split" ? (
+            <div className="flex flex-col gap-6 self-start lg:flex-row lg:items-center lg:gap-8">
+              <div className="shrink-0">
+                {logo}
+                {brandName && <p className="sr-only">{brandName}</p>}
+              </div>
+              {quote && (
+                <>
+                  <span aria-hidden="true" className="hidden w-px self-stretch bg-ink/20 lg:block" />
+                  <p className="max-w-[16rem] font-heading text-xl leading-snug text-ink-body [text-wrap:balance]">“{quote}”</p>
+                </>
+              )}
+            </div>
+          ) : (
+            <div>
+              {logo}
+              {brandName && <p className="sr-only">{brandName}</p>}
+              {quote && (
+                <p className="mt-6 max-w-[18rem] font-heading text-xl leading-snug text-ink-body">“{quote}”</p>
+              )}
+            </div>
+          )}
 
           {pages && (
             <nav aria-label={t.pagesNav} className={stacked ? "md:col-span-2 md:row-start-2 md:border-t md:border-ink/10 md:pt-10" : undefined}>
               <h2 className={stacked ? "sr-only" : title}>{pages.title}</h2>
               {groups ? (
-                <div className={`${stacked ? "" : "mt-5 "}grid gap-x-8 gap-y-8 ${groupCols[Math.min(groups.reduce((n, g) => n + (g.wide ? 2 : 1), 0), 4)]}`}>
+                <div className={`${stacked ? "md:gap-x-12 " : "mt-5 "}grid gap-x-8 gap-y-8 ${(stacked ? rowCols : groupCols)[Math.min(groups.reduce((n, g) => n + (g.wide ? 2 : 1), 0), 4)]}`}>
                   {groups.map((g, gi) => (
                     <div key={gi} className={g.wide ? "col-span-2" : undefined}>
-                      <h3 className={groupTitle}>{g.title}</h3>
+                      {/* on their own row the groups are the headings of the footer: same weight as "Where we are" */}
+                      <h3 className={stacked ? title : groupTitle}>{g.title}</h3>
                       <div className={g.wide ? "mt-2 gap-x-8 sm:columns-2" : "mt-2"}>
                         {g.links.map((p, i) => (
                           <L key={`${i}-${p.href}`} href={p.href} className={link}>
@@ -164,6 +202,18 @@ export function Footer({
                           </L>
                         ))}
                       </div>
+                      {g.sub?.map((sg, si) => (
+                        <div key={si} className="mt-6">
+                          <h4 className={groupTitle}>{sg.title}</h4>
+                          <div className="mt-2">
+                            {sg.links.map((p, i) => (
+                              <L key={`${i}-${p.href}`} href={p.href} className={link}>
+                                {p.label}
+                              </L>
+                            ))}
+                          </div>
+                        </div>
+                      ))}
                     </div>
                   ))}
                 </div>
