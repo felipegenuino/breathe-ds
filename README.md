@@ -212,6 +212,8 @@ files (`public/brand`) in the repositories, split into two components so the
 <Curtain logo={<TtcabSymbol />} name={<TtcabWordmark />} wordmarkRatio={TTCAB_LOCKUP.wordmarkPerSymbol} tagline="…" />
 // once per session: the head script, from its own module (callable in a server layout, 0.6.8)
 // import { curtainHeadScript } from "@breathe-ds/ui/components/curtainHeadScript";
+// Logo that is one piece (Cuidado Global): whole in `name`, no symbol, tagline beside it
+<Curtain layout="split" logo={null} name={<img src="/brand/cuidado-global-vertical-color.svg" alt="" />} tagline="…" />
 <Lockup variant="horizontal" size="md" logo={<CreetaSymbol />} wordmark={<CreetaWordmark />} wordmarkRatio={CREETA_LOCKUP.wordmarkPerSymbol} name="creeta" />
 ```
 

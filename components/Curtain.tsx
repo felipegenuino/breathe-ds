@@ -9,8 +9,14 @@ type Props = {
   /** Line below the name (e.g. "Centro de Reequilíbrio Toracoabdominal"). */
   tagline?: ReactNode;
   /** Symbol next to the name. Default: the BreatheMark (ring + dot). Each
-   *  site injects its own logo here. */
+   *  site injects its own logo here. `null` = no symbol: for a brand whose logo
+   *  is one piece (Cuidado Global), which goes whole in `name`. */
   logo?: ReactNode;
+  /** How logo and tagline are arranged.
+   *  - `lockup` (default): symbol + name, tagline under the name.
+   *  - `split`: logo on the left, a thin divider, tagline on the right. On a
+   *    phone it stacks (logo, tagline below) and the divider goes away. */
+  layout?: "lockup" | "split";
   /** When `name` is an svg wordmark: its height as a fraction of the symbol
    *  height, from the brand manual (e.g. `CREETA_LOCKUP.wordmarkPerSymbol`). */
   wordmarkRatio?: number;
@@ -40,7 +46,7 @@ type Props = {
  * When it finishes rising, the <html> gets data-cg-curtain-done (so page tops
  * "land" only after it, never on a route change) and onDone is called.
  */
-export function Curtain({ name, tagline, logo, wordmarkRatio, symbolSide = "left", storageKey, onDone, className }: Props) {
+export function Curtain({ name, tagline, logo, layout = "lockup", wordmarkRatio, symbolSide = "left", storageKey, onDone, className }: Props) {
   const el = useRef<HTMLDivElement>(null);
   const [gone, setGone] = useState(false);
 
@@ -71,7 +77,7 @@ export function Curtain({ name, tagline, logo, wordmarkRatio, symbolSide = "left
           it sits next to the name, on the same line, with the tagline below;
           otherwise the symbol would end up after the tagline, far from the wordmark. */}
       {(() => {
-        const mark = <span className="cg-curtain__mark">{logo ?? <BreatheMark size={60} duration={5} />}</span>;
+        const mark = logo === null ? null : <span className="cg-curtain__mark">{logo ?? <BreatheMark size={60} duration={5} />}</span>;
         const nameEl = (
           <span
             className="cg-curtain__name"
@@ -81,6 +87,15 @@ export function Curtain({ name, tagline, logo, wordmarkRatio, symbolSide = "left
           </span>
         );
         const tag = tagline ? <span className="cg-curtain__tag">{tagline}</span> : null;
+        if (layout === "split") {
+          return (
+            <div className="cg-curtain__lockup cg-curtain__lockup--split">
+              <span className="cg-curtain__row">{symbolSide === "right" ? <>{nameEl}{mark}</> : <>{mark}{nameEl}</>}</span>
+              {tag && <span className="cg-curtain__rule" />}
+              {tag}
+            </div>
+          );
+        }
         return symbolSide === "right" ? (
           <div className="cg-curtain__lockup cg-curtain__lockup--right">
             <span className="cg-curtain__row">{nameEl}{mark}</span>
@@ -136,6 +151,24 @@ const CURTAIN_CSS = `
   font-size:clamp(.8rem,2.4vw,1rem); line-height:1.3; color:var(--color-ink-soft,#54707a);
   animation:cg-curtain-tag 500ms ease 820ms both;
 }
+/* split: logo | divider | tagline, side by side; the tagline reads as a statement next to the logo */
+.cg-curtain__lockup--split{ gap:clamp(20px,3.2vw,40px); }
+.cg-curtain__lockup--split .cg-curtain__tag{
+  margin-top:0; max-width:18ch; text-wrap:balance;
+  font-size:clamp(1rem,2vw,1.375rem); line-height:1.3; color:var(--color-ink,#14323a);
+  animation-name:cg-curtain-tag-split;
+}
+.cg-curtain__rule{
+  align-self:stretch; width:1px; background:currentColor; opacity:.22;
+  transform-origin:center; animation:cg-curtain-rule 500ms var(--ease-cg,cubic-bezier(.2,.8,.2,1)) 700ms both;
+}
+@media (max-width:560px){
+  .cg-curtain__lockup--split{ flex-direction:column; text-align:center; gap:1rem; }
+  .cg-curtain__lockup--split .cg-curtain__tag{ max-width:26ch; font-size:1rem; animation-name:cg-curtain-tag; }
+  .cg-curtain__rule{ display:none; }
+}
+@keyframes cg-curtain-tag-split{ from{ opacity:0; transform:translateX(-8px); } }
+@keyframes cg-curtain-rule{ from{ opacity:0; transform:scaleY(0); } }
 @keyframes cg-curtain-rise{ to{ transform:translateY(-100%); visibility:hidden; } }
 @keyframes cg-curtain-mark{ from{ opacity:0; transform:scale(.6) rotate(-16deg); } }
 @keyframes cg-curtain-name{ from{ opacity:0; transform:translateX(-8px); } }
